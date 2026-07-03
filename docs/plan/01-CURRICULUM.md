@@ -134,42 +134,55 @@ Legend: 🎬 = flagship animation worth extra polish.
 |---|---|---|---|
 | 8.1 | Modules | import/export; one file = one module; dependency graphs | ModuleGraph — files as paper cards with arrows; an import animates a value traveling between cards |
 | 8.2 | npm & package.json | Installing packages, scripts, node_modules, semver (^ ~), lockfiles | ModuleGraph — your card plugging into a wall of community cards |
-| 8.3 | Node.js basics | JS outside the browser; running scripts; the terminal (where Playwright lives) | EngineDiagram revisited — same engine, no browser around it |
-| 8.4 | Debugging like a pro | Breakpoints, step over/into, watch, call stack panel in DevTools — mapped 1:1 to our CallStackTower | Side-by-side: real DevTools screenshot annotated ⇄ our visualizations |
-| 8.5 | ES6+ grab bag | Optional chaining `?.`, nullish `??`, template niceties, Symbol/iterators (light) | ExpressionTree — `?.` short-circuit ray stopping at null |
-| 8.6 | A taste of TypeScript | Types as labels the machine checks *before* running; interfaces; why Playwright projects use TS | ValueZoo — the pens get locked gates; a wrong-type value bounces off at compile time |
-| ✅ | **Checkpoint: environment setup** | Node + a real local project created outside the app; run a script from the terminal | Guided checklist with screenshots |
+| 8.3 | Debugging like a pro | Breakpoints, step over/into, watch, call stack panel in DevTools — mapped 1:1 to our CallStackTower | Side-by-side: real DevTools screenshot annotated ⇄ our visualizations |
+| 8.4 | ES6+ grab bag | Optional chaining `?.`, nullish `??`, template niceties, Symbol/iterators (light) | ExpressionTree — `?.` short-circuit ray stopping at null |
+| 8.5 | A taste of TypeScript | Types as labels the machine checks *before* running; interfaces; why Playwright projects use TS | ValueZoo — the pens get locked gates; a wrong-type value bounces off at compile time |
+| ✅ | **Checkpoint: dependency detective** | Open a real project's package.json and explain every line — scripts, deps, semver ranges, the lockfile | Annotated package.json walkthrough |
 
-## Phase 9 — Testing Mindset
+## Phase 9 — Node.js
+*Goal: JS with the browser walls removed — deep comfort in the runtime Vitest and Playwright run on.*
+
+| # | Lesson | What's understood afterward | Viz |
+|---|---|---|---|
+| 9.1 | What is Node, really? | Same V8 engine, no browser around it: no DOM, no window — new powers instead; the REPL; running `node script.js` | EngineDiagram from 0.2 revisited — the browser shell lifts off, a terminal shell drops on |
+| 9.2 | The terminal, properly | cd/ls, running scripts, reading errors and stack traces in a terminal; exit codes — how CI knows pass from fail | Simulated terminal pane — a failing script's stack trace annotated line by line |
+| 9.3 | Modules in Node: CJS vs ESM | `require` vs `import`, `"type": "module"`, default vs named in each; why Playwright configs look the way they do | ModuleGraph drawn twice — CJS arrows vs ESM arrows; one package.json switch flips the style |
+| 9.4 | process: argv, env & exit | `process.argv` (scripts that take input), `process.env` (where BASE_URL and secrets live in real suites), exit codes | Terminal viz — the same script fed different env vars produces different runs |
+| 9.5 | The file system | fs read/write (sync & promise flavors), path.join, __dirname vs cwd; where test reports and screenshots actually go | A script writes a real "test-report.txt" into a hand-drawn folder tree |
+| 9.6 | Node's event loop & non-blocking I/O | The 6.2 event loop, backstage edition: libuv instead of Web APIs; timers in Node; how one thread serves many files | EventLoopMachine reskinned — the Web-API waiting room becomes the libuv workshop |
+| 9.7 | fetch without a browser | Calling a real API from a plain script; JSON in, JSON out — the seed of API testing | NetworkRoundTrip — the envelope leaves a terminal instead of a browser |
+| ✅ | **Checkpoint: environment setup** | Install Node for real; `npm init` a project outside the app; write a script that reads process.env and writes a file; run it from the terminal | Guided checklist with screenshots |
+
+## Phase 10 — Testing Mindset
 *Goal: think like a tester before touching a test tool.*
 
 | # | Lesson | What's understood afterward | Viz |
 |---|---|---|---|
-| 9.1 | Why software breaks | Regression; the cost-of-bug curve; what testing actually buys | A hand-drawn "bug escapes to production" comic with real cost data |
-| 9.2 | The testing pyramid | Unit / integration / E2E — tradeoffs of speed, cost, confidence; where Playwright sits | 🎬 TestPyramid — interactive: drag the slider, watch suite runtime vs confidence change |
-| 9.3 | Anatomy of a test | Arrange–Act–Assert; one behavior per test; naming tests as sentences | FunctionMachine reframed: given input (arrange), run (act), check output (assert) |
-| 9.4 | Assertions | expect().toBe vs toEqual (references return!), matchers, failure messages you can read | AssertionScale — a balance scale weighing expected vs actual; toEqual unpacks structure |
-| 9.5 | Vitest hands-on | describe/it, running a suite, reading red/green output, watch mode | Simulated test-runner pane with authentic output |
-| 9.6 | Test doubles & TDD taste | Mocks/stubs/spies conceptually; red-green-refactor once | FunctionMachine — a real dependency machine swapped for a cardboard fake |
+| 10.1 | Why software breaks | Regression; the cost-of-bug curve; what testing actually buys | A hand-drawn "bug escapes to production" comic with real cost data |
+| 10.2 | The testing pyramid | Unit / integration / E2E — tradeoffs of speed, cost, confidence; where Playwright sits | 🎬 TestPyramid — interactive: drag the slider, watch suite runtime vs confidence change |
+| 10.3 | Anatomy of a test | Arrange–Act–Assert; one behavior per test; naming tests as sentences | FunctionMachine reframed: given input (arrange), run (act), check output (assert) |
+| 10.4 | Assertions | expect().toBe vs toEqual (references return!), matchers, failure messages you can read | AssertionScale — a balance scale weighing expected vs actual; toEqual unpacks structure |
+| 10.5 | Vitest hands-on | describe/it, running a suite, reading red/green output, watch mode | Simulated test-runner pane with authentic output |
+| 10.6 | Test doubles & TDD taste | Mocks/stubs/spies conceptually; red-green-refactor once | FunctionMachine — a real dependency machine swapped for a cardboard fake |
 | ✅ | **Checkpoint project: test the tip calculator** | Write Vitest tests for the Phase 3 project; break the code, watch tests catch it | The red/green loop experienced firsthand |
 
-## Phase 10 — Playwright (job-ready)
+## Phase 11 — Playwright (job-ready)
 *Goal: write, structure, debug, and CI-run real Playwright suites.*
 
 | # | Lesson | What's understood afterward | Viz |
 |---|---|---|---|
-| 10.1 | What Playwright is | Browser automation architecture: your script ⇄ Playwright server ⇄ real browsers; headless vs headed | 🎬 PlaywrightBridge — script sends commands across a bridge to a puppet browser |
-| 10.2 | First test & test runner | `npx playwright test`; the config; trace viewer first look | Simulated runner + annotated real screenshots |
-| 10.3 | 🎬 Locators | getByRole/getByText/getByLabel > CSS; why user-facing locators survive redesigns; chaining & filtering | SelectorLab v2 — same lab, Playwright locator syntax; a "redesign" button restyles the page and shows which locators survive |
-| 10.4 | Actions | click/fill/press/selectOption/hover/drag; actionability checks before every action | DOMTree — before each action, Playwright's checklist (visible? stable? enabled?) ticks off item by item |
-| 10.5 | 🎬 Auto-waiting & web-first assertions | THE flaky-test killer: expect(locator) retries until timeout; connects back to lesson 7.8 | Timeline — assertion polling as repeated gentle checks vs the old sleep(5000) sledgehammer, side by side |
-| 10.6 | Fixtures & hooks | test/expect imports, beforeEach, page fixture, custom fixtures; test isolation | CallStackTower reframed — each test gets a fresh browser context card |
-| 10.7 | Page Object Model | Structuring suites: page classes, locators as properties, actions as methods; DRY test code | ModuleGraph — spec files pointing at page-object cards pointing at the app |
-| 10.8 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.10 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
-| 10.9 | Auth, storage state & sessions | Log in once, reuse storageState; the cookies/localStorage knowledge from 7.7 pays off | ObjectLocker — a saved session card stamped and reused across tests |
-| 10.10 | Debugging failing tests | UI mode, trace viewer, screenshots, videos; reading a failure like a detective | Annotated trace-viewer walkthrough |
-| 10.11 | Parallelism, retries, CI | Workers, sharding, retries (and why retries hide real bugs), GitHub Actions basics | TestPyramid + a worker-lanes timeline |
-| 10.12 | Visual & a11y testing (bonus) | toHaveScreenshot; axe integration | Diff overlay demo |
+| 11.1 | What Playwright is | Browser automation architecture: your script ⇄ Playwright server ⇄ real browsers; headless vs headed | 🎬 PlaywrightBridge — script sends commands across a bridge to a puppet browser |
+| 11.2 | First test & test runner | `npx playwright test`; the config; trace viewer first look | Simulated runner + annotated real screenshots |
+| 11.3 | 🎬 Locators | getByRole/getByText/getByLabel > CSS; why user-facing locators survive redesigns; chaining & filtering | SelectorLab v2 — same lab, Playwright locator syntax; a "redesign" button restyles the page and shows which locators survive |
+| 11.4 | Actions | click/fill/press/selectOption/hover/drag; actionability checks before every action | DOMTree — before each action, Playwright's checklist (visible? stable? enabled?) ticks off item by item |
+| 11.5 | 🎬 Auto-waiting & web-first assertions | THE flaky-test killer: expect(locator) retries until timeout; connects back to lesson 7.8 | Timeline — assertion polling as repeated gentle checks vs the old sleep(5000) sledgehammer, side by side |
+| 11.6 | Fixtures & hooks | test/expect imports, beforeEach, page fixture, custom fixtures; test isolation | CallStackTower reframed — each test gets a fresh browser context card |
+| 11.7 | Page Object Model | Structuring suites: page classes, locators as properties, actions as methods; DRY test code | ModuleGraph — spec files pointing at page-object cards pointing at the app |
+| 11.8 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.10 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
+| 11.9 | Auth, storage state & sessions | Log in once, reuse storageState; the cookies/localStorage knowledge from 7.7 pays off | ObjectLocker — a saved session card stamped and reused across tests |
+| 11.10 | Debugging failing tests | UI mode, trace viewer, screenshots, videos; reading a failure like a detective | Annotated trace-viewer walkthrough |
+| 11.11 | Parallelism, retries, CI | Workers, sharding, retries (and why retries hide real bugs), GitHub Actions basics | TestPyramid + a worker-lanes timeline |
+| 11.12 | Visual & a11y testing (bonus) | toHaveScreenshot; axe integration | Diff overlay demo |
 | ✅ | **Capstone: full test suite** | A real Playwright suite (in a real repo, outside the app) against the Phase 7 todo app + a public demo site: POM, fixtures, API mocking, CI config | Graduation. You are an automation tester. |
 
 ---

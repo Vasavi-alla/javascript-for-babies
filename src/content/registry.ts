@@ -30,9 +30,10 @@ export const PHASES: PhaseMeta[] = [
   { number: 5, title: 'Under the Hood', question: 'Execution contexts, the call stack, hoisting, prototypes, this', plannedLessons: 9 },
   { number: 6, title: 'Time & Async', question: 'The event loop, callbacks, promises, async/await', plannedLessons: 9 },
   { number: 7, title: 'The Browser & DOM', question: 'The DOM tree, selectors, events — the automation tester’s hunting ground', plannedLessons: 9 },
-  { number: 8, title: 'Modern JS & Tooling', question: 'Modules, npm, debugging, ES6+, a taste of TypeScript', plannedLessons: 7 },
-  { number: 9, title: 'Testing Mindset', question: 'Why we test, assertions, the test pyramid, Vitest', plannedLessons: 7 },
-  { number: 10, title: 'Playwright', question: 'Locators, auto-waiting, fixtures, POM, network, CI — job-ready', plannedLessons: 13 },
+  { number: 8, title: 'Modern JS & Tooling', question: 'Modules, npm, debugging, ES6+, a taste of TypeScript', plannedLessons: 6 },
+  { number: 9, title: 'Node.js', question: 'JS without the browser: the terminal, process & env, files, Node’s event loop — where Playwright lives', plannedLessons: 8 },
+  { number: 10, title: 'Testing Mindset', question: 'Why we test, assertions, the test pyramid, Vitest', plannedLessons: 7 },
+  { number: 11, title: 'Playwright', question: 'Locators, auto-waiting, fixtures, POM, network, CI — job-ready', plannedLessons: 13 },
 ]
 
 export const LESSONS: LessonMeta[] = [

@@ -36,7 +36,7 @@ Along the way: a study coach that counts only *active* minutes and nudges real
 breaks, a streak calendar, a daily note sticker — and **Barnaby**, the resident
 cat, who patrols the bottom of every page, walks, sleeps, and enjoys being petted.
 
-## The curriculum (Phases 0–10)
+## The curriculum (Phases 0–11)
 
 | Phase | Territory |
 |---|---|
@@ -45,12 +45,13 @@ cat, who patrols the bottom of every page, walks, sleeps, and enjoys being pette
 | 2 | Decisions and loops — control flow |
 | 3 | Functions — parameters, returns, scope, closures, callbacks, recursion |
 | 4 | Collections — arrays, objects, references |
-| 5 | How JS *really* runs — hoisting, `this`, the event loop |
-| 6 | Async — callbacks → promises → async/await |
+| 5 | How JS *really* runs — hoisting, `this`, execution contexts |
+| 6 | Async — the event loop, single-threaded & non-blocking, promises, async/await |
 | 7 | The DOM — JS meets the page |
 | 8 | Modern JS & tooling |
-| 9 | Testing fundamentals (Vitest) |
-| 10 | **Playwright** — automation testing, the destination |
+| 9 | **Node.js** — the terminal, process & env, files, Node's event loop |
+| 10 | Testing fundamentals (Vitest) |
+| 11 | **Playwright** — automation testing, the destination |
 
 ## Running it
 

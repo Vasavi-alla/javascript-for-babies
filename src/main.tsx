@@ -1,6 +1,8 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 import '@fontsource/caveat/500.css'
 import '@fontsource/caveat/600.css'
 import '@fontsource/caveat/700.css'
@@ -17,5 +19,8 @@ createRoot(document.getElementById('root')!).render(
     <BrowserRouter>
       <App />
     </BrowserRouter>
+    {/* no-ops locally; report to Vercel when deployed there */}
+    <Analytics />
+    <SpeedInsights />
   </StrictMode>,
 )

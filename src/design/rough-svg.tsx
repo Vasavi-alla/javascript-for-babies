@@ -19,6 +19,8 @@ export interface RoughShapeStyle {
   fillStyle?: Options['fillStyle']
   roughness?: number
   bowing?: number
+  /** rough.js double-draws strokes by default; true = one clean sketchy pass */
+  disableMultiStroke?: boolean
   seed: number
 }
 
@@ -32,8 +34,20 @@ function toOptions(style: RoughShapeStyle): Options {
     hachureGap: 6,
     roughness: style.roughness ?? 1.2,
     bowing: style.bowing ?? 1,
+    disableMultiStroke: style.disableMultiStroke ?? false,
     seed: style.seed,
   }
+}
+
+/** Closed sketchy polygon (pine trees, flags, signs). */
+export function RoughPolygon(props: { points: Point[] } & RoughShapeStyle) {
+  const { points } = props
+  const drawable = useMemo(
+    () => gen.polygon(points.map((p) => [p.x, p.y] as [number, number]), toOptions(props)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [JSON.stringify(points), props.stroke, props.strokeWidth, props.fill, props.fillStyle, props.roughness, props.seed],
+  )
+  return <DrawablePaths drawable={drawable} />
 }
 
 export function DrawablePaths({ drawable }: { drawable: Drawable }) {
@@ -93,6 +107,41 @@ export function RoughLine(
 export interface Point {
   x: number
   y: number
+}
+
+/**
+ * A sketchy freehand curve through a set of points — the Excalidraw stroke.
+ * Optional dash pattern turns it into a pencil-dotted route.
+ */
+export function RoughCurve(
+  props: { points: Point[]; strokeDasharray?: string; opacity?: number } & RoughShapeStyle,
+) {
+  const { points, strokeDasharray, opacity } = props
+  const paths = useMemo(() => {
+    if (points.length < 2) return []
+    const drawable = gen.curve(
+      points.map((p) => [p.x, p.y] as [number, number]),
+      toOptions(props),
+    )
+    return gen.toPaths(drawable)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [JSON.stringify(points), props.stroke, props.strokeWidth, props.roughness, props.bowing, props.seed])
+
+  return (
+    <g opacity={opacity}>
+      {paths.map((p, i) => (
+        <path
+          key={i}
+          d={p.d}
+          stroke={p.stroke}
+          strokeWidth={p.strokeWidth}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={strokeDasharray}
+        />
+      ))}
+    </g>
+  )
 }
 
 /** Curved hand-drawn arrow. `curve` bends the midpoint sideways (0 = straight). */
