@@ -1,13 +1,19 @@
+import { useState } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { RoughEllipse, RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { InkButton } from '../../design/InkButton'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
- * 3.1 — What is a function? 🎬 hero lesson
+ * 3.1 — What is a function? 🎬 hero lesson — playground-first pilot
  * Viz: FunctionMachine — a hand-drawn machine with an input hopper, a gear,
  * and an output chute. The key beat: DEFINING builds the machine (nothing
  * runs); CALLING drops a value in and makes it go.
+ * A "try it first" playground (mystery machine, no explanation) runs before
+ * the hook — the format-variety pilot from
+ * docs/superpowers/specs/2026-07-03-lesson-format-variety-design.md.
+ * Classic-format backup: lesson31.old.tsx.
  */
 
 const CODE = `function greet(name) {
@@ -133,26 +139,114 @@ function FunctionMachine({ stepIndex }: { stepIndex: number }) {
   )
 }
 
+// ── "try it first" playground: click a name, watch a greeting come out. ──
+const PLAY_NAMES = ['Lijas', 'Ada', 'you']
+
+function FunctionPlayground() {
+  const [history, setHistory] = useState<string[]>([])
+  const [dropping, setDropping] = useState<string | null>(null)
+
+  function tryName(nameValue: string) {
+    setDropping(nameValue)
+    window.setTimeout(() => {
+      setHistory((h) => [...h, `Hello, ${nameValue}!`])
+      setDropping(null)
+    }, 550)
+  }
+
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap gap-3">
+        {PLAY_NAMES.map((n) => (
+          <InkButton id={`play-31-chip-${n}`} key={n} onClick={() => tryName(n)} disabled={dropping !== null}>
+            {n}
+          </InkButton>
+        ))}
+      </div>
+      <svg viewBox="0 0 440 260" className="w-full max-w-md">
+        {/* hopper */}
+        <RoughLine x1={155} y1={20} x2={195} y2={68} seed={361} strokeWidth={2} />
+        <RoughLine x1={285} y1={20} x2={245} y2={68} seed={362} strokeWidth={2} />
+        <RoughRect x={148} y={68} width={144} height={90} seed={363} fill="var(--color-sticky)" fillStyle="solid" />
+        <text x={220} y={118} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-ink-soft)">
+          ???
+        </text>
+        <RoughLine x1={292} y1={158} x2={340} y2={198} seed={364} strokeWidth={2} />
+        <RoughLine x1={272} y1={175} x2={318} y2={213} seed={365} strokeWidth={2} />
+
+        <AnimatePresence>
+          {dropping && (
+            <motion.g
+              key={dropping}
+              initial={{ x: 220, y: -10, opacity: 0 }}
+              animate={{ x: 220, y: 40, opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ type: 'spring', damping: 15 }}
+            >
+              <RoughRect x={-42} y={-14} width={84} height={28} seed={366} fill="var(--color-marker-teal)" fillStyle="solid" strokeWidth={1.5} />
+              <text x={0} y={5} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fontWeight={600} fill="var(--color-ink)">
+                "{dropping}"
+              </text>
+            </motion.g>
+          )}
+        </AnimatePresence>
+
+        <RoughRect x={40} y={210} width={360} height={44} seed={367} strokeWidth={1.5} />
+        <text x={52} y={206} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
+          console
+        </text>
+        {history.length === 0 && (
+          <text x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
+            click a name above
+          </text>
+        )}
+        {history.slice(-1).map((line) => (
+          <motion.text
+            key={line}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            x={58}
+            y={236}
+            fontFamily="var(--font-code)"
+            fontSize={12.5}
+            fill="var(--color-ink)"
+          >
+            {line}
+          </motion.text>
+        ))}
+      </svg>
+    </div>
+  )
+}
+
 export const lesson31: LessonDef = {
   id: '3.1',
+  playground: {
+    prompt: (
+      <>
+        Before any explanation — here's a mystery machine. Click a name below and watch what
+        happens. Click another. See if you can guess the rule before reading on.
+      </>
+    ),
+    Widget: FunctionPlayground,
+  },
   hook: (
     <>
       <p>
-        In the FizzBuzz checkpoint you wrote fifteen lines of decision logic. Now imagine your
-        program needs that logic in five different places. Copy-paste it five times? Then a bug is
-        found… and you fix it in four places and forget the fifth. That disease has a cure, and the
-        cure is the single most important idea in JavaScript: the{' '}
+        You just clicked a name and a greeting popped out the other side. Click a different name
+        and a different greeting appears — same machine, same rule, different input. That mystery
+        box is your very first{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           function
         </HighlightMark>{' '}
         — a machine you <em>build once</em> and <em>use forever</em>.
       </p>
       <p>
-        A function is a named machine: values go in the hopper, work happens inside, something
-        comes out. And here's a secret — you've been <em>using</em> these machines since your very
-        first lesson. <code>console.log</code>? A function. <code>typeof</code>'s cousin{' '}
-        <code>String()</code>? A function. Today you stop just using machines and start{' '}
-        <strong>building</strong> them.
+        Here's why that matters: imagine your program needs that "say hello" logic in five
+        different places. Copy-paste it five times? Then a bug is found… and you fix it in four
+        places and forget the fifth. Functions are the cure — and you've been <em>using</em> them
+        since your very first lesson. <code>console.log</code>? A function. Today you stop just
+        using machines and start <strong>building</strong> them.
       </p>
     </>
   ),
