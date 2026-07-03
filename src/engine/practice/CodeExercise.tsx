@@ -9,7 +9,8 @@ import { ConsolePane } from '../../design/ConsolePane'
 import { HighlightMark } from '../../design/HighlightMark'
 import { runCode, type RunResult } from './runner'
 import { diffLines } from './diff'
-import { askMentor, getGeminiKey, setGeminiKey } from './gemini'
+import { askMentor } from './gemini'
+import { MentorPanel } from './MentorPanel'
 import type { CodeExerciseDef } from './types'
 
 /**
@@ -24,11 +25,6 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
   const [checkedCode, setCheckedCode] = useState('')
   const [running, setRunning] = useState(false)
   const [revealed, setRevealed] = useState(false)
-  const [mentorText, setMentorText] = useState<string | null>(null)
-  const [mentorBusy, setMentorBusy] = useState(false)
-  const [hasKey, setHasKey] = useState(() => Boolean(getGeminiKey()))
-  const [keyOpen, setKeyOpen] = useState(false)
-  const [keyDraft, setKeyDraft] = useState('')
   const passedOnce = useRef(false)
 
   // ── verdicts (computed against the code as it was when RUN was pressed) ──
@@ -41,7 +37,6 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
   async function run() {
     if (running) return
     setRunning(true)
-    setMentorText(null)
     const res = await runCode(code)
     setResult(res)
     setCheckedCode(code)
@@ -56,25 +51,6 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
       passedOnce.current = true
       onPass?.()
     }
-  }
-
-  async function callMentor() {
-    if (!hasKey) {
-      setKeyOpen(true)
-      return
-    }
-    setMentorBusy(true)
-    setMentorText(null)
-    const text = await askMentor({
-      task: def.task,
-      code,
-      output: result?.lines ?? [],
-      expected: def.expectedOutput,
-      error: result?.error,
-      passed,
-    })
-    setMentorText(text)
-    setMentorBusy(false)
   }
 
   return (
@@ -132,39 +108,25 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
             I’m stuck — show the answer
           </button>
         )}
-        {result && (
-          <InkButton id={`mentor-${def.id}`} onClick={callMentor} disabled={mentorBusy}>
-            {mentorBusy ? '🤖 thinking…' : '🤖 ask the AI mentor'}
-          </InkButton>
-        )}
       </div>
 
-      {/* ── gemini key setup (only if the mentor was summoned with no key) ── */}
-      {keyOpen && !hasKey && (
-        <div className="border-ink-soft/40 mt-3 flex max-w-xl flex-col gap-2 border-l-2 border-dashed pl-3">
-          <p className="text-sm">
-            The mentor runs on <strong>your</strong> Gemini key (it stays in this browser only —
-            never sent anywhere except to Google).
-          </p>
-          <div className="flex flex-wrap items-center gap-2">
-            <input
-              value={keyDraft}
-              onChange={(e) => setKeyDraft(e.target.value)}
-              placeholder="paste your Gemini API key"
-              className="border-ink-soft/50 bg-paper-raised w-72 rounded-sm border border-dashed px-3 py-1.5 font-mono text-xs outline-none"
-            />
-            <InkButton
-              id={`savekey-${def.id}`}
-              disabled={keyDraft.trim() === ''}
-              onClick={() => {
-                setGeminiKey(keyDraft)
-                setHasKey(true)
-                setKeyOpen(false)
-              }}
-            >
-              save key
-            </InkButton>
-          </div>
+      {/* ── the AI mentor (remounts per run so feedback never goes stale) ── */}
+      {result && (
+        <div className="mt-4">
+          <MentorPanel
+            key={checkedCode}
+            id={`exercise-${def.id}`}
+            ask={() =>
+              askMentor({
+                task: def.task,
+                code: checkedCode,
+                output: result.lines,
+                expected: def.expectedOutput,
+                error: result.error,
+                passed,
+              })
+            }
+          />
         </div>
       )}
 
@@ -223,14 +185,6 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
           </HighlightMark>{' '}
           That’s not a quiz answer — that’s working code from your own fingers.
         </motion.p>
-      )}
-
-      {/* ── the AI mentor's words ── */}
-      {mentorText && (
-        <div className="border-pencil-blue/60 mt-4 max-w-xl border-l-2 pl-3">
-          <p className="font-hand text-xl">🤖 the mentor says:</p>
-          <p className="mt-1 text-[15px]">{mentorText}</p>
-        </div>
       )}
 
       {/* ── the model answer + how yours compares ── */}

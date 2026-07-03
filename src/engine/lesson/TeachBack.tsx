@@ -3,6 +3,8 @@ import { motion } from 'motion/react'
 import { PaperCard } from '../../design/PaperCard'
 import { StickyNote } from '../../design/StickyNote'
 import { InkButton } from '../../design/InkButton'
+import { MentorPanel } from '../practice/MentorPanel'
+import { reviewTeachBack } from '../practice/gemini'
 import { useProgress } from '../../store/progress'
 
 /**
@@ -59,7 +61,16 @@ export function TeachBack({
       {submitted && (
         <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="mt-5">
           <p className="text-marker-teal font-hand text-xl font-semibold">✓ saved to your journal</p>
-          <p className="text-ink-soft mt-2 text-sm">Compare with one way a teacher might say it:</p>
+
+          <div className="mt-4">
+            <MentorPanel
+              id={`teachback-${lessonId}`}
+              label="🤖 have the mentor check my explanation"
+              ask={() => reviewTeachBack({ prompt, answer: draft.trim(), modelAnswer })}
+            />
+          </div>
+
+          <p className="text-ink-soft mt-4 text-sm">Compare with one way a teacher might say it:</p>
           <div className="mt-2">
             <StickyNote id={`model-${lessonId}`} className="max-w-2xl">
               {modelAnswer}
