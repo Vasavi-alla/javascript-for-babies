@@ -25,3 +25,4 @@ dist-ssr
 *.sln
 *.sw?
 public/cat/*.mp4
+public/cat/cat-*.gif

@@ -27,7 +27,10 @@ type Mood = 'sleeping' | 'sitting' | 'walking' | 'petted'
  * No files → the hand-drawn vector cat below is used. All-or-nothing.
  */
 const SPRITE_MOODS = ['walk', 'sit', 'sleep'] as const
-type SpriteSet = Record<(typeof SPRITE_MOODS)[number], string>
+interface SpriteSet extends Record<(typeof SPRITE_MOODS)[number], string> {
+  /** optional bonus loop: shown while being petted (falls back to sit) */
+  pet?: string
+}
 
 function probeImage(src: string): Promise<boolean> {
   return new Promise((resolve) => {
@@ -38,13 +41,20 @@ function probeImage(src: string): Promise<boolean> {
   })
 }
 
+async function findSprite(mood: string): Promise<string | null> {
+  if (await probeImage(`/cat/${mood}.webp`)) return `/cat/${mood}.webp`
+  if (await probeImage(`/cat/${mood}.gif`)) return `/cat/${mood}.gif`
+  return null
+}
+
 async function resolveSprites(): Promise<SpriteSet | null> {
   const found = {} as SpriteSet
   for (const mood of SPRITE_MOODS) {
-    if (await probeImage(`/cat/${mood}.webp`)) found[mood] = `/cat/${mood}.webp`
-    else if (await probeImage(`/cat/${mood}.gif`)) found[mood] = `/cat/${mood}.gif`
-    else return null
+    const src = await findSprite(mood)
+    if (!src) return null
+    found[mood] = src
   }
+  found.pet = (await findSprite('pet')) ?? undefined
   return found
 }
 
@@ -196,7 +206,15 @@ export function ResidentCat() {
           <div style={{ transform: dir === -1 ? 'scaleX(-1)' : undefined }}>
             {sprites ? (
               <img
-                src={mood === 'walking' ? sprites.walk : mood === 'sleeping' ? sprites.sleep : sprites.sit}
+                src={
+                  mood === 'walking'
+                    ? sprites.walk
+                    : mood === 'sleeping'
+                      ? sprites.sleep
+                      : mood === 'petted'
+                        ? (sprites.pet ?? sprites.sit)
+                        : sprites.sit
+                }
                 alt=""
                 draggable={false}
                 className="pointer-events-none h-24 w-auto select-none"

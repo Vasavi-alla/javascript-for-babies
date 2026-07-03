@@ -7,6 +7,10 @@ them automatically (his walking, chasing, and petting behavior stays):
   walk.webp   (or walk.gif)   — walking loop
   sit.webp    (or sit.gif)    — sitting / idle loop
   sleep.webp  (or sleep.gif)  — sleeping loop
+  pet.webp    (or pet.gif)    — OPTIONAL: shown while being petted
+                                (falls back to the sit loop if absent)
+
+Note: .webp is checked FIRST — if both exist for a mood, the .webp wins.
 
 Rules:
   - side view, FACING RIGHT (the app mirrors him when walking left)
