@@ -12,7 +12,8 @@ import { useMeasure } from '../design/useMeasure'
 
 const INK = 'var(--color-ink)'
 const CAT_WIDTH = 128
-const WALK_SPEED = 42 // px per second
+const WALK_SPEED = 42 // px per second, ambling on his own
+const CHASE_SPEED = 85 // px per second, following a finger/pencil
 
 type Mood = 'sleeping' | 'sitting' | 'walking' | 'petted'
 
@@ -24,6 +25,7 @@ export function ResidentCat() {
   const [walkSeconds, setWalkSeconds] = useState(1)
   const [twitch, setTwitch] = useState(0)
   const [fidget, setFidget] = useState(0) // re-arms the sitting timer on "stay" rolls
+  const [frame, setFrame] = useState(0) // walk-cycle sprite frame
   const [hearts, setHearts] = useState<number[]>([])
   const xLive = useRef(12)
   const heartId = useRef(0)
@@ -71,6 +73,28 @@ export function ResidentCat() {
     return () => window.clearTimeout(timer)
   }, [mood, fidget, floorWidth, walkSeconds, x])
 
+  // The sprite-cycle trick: while walking, flip between drawn poses in
+  // discrete steps (no tweening) — the snap between frames reads as a gait.
+  useEffect(() => {
+    if (mood !== 'walking') return
+    const timer = window.setInterval(() => setFrame((f) => (f + 1) % 4), 130)
+    return () => window.clearInterval(timer)
+  }, [mood])
+
+  // oneko-style: lead him with a finger, mouse, or hovering Pencil.
+  function chase(e: React.PointerEvent<HTMLDivElement>) {
+    if (mood === 'petted') return
+    const rect = e.currentTarget.getBoundingClientRect()
+    const roamMax = Math.max(4, rect.width - CAT_WIDTH - 4)
+    const target = Math.min(roamMax, Math.max(4, e.clientX - rect.left - CAT_WIDTH / 2))
+    const distance = Math.abs(target - xLive.current)
+    if (distance < 28) return // close enough — cats don't fuss
+    setDir(target > xLive.current ? 1 : -1)
+    setWalkSeconds(distance / CHASE_SPEED)
+    setX(target)
+    setMood('walking')
+  }
+
   function pet() {
     const id = ++heartId.current
     setHearts((h) => [...h, id])
@@ -85,7 +109,7 @@ export function ResidentCat() {
 
   return (
     <div className="flex min-w-64 flex-1 flex-col self-stretch">
-      <div ref={floorRef} className="relative min-h-28 flex-1">
+      <div ref={floorRef} onPointerMove={chase} className="relative min-h-28 flex-1" style={{ touchAction: 'none' }}>
         <motion.button
           type="button"
           onClick={pet}
@@ -128,7 +152,7 @@ export function ResidentCat() {
 
           <div style={{ transform: dir === -1 ? 'scaleX(-1)' : undefined }}>
             {mood === 'walking' ? (
-              <WalkingPose />
+              <WalkingPose frame={frame} />
             ) : mood === 'sleeping' ? (
               <SleepingPose twitch={twitch} />
             ) : (
@@ -140,7 +164,8 @@ export function ResidentCat() {
         <div aria-hidden className="border-ink-soft/40 absolute right-0 bottom-0 left-0 border-t-2 border-dashed" />
       </div>
       <p className="text-ink-soft font-hand mt-1.5 text-center text-sm leading-tight">
-        Barnaby, the resident cat. does nothing. essential. <span className="italic">(pet him)</span>
+        Barnaby, the resident cat. does nothing. essential.{' '}
+        <span className="italic">(pet him — or lead him around with your finger)</span>
       </p>
     </div>
   )
@@ -257,22 +282,31 @@ function SittingPose({ petted, twitch }: { petted: boolean; twitch: number }) {
   )
 }
 
-function WalkingPose() {
+/**
+ * Four keyframe poses of a quadruped walk — contact, passing, contact
+ * (opposite), passing — snapped between like a sprite sheet. Each entry:
+ * body lift, tail sway, and one rotation per leg
+ * [nearFront, farFront, farBack, nearBack] (diagonal pairs move together).
+ */
+const WALK_FRAMES = [
+  { body: 0, tail: 6, legs: [26, -18, 20, -24] },
+  { body: -2.5, tail: 0, legs: [9, -5, 6, -8] },
+  { body: 0, tail: -6, legs: [-24, 20, -18, 26] },
+  { body: -2.5, tail: 0, legs: [-8, 6, -5, 9] },
+]
+
+function WalkingPose({ frame }: { frame: number }) {
+  const pose = WALK_FRAMES[frame % WALK_FRAMES.length]
   return (
     <svg viewBox="0 0 140 90" className="h-20 w-32">
-      {/* whole cat bobs as he pads along */}
-      <motion.g animate={{ y: [0, -1.6, 0] }} transition={{ duration: 0.45, repeat: Infinity, ease: 'easeInOut' }}>
-        {/* upright waving tail */}
-        <motion.path
-          d="M32,48 C20,40 18,28 28,22"
-          fill="none"
-          stroke={INK}
-          strokeWidth={2.6}
-          strokeLinecap="round"
-          animate={{ rotate: [0, 6, 0, -4, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-          style={{ originX: '33px', originY: '49px' }}
-        />
+      <g transform={`translate(0 ${pose.body})`}>
+        {/* upright tail, swaying with the stride */}
+        <g transform={`rotate(${pose.tail} 33 49)`}>
+          <path d="M32,48 C20,40 18,28 28,22" fill="none" stroke={INK} strokeWidth={2.6} strokeLinecap="round" />
+        </g>
+        {/* far legs first — behind the body, lighter */}
+        <WalkLeg x={90} rot={pose.legs[1]} far />
+        <WalkLeg x={62} rot={pose.legs[2]} far />
         {/* body */}
         <path
           d="M30,52 C31,40 52,33 78,35 C99,37 110,45 109,55 C108,63 96,66 80,66 L46,66 C36,66 29,60 30,52 z"
@@ -287,30 +321,27 @@ function WalkingPose() {
         <path d="M115,22 L124,12 L126,25 z" fill="color-mix(in srgb, var(--color-marker-coral) 30%, transparent)" stroke={INK} strokeWidth={2} strokeLinejoin="round" />
         <circle cx={117} cy={36} r={2.1} fill={INK} />
         <path d="M124,42 l4,0 l-2,3 z" fill={INK} />
-        {/* four legs, each swinging from its OWN hip — diagonal trot */}
-        <Leg x={50} phase={0} />
-        <Leg x={62} phase={1} far />
-        <Leg x={90} phase={0} far />
-        <Leg x={102} phase={1} />
-      </motion.g>
+        {/* near legs — in front */}
+        <WalkLeg x={102} rot={pose.legs[0]} />
+        <WalkLeg x={50} rot={pose.legs[3]} />
+      </g>
     </svg>
   )
 }
 
-/** One walking leg, pivoting at its own hip. Far-side legs sit lighter, behind. */
-function Leg({ x, phase, far = false }: { x: number; phase: 0 | 1; far?: boolean }) {
+/** One leg drawn at a fixed hip rotation — the frames do the animating. */
+function WalkLeg({ x, rot, far = false }: { x: number; rot: number; far?: boolean }) {
   return (
-    <motion.path
-      d={`M${x},62 L${x},82 L${x + 4},82`}
-      fill="none"
-      stroke={INK}
-      strokeWidth={far ? 2.1 : 2.7}
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity={far ? 0.55 : 1}
-      animate={{ rotate: phase === 0 ? [16, -16] : [-16, 16] }}
-      transition={{ duration: 0.42, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
-      style={{ originX: `${x}px`, originY: '62px' }}
-    />
+    <g transform={`rotate(${rot} ${x} 62)`}>
+      <path
+        d={`M${x},62 L${x},82 L${x + 4},82`}
+        fill="none"
+        stroke={INK}
+        strokeWidth={far ? 2.1 : 2.7}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        opacity={far ? 0.55 : 1}
+      />
+    </g>
   )
 }
