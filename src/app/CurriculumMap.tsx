@@ -58,20 +58,10 @@ export function CurriculumMap() {
       {/* ── 1 · the morning page ─────────────────────────────── */}
       <section className="flex flex-wrap items-start justify-between gap-x-12 gap-y-8">
         <div className="min-w-64 flex-1">
-          <div className="flex items-center gap-5">
-            <img
-              src="/vasavi.png"
-              alt="Vasavi"
-              className="border-ink h-32 w-32 shrink-0 rounded-2xl border-2 object-cover shadow-[2px_4px_10px_rgba(43,41,37,0.18)] sm:h-36 sm:w-36"
-              style={{ rotate: '-2deg' }}
-            />
-            <div>
-              <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
-              <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
-                Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
-              </h1>
-            </div>
-          </div>
+          <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
+          <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
+            Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
+          </h1>
           <p className="mt-3 max-w-xl text-lg">
             {streak > 0 ? (
               <>
@@ -95,6 +85,14 @@ export function CurriculumMap() {
           </p>
 
           <PaperCard id="continue-card" tilt={false} className="mt-6 max-w-xl">
+            {/* her portrait perches on the card's corner — absolute, so the
+                card and the greeting keep their own sizes */}
+            <img
+              src="/vasavi.png"
+              alt="Vasavi"
+              className="border-ink pointer-events-none absolute -top-24 right-4 h-28 w-24 rounded-xl border-2 object-cover shadow-[3px_5px_12px_rgba(43,41,37,0.22)] sm:-top-28 sm:h-32 sm:w-28"
+              style={{ rotate: '2.5deg' }}
+            />
             {next ? (
               <>
                 <p className="text-ink-soft text-sm">
