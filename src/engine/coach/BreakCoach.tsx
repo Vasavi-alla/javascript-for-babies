@@ -83,7 +83,7 @@ export function BreakCoach() {
                   <p className="mt-2">
                     That’s {BREAK_AFTER_MINUTES} focused minutes. Brains file things away during
                     pauses, not during marathons — water, stretch, look at something far away.
-                    Your place in the shop is saved, always.
+                    This notebook keeps your page, always.
                   </p>
                 </>
               ) : (

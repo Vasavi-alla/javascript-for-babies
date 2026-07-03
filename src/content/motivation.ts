@@ -1,7 +1,8 @@
 /**
  * Daily notes pinned to the home page — one per day, rotating
  * deterministically so the same day always shows the same note.
- * Tone: warm shop-mate, never corporate poster.
+ * Tone: a warm note-to-self in the notebook, never a corporate poster.
+ * (App-level copy stays notebook-branded — "the shop" belongs to Phase 3.)
  */
 
 const MESSAGES: string[] = [
@@ -34,7 +35,7 @@ const MESSAGES: string[] = [
   'Learning to code is mostly learning to stay calm while being wrong. You’re training both.',
   'The machine does exactly what you say — which means every bug is a conversation, not a mystery.',
   'Six months from now you’ll debug something at work and quietly smile, remembering this exact chapter.',
-  'Don’t compare your chapter 3 to someone else’s chapter 30. Your shelf is filling at exactly the right speed.',
+  'Don’t compare your chapter 3 to someone else’s chapter 30. Your notebook is filling at exactly the right speed.',
   'Curiosity beats discipline on the good days. Discipline covers the rest. You only need one of them per day.',
   'Read error messages like letters from a pen pal: they’re oddly formal, but they’re trying to help.',
   'Every “aha!” you’ve had lives in your notebook now. You’re not just learning — you’re writing your own textbook.',

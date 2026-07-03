@@ -194,7 +194,7 @@ export function DailySticker({ day, text, doodle }: { day: string; text: string;
               <Art />
             </div>
             <div>
-              <p className="font-hand text-xl leading-tight font-bold">📌 today’s note from the shop</p>
+              <p className="font-hand text-xl leading-tight font-bold">📌 today’s note, tucked in your notebook</p>
               <p className="mt-1.5 text-[14.5px] leading-snug">{text}</p>
             </div>
           </div>

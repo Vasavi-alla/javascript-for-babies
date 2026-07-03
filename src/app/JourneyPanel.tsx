@@ -3,6 +3,7 @@ import { activeDaySet, computeStreak, monthGrid, localDay } from '../engine/coac
 import { dailyNote } from '../content/motivation'
 import { PaperCard } from '../design/PaperCard'
 import { DailySticker } from '../design/DailySticker'
+import { ResidentCat } from './ResidentCat'
 
 /** Home-page strip: streak, counters, this month's activity, and today's note. */
 export function JourneyPanel() {
@@ -67,8 +68,16 @@ export function JourneyPanel() {
           </div>
           <p className="text-ink-soft font-hand mt-1 text-center text-lg">{month.title}</p>
         </div>
+      </div>
 
-        <DailySticker day={today} {...dailyNote(today)} />
+      {/* row 2: the daily sticker (1/3) and Barnaby's stretch of desk (2/3) */}
+      <div className="mt-7 grid items-end gap-6 md:grid-cols-3">
+        <div className="md:col-span-1">
+          <DailySticker day={today} {...dailyNote(today)} />
+        </div>
+        <div className="md:col-span-2">
+          <ResidentCat />
+        </div>
       </div>
     </PaperCard>
   )
