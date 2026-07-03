@@ -58,10 +58,20 @@ export function CurriculumMap() {
       {/* ── 1 · the morning page ─────────────────────────────── */}
       <section className="flex flex-wrap items-start justify-between gap-x-12 gap-y-8">
         <div className="min-w-64 flex-1">
-          <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
-          <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
-            Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
-          </h1>
+          <div className="flex items-center gap-5">
+            <img
+              src="/vasavi.png"
+              alt="Vasavi"
+              className="border-ink h-24 w-24 shrink-0 rounded-full border-2 object-cover shadow-[2px_4px_10px_rgba(43,41,37,0.18)]"
+              style={{ rotate: '-2deg' }}
+            />
+            <div>
+              <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
+              <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
+                Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
+              </h1>
+            </div>
+          </div>
           <p className="mt-3 max-w-xl text-lg">
             {streak > 0 ? (
               <>
