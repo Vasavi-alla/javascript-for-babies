@@ -90,7 +90,7 @@ export function CurriculumMap() {
             <img
               src="/vasavi.png"
               alt="Vasavi"
-              className="border-ink pointer-events-none absolute -top-24 right-4 h-28 w-24 rounded-xl border-2 object-cover shadow-[3px_5px_12px_rgba(43,41,37,0.22)] sm:-top-28 sm:h-32 sm:w-28"
+              className="border-ink pointer-events-none absolute -top-6 right-5 h-28 w-24 rounded-xl border-2 object-cover shadow-[3px_5px_12px_rgba(43,41,37,0.22)] sm:-top-8 sm:h-32 sm:w-28"
               style={{ rotate: '2.5deg' }}
             />
             {next ? (
