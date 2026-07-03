@@ -124,43 +124,40 @@ function SlotMachine({ stepIndex }: { stepIndex: number }) {
 
 // ── your turn: write a two-slot machine, for real ────────────────────────
 
-const PICKUP_EXERCISE: CodeExerciseDef = {
-  id: 'l32-pickup',
-  title: 'build a two-slot machine',
-  task: 'An order-announcer with TWO input slots — and the order of the slots is the whole lesson.',
+const CITYTEMP_EXERCISE: CodeExerciseDef = {
+  id: 'l32-citytemp',
+  title: 'two slots, one trap',
+  task: 'A weather announcer with two parameters — where a swapped argument produces obvious nonsense (“It is Chennai degrees in 30”). Build it so the order comes out right, twice.',
   steps: [
     <>
-      A function named <code>pickup</code> with TWO input slots: <code>customer</code> first, then{' '}
-      <code>item</code>.
+      A function named <code>weather</code> with TWO parameters: <code>city</code> first, then{' '}
+      <code>temp</code> (a number).
     </>,
     <>
-      Each call prints <code>&lt;customer&gt;, your &lt;item&gt; is ready!</code> — built from the
-      two slots, matching the expected output <em>exactly</em>.
+      Each call prints <code>It is &lt;temp&gt; degrees in &lt;city&gt;</code> — note the twist:
+      the parameters arrive city-first, but the sentence says temp-first. You must place each slot
+      where the sentence needs it, not where it arrived.
     </>,
     <>
-      Two orders to announce: Noor’s bread, then Eli’s cake. The <em>order of your arguments</em>{' '}
-      decides which value lands in which slot.
+      Two reports: Chennai at 30, then Oslo at 3 — numbers without quotes.
     </>,
   ],
-  starter: '// build the pickup machine here — two slots!\n\n\n// then announce Noor’s bread and Eli’s cake\n',
-  expectedOutput: ['Noor, your bread is ready!', 'Eli, your cake is ready!'],
+  starter: '',
+  expectedOutput: ['It is 30 degrees in Chennai', 'It is 3 degrees in Oslo'],
   mustUse: [
-    { test: /function\s+pickup\s*\(\s*\w+\s*,\s*\w+\s*\)/, label: 'defines pickup with two input slots' },
-    { test: /pickup\s*\(\s*["']Noor["']\s*,\s*["']bread["']\s*\)/, label: 'calls pickup("Noor", "bread") — person first!' },
-    { test: /pickup\s*\(\s*["']Eli["']\s*,\s*["']cake["']\s*\)/, label: 'calls pickup("Eli", "cake")' },
+    { test: /function\s+weather\s*\(\s*\w+\s*,\s*\w+\s*\)/, label: 'weather has two parameters' },
+    { test: /weather\s*\(\s*["']Chennai["']\s*,\s*30\s*\)/, label: 'calls weather("Chennai", 30) — city first, number unquoted' },
+    { test: /weather\s*\(\s*["']Oslo["']\s*,\s*3\s*\)/, label: 'calls weather("Oslo", 3)' },
   ],
   mustNotUse: [
-    {
-      test: /console\.log\s*\(\s*["'](Noor|Eli),/,
-      label: 'no typing the finished sentences by hand — the machine must build them from its two slots',
-    },
+    { test: /console\.log\s*\(\s*["']It is 3/, label: 'the sentences must be built from the slots, not typed by hand' },
   ],
-  modelAnswer: `function pickup(customer, item) {
-  console.log(customer + ", your " + item + " is ready!");
+  modelAnswer: `function weather(city, temp) {
+  console.log("It is " + temp + " degrees in " + city);
 }
 
-pickup("Noor", "bread");
-pickup("Eli", "cake");`,
+weather("Chennai", 30);
+weather("Oslo", 3);`,
 }
 
 const GREET_TIME_EXERCISE: CodeExerciseDef = {
@@ -313,7 +310,7 @@ export const lesson32: LessonDef = {
   ],
   PlayExtra: () => (
     <>
-      <CodeExercise def={PICKUP_EXERCISE} />
+      <CodeExercise def={CITYTEMP_EXERCISE} />
       <CodeExercise def={GREET_TIME_EXERCISE} />
     </>
   ),

@@ -88,42 +88,41 @@ function FlowRoad({ stepIndex }: { stepIndex: number }) {
   )
 }
 
-const WEATHER_EXERCISE: CodeExerciseDef = {
+const PASSFAIL_EXERCISE: CodeExerciseDef = {
   id: 'd2a-weather',
   title: 'a message that depends',
-  task: 'The program looks at the temperature and decides which of two messages to remember — then says the one it chose.',
+  task: 'An exam checker: it looks at the score, decides which of two messages to REMEMBER, and says the chosen one exactly once — the decision picks the value, not the printing.',
   steps: [
     <>
-      The first line is given: <code>let temperature = 35;</code> — it’s already in the editor.
+      The first line is given: <code>let score = 72;</code> — it’s already in the editor.
     </>,
     <>
-      If the temperature is above 30, the message is <code>"Stay hydrated!"</code> — otherwise it’s{' '}
-      <code>"Nice weather!"</code>.
+      A score of 50 or more means the message is <code>"You passed! 🎉"</code> — anything lower
+      means <code>"Try again."</code> (careful: “50 or more” is not the same as “more than 50”).
     </>,
     <>
-      The chosen text must end up in a variable named <code>message</code>, and exactly ONE{' '}
-      <code>console.log</code> — placed after the decision — prints it. The decision chooses the
-      value, not the printing.
+      The chosen text must land in a variable named <code>message</code>, and exactly ONE{' '}
+      <code>console.log</code> — placed AFTER the decision — prints it.
     </>,
   ],
-  starter: 'let temperature = 35;\n\n',
-  expectedOutput: ['Stay hydrated!'],
+  starter: 'let score = 72;\n\n',
+  expectedOutput: ['You passed! 🎉'],
   mustUse: [
     { test: /let\s+message/, label: 'a message variable holds the result' },
-    { test: /if\s*\(\s*temperature\s*>\s*30\s*\)/, label: 'the decision checks temperature > 30' },
+    { test: /if\s*\(\s*score\s*>=\s*50\s*\)/, label: 'the decision checks score >= 50 (or-equal matters!)' },
     { test: /else/, label: 'the other path is covered too' },
     { test: /console\.log\s*\(\s*message\s*\)/, label: 'the message variable is printed after deciding' },
   ],
   mustNotUse: [
     { test: /console\.log[\s\S]*console\.log/, label: 'exactly one console.log in the whole program' },
   ],
-  modelAnswer: `let temperature = 35;
+  modelAnswer: `let score = 72;
 
 let message;
-if (temperature > 30) {
-  message = "Stay hydrated!";
+if (score >= 50) {
+  message = "You passed! 🎉";
 } else {
-  message = "Nice weather!";
+  message = "Try again.";
 }
 
 console.log(message);`,
@@ -284,7 +283,7 @@ export const lesson21: LessonDef = {
   ],
   PlayExtra: () => (
     <>
-      <CodeExercise def={WEATHER_EXERCISE} />
+      <CodeExercise def={PASSFAIL_EXERCISE} />
       <CodeExercise def={ODDEVEN_EXERCISE} />
     </>
   ),

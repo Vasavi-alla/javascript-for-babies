@@ -211,41 +211,39 @@ function ReturnChute({ stepIndex }: { stepIndex: number }) {
   )
 }
 
-const CHEER_EXERCISE: CodeExerciseDef = {
-  id: 'd3a-cheer',
-  title: 'a machine with a loop inside',
-  task: 'Build a cheering machine: tell it a number, and it cheers exactly that many times. Functions meet Phase 2’s loops.',
+const HALFSUM_EXERCISE: CodeExerciseDef = {
+  id: 'l33-halfsum',
+  title: 'returned values are ingredients',
+  task: 'The proof that return beats console.log: use ONE function’s answers twice, inside a bigger calculation. Printed text could never do this.',
   steps: [
     <>
-      A function named <code>cheer</code> with one input slot: <code>times</code>.
+      A function named <code>half</code> with one parameter <code>n</code> — it RETURNS n ÷ 2.
+      Nothing printed inside.
     </>,
     <>
-      Calling it prints <code>Hip hip hooray!</code> exactly <code>times</code> times — and your
-      whole program may contain only ONE <code>console.log</code>. (DRY: the repetition is the
-      machine’s job.)
+      One single <code>console.log</code> that prints <code>half(10) + half(6)</code> — two calls,
+      their returned values ADDED together before printing.
     </>,
-    <>Prove it with <code>cheer(3)</code>.</>,
+    <>
+      Trace it first: what travels back from each call, and what does + see?
+    </>,
   ],
   starter: '',
-  expectedOutput: ['Hip hip hooray!', 'Hip hip hooray!', 'Hip hip hooray!'],
+  expectedOutput: ['8'],
   mustUse: [
-    { test: /function\s+cheer\s*\(\s*\w+\s*\)/, label: 'cheer is a function with one input slot' },
-    { test: /for\s*\(|while\s*\(/, label: 'a loop does the repeating' },
-    { test: /cheer\s*\(\s*3\s*\)/, label: 'called with 3' },
+    { test: /function\s+half\s*\(\s*\w+\s*\)/, label: 'half is a function with one parameter' },
+    { test: /return/, label: 'half RETURNS its result — the chute, not the window' },
+    { test: /half\s*\(\s*10\s*\)\s*\+\s*half\s*\(\s*6\s*\)/, label: 'two returned values are added: half(10) + half(6)' },
   ],
   mustNotUse: [
-    {
-      test: /console\.log[\s\S]*console\.log[\s\S]*console\.log/,
-      label: 'one console.log total — not one per cheer',
-    },
+    { test: /console\.log[\s\S]*console\.log/, label: 'exactly one console.log — the returns do the work' },
+    { test: /=\s*8\b/, label: 'no pre-computed 8 — the returns must earn it' },
   ],
-  modelAnswer: `function cheer(times) {
-  for (let i = 0; i < times; i++) {
-    console.log("Hip hip hooray!");
-  }
+  modelAnswer: `function half(n) {
+  return n / 2;
 }
 
-cheer(3);`,
+console.log(half(10) + half(6));`,
 }
 
 export const lesson33: LessonDef = {
@@ -337,44 +335,34 @@ export const lesson33: LessonDef = {
         function that only prints its answer can't be tested this way: the text went to the
         screen, and no program can read the screen.
       </p>
-      <p>
-        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the keyword is
-        named after the <em>going back</em>, not the value. In Dartmouth BASIC (1964),{' '}
-        <code>RETURN</code> carried no value at all — it just meant "jump back to where you came
-        from" after a <code>GOSUB</code>. The value-carrying return came from the math/Lisp side
-        of the family tree; modern <code>return</code> is both ancestors fused.
-      </p>
     </>
   ),
   quiz: [
     {
-      question: 'function check(n) { return n > 10; console.log("checked!"); } — when does "checked!" print?',
-      options: [
-        'After the return delivers its value',
-        'Never — return stops the function instantly; that line is unreachable',
-        'Only when n > 10 is false',
-      ],
-      correctIndex: 1,
-      why: 'return is a full stop. The instant it fires, the machine halts and the value departs — nothing below it in the function ever runs, no matter what. Editors literally gray that line out as dead code.',
+      kind: 'type-output',
+      question: 'When does "checked!" print? Type your answer in one word.',
+      code: 'function check(n) {\n  return n > 10;\n  console.log("checked!");\n}',
+      accept: ['never', 'Never', 'never!'],
+      placeholder: 'when?…',
+      why: 'Never — return is a full stop. The instant it fires, the machine halts and the value departs; nothing below it in the function ever runs, no matter what. Editors literally gray that line out as dead code.',
     },
     {
-      question: 'function mystery() { 3 + 4; } — what is the value of let a = mystery();?',
-      options: ['7 — the machine computed it', 'undefined — computed, then thrown away, never returned', 'An error: nothing to assign'],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'Type what a holds:',
+      code: 'function mystery() {\n  3 + 4;\n}\n\nlet a = mystery();',
+      accept: ['undefined'],
+      placeholder: 'a value…',
       why: 'The body really does evaluate 3 + 4 to 7… and then discards it. Without return, the result never reaches the chute, so the call produces undefined. Doing work and returning work are separate acts.',
     },
     {
-      question: 'What is the ONE-sentence difference between console.log and return?',
-      options: [
-        'console.log is faster; return is safer',
-        'console.log shows a value to the human; return hands a value back to the program',
-        'They are interchangeable inside functions',
-      ],
-      correctIndex: 1,
-      why: 'The window vs the chute. Logged text goes to your eyeballs and is gone — no code can read it back. A returned value replaces the call expression, so the rest of the program can store it, add to it, or test it. This one sentence dissolves the most common beginner bug in JavaScript.',
+      kind: 'type-output',
+      question: 'console.log shows a value to the human. return hands the value back to the ___ — type the one word.',
+      accept: ['program', 'the program', 'code', 'caller'],
+      placeholder: 'one word…',
+      why: 'The program! The window vs the chute: logged text goes to your eyeballs and is gone — no code can read it back. A returned value replaces the call expression, so the rest of the program can store it, add to it, or test it. This one sentence dissolves the most common beginner bug in JavaScript.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={CHEER_EXERCISE} />,
+  PlayExtra: () => <CodeExercise def={HALFSUM_EXERCISE} />,
   teachBack: {
     prompt:
       'A friend writes a function that console.logs the answer, then wonders why let x = theirFunction() gives undefined. Explain the window vs chute difference — and what return actually does when it fires.',
@@ -385,6 +373,5 @@ export const lesson33: LessonDef = {
     'return does two things at once: stops the machine instantly, and sends its value back to REPLACE the call expression.',
     'Every call produces a value. No return (or bare return;) → undefined. Even console.log returns undefined.',
     'console.log = window (shows the human). return = chute (hands the program). To USE a result, it must be returned.',
-    'Fun fact: in Dartmouth BASIC (1964), RETURN carried no value — it just meant "jump back." The value came from the math/Lisp side of the family.',
   ],
 }

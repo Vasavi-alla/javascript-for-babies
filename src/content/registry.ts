@@ -69,12 +69,12 @@ export const LESSONS: LessonMeta[] = [
   { id: '3.3', slug: 'return', title: 'return', phase: 3, blurb: 'The output chute: the value travels back and replaces the call. Not the same as console.log!', status: 'available' },
   { id: '3.4', slug: 'function-expressions-arrows', title: 'Function expressions & arrows', phase: 3, blurb: 'Functions are values — stored in variables like any number or string.', status: 'available' },
   { id: '3.5', slug: 'scope', title: 'Scope', phase: 3, blurb: 'Where a name can be seen from: nested bubbles and the outward lookup.', status: 'available' },
-  { id: '3.6', slug: 'call-stack', title: 'The call stack (first look)', phase: 3, blurb: 'Every call gets its own frame; frames stack up and pop off.', status: 'planned' },
-  { id: '3.7', slug: 'closures', title: 'Closures', phase: 3, blurb: 'The inner function walks away wearing a backpack of outer variables.', status: 'planned' },
-  { id: '3.8', slug: 'higher-order-functions', title: 'Higher-order functions & callbacks', phase: 3, blurb: 'Machines that accept other machines — “call this when done.”', status: 'planned' },
-  { id: '3.9', slug: 'recursion', title: 'Recursion', phase: 3, blurb: 'A function calling itself — and the base case that stops the tower.', status: 'planned' },
-  { id: '3.10', slug: 'defaults-rest-pure', title: 'Defaults, rest & pure functions', phase: 3, blurb: 'Fallback values, gathering extras — and machines with no leaky pipes.', status: 'planned' },
-  { id: '3.11', slug: 'checkpoint-tip-calculator', title: 'Checkpoint: the tip calculator brain', phase: 3, blurb: 'Compose small pure functions; watch every call on the stack.', status: 'planned' },
+  { id: '3.6', slug: 'call-stack', title: 'The call stack (first look)', phase: 3, blurb: 'Every call gets its own frame; frames stack up and pop off.', status: 'available' },
+  { id: '3.7', slug: 'closures', title: 'Closures', phase: 3, blurb: 'The inner function walks away wearing a backpack of outer variables.', status: 'available' },
+  { id: '3.8', slug: 'higher-order-functions', title: 'Higher-order functions & callbacks', phase: 3, blurb: 'Functions that accept other functions — “call this back when it’s time.”', status: 'available' },
+  { id: '3.9', slug: 'recursion', title: 'Recursion', phase: 3, blurb: 'A function calling itself — and the base case that stops the tower.', status: 'available' },
+  { id: '3.10', slug: 'defaults-rest-pure', title: 'Default parameters & pure functions', phase: 3, blurb: 'Fallback values for silent slots — and sealed functions with no leaky pipes.', status: 'available' },
+  { id: '3.11', slug: 'checkpoint-tip-calculator', title: 'Checkpoint: the tip calculator brain', phase: 3, blurb: 'Compose small pure functions into one working brain — your first testable unit.', status: 'available' },
 ]
 
 export function lessonsForPhase(phase: number): LessonMeta[] {

@@ -1,6 +1,8 @@
 import { motion } from 'motion/react'
 import { RoughEllipse, RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -128,6 +130,41 @@ function FunctionValueSlots({ stepIndex }: { stepIndex: number }) {
   )
 }
 
+const MAX_EXERCISE: CodeExerciseDef = {
+  id: 'l34-max',
+  title: 'an arrow with a decision inside',
+  task: 'Arrows meet the ternary from 2.4: a one-line function that PICKS the bigger of two numbers. No braces, no return keyword — the expression does everything.',
+  steps: [
+    <>
+      An arrow function stored in a variable named <code>bigger</code>, taking TWO parameters:{' '}
+      <code>a</code> and <code>b</code>.
+    </>,
+    <>
+      Its whole body is one ternary expression: if <code>a &gt; b</code> the result is{' '}
+      <code>a</code>, otherwise <code>b</code>. Brace-less, so it auto-returns.
+    </>,
+    <>
+      Print <code>bigger(3, 7)</code>, then <code>bigger(9, 2)</code>.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['7', '9'],
+  mustUse: [
+    { test: /bigger\s*=\s*\(\s*\w+\s*,\s*\w+\s*\)\s*=>/, label: 'bigger is an arrow function with two parameters' },
+    { test: /\?[\s\S]*:/, label: 'a ternary makes the decision (2.4 pays a visit)' },
+    { test: /console\.log\s*\(\s*bigger\s*\(\s*3\s*,\s*7\s*\)\s*\)/, label: 'prints bigger(3, 7)' },
+    { test: /console\.log\s*\(\s*bigger\s*\(\s*9\s*,\s*2\s*\)\s*\)/, label: 'prints bigger(9, 2)' },
+  ],
+  mustNotUse: [
+    { test: /=>\s*\{/, label: 'keep it brace-less — the auto-return is the exercise' },
+    { test: /\breturn\b/, label: 'no return keyword anywhere: the expression IS the return' },
+  ],
+  modelAnswer: `const bigger = (a, b) => a > b ? a : b;
+
+console.log(bigger(3, 7));
+console.log(bigger(9, 2));`,
+}
+
 export const lesson34: LessonDef = {
   id: '3.4',
   hook: (
@@ -212,39 +249,32 @@ export const lesson34: LessonDef = {
         write <code>return</code> yourself, or you get <code>undefined</code>. That last one
         causes real bugs, which is why the quiz drills it.
       </p>
-      <p>
-        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the arrow didn't
-        start in JavaScript. CoffeeScript — a 2009 fan-made language that compiled <em>into</em>{' '}
-        JS — wrote functions with <code>=&gt;</code>, and programmers loved it so much the
-        shorthand was pulled into official JavaScript in ES2015. A rare case of a dialect changing
-        the original language.
-      </p>
     </>
   ),
   quiz: [
     {
-      question: 'const add1 = (x) => x + 1; — what is add1(2)?',
-      options: ['3 — single-expression arrows return their result automatically', 'undefined — there is no return keyword', 'An error — arrows need braces'],
-      correctIndex: 0,
+      kind: 'type-output',
+      question: 'Type exactly what prints:',
+      code: 'const add1 = (x) => x + 1;\nconsole.log(add1(2));',
+      accept: ['3'],
       why: 'A brace-less arrow body is a single expression, and its result IS the return value — that’s the whole point of the short costume. add1(2) → 2 + 1 → 3 travels back through the chute.',
     },
     {
-      question: 'const add1 = (x) => { x + 1; }; — now what is add1(2)?',
-      options: ['3 — same as before', 'undefined — braces mean a normal body, and this one never returns', 'An error — you can’t mix arrows and braces'],
-      correctIndex: 1,
-      why: 'Adding braces switches off auto-return. This body computes 3 and throws it away — no return, so the call produces undefined (lesson 3.3’s rule, striking again). One pair of braces, completely different behavior: a top-five JavaScript gotcha in real code.',
+      kind: 'type-output',
+      question: 'One pair of braces added — now type exactly what prints:',
+      code: 'const add1 = (x) => { x + 1; };\nconsole.log(add1(2));',
+      accept: ['undefined'],
+      why: 'Braces switch OFF auto-return. This body computes 3 and throws it away — no return, so the call produces undefined (lesson 3.3’s rule, striking again). One pair of braces, completely different behavior: a top-five JavaScript gotcha in real code.',
     },
     {
-      question: 'What does "functions are first-class values" let you do?',
-      options: [
-        'Only call them with more arguments',
-        'Store them in variables, pass them into other functions, and return them from functions',
-        'Make them run faster than normal code',
-      ],
-      correctIndex: 1,
-      why: 'First-class means full value citizenship: everything a number or string can do — sit in a slot, ride into a parameter, come back through a chute — a function can do too. Lessons 3.7 and 3.8 spend this permission slip in spectacular ways.',
+      kind: 'type-output',
+      question: 'A function is a value with its own type tag. Type what this prints:',
+      code: 'const double = (n) => n * 2;\nconsole.log(typeof double);',
+      accept: ['function', '"function"'],
+      why: 'function — its very own typeof answer, proof of full value citizenship: everything a number or string can do (sit in a slot, ride into a parameter, come back through a chute), a function can do too. Lessons 3.7 and 3.8 spend this permission slip in spectacular ways.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={MAX_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain to a friend what it means that "functions are values" — use the memory-slot picture — and show them how an arrow function is just a shorter way to write one.',
@@ -255,6 +285,5 @@ export const lesson34: LessonDef = {
     'Functions are VALUES: a machine can live in a memory slot under a label, like any number or string. typeof says "function".',
     'Arrow shorthand: (n) => n * 3 — "n goes to n times 3". Single-expression bodies auto-return; add braces and you must return yourself.',
     'First-class = full citizenship: store it, pass it, return it. This permission slip powers lessons 3.7 and 3.8.',
-    'Fun fact: the => arrow was borrowed from CoffeeScript (2009), a fan-made dialect so loved that official JavaScript adopted its shorthand in ES2015.',
   ],
 }

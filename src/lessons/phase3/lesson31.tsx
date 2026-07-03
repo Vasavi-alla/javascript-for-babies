@@ -158,42 +158,41 @@ function GreetMachine({ stepIndex }: { stepIndex: number }) {
 
 // ── your turn: write a whole machine, for real ───────────────────────────
 
-const WELCOME_EXERCISE: CodeExerciseDef = {
-  id: 'l31-welcome',
-  title: 'build a machine from scratch',
-  task: 'You watched greet get built — now build your own greeting machine, with your own fingers. Press RUN and it really executes.',
+const CHEER_EXERCISE: CodeExerciseDef = {
+  id: 'd3a-cheer',
+  title: 'a function with a loop inside',
+  task: 'Not another greeting — this function’s body holds a whole LOOP (Phase 2 pays a visit). Tell it a number; it cheers exactly that many times.',
   steps: [
     <>
-      A function named <code>welcome</code> with one input slot: <code>name</code>.
+      A function named <code>cheer</code> with one input slot: <code>times</code>.
     </>,
     <>
-      Each call prints <code>Welcome, &lt;name&gt;!</code> — built from whatever is in the slot,
-      matching the expected output <em>exactly</em> (mind the comma, the space, the{' '}
-      <code>!</code>).
+      Calling it prints <code>Hip hip hooray!</code> exactly <code>times</code> times — and your
+      whole program may contain only ONE <code>console.log</code>. (DRY: the repetition is the
+      function’s job.)
     </>,
-    <>
-      Prove it works: one call for <code>"Ida"</code>, one for <code>"Omar"</code>, in that order.
-    </>,
+    <>Prove it with <code>cheer(3)</code>.</>,
   ],
-  starter: '// build the welcome machine here\n\n\n// then call it for "Ida" and for "Omar"\n',
-  expectedOutput: ['Welcome, Ida!', 'Welcome, Omar!'],
+  starter: '',
+  expectedOutput: ['Hip hip hooray!', 'Hip hip hooray!', 'Hip hip hooray!'],
   mustUse: [
-    { test: /function\s+welcome\s*\(\s*\w+\s*\)/, label: 'defines a function named welcome with one input slot' },
-    { test: /welcome\s*\(\s*["']Ida["']\s*\)/, label: 'calls welcome("Ida")' },
-    { test: /welcome\s*\(\s*["']Omar["']\s*\)/, label: 'calls welcome("Omar")' },
+    { test: /function\s+cheer\s*\(\s*\w+\s*\)/, label: 'cheer is a function with one input slot' },
+    { test: /for\s*\(|while\s*\(/, label: 'a loop does the repeating' },
+    { test: /cheer\s*\(\s*3\s*\)/, label: 'called with 3' },
   ],
   mustNotUse: [
     {
-      test: /console\.log\s*\(\s*["']Welcome, (Ida|Omar)/,
-      label: 'no typing the finished sentences by hand — the machine must build them from its slot',
+      test: /console\.log[\s\S]*console\.log[\s\S]*console\.log/,
+      label: 'one console.log total — not one per cheer',
     },
   ],
-  modelAnswer: `function welcome(name) {
-  console.log("Welcome, " + name + "!");
+  modelAnswer: `function cheer(times) {
+  for (let i = 0; i < times; i++) {
+    console.log("Hip hip hooray!");
+  }
 }
 
-welcome("Ida");
-welcome("Omar");`,
+cheer(3);`,
 }
 
 const REPEATED = ['Sam', 'Maya', 'Priya']
@@ -319,7 +318,7 @@ export const lesson31: LessonDef = {
       why: 'console.log — it has the full machine shape: a name, the GO-button parentheses, and a value dropped in. Someone else built it; you were a function CALLER from day one. Today you became a BUILDER.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={WELCOME_EXERCISE} />,
+  PlayExtra: () => <CodeExercise def={CHEER_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain to a friend what a function is, using the machine picture — and make sure you explain why defining one prints nothing, but calling it does something.',
