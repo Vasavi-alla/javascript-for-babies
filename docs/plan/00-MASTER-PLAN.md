@@ -24,6 +24,7 @@ A single-page webapp where JavaScript is *seen*, not memorized. Every concept �
 | 2026-07-02 | Automation target: **Playwright** (deep dive) | User choice; JS-native, industry momentum |
 | 2026-07-02 | Stack: React + TypeScript + Vite; Framer Motion; rough.js for hand-drawn SVG; Zustand + localStorage for progress | See `02-ARCHITECTURE.md` |
 | 2026-07-03 | "Watch it happen" is question-free; checks are typed-input first (MCQ only when options teach) | User: stepper interruptions broke the flow; typing = recall, clicking = recognition |
+| 2026-07-03 | ONE lesson format for all phases: the classic 6-part anatomy (+ a write-code exercise per lesson) | Mission/Machine Shop format was built, trialed, and retired — the story analogy didn't land; consistency with Phases 1–2 won |
 
 ## The journey at a glance (details in 01-CURRICULUM.md)
 | Phase | Title | Core question |

@@ -1,11 +1,8 @@
 import { Link, useParams } from 'react-router'
 import { PHASES, lessonsForPhase } from '../content/registry'
 import { PHASE_INTROS } from '../content/phase-intros'
-import { MISSION_THEMES } from '../content/phase-themes'
 import { PHASE_LABS } from '../labs'
-import { MISSION_DEFS } from '../lessons'
 import { practiceSetsForPhase } from '../practice/sets'
-import { ShopShelf } from '../engine/mission/ShopShelf'
 import { useProgress } from '../store/progress'
 import { PaperCard } from '../design/PaperCard'
 import { StickyNote } from '../design/StickyNote'
@@ -31,18 +28,6 @@ export function PhasePage() {
   const prev = PHASES.find((p) => p.number === phaseNumber - 1)
   const next = PHASES.find((p) => p.number === phaseNumber + 1)
   const isFoundation = phaseNumber <= 1
-  const theme = MISSION_THEMES[phaseNumber]
-  const shelfSlots = theme
-    ? lessons.map((lesson) => {
-        const mission = MISSION_DEFS[lesson.id]
-        return {
-          lessonId: lesson.id,
-          emoji: mission?.shelfItem.emoji,
-          label: mission?.shelfItem.label,
-          done: Boolean(completedLessons[lesson.id]),
-        }
-      })
-    : []
 
   return (
     <div className="flex flex-col gap-10">
@@ -63,23 +48,6 @@ export function PhasePage() {
           The big question: <HighlightMark type="underline" color="var(--color-marker-yellow)">“{phase.question}”</HighlightMark>
         </p>
       </header>
-
-      {theme && (
-        <section>
-          <TapeLabel id={`shop-${phase.number}`} color="var(--color-marker-coral)">
-            your new workplace: {theme.workplace}
-          </TapeLabel>
-          <div className="mt-4 flex max-w-3xl flex-col gap-4">
-            {theme.shopSign.map((paragraph, i) => (
-              <p key={i}>{paragraph}</p>
-            ))}
-          </div>
-          <div className="mt-6">
-            <p className="font-hand mb-3 text-2xl font-semibold">{theme.labels.shelf}</p>
-            <ShopShelf slots={shelfSlots} theme={theme} />
-          </div>
-        </section>
-      )}
 
       <section>
         <TapeLabel id={`why-${phase.number}`} color="var(--color-marker-coral)">
@@ -154,36 +122,28 @@ export function PhasePage() {
         </TapeLabel>
         {lessons.length > 0 ? (
           <ol className="mt-5 flex flex-col gap-4">
-            {lessons.map((lesson) => {
-              const mission = MISSION_DEFS[lesson.id]
-              return (
-                <li key={lesson.id}>
-                  <PaperCard id={`lesson-card-${lesson.id}`} className="max-w-3xl">
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-hand text-ink-soft text-2xl font-bold">{lesson.id}</span>
-                      <div>
-                        {lesson.status === 'available' ? (
-                          <Link to={`/lesson/${lesson.id}`} className="text-lg font-bold hover:underline">
-                            {lesson.title}
-                            {completedLessons[lesson.id] && (
-                              <span className="text-marker-teal font-hand ml-2 text-xl">✓ done</span>
-                            )}
-                          </Link>
-                        ) : (
-                          <span className="text-lg font-bold">{lesson.title} <span className="text-ink-soft text-sm font-normal">✏️ being drawn</span></span>
-                        )}
-                        {mission && theme && (
-                          <p className="text-marker-coral font-hand text-lg">
-                            {theme.labels.workOrder} · {theme.jobTypeLabels[mission.jobType]}
-                          </p>
-                        )}
-                        <p className="text-ink-soft mt-0.5">{lesson.blurb}</p>
-                      </div>
+            {lessons.map((lesson) => (
+              <li key={lesson.id}>
+                <PaperCard id={`lesson-card-${lesson.id}`} className="max-w-3xl">
+                  <div className="flex items-baseline gap-3">
+                    <span className="font-hand text-ink-soft text-2xl font-bold">{lesson.id}</span>
+                    <div>
+                      {lesson.status === 'available' ? (
+                        <Link to={`/lesson/${lesson.id}`} className="text-lg font-bold hover:underline">
+                          {lesson.title}
+                          {completedLessons[lesson.id] && (
+                            <span className="text-marker-teal font-hand ml-2 text-xl">✓ done</span>
+                          )}
+                        </Link>
+                      ) : (
+                        <span className="text-lg font-bold">{lesson.title} <span className="text-ink-soft text-sm font-normal">✏️ being drawn</span></span>
+                      )}
+                      <p className="text-ink-soft mt-0.5">{lesson.blurb}</p>
                     </div>
-                  </PaperCard>
-                </li>
-              )
-            })}
+                  </div>
+                </PaperCard>
+              </li>
+            ))}
           </ol>
         ) : (
           <p className="text-ink-soft mt-4 max-w-2xl">

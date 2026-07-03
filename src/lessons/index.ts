@@ -1,5 +1,4 @@
 import type { LessonDef } from '../engine/lesson/types'
-import type { MissionDef } from '../engine/mission/types'
 import { lesson01 } from './phase0/lesson01'
 import { lesson02 } from './phase0/lesson02'
 import { lesson03 } from './phase0/lesson03'
@@ -24,8 +23,8 @@ import { lesson25 } from './phase2/lesson25'
 import { lesson26 } from './phase2/lesson26'
 import { lesson27 } from './phase2/lesson27'
 import { lesson28 } from './phase2/lesson28'
-import { mission31 } from './phase3/mission31'
-import { mission32 } from './phase3/mission32'
+import { lesson31 } from './phase3/lesson31'
+import { lesson32 } from './phase3/lesson32'
 import { lesson33 } from './phase3/lesson33'
 import { lesson34 } from './phase3/lesson34'
 import { lesson35 } from './phase3/lesson35'
@@ -56,13 +55,9 @@ export const LESSON_DEFS: Record<string, LessonDef> = {
   '2.6': lesson26,
   '2.7': lesson27,
   '2.8': lesson28,
+  '3.1': lesson31,
+  '3.2': lesson32,
   '3.3': lesson33,
   '3.4': lesson34,
   '3.5': lesson35,
-}
-
-/** Mission-format lessons (Phases 3–4), by id — rendered by MissionShell. */
-export const MISSION_DEFS: Record<string, MissionDef> = {
-  '3.1': mission31,
-  '3.2': mission32,
 }

@@ -1,6 +1,20 @@
 import type { ComponentType, ReactNode } from 'react'
 import type { Prediction, Step } from '../stepper/types'
-import type { CheckItem } from '../mission/types'
+
+/** A quick check. 'choice' renders like a quiz; 'type-output' asks for exact typed text. */
+export type CheckItem =
+  | ({ kind: 'choice' } & Prediction)
+  | {
+      kind: 'type-output'
+      question: string
+      /** Optional code the question is about, shown above the input. */
+      code?: string
+      /** Accepted answers (compared after trimming; case-sensitive — output is exact). */
+      accept: string[]
+      why: string
+      /** Input hint; defaults to "type the console output…". */
+      placeholder?: string
+    }
 
 /**
  * A complete lesson, following the 6-part anatomy in 04-LESSON-BLUEPRINT.md:
@@ -24,7 +38,7 @@ export interface LessonDef {
    * keep an MCQ only when the options themselves are the teaching.
    */
   quiz: Array<Prediction | CheckItem>
-  /** Optional extra interactive exercise rendered in the Play section. */
+  /** Optional extra interactive exercise rendered in the Play section (e.g. a CodeExercise). */
   PlayExtra?: ComponentType
   teachBack: {
     prompt: string

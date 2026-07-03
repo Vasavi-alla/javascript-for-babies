@@ -1,8 +1,6 @@
 import { Link, useNavigate } from 'react-router'
 import { motion } from 'motion/react'
 import { LESSONS, PHASES, lessonsForPhase, type LessonMeta } from '../content/registry'
-import { MISSION_DEFS } from '../lessons'
-import { MISSION_THEMES } from '../content/phase-themes'
 import { practiceSetsForPhase } from '../practice/sets'
 import { dailyNote } from '../content/motivation'
 import { LEARNER_NAME } from '../content/learner'
@@ -51,17 +49,7 @@ export function CurriculumMap() {
   const next = findNextLesson(completedLessons)
   const currentPhase = next?.phase ?? PHASES.filter((p) => lessonsForPhase(p.number).length > 0).at(-1)?.number ?? 0
 
-  // Mid-mission? Then the button resumes the exact job step.
-  const nextMission = next ? MISSION_DEFS[next.id] : undefined
-  const stepsTotal = nextMission?.challenges.length ?? 0
-  const stepsDone = nextMission ? nextMission.challenges.filter((c) => completedChallenges[c.id]).length : 0
-  const theme = next ? MISSION_THEMES[next.phase] : undefined
-
-  const continueLabel = !startedEver
-    ? 'start at page one ▸'
-    : stepsDone > 0
-      ? `resume job step ${stepsDone + 1} of ${stepsTotal} ▸`
-      : 'continue where I left off ▸'
+  const continueLabel = !startedEver ? 'start at page one ▸' : 'continue where I left off ▸'
 
   // A practice bay for the current phase that still has unsolved drills.
   const openBay = practiceSetsForPhase(currentPhase).find((set) =>
@@ -112,14 +100,6 @@ export function CurriculumMap() {
                 <p className="font-hand mt-1 text-3xl font-bold">
                   {next.id} — {next.title}
                 </p>
-                {nextMission && theme && (
-                  <p className="text-marker-coral font-hand text-lg">
-                    {theme.labels.workOrder} · {theme.jobTypeLabels[nextMission.jobType]}
-                    {stepsDone > 0 && (
-                      <span className="text-ink-soft"> — {stepsDone} of {stepsTotal} job steps already done</span>
-                    )}
-                  </p>
-                )}
                 <p className="text-ink-soft mt-1.5">{next.blurb}</p>
                 <div className="mt-4">
                   <InkButton id="continue-journey" variant="primary" onClick={() => navigate(`/lesson/${next.id}`)}>

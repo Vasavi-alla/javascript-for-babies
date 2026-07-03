@@ -433,7 +433,7 @@ cheer(3);`,
         task: 'The shop needs printed price tags: item, price, and the shop’s name on every tag. One never-changing fact, one machine, two calls.',
         steps: [
           <>
-            The shop’s name — <code>"The Machine Shop"</code> — lives in a variable named{' '}
+            The shop’s name — <code>"Code Corner"</code> — lives in a variable named{' '}
             <code>shopName</code>. It never changes; store it accordingly.
           </>,
           <>
@@ -450,9 +450,9 @@ cheer(3);`,
           </>,
         ],
         starter: '',
-        expectedOutput: ['gear — $5 (at The Machine Shop)', 'spring — $2 (at The Machine Shop)'],
+        expectedOutput: ['gear — $5 (at Code Corner)', 'spring — $2 (at Code Corner)'],
         mustUse: [
-          { test: /const\s+shopName\s*=\s*["']The Machine Shop["']/, label: 'the never-changing shop name is stored permanently' },
+          { test: /const\s+shopName\s*=\s*["']Code Corner["']/, label: 'the never-changing shop name is stored permanently' },
           { test: /function\s+priceTag\s*\(\s*\w+\s*,\s*\w+\s*\)/, label: 'priceTag is a function with two input slots' },
           { test: /priceTag\s*\(\s*["']gear["']\s*,\s*5\s*\)/, label: 'called for gear at 5 — item first, price second' },
           { test: /priceTag\s*\(\s*["']spring["']\s*,\s*2\s*\)/, label: 'called for spring at 2' },
@@ -460,7 +460,7 @@ cheer(3);`,
         mustNotUse: [
           { test: /console\.log\s*\(\s*["'](gear|spring)/, label: 'tags are built from the slots — no hand-typed tags' },
         ],
-        modelAnswer: `const shopName = "The Machine Shop";
+        modelAnswer: `const shopName = "Code Corner";
 
 function priceTag(item, price) {
   console.log(item + " — $" + price + " (at " + shopName + ")");

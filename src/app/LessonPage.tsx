@@ -1,8 +1,7 @@
 import { Link, useParams } from 'react-router'
 import { findLesson } from '../content/registry'
-import { LESSON_DEFS, MISSION_DEFS } from '../lessons'
+import { LESSON_DEFS } from '../lessons'
 import { LessonShell } from '../engine/lesson/LessonShell'
-import { MissionShell } from '../engine/mission/MissionShell'
 import { PaperCard } from '../design/PaperCard'
 import { StickyNote } from '../design/StickyNote'
 
@@ -10,7 +9,6 @@ export function LessonPage() {
   const { id } = useParams<{ id: string }>()
   const lesson = id ? findLesson(id) : undefined
   const def = id ? LESSON_DEFS[id] : undefined
-  const mission = id ? MISSION_DEFS[id] : undefined
 
   if (!lesson) {
     return (
@@ -20,12 +18,8 @@ export function LessonPage() {
     )
   }
 
-  // key resets challenge/stepper/quiz state when navigating between lessons
-  if (mission) {
-    return <MissionShell key={lesson.id} def={mission} />
-  }
-
   if (def) {
+    // key resets the stepper/quiz state when navigating between lessons
     return <LessonShell key={lesson.id} def={def} />
   }
 
