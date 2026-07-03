@@ -70,7 +70,9 @@ export function ResidentCat() {
   const [hearts, setHearts] = useState<number[]>([])
   const xLive = useRef(12)
   const heartId = useRef(0)
-  const wakeTo = useRef<Mood>('sitting')
+  /** what he was doing before the petting — resumed afterwards */
+  const resume = useRef<{ mood: Mood; target?: number }>({ mood: 'sitting' })
+  const petTimer = useRef<number | null>(null)
 
   // ── the behavior brain: one pending decision at a time ──
   useEffect(() => {
@@ -137,13 +139,36 @@ export function ResidentCat() {
     const id = ++heartId.current
     setHearts((h) => [...h, id])
     window.setTimeout(() => setHearts((h) => h.filter((v) => v !== id)), 1300)
+
     if (mood !== 'petted') {
-      wakeTo.current = mood === 'sleeping' ? 'sleeping' : 'sitting'
-      setX(xLive.current) // if mid-walk: stop right where he is
+      // remember the interrupted activity — and, mid-walk, the destination
+      resume.current = mood === 'walking' ? { mood: 'walking', target: x } : { mood }
+      setX(xLive.current) // stop right where he is
       setMood('petted')
     }
-    window.setTimeout(() => setMood((m) => (m === 'petted' ? wakeTo.current : m)), 2600)
+    // more petting extends the cuddle; resuming happens after the LAST pet
+    if (petTimer.current) window.clearTimeout(petTimer.current)
+    petTimer.current = window.setTimeout(() => {
+      const r = resume.current
+      if (r.mood === 'walking' && r.target !== undefined) {
+        const distance = Math.abs(r.target - xLive.current)
+        if (distance > 12) {
+          setDir(r.target > xLive.current ? 1 : -1)
+          setWalkSeconds(distance / WALK_SPEED)
+          setX(r.target)
+          setMood('walking') // back on his way, same destination
+          return
+        }
+        setMood('sitting') // basically arrived anyway
+        return
+      }
+      setMood(r.mood) // back to sleeping or sitting, as he was
+    }, 2600)
   }
+
+  useEffect(() => () => {
+    if (petTimer.current) window.clearTimeout(petTimer.current)
+  }, [])
 
   return (
     // pinned to the bottom of the screen, on every page; the strip itself
