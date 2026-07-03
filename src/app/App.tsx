@@ -4,6 +4,7 @@ import { Layout } from './Layout'
 import { CurriculumMap } from './CurriculumMap'
 import { PhasePage } from './PhasePage'
 import { LessonPage } from './LessonPage'
+import { PracticePage } from './PracticePage'
 import { DesignGallery } from './DesignGallery'
 
 /** React Router keeps the scroll position across navigations — reset it. */
@@ -24,6 +25,7 @@ export default function App() {
         <Route index element={<CurriculumMap />} />
         <Route path="phase/:number" element={<PhasePage />} />
         <Route path="lesson/:id" element={<LessonPage />} />
+        <Route path="practice/:id" element={<PracticePage />} />
         <Route path="design" element={<DesignGallery />} />
       </Route>
     </Routes>

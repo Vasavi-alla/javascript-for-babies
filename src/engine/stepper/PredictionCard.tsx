@@ -9,10 +9,13 @@ export function PredictionCard({
   prediction,
   answered,
   onAnswer,
+  heading = '🔮 Predict before you press next:',
 }: {
   prediction: Prediction
   answered: number | undefined
   onAnswer: (choice: number) => void
+  /** Missions override this (e.g. "Predict before you press GO:"). */
+  heading?: string
 }) {
   const hasAnswered = answered !== undefined
   const wasRight = answered === prediction.correctIndex
@@ -24,9 +27,7 @@ export function PredictionCard({
       transition={{ type: 'spring', damping: 16 }}
     >
       <StickyNote id={`prediction-${prediction.question}`} color="pink" className="max-w-xl">
-        <p className="font-hand mb-2 text-2xl leading-snug font-semibold">
-          🔮 Predict before you press next:
-        </p>
+        <p className="font-hand mb-2 text-2xl leading-snug font-semibold">{heading}</p>
         <p className="mb-3">{prediction.question}</p>
 
         <div className="flex flex-wrap gap-2">
