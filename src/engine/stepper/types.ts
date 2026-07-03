@@ -22,5 +22,10 @@ export interface Step {
   highlightLines?: number[]
   /** Replace the lesson's code pane for this step (e.g. showing a fixed typo). */
   codeOverride?: string
+  /**
+   * IGNORED since 2026-07-03: "watch it happen" no longer asks questions
+   * (user decision — thinking moved to the typed checks). Kept only so
+   * existing lesson data compiles; don't add predictions to new steps.
+   */
   prediction?: Prediction
 }

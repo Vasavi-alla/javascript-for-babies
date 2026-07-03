@@ -11,7 +11,7 @@ A single-page webapp where JavaScript is *seen*, not memorized. Every concept â€
 1. **See it, then name it.** Show the mechanism animating first, attach the syntax second. Syntax is the label, not the lesson.
 2. **Visuals + depth, never visuals instead of depth.** Every animation has an "Under the hood" explanation. If a lesson looks pretty but a learner couldn't explain *why*, the lesson is broken.
 3. **One mental model per lesson.** A lesson teaches exactly one idea. Related ideas get their own lessons and link back.
-4. **Predict before reveal.** Before an animation plays its key step, ask the learner to predict the outcome. Prediction errors are where learning happens.
+4. **Type, don't recognize.** *(Revised 2026-07-03; replaces "predict before reveal.")* "Watch it happen" plays uninterrupted â€” no questions block the animation. The thinking happens in the checks instead, where the learner TYPES concrete answers (values, outputs, counts, keywords) rather than picking from options; MCQs survive only where the contrasting options are themselves the teaching. Prediction moments live on inside mission challenges, where predicting-then-pressing-GO is the interaction itself.
 5. **Teach-back closes every lesson.** A prompt like "Explain to a friend why `let x = 5` doesn't put 5 *inside* x's name." The learner types/says it; a model answer is available to compare.
 6. **Nothing is magic.** When we simplify (e.g., "variables are labeled boxes"), we say it's a simplification and later revisit with the accurate model (stack/heap, references).
 7. **Spaced recall.** Recap cards resurface earlier concepts inside later lessons (closures resurface scope; Playwright resurfaces promises).
@@ -23,6 +23,7 @@ A single-page webapp where JavaScript is *seen*, not memorized. Every concept â€
 | 2026-07-02 | Interaction: **Phased** â€” guided step-through visualizations first, live code-visualizing sandbox added later | User choice; ship lessons fast, add power later |
 | 2026-07-02 | Automation target: **Playwright** (deep dive) | User choice; JS-native, industry momentum |
 | 2026-07-02 | Stack: React + TypeScript + Vite; Framer Motion; rough.js for hand-drawn SVG; Zustand + localStorage for progress | See `02-ARCHITECTURE.md` |
+| 2026-07-03 | "Watch it happen" is question-free; checks are typed-input first (MCQ only when options teach) | User: stepper interruptions broke the flow; typing = recall, clicking = recognition |
 
 ## The journey at a glance (details in 01-CURRICULUM.md)
 | Phase | Title | Core question |

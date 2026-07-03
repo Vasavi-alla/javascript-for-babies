@@ -116,6 +116,7 @@ export function MissionShell({ def }: { def: MissionDef }) {
                     code={item.code}
                     accept={item.accept}
                     why={item.why}
+                    placeholder={item.placeholder}
                   />
                 ),
               )}

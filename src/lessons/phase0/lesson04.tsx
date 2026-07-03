@@ -165,14 +165,11 @@ export const lesson04: LessonDef = {
   ),
   quiz: [
     {
-      question: 'While a program is running, where does it keep the values it’s currently working with?',
-      options: [
-        'In RAM — the fast, temporary workbench',
-        'On the disk — the permanent cupboard',
-        'Inside the processor, permanently',
-      ],
-      correctIndex: 0,
-      why: 'Working values live in RAM, where access is nearly instant. The disk is for keeping things across power-off — too slow for every-instruction work.',
+      kind: 'type-output',
+      question: 'While a program is running, it keeps its working values on the fast, temporary workbench. Type its three-letter name.',
+      accept: ['RAM', 'ram', 'Ram'],
+      placeholder: 'three letters…',
+      why: 'RAM — where access is nearly instant. The disk is the permanent cupboard, for keeping things across power-off — far too slow for every-instruction work.',
     },
     {
       question: 'Why do apps have a Save button at all?',
@@ -185,14 +182,11 @@ export const lesson04: LessonDef = {
       why: 'Unsaved work exists only on the workbench (RAM). Close the program — or lose power — and the workbench is cleared. Save = “copy this to the cupboard (disk) where it survives.”',
     },
     {
-      question: 'A photo of your dog is stored in memory as…',
-      options: [
-        'A tiny picture inside the box',
-        'A description in English',
-        'Numbers — like everything else in memory',
-      ],
-      correctIndex: 2,
-      why: 'Boxes can only hold small numbers. A photo is a long run of numbers (color values for every pixel) plus an agreement about how to read them. Text, sound, video — same story. It’s numbers all the way down.',
+      kind: 'type-output',
+      question: 'A photo of your dog, the text of this page, a song — in memory they are ALL stored as ___. Type the one word.',
+      accept: ['numbers', 'Numbers'],
+      placeholder: 'one word…',
+      why: 'Numbers — boxes can only hold small numbers. A photo is a long run of them (color values for every pixel) plus an agreement about how to read them. Text, sound, video — same story. It’s numbers all the way down.',
     },
   ],
   teachBack: {

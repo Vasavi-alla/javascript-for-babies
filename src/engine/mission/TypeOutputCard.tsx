@@ -16,12 +16,14 @@ export function TypeOutputCard({
   code,
   accept,
   why,
+  placeholder = 'type the console output…',
 }: {
   index: number
   question: string
-  code: string
+  code?: string
   accept: string[]
   why: string
+  placeholder?: string
 }) {
   const [typed, setTyped] = useState('')
   const [tries, setTries] = useState(0)
@@ -42,7 +44,7 @@ export function TypeOutputCard({
     <StickyNote id={`typecheck-${index}-${question}`} className="w-full max-w-xl">
       <p className="font-hand text-2xl leading-snug font-semibold">✏️ Quick check {index + 1}</p>
       <p className="mt-1 mb-3">{question}</p>
-      <CodePane code={code} className="text-sm" />
+      {code && <CodePane code={code} className="text-sm" />}
 
       {!finished ? (
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -52,7 +54,7 @@ export function TypeOutputCard({
             onKeyDown={(e) => {
               if (e.key === 'Enter') check()
             }}
-            placeholder="type the console output…"
+            placeholder={placeholder}
             className="border-ink-soft/50 bg-paper-raised focus:border-ink w-64 rounded-sm border border-dashed px-3 py-1.5 font-mono text-sm outline-none"
           />
           <InkButton id={`typecheck-go-${index}`} onClick={check} disabled={typed.trim() === ''}>

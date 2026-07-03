@@ -215,26 +215,23 @@ export const lesson19: LessonDef = {
   ),
   quiz: [
     {
-      question: 'What does "10" + 1 give?',
-      options: ['11', '"101" — the number was converted and glued on', 'NaN'],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'Type exactly what console.log("10" + 1) shows:',
+      accept: ['101', '"101"'],
       why: '+ prefers strings: one string on either side turns + into the gluing operator. "10" + 1 → "10" + "1" → "101". The single most common form-input bug in existence.',
     },
     {
-      question: 'And "10" - 1?',
-      options: ['9 — minus converts the string to a number and does math', '"9"', '"101"'],
-      correctIndex: 0,
+      kind: 'type-output',
+      question: 'And console.log("10" - 1)? Type it:',
+      accept: ['9'],
       why: 'Minus has no string meaning, so coercion runs the OTHER way: "10" becomes 10, and 10 − 1 = 9 (a number). The +/− asymmetry is the heart of this lesson — same operands, opposite conversions.',
     },
     {
-      question: 'You’re writing a check in a test: “did the API return exactly the number 200?” Which comparison?',
-      options: [
-        'status == 200 — more forgiving, fewer false failures',
-        'status === 200 — strict: value AND type must match, no coercion surprises',
-        'Either — they’re the same for numbers',
-      ],
-      correctIndex: 1,
-      why: 'A test exists to catch surprises — a forgiving comparison DEFEATS it: status == 200 would happily pass if the API wrongly returned the string "200", hiding a real bug. Assertions want ===-style strictness, and test frameworks build it in (toBe uses strict logic). Loose equality in a test is a bug detector with its batteries removed.',
+      kind: 'type-output',
+      question: 'status holds the NUMBER 200. Type what status == "200" (loose, double =) evaluates to — then read why that answer is dangerous in a test.',
+      accept: ['true'],
+      placeholder: 'a value…',
+      why: 'true! == coerces the string into a number before comparing — so a test written with == would happily PASS even if the API wrongly returned the string "200", hiding a real bug. That’s a bug detector with its batteries removed. === would answer false and catch it. Always === in tests.',
     },
   ],
   teachBack: {

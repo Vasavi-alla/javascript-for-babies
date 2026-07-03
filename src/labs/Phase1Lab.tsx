@@ -4,7 +4,6 @@ import { CodePane } from '../design/CodePane'
 import { HandArrow, RoughEllipse, RoughRect } from '../design/rough-svg'
 import { useStepper } from '../engine/stepper/useStepper'
 import { StepperControls } from '../engine/stepper/StepperControls'
-import { PredictionCard } from '../engine/stepper/PredictionCard'
 import type { Step } from '../engine/stepper/types'
 
 /**
@@ -166,16 +165,6 @@ export function Phase1Lab() {
           <MemoryScene stepIndex={stepper.index} />
         </div>
       </div>
-
-      {stepper.step.prediction && (
-        <div className="mt-4">
-          <PredictionCard
-            prediction={stepper.step.prediction}
-            answered={stepper.answered}
-            onAnswer={stepper.answer}
-          />
-        </div>
-      )}
 
       <div className="mt-6">
         <StepperControls stepper={stepper} steps={STEPS} />

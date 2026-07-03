@@ -607,15 +607,11 @@ export const mission32: MissionDef = {
       why: 'Position, not meaning: "moo" arrived first so it landed in the animal slot, and "cow" fell into sound. The machine happily reports that moo says cow — no error, just an argument order the caller got backwards.',
     },
     {
-      kind: 'choice',
-      question: 'In the call callOut("Priya", "chai") — what is "chai"?',
-      options: [
-        'A parameter — it’s one of the machine’s slot names',
-        'An argument — a value dropped into slot 2 for this one call',
-        'The return value',
-      ],
-      correctIndex: 1,
-      why: 'Arguments are the values that arrive at call time; parameters are the slot names in the definition (customer, drink). "chai" is a value arriving second, so it’s the argument that fills the second parameter.',
+      kind: 'type-output',
+      question: 'In the call callOut("Priya", "chai") — is "chai" a parameter or an argument? Type the word.',
+      accept: ['argument', 'an argument', 'Argument'],
+      placeholder: 'parameter / argument…',
+      why: 'An argument — arguments are the VALUES that arrive at call time; parameters are the slot NAMES in the definition (customer, drink). "chai" arrives second, so it’s the argument that fills the second parameter.',
     },
   ],
   teachBack: {

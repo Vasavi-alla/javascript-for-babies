@@ -1,5 +1,6 @@
 import type { ComponentType, ReactNode } from 'react'
 import type { Prediction, Step } from '../stepper/types'
+import type { CheckItem } from '../mission/types'
 
 /**
  * A complete lesson, following the 6-part anatomy in 04-LESSON-BLUEPRINT.md:
@@ -17,8 +18,12 @@ export interface LessonDef {
   Viz: ComponentType<{ stepIndex: number }>
   /** The accurate, deeper explanation with real terminology. */
   underTheHood: ReactNode
-  /** Quick-check questions (same shape as predictions). */
-  quiz: Prediction[]
+  /**
+   * Quick checks. Prefer typed answers ({ kind: 'type-output', … }) over
+   * multiple choice — recall beats recognition (user decision 2026-07-03);
+   * keep an MCQ only when the options themselves are the teaching.
+   */
+  quiz: Array<Prediction | CheckItem>
   /** Optional extra interactive exercise rendered in the Play section. */
   PlayExtra?: ComponentType
   teachBack: {

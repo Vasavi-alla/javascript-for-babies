@@ -236,20 +236,17 @@ export const lesson03: LessonDef = {
       why: 'console.log speaks to the console, and only developers (and testers!) who open DevTools ever see it. Users of the site see nothing. It’s a workbench tool, not a user feature.',
     },
     {
-      question: 'What does console.log(10 - 4) print?',
-      options: ['10 - 4', '6', 'An error'],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'Type exactly what console.log(10 - 4) prints:',
+      accept: ['6'],
       why: 'No quotes → it’s an expression → the machine evaluates it to 6 first, then prints the result. Quotes would have made it literal text.',
     },
     {
-      question: 'What’s the difference between console.log(2 + 3) and console.log("2 + 3")?',
-      options: [
-        'Nothing — both print the same thing',
-        'The first prints 5, the second prints 2 + 3 — quotes mean “literal text, don’t evaluate”',
-        'The second one is an error',
-      ],
-      correctIndex: 1,
-      why: 'This tiny pair is one of the most important pictures in early programming: without quotes the machine computes; with quotes it copies. Confusing the two causes real bugs for years — you’ve now beaten it on day one.',
+      kind: 'type-output',
+      question: 'Now the twin with quotes: type EXACTLY what console.log("2 + 3") prints — every character.',
+      accept: ['2 + 3'],
+      placeholder: 'exact characters…',
+      why: 'The quotes mean “literal text, don’t evaluate” — so the machine copies the characters 2, space, +, space, 3 to the console. Without quotes it would have computed 5. This tiny pair is one of the most important pictures in early programming — you’ve now beaten it on day one.',
     },
   ],
   teachBack: {

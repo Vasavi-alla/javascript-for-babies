@@ -182,26 +182,23 @@ export const lesson18: LessonDef = {
   ),
   quiz: [
     {
-      question: 'What does typeof "42" give?',
-      options: ['"number"', '"string"', '"42"'],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'Type what typeof "42" gives (as the console would show it):',
+      accept: ['string', '"string"'],
       why: 'Quotes make it a string — typeof reads the value’s tag, and the tag says string. The digits inside don’t matter; the wrapper decides.',
     },
     {
-      question: 'let x = 5; x = "five"; — what happens?',
-      options: [
-        'TypeError — x is a number variable',
-        'Nothing bad — the label now points at a string; variables don’t have types',
-        'x becomes 5 anyway',
-      ],
-      correctIndex: 1,
-      why: 'Dynamic typing: perfectly legal. (Note this is different from const — const forbids ANY reassignment; let allows reassignment to anything, including another type.) Legal, but a common source of confusion — which is why TypeScript exists.',
+      kind: 'type-output',
+      question: 'Type exactly what prints:',
+      code: 'let x = 5;\nx = "five";\nconsole.log(typeof x);',
+      accept: ['string', '"string"'],
+      why: 'Perfectly legal — dynamic typing: the label now points at a string, because types live on VALUES, not variables. (Different from const, which forbids ANY reassignment.) Legal, but a common source of confusion — which is why TypeScript exists.',
     },
     {
-      question: 'What does typeof typeof true give?',
-      options: ['"boolean"', '"string"', 'An error'],
-      correctIndex: 1,
-      why: 'Inside-out: typeof true → "boolean" (a string!), then typeof "boolean" → "string". Every typeof answer is a string, so double-typeof is ALWAYS "string". A tiny puzzle that proves you’ve internalized evaluate-first.',
+      kind: 'type-output',
+      question: 'The tiny puzzle: type what typeof typeof true gives.',
+      accept: ['string', '"string"'],
+      why: 'Inside-out: typeof true → "boolean" (a string!), then typeof "boolean" → "string". Every typeof answer is a string, so double-typeof is ALWAYS "string". Solving this proves you’ve internalized evaluate-first.',
     },
   ],
   teachBack: {

@@ -213,9 +213,10 @@ export const lesson15: LessonDef = {
   ),
   quiz: [
     {
-      question: 'What does 9 % 4 give?',
-      options: ['2.25', '1', '36'],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'Type what 9 % 4 gives:',
+      accept: ['1'],
+      placeholder: 'a value…',
       why: '% is the remainder, not division: 4 fits into 9 twice (=8), leaving 1 over. (9 / 4 would be 2.25 — different operator, different question.)',
     },
     {
@@ -229,10 +230,11 @@ export const lesson15: LessonDef = {
       why: 'It’s physics-of-storage, not a bug: base-2 has no exact finite form for 0.1, so the machine stores the nearest neighbor and tiny errors surface in math. Every IEEE-754 language behaves identically — saying this sentence in an interview earns instant respect.',
     },
     {
-      question: 'What does 1 / 0 give in JavaScript?',
-      options: ['A crash — division by zero is illegal', 'Infinity — a special number meaning “beyond all numbers”', '0'],
-      correctIndex: 1,
-      why: 'JavaScript never crashes on this — it answers with the special value Infinity and keeps running. (0 / 0, where even infinity makes no sense, gives NaN instead.) Programs surviving weird math is very JavaScript — you’ll learn to test for these values.',
+      kind: 'type-output',
+      question: 'Type exactly what 1 / 0 gives in JavaScript — capitalization counts:',
+      accept: ['Infinity'],
+      placeholder: 'a special value…',
+      why: 'JavaScript never crashes on this — it answers with the special value Infinity (capital I) and keeps running. (0 / 0, where even infinity makes no sense, gives NaN instead.) Programs surviving weird math is very JavaScript — you’ll learn to test for these values.',
     },
   ],
   teachBack: {

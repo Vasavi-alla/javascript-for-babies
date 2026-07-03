@@ -849,16 +849,12 @@ export const mission31: MissionDef = {
   ),
   finalCheck: [
     {
-      kind: 'choice',
-      question:
-        'The engine reads a function definition — function tellJoke() { console.log("…") } — and moves on. What ran at that moment?',
-      options: [
-        'The body ran once, as a test',
-        'Nothing in the body ran — the machine was built and stored under its name',
-        'The body runs every time the engine re-reads the file',
-      ],
-      correctIndex: 1,
-      why: 'Defining is construction, not execution. The engine stores the body and ties the name to it — the code inside waits, inert, until somebody calls. Define a function and never call it? Its body never runs at all.',
+      kind: 'type-output',
+      question: 'A function is defined but NOBODY ever calls it. How many times does its body run? Type the number.',
+      code: 'function tellJoke() {\n  console.log("…");\n}',
+      accept: ['0', 'zero'],
+      placeholder: 'a number…',
+      why: 'Zero — defining is construction, not execution. The engine stores the body and ties the name to it; the code inside waits, inert, until somebody calls. No call, no run. Ever.',
     },
     {
       kind: 'type-output',
@@ -868,15 +864,11 @@ export const mission31: MissionDef = {
       why: 'The value "tools" drops into the slot called word, and the body glues a "!" onto it. (No quotes in the output — quotes live in code, not on the console.)',
     },
     {
-      kind: 'choice',
-      question: 'You have been calling a function since lesson 0.3. Which one?',
-      options: [
-        'let — it creates variables',
-        'console.log — name, parentheses, a value dropped in: a machine',
-        'The = sign',
-      ],
-      correctIndex: 1,
-      why: 'console.log(...) has the full machine shape: a name, the GO-button parentheses, and a value in the hopper. let and = are keywords/operators, not functions. You were a function CALLER from day one — today you became a BUILDER.',
+      kind: 'type-output',
+      question: 'You have been pressing one machine’s GO button since lesson 0.3. Type its full name.',
+      accept: ['console.log', 'console.log()'],
+      placeholder: 'the machine’s name…',
+      why: 'console.log — it has the full machine shape: a name, the GO-button parentheses, and a value dropped in. Someone else built it; you were a function CALLER from day one. Today you became a BUILDER.',
     },
   ],
   teachBack: {

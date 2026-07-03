@@ -199,24 +199,19 @@ export const lesson14: LessonDef = {
   ),
   quiz: [
     {
-      question: 'const city = "Chennai"; city = "Mumbai"; — what happens on the second line?',
-      options: [
-        'city becomes "Mumbai"',
-        'TypeError: Assignment to constant variable — the program stops there',
-        'Both values are kept',
-      ],
-      correctIndex: 1,
-      why: 'const enforces the never-reassign promise with an error at the exact line that broke it. Everything before that line already ran (lesson 0.5!); everything after never does.',
+      kind: 'type-output',
+      question: 'The second line halts the program. Type the NAME of the error (one word, ends in Error).',
+      code: 'const city = "Chennai";\ncity = "Mumbai";',
+      accept: ['TypeError'],
+      placeholder: 'SomethingError…',
+      why: 'TypeError: Assignment to constant variable. const enforces the never-reassign promise with an error at the exact line that broke it. Everything before that line already ran (lesson 0.5!); everything after never does.',
     },
     {
-      question: 'You’re creating a variable and you’re not sure yet if it will need to change. What’s the professional default?',
-      options: [
-        'let — it’s more flexible, so it’s safer',
-        'const — and upgrade to let only when a reassignment actually appears',
-        'var — it works everywhere',
-      ],
-      correctIndex: 1,
-      why: 'Start locked, unlock only when needed. If you guessed wrong, the machine will tell you instantly (a clear TypeError at the exact line) and switching to let takes two seconds. The reverse mistake — a let that silently changes when it shouldn’t — can hide for weeks.',
+      kind: 'type-output',
+      question: 'You’re creating a variable and you’re not sure yet if it will need to change. Type the keyword professionals reach for FIRST.',
+      accept: ['const'],
+      placeholder: 'a keyword…',
+      why: 'const — start locked, upgrade to let only when a reassignment actually appears. If you guessed wrong, the machine tells you instantly (a clear TypeError) and switching takes two seconds. The reverse mistake — a let that silently changes when it shouldn’t — can hide for weeks.',
     },
     {
       question: 'You open a tutorial from 2012 and every line uses var. What’s the right move?',

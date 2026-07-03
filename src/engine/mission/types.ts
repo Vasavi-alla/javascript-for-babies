@@ -37,17 +37,19 @@ export interface MissionChallenge {
   stuck: ReactNode
 }
 
-/** A final-inspection check. 'choice' renders like a quiz; 'type-output' asks for exact text. */
+/** A quick check. 'choice' renders like a quiz; 'type-output' asks for exact typed text. */
 export type CheckItem =
   | ({ kind: 'choice' } & Prediction)
   | {
       kind: 'type-output'
       question: string
-      /** Code the question is about, shown above the input. */
-      code: string
+      /** Optional code the question is about, shown above the input. */
+      code?: string
       /** Accepted answers (compared after trimming; case-sensitive — output is exact). */
       accept: string[]
       why: string
+      /** Input hint; defaults to "type the console output…". */
+      placeholder?: string
     }
 
 export interface MissionDef {

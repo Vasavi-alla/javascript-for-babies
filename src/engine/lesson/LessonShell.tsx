@@ -8,10 +8,11 @@ import { CodePane } from '../../design/CodePane'
 import { useProgress } from '../../store/progress'
 import { useStepper } from '../stepper/useStepper'
 import { StepperControls } from '../stepper/StepperControls'
-import { PredictionCard } from '../stepper/PredictionCard'
 import { QuizCard } from './QuizCard'
+import { TypeOutputCard } from '../mission/TypeOutputCard'
 import { TeachBack } from './TeachBack'
 import type { LessonDef } from './types'
+import type { Prediction } from '../stepper/types'
 
 /** Renders a complete lesson in the 6-part anatomy (04-LESSON-BLUEPRINT.md). */
 export function LessonShell({ def }: { def: LessonDef }) {
@@ -58,16 +59,6 @@ export function LessonShell({ def }: { def: LessonDef }) {
             </div>
           </div>
 
-          {stepper.step.prediction && (
-            <div className="mt-4">
-              <PredictionCard
-                prediction={stepper.step.prediction}
-                answered={stepper.answered}
-                onAnswer={stepper.answer}
-              />
-            </div>
-          )}
-
           <div className="mt-6">
             <StepperControls stepper={stepper} steps={def.steps} />
           </div>
@@ -94,9 +85,21 @@ export function LessonShell({ def }: { def: LessonDef }) {
         </TapeLabel>
         <div className="mt-4 flex flex-col items-start gap-5">
           {PlayExtra && <PlayExtra />}
-          {def.quiz.map((q, i) => (
-            <QuizCard key={i} index={i} question={q} />
-          ))}
+          {def.quiz.map((q, i) =>
+            'kind' in q && q.kind === 'type-output' ? (
+              <TypeOutputCard
+                key={i}
+                index={i}
+                question={q.question}
+                code={q.code}
+                accept={q.accept}
+                why={q.why}
+                placeholder={q.placeholder}
+              />
+            ) : (
+              <QuizCard key={i} index={i} question={q as Prediction} />
+            ),
+          )}
         </div>
       </section>
 

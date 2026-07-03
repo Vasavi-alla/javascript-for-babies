@@ -222,34 +222,23 @@ export const lesson111: LessonDef = {
   ),
   quiz: [
     {
-      question: 'Line 4 reassigns power. Why didn’t line 3 use const?',
-      options: [
-        'const doesn’t work with numbers',
-        'Because power changes on line 4 — const would throw a TypeError right there',
-        'Style preference — const would work fine',
-      ],
-      correctIndex: 1,
-      why: 'The professional default is const UNTIL a reassignment is needed (lesson 1.4) — and line 4 needs one. With const, line 4 would halt with TypeError: Assignment to constant variable. let is the honest choice for a value that varies.',
+      kind: 'type-output',
+      question: 'If line 3 used const instead of let, line 4 (the reassignment) would halt the program. Type the error’s NAME.',
+      accept: ['TypeError'],
+      placeholder: 'SomethingError…',
+      why: 'TypeError: Assignment to constant variable. The professional default is const UNTIL a reassignment is needed (lesson 1.4) — and line 4 needs one, so let is the honest choice for a value that varies.',
     },
     {
-      question: 'If line 3 were let power = "9000" (in quotes), what would line 4 make power?',
-      options: [
-        '9001',
-        '"90001" — a string glued with a number',
-        'An error',
-      ],
-      correctIndex: 1,
+      kind: 'type-output',
+      question: 'If line 3 were let power = "9000" (in quotes), type what line 4 (power = power + 1) would make power:',
+      accept: ['90001', '"90001"'],
       why: 'The + meets a string → coercion glues (lesson 1.9): "9000" + 1 → "90001". One pair of quotes turns a power-up into a five-digit typo. This is the exact bug shape that leaks out of form inputs in real apps — and that your future tests will catch.',
     },
     {
-      question: 'In `${hero} of ${place}`, what happens inside each ${…}?',
-      options: [
-        'The text is copied as-is',
-        'The expression is EVALUATED — labels followed, boxes opened — and the result is spliced into the string',
-        'Only variable names are allowed, nothing else',
-      ],
-      correctIndex: 1,
-      why: 'Slots run the full evaluate-first machinery — any expression works: ${power + 1}, ${hero.toUpperCase()}, even ${2 + 3}. The result becomes part of the train. (That’s also why quotes-vs-backticks matters: ordinary quotes never evaluate slots.)',
+      kind: 'type-output',
+      question: 'Type the exact string `${2 + 3}` produces:',
+      accept: ['5'],
+      why: 'The slot runs the full evaluate-first machinery: 2 + 3 becomes 5, then gets spliced into the train. Any expression works — ${power + 1}, ${hero.toUpperCase()}. Ordinary quotes would have printed the slot literally; backticks switch the slots on.',
     },
   ],
   teachBack: {

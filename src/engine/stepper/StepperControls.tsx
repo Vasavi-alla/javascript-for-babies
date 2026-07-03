@@ -28,13 +28,8 @@ export function StepperControls({ stepper, steps }: { stepper: StepperState; ste
         ))}
       </div>
 
-      <InkButton
-        id="stepper-next"
-        variant="primary"
-        onClick={stepper.next}
-        disabled={stepper.isLast || stepper.gated}
-      >
-        {stepper.gated ? 'predict first!' : 'next ▶'}
+      <InkButton id="stepper-next" variant="primary" onClick={stepper.next} disabled={stepper.isLast}>
+        next ▶
       </InkButton>
     </div>
   )

@@ -211,14 +211,11 @@ export const lesson02: LessonDef = {
       why: 'Same language, same engine — new home. No new JavaScript to learn. It adds powers (files, servers, terminals) and drops the web page. Playwright, and nearly every developer tool you’ll meet, runs on it.',
     },
     {
-      question: 'Why does the same JavaScript work in Chrome, Firefox AND Safari, even though each has a different engine?',
-      options: [
-        'They all secretly use V8',
-        'All engines follow the same published standard (ECMAScript)',
-        'The code is translated by each website before sending',
-      ],
-      correctIndex: 1,
-      why: 'Different engines, one rulebook. The ECMAScript standard defines exactly how the language must behave, and every engine implements it. (Small differences still exist — which is one reason cross-browser testing is a real job.)',
+      kind: 'type-output',
+      question: 'Chrome, Firefox and Safari have different engines, yet the same JavaScript runs in all three — because every engine follows one published rulebook. Type its name.',
+      accept: ['ECMAScript', 'ecmascript', 'EcmaScript', 'Ecmascript'],
+      placeholder: 'the standard’s name…',
+      why: 'ECMAScript — different engines, one rulebook. The standard defines exactly how the language must behave, and every engine implements it. (Small differences still exist — which is one reason cross-browser testing is a real job.)',
     },
   ],
   teachBack: {
