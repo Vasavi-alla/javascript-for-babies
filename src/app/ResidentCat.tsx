@@ -13,7 +13,6 @@ import { useMeasure } from '../design/useMeasure'
 const INK = 'var(--color-ink)'
 const CAT_WIDTH = 128
 const WALK_SPEED = 42 // px per second, ambling on his own
-const CHASE_SPEED = 85 // px per second, following a finger/pencil
 
 type Mood = 'sleeping' | 'sitting' | 'walking' | 'petted'
 
@@ -133,26 +132,6 @@ export function ResidentCat() {
     const timer = window.setInterval(() => setFrame((f) => (f + 1) % 4), 130)
     return () => window.clearInterval(timer)
   }, [mood, sprites])
-
-  // oneko-style: lead him with a finger, mouse, or hovering Pencil — the
-  // listener lives on window (his strip is click-transparent), and only
-  // pointers near the bottom of the screen count as "on the desk".
-  useEffect(() => {
-    function onMove(e: PointerEvent) {
-      if (mood === 'petted') return
-      if (e.clientY < window.innerHeight - 150) return
-      const roamMax = Math.max(4, floorWidth - CAT_WIDTH - 4)
-      const target = Math.min(roamMax, Math.max(4, e.clientX - CAT_WIDTH / 2))
-      const distance = Math.abs(target - xLive.current)
-      if (distance < 28) return // close enough — cats don't fuss
-      setDir(target > xLive.current ? 1 : -1)
-      setWalkSeconds(distance / CHASE_SPEED)
-      setX(target)
-      setMood('walking')
-    }
-    window.addEventListener('pointermove', onMove)
-    return () => window.removeEventListener('pointermove', onMove)
-  }, [mood, floorWidth])
 
   function pet() {
     const id = ++heartId.current
