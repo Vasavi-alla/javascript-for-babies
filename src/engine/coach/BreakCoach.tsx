@@ -77,6 +77,12 @@ export function BreakCoach() {
             transition={{ type: 'spring', damping: 18 }}
           >
             <StickyNote id={`break-${nudge}`} className="max-w-md p-2">
+              <img
+                src="/yawn.png"
+                alt="Vasavi yawning and stretching"
+                className="border-ink mx-auto mb-3 h-48 w-40 rounded-xl border-2 object-cover"
+                style={{ rotate: '1.5deg' }}
+              />
               {nudge === 'break' ? (
                 <>
                   <p className="font-hand text-3xl font-bold">☕ time to stretch</p>

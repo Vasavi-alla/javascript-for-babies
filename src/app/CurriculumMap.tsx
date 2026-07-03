@@ -62,7 +62,7 @@ export function CurriculumMap() {
             <img
               src="/vasavi.png"
               alt="Vasavi"
-              className="border-ink h-24 w-24 shrink-0 rounded-full border-2 object-cover shadow-[2px_4px_10px_rgba(43,41,37,0.18)]"
+              className="border-ink h-32 w-32 shrink-0 rounded-2xl border-2 object-cover shadow-[2px_4px_10px_rgba(43,41,37,0.18)] sm:h-36 sm:w-36"
               style={{ rotate: '-2deg' }}
             />
             <div>
