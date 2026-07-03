@@ -75,14 +75,16 @@ export function BreakCoach() {
             initial={{ y: 24, rotate: -2 }}
             animate={{ y: 0, rotate: -1 }}
             transition={{ type: 'spring', damping: 18 }}
+            className="relative mt-36"
           >
+            {/* she floats above the card, absolutely positioned — the note keeps its own size */}
+            <img
+              src="/yawn.png"
+              alt="Vasavi yawning and stretching"
+              className="border-ink pointer-events-none absolute -top-36 left-1/2 h-40 w-32 -translate-x-1/2 rounded-xl border-2 object-cover shadow-[3px_5px_14px_rgba(43,41,37,0.25)]"
+              style={{ rotate: '2deg' }}
+            />
             <StickyNote id={`break-${nudge}`} className="max-w-md p-2">
-              <img
-                src="/yawn.png"
-                alt="Vasavi yawning and stretching"
-                className="border-ink mx-auto mb-3 h-48 w-40 rounded-xl border-2 object-cover"
-                style={{ rotate: '1.5deg' }}
-              />
               {nudge === 'break' ? (
                 <>
                   <p className="font-hand text-3xl font-bold">☕ time to stretch</p>
