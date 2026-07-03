@@ -24,7 +24,7 @@ export function LessonShell({ def }: { def: LessonDef }) {
   const nextMeta = orderIndex >= 0 ? LESSONS[orderIndex + 1] : undefined
 
   const code = stepper.step.codeOverride ?? def.code
-  const { Viz, PlayExtra } = def
+  const { Viz, PlayExtra, playground } = def
 
   if (!meta) return null
 
@@ -38,6 +38,21 @@ export function LessonShell({ def }: { def: LessonDef }) {
         <h1 className="font-hand mt-2 text-4xl font-bold sm:text-5xl">
           {meta.id} — {meta.title}
         </h1>
+
+        {playground && (
+          <div className="mt-6 max-w-3xl">
+            <TapeLabel id={`playground-${def.id}`} color="var(--color-marker-yellow)">
+              try it first
+            </TapeLabel>
+            <PaperCard id={`playground-card-${def.id}`} tilt={false} className="mt-4">
+              <div className="flex flex-col gap-4">
+                <p>{playground.prompt}</p>
+                <playground.Widget />
+              </div>
+            </PaperCard>
+          </div>
+        )}
+
         <div className="mt-4 flex max-w-3xl flex-col gap-3 text-lg">{def.hook}</div>
       </header>
 

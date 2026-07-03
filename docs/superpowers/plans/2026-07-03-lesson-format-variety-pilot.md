@@ -11,7 +11,7 @@
 ## Global Constraints
 
 - **No automated test framework exists in this repo** (`package.json` has no vitest/jest). Verification for every step is: `npm run build` (runs `tsc -b && vite build` — this is the typecheck gate) plus a manual browser walkthrough via `npm run dev`. Do not introduce a testing framework as part of this work.
-- **This directory is not a git repository** (confirmed: no `.git`). Skip all `git add`/`git commit` steps — saving the file via the Edit/Write tool is the persistence step.
+- Git was initialized partway through planning this work (repo now exists, remote `origin` is `https://github.com/jaws97/js-for-babies`, working branch is `development`). Each task below should be committed on `development` as normal — do not push to `origin` or touch `master` without being told to.
 - **No new colors, fonts, or visual primitives.** Reuse only existing `src/design/` components and the 4 existing marker color tokens: `--color-marker-yellow`, `--color-marker-coral`, `--color-marker-teal`, `--color-pencil-blue` (defined in `src/styles/index.css`).
 - **`LessonDef`/`LessonShell` changes must be strictly additive.** Every lesson currently in `src/lessons/index.ts` must keep rendering with no visual change when it doesn't set the new field.
 - **Preserve the current 3.1 content** as a recoverable backup file before rewriting it, so the user can restore it instantly if the new format teaches worse (per `docs/superpowers/specs/2026-07-03-lesson-format-variety-design.md`).

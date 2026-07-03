@@ -10,6 +10,16 @@ export interface LessonDef {
   id: string
   /** Why this concept exists — shown before anything else. Never starts with syntax. */
   hook: ReactNode
+  /**
+   * Optional "playground-first" teaser: an interactive widget rendered
+   * BEFORE the hook, with no explanation yet. The learner free-plays and
+   * forms a theory; the hook then names what they just did. See
+   * docs/superpowers/specs/2026-07-03-lesson-format-variety-design.md.
+   */
+  playground?: {
+    prompt: ReactNode
+    Widget: ComponentType
+  }
   /** Code shown next to the visualization (steps may override via codeOverride). */
   code?: string
   steps: Step[]
