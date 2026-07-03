@@ -5,6 +5,7 @@ import { MISSION_DEFS } from '../lessons'
 import { MISSION_THEMES } from '../content/phase-themes'
 import { practiceSetsForPhase } from '../practice/sets'
 import { dailyNote } from '../content/motivation'
+import { LEARNER_NAME } from '../content/learner'
 import { useProgress } from '../store/progress'
 import { activeDaySet, computeStreak, localDay, monthGrid } from '../engine/coach/stats'
 import { PaperCard } from '../design/PaperCard'
@@ -78,7 +79,7 @@ export function CurriculumMap() {
         <div className="min-w-64 flex-1">
           <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
           <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
-            Welcome{startedEver ? ' back' : ''}, Lijas
+            Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
           </h1>
           <p className="mt-3 max-w-xl text-lg">
             {streak > 0 ? (
