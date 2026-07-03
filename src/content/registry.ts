@@ -76,6 +76,19 @@ export const LESSONS: LessonMeta[] = [
   { id: '3.9', slug: 'recursion', title: 'Recursion', phase: 3, blurb: 'A function calling itself — and the base case that stops the tower.', status: 'available' },
   { id: '3.10', slug: 'defaults-rest-pure', title: 'Default parameters & pure functions', phase: 3, blurb: 'Fallback values for silent slots — and sealed functions with no leaky pipes.', status: 'available' },
   { id: '3.11', slug: 'checkpoint-tip-calculator', title: 'Checkpoint: the tip calculator brain', phase: 3, blurb: 'Compose small pure functions into one working brain — your first testable unit.', status: 'available' },
+
+  // Phase 4 — Collections
+  { id: '4.1', slug: 'arrays', title: 'Arrays', phase: 4, blurb: 'One name, many values — elements in order, found by index.', status: 'available' },
+  { id: '4.2', slug: 'grow-shrink', title: 'Growing & shrinking', phase: 4, blurb: 'push, pop, shift, unshift — and why front-of-array work moves everyone.', status: 'available' },
+  { id: '4.3', slug: 'objects', title: 'Objects', phase: 4, blurb: 'Properties: key → value. Fetch by name, not position — dot vs brackets.', status: 'available' },
+  { id: '4.4', slug: 'primitives-vs-references', title: 'Primitives vs references', phase: 4, blurb: 'THE lesson: what really copies when you write b = a — the value, or the arrow?', status: 'available' },
+  { id: '4.5', slug: 'copying-equality', title: 'Copying & equality', phase: 4, blurb: 'Shallow vs deep copies, spread — and why {} !== {}.', status: 'planned' },
+  { id: '4.6', slug: 'iterating-collections', title: 'Iterating collections', phase: 4, blurb: 'for...of, for...in, and Object.keys / values / entries.', status: 'planned' },
+  { id: '4.7', slug: 'map-filter-reduce', title: 'map / filter / reduce', phase: 4, blurb: 'The transform trio — every element’s journey down the belt.', status: 'planned' },
+  { id: '4.8', slug: 'sorting-finding', title: 'Sorting & finding', phase: 4, blurb: 'sort’s string-default gotcha, find, some, every, includes.', status: 'planned' },
+  { id: '4.9', slug: 'destructuring-spread-rest', title: 'Destructuring, spread & rest', phase: 4, blurb: 'Unpacking shapes into fresh names — and gathering leftovers.', status: 'planned' },
+  { id: '4.10', slug: 'map-set-json', title: 'Map, Set & JSON', phase: 4, blurb: 'When objects aren’t enough — and JSON, the wire format your tests will live on.', status: 'planned' },
+  { id: '4.11', slug: 'checkpoint-test-dashboard', title: 'Checkpoint: test-results dashboard', phase: 4, blurb: 'Pass rates and failure groups computed from raw run data — your first QA dashboard.', status: 'planned' },
 ]
 
 export function lessonsForPhase(phase: number): LessonMeta[] {

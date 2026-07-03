@@ -26,3 +26,5 @@ dist-ssr
 *.sw?
 public/cat/*.mp4
 public/cat/cat-*.gif
+# full-res portrait sources (web-size .webp derivatives are committed instead)
+public/vasavi/vasavi*.png

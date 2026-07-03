@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { motion } from 'motion/react'
 import { LESSONS, PHASES, lessonsForPhase, type LessonMeta } from '../content/registry'
@@ -12,6 +13,7 @@ import { HighlightMark } from '../design/HighlightMark'
 import { DailySticker } from '../design/DailySticker'
 import { RoughCurve, RoughEllipse, RoughLine, RoughPolygon, RoughRect } from '../design/rough-svg'
 import { useMeasure } from '../design/useMeasure'
+import { ResidentCat } from './ResidentCat'
 
 /**
  * The landing page, as a notebook spread:
@@ -68,7 +70,9 @@ export function CurriculumMap() {
   const minutesToday = progress.studyLog[today] ?? 0
 
   return (
-    <div className="flex flex-col gap-14">
+    // extra bottom padding: Barnaby's fixed strip lives on this page only
+    <div className="flex flex-col gap-14 pb-16">
+      <ResidentCat />
       {/* ── 1 · the morning page ─────────────────────────────── */}
       <section className="flex flex-wrap items-start justify-between gap-x-12 gap-y-8">
         <div className="min-w-64 flex-1">
@@ -99,21 +103,18 @@ export function CurriculumMap() {
           </p>
 
           <PaperCard id="continue-card" tilt={false} className="mt-6 max-w-xl">
-            {/* her portrait perches on the card's corner — absolute, so the
-                card and the greeting keep their own sizes; it links to her LinkedIn */}
+            {/* a random portrait of hers perches on the card's corner each
+                visit — absolute, so the card keeps its own size; links to
+                her LinkedIn */}
             <a
               href="https://www.linkedin.com/in/vasavi-alla/"
               target="_blank"
               rel="noopener noreferrer"
               title="Vasavi on LinkedIn ↗"
-              className="absolute -top-6 right-5 sm:-top-8"
+              className="border-ink absolute -top-6 right-5 block h-28 w-24 overflow-hidden rounded-xl border-2 shadow-[3px_5px_12px_rgba(43,41,37,0.22)] sm:-top-8 sm:h-32 sm:w-28"
               style={{ rotate: '2.5deg' }}
             >
-              <img
-                src="/vasavi.png"
-                alt="Vasavi"
-                className="border-ink h-28 w-24 rounded-xl border-2 object-cover shadow-[3px_5px_12px_rgba(43,41,37,0.22)] sm:h-32 sm:w-28"
-              />
+              <RandomPortrait />
             </a>
             {/* text keeps clear of her column at every viewport width */}
             <div className="pr-24 sm:pr-28">
@@ -276,7 +277,7 @@ export function CurriculumMap() {
           {PHASES.map((phase) => {
             const bend = BENDS[phase.number]
             if (!bend) return null
-            const built = lessonsForPhase(phase.number)
+            const built = lessonsForPhase(phase.number).filter((l) => l.status === 'available')
             const done = built.filter((l) => completedLessons[l.id]).length
             const cleared = built.length > 0 && done === built.length
             const isCurrent = phase.number === currentPhase
@@ -405,6 +406,14 @@ const BENDS = [
 ]
 const FINISH = { x: 50, y: 1960 }
 const ROAD_HEIGHT = 2040
+
+/** One of her ten portraits, picked at random on every visit to this page. */
+const PORTRAITS = Array.from({ length: 10 }, (_, i) => `/vasavi/${i + 1}.webp`)
+
+function RandomPortrait() {
+  const [src] = useState(() => PORTRAITS[Math.floor(Math.random() * PORTRAITS.length)])
+  return <img src={src} alt="Vasavi" className="absolute inset-0 h-full w-full object-cover" />
+}
 
 /** Doodles on the flanks of the road — a game-map landscape: friendly meadows
  *  early, warning signs where learners actually get eaten, mountains late. */
