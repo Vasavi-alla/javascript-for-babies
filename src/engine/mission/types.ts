@@ -25,8 +25,13 @@ export interface MissionChallenge {
   id: string
   /** Short imperative title, e.g. "Find the GO button". */
   title: string
-  /** What the learner is asked to do, in plain words. */
+  /** Scene-setting, ONE or two short sentences — people skim. */
   prompt: ReactNode
+  /**
+   * The single do-this instruction, rendered loud (👉 + highlight) so it
+   * can't be skimmed past. Keep it under ~10 words.
+   */
+  action: ReactNode
   Interactive: ComponentType<{ onComplete: () => void }>
   /** The "I'm stuck — show me" escape: spell out exactly what to do. */
   stuck: ReactNode

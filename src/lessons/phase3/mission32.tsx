@@ -492,11 +492,11 @@ export const mission32: MissionDef = {
       title: 'load the slots, press GO',
       prompt: (
         <p>
-          Here’s Marco’s machine — it has <strong>two</strong> input slots, <code>customer</code>{' '}
-          and <code>drink</code>. First order of the day: <em>chai for Priya</em>. Load the call
-          with both values, then press GO.
+          Marco’s machine has <strong>two</strong> input slots: <code>customer</code> and{' '}
+          <code>drink</code>. First order of the day: <em>chai for Priya</em>.
         </p>
       ),
+      action: <>Load the call with the two chips, then press GO</>,
       Interactive: LoadChallenge,
       stuck: (
         <>
@@ -512,11 +512,11 @@ export const mission32: MissionDef = {
       title: 'Marco’s scribbled ticket',
       prompt: (
         <p>
-          Rush hour. Marco slaps a ticket on the counter and copies it into a call, top to bottom,
-          without thinking. Look at the ticket, look at the call — and <em>before</em> you press
-          GO, commit to a prediction.
+          Rush hour. Marco copies the scribbled ticket into a call, top to bottom, without
+          thinking.
         </p>
       ),
+      action: <>Predict what the machine will shout — then press GO</>,
       Interactive: TicketChallenge,
       stuck: (
         <>
@@ -531,10 +531,10 @@ export const mission32: MissionDef = {
       title: 'the forgotten drink',
       prompt: (
         <p>
-          Closing time, one last ticket — and Marco only wrote the name. The call has one argument
-          but the machine has two slots. Predict what comes out, then run it and fix it.
+          Closing time, one last ticket — and Marco only wrote the name. Two slots, one value.
         </p>
       ),
+      action: <>Predict, press GO — then fix the call</>,
       Interactive: ForgotChallenge,
       stuck: (
         <>
@@ -549,12 +549,11 @@ export const mission32: MissionDef = {
       title: 'now write one yourself',
       prompt: (
         <p>
-          You’ve loaded Marco’s machine every way it can be loaded — now{' '}
-          <strong>build a two-slot machine with your own fingers</strong>. Press RUN and it really
-          executes: the inspection checks your output <em>and</em> your syntax, including whether
-          your arguments are in the right order.
+          You’ve loaded Marco’s machine every way it can be loaded. The inspection checks your
+          output, your syntax, <em>and</em> your argument order.
         </p>
       ),
+      action: <>Write the two-slot machine yourself, then press RUN</>,
       Interactive: WriteChallenge,
       stuck: (
         <>

@@ -736,13 +736,11 @@ export const mission31: MissionDef = {
       title: 'first, the KT: read a blueprint',
       prompt: (
         <p>
-          No one touches a workbench before the knowledge transfer. Below is a finished blueprint
-          for Rosa’s machine — real JavaScript. It has exactly <strong>four parts</strong>, marked
-          as bright yellow chips right inside the code. Click each chip to learn what that part is
-          — a coral ring will circle the matching piece of the machine, and inspected chips turn
-          teal.
+          No one touches a workbench before the KT. This is Rosa’s machine as real JavaScript —{' '}
+          <strong>four parts, four yellow chips</strong> right inside the code.
         </p>
       ),
+      action: <>Click all four yellow chips, one by one</>,
       Interactive: BlueprintChallenge,
       stuck: (
         <>
@@ -758,12 +756,11 @@ export const mission31: MissionDef = {
       title: 'assemble it on the bench',
       prompt: (
         <p>
-          Now you build. The frame is already on the bench — the word <code>function</code> and the
-          braces <code>{'{ }'}</code>. The blueprint has <strong>three holes</strong>, and the tray
-          holds <strong>three pieces of code</strong>. Click a piece and that exact text drops into
-          its hole — while the matching part appears on the machine drawing.
+          Now you build. The frame — <code>function</code> and the braces — is already on the
+          bench. Three holes in the blueprint, three pieces of code in the tray.
         </p>
       ),
+      action: <>Click each piece in the tray to bolt it in</>,
       Interactive: AssembleChallenge,
       stuck: (
         <>
@@ -780,11 +777,11 @@ export const mission31: MissionDef = {
       title: 'find the GO button',
       prompt: (
         <p>
-          The machine is built — but it’s sitting there, off. Rosa steps up to test it. Two things
-          you could type are below. <strong>Trying things is free in programming</strong> — worst
-          case, you learn something. Make it greet her, then handle the morning rush.
+          The machine is built — but sitting there, OFF. Rosa steps up to test it.{' '}
+          <strong>Trying things is free in programming</strong> — worst case, you learn something.
         </p>
       ),
+      action: <>Try both buttons under the code — make it greet Rosa</>,
       Interactive: GoChallenge,
       stuck: (
         <>
@@ -799,11 +796,11 @@ export const mission31: MissionDef = {
       title: 'now write one yourself',
       prompt: (
         <p>
-          Watching is easy — <strong>this shop pays for working code</strong>. Type the whole thing
-          with your own fingers: definition, body, and two calls. Press RUN and the machine really
-          executes what you wrote — the inspection tells you exactly what’s right and what isn’t.
+          Watching is easy — <strong>this shop pays for working code</strong>. Press RUN and your
+          code really executes; the inspection shows exactly what’s right and what isn’t.
         </p>
       ),
+      action: <>Write the whole thing yourself, then press RUN</>,
       Interactive: WriteChallenge,
       stuck: (
         <>

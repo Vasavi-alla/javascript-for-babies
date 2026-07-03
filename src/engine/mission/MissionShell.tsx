@@ -7,6 +7,7 @@ import { PaperCard } from '../../design/PaperCard'
 import { StickyNote } from '../../design/StickyNote'
 import { TapeLabel } from '../../design/TapeLabel'
 import { InkButton } from '../../design/InkButton'
+import { HighlightMark } from '../../design/HighlightMark'
 import { useProgress } from '../../store/progress'
 import { QuizCard } from '../lesson/QuizCard'
 import { TeachBack } from '../lesson/TeachBack'
@@ -22,11 +23,17 @@ import type { MissionChallenge, MissionDef } from './types'
  */
 export function MissionShell({ def }: { def: MissionDef }) {
   const meta = findLesson(def.id)
-  const { completedLessons, markComplete } = useProgress()
+  const { completedLessons, markComplete, completedChallenges, markChallengeComplete } = useProgress()
   const isDone = Boolean(completedLessons[def.id])
 
-  // Revisiting a finished lesson shows everything at once, still playable.
-  const [doneCount, setDoneCount] = useState(isDone ? def.challenges.length : 0)
+  // Resume where the learner left off: completed job steps stay completed
+  // across visits (persisted per challenge id in the progress store).
+  const [doneCount, setDoneCount] = useState(() => {
+    if (isDone) return def.challenges.length
+    let n = 0
+    while (n < def.challenges.length && completedChallenges[def.challenges[n].id]) n++
+    return n
+  })
   const allDone = doneCount >= def.challenges.length
 
   const orderIndex = LESSONS.findIndex((l) => l.id === def.id)
@@ -59,7 +66,10 @@ export function MissionShell({ def }: { def: MissionDef }) {
           stepNumber={i + 1}
           totalSteps={def.challenges.length}
           completed={i < doneCount}
-          onComplete={() => setDoneCount((n) => Math.max(n, i + 1))}
+          onComplete={() => {
+            markChallengeComplete(challenge.id)
+            setDoneCount((n) => Math.max(n, i + 1))
+          }}
         />
       ))}
 
@@ -179,7 +189,13 @@ function ChallengeFrame({
         {completed && <span className="text-marker-teal ml-2">✓</span>}
       </TapeLabel>
       <PaperCard id={`challenge-card-${challenge.id}`} tilt={false} className="mt-4">
-        <div className="mb-4 flex flex-col gap-2 text-lg">{challenge.prompt}</div>
+        <div className="mb-2 flex flex-col gap-2 text-lg">{challenge.prompt}</div>
+        <p className="font-hand mb-4 text-2xl leading-snug">
+          👉{' '}
+          <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 50%, transparent)">
+            {challenge.action}
+          </HighlightMark>
+        </p>
         <challenge.Interactive onComplete={onComplete} />
 
         <div className="mt-4">
