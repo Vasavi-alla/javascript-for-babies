@@ -1,0 +1,56 @@
+# 05 — Progress (source of truth for day-to-day work)
+
+> Update this file at the end of every session: statuses, next-up list, session log.
+
+## Status board
+| Milestone | Deliverable | Status |
+|---|---|---|
+| Planning | Plan files (00–05), CLAUDE.md | ✅ done (2026-07-02) |
+| M0 | Scaffold: Vite + React + TS, Tailwind, fonts, design tokens, paper texture, core design components (PaperCard, RoughBox, HandArrow, StickyNote, InkButton, CodePane, ConsolePane, Stepper), app shell + router, lesson registry, Stepper engine, curriculum map + per-phase pages | ✅ done (2026-07-02) |
+| M1 | Phase 0 (5 lessons) + Phase 1 (10 lessons + checkpoint). Hero build: `MemoryDiagram` | ✅ done (2026-07-02) — all of Phase 0 (0.1–0.5) and Phase 1 (1.1–1.11) built; user verified through 1.4, later lessons pending user verification |
+| M2 | Phase 2 + Phase 3 (FlowRoad, LoopMachine, FunctionMachine, ScopeLens, CallStackTower, ClosureBackpack) | 🟨 in progress — **Phase 2 complete (2.1–2.8)**; Phase 3: 3.1–3.4 built, 3.5–3.11 remain |
+| M3 | Phase 4 + Phase 5 (heap-mode MemoryDiagram, PipelineBelt, TwoPassScanner, ThisCompass, PrototypeChain) | ⬜ not started |
+| M4 | Sandbox v1 (acorn + step-evaluator; variables/functions/control flow) | ⬜ not started |
+| M5 | Phase 6 (EventLoopMachine 🎬, PromiseTimeline, NetworkRoundTrip) + sandbox async | ⬜ not started |
+| M6 | Phase 7 + Phase 8 (DOMTree, SelectorLab, EventBubbles, ModuleGraph) | ⬜ not started |
+| M7 | Phase 9 + Phase 10 (TestPyramid, AssertionScale, TestRunnerPane, PlaywrightBridge, SelectorLab v2) | ⬜ not started |
+| M8 | Polish: recall deck, journal review, progress export, reduced-motion & a11y pass, optional chalkboard theme | ⬜ not started |
+
+## Next up (top = do first)
+1. **Phase 3 second half**: 3.5 scope/ScopeLens 🎬, 3.6 call stack/CallStackTower 🎬, 3.7 closures/ClosureBackpack 🎬, 3.8 HOFs & callbacks, 3.9 recursion, 3.10 defaults/rest/pure functions, 3.11 checkpoint: tip calculator. All 11 Phase 3 registry entries exist (3.1–3.4 'available', rest 'planned' — flip each to 'available' when built). 3.1–3.4 are built but **not yet user-verified in the browser**. Setup notes for continuity: 3.2 promised "a spectacular exception" to slots-forget-everything (→ deliver in 3.7 closures); 3.3/3.4 teased hoisting & `this` (→ Phase 5); 3.4 teased passing machines into machines (→ 3.8).
+2. Phase 2 lab (`src/labs/`) still missing — phases 0/1 have labs. Consider a LoopMachine playground.
+2. **Fun facts are OPTIONAL (user refinement 2026-07-03: "not all facts are fun")** — include a "Fun fact:" only when it's genuinely story-worthy (V8 naming, typeof-null 1995, AT&T 1990); skip dry terminology/spec history entirely. Never invent facts. See memory: feedback-fun-facts.
+2. Before starting M2, have the user run through 1.5–1.11 in the browser (not yet user-verified) and collect feedback — especially the 1.11 MadLibsBuilder interactive.
+3. User asked (2026-07-02) about objects & call-by-value/call-by-reference: confirmed it's Phase 4 (lesson 4.4 updated in 01-CURRICULUM.md to explicitly cover call by value vs call by reference/sharing for function arguments). Honor this when building Phase 4.
+4. Note: user prefers to run/verify the app themselves; don't auto-run builds without need.
+2. Lesson framework already exists: `engine/lesson/LessonShell.tsx` renders a `LessonDef` (see `engine/lesson/types.ts`); lessons live in `src/lessons/phaseN/lessonNN.tsx`, are registered in `src/lessons/index.ts`, and their registry status flipped to 'available' in `src/content/registry.ts`. Follow the existing Phase 0 lessons as templates (0.1 is the reference).
+3. Progress store (`src/store/progress.ts`): completion + teach-back journal, persisted. A journal review page is still to build (M8).
+4. Caution: don't edit `src/content/registry.ts` with PowerShell regex — it corrupts UTF-8 (happened once; file was rewritten). Use the Edit tool.
+
+## Standing user feedback (apply to ALL future work)
+- **Write for true newbies.** No expert one-liners anywhere in the UI; every phase/lesson listing carries a plain-words explanation. Phase intros live in `src/content/phase-intros.ts`.
+- **Motivation before mechanism.** Every phase (and lesson) opens with "why do we need this?" — what breaks without the concept (`whyNeeded` in phase-intros).
+- **Foundations get priority.** Phases 0–1 are visually elevated ("start here — the foundation").
+- **Name and explain runtime concepts explicitly** — synchronous, asynchronous, blocking, non-blocking, single-threaded, Node.js's model (Phase 6 + 8 intros do this; lessons must too).
+- Structure: compact home map → rich per-phase pages, not everything on one page.
+- **Labs are per phase** (`src/labs/`, rendered on phase pages). `/design` is only the app's internal style guide.
+- **Prediction/quiz wording must stand alone** in plain language — never depend on a metaphor from an earlier step (e.g. say "keeps age but swaps what it remembers", not "the label moves to a brand-new box").
+- **Keep "Under the Hood" compact** (user request 2026-07-03): 3 short paragraphs max (~250 words total incl. the fun fact), matching Phase 0–2 lessons. Long walls of text lose the learner's attention. See memory: feedback-compact-under-the-hood.
+
+## Working agreements
+- Verify every lesson in the browser before marking done.
+- After each milestone, pause for the user to actually *use* the lessons and give feedback before starting the next.
+- Lesson content lives in the app (React), plans live here in markdown.
+
+## Session log
+| Date | What happened |
+|---|---|
+| 2026-07-02 | Project kickoff. Decisions made: warm-sketchbook UI, phased interaction (guided → sandbox), Playwright as the automation target. Wrote plan files 00–05 and CLAUDE.md. No code yet. |
+| 2026-07-02 | M0 built: Vite+React+TS scaffold, sketchbook design system (rough.js primitives, PaperCard, StickyNote, InkButton, TapeLabel, HighlightMark, CodePane/shiki, ConsolePane), stepper engine with prediction gates, lesson registry, design lab (`/design`) with a live lesson-1.2 preview. User feedback after first run: map copy too vague for newbies → added per-phase pages (`/phase/:n`) with plain-words intros + key-term glossaries (`src/content/phase-intros.ts`), elevated Phases 0–1 as "the foundation", explicitly covered sync/async/blocking/non-blocking/Node concepts in phase intros. |
+| 2026-07-02 | Second feedback round: added "why do we need this?" sections to all phase intros (variables especially); made labs per-phase (`src/labs/`: Phase0Lab = big-picture code→engine→memory→output diagram, Phase1Lab = variable-birth stepper moved out of the common gallery); `/design` demoted to internal style guide; rewrote the reassignment prediction in plain standalone language (no box/label-metaphor dependence). |
+| 2026-07-02 | Built the full lesson framework (LessonShell 6-part anatomy, QuizCard, TeachBack + journal, progress store with localStorage, done-badges on phase pages and map) and ALL of Phase 0: 0.1 InstructionTape, 0.2 EngineDiagram, 0.3 ConsoleViz + live TryConsole, 0.4 MemoryWall, 0.5 ErrorAnatomy. User verified Phase 0 working. Then Phase 1 lessons 1.1 (ValueZoo), 1.2 (MemoryDiagram hero lesson), 1.3 (Reassignment with evaluation bubble). Session ended near usage limit; next: 1.4–1.11. |
+| 2026-07-03 | **Started Phase 3 (M2 second half)** — built 3.1 what-is-a-function (FunctionMachine 🎬: hopper/gear/chute, define-vs-call as the core beat, "nothing printed yet" prediction; Eich/Scheme 10-days fun fact), 3.2 params vs args (two labeled slots, positional matching, fresh-slots-per-call, missing-arg→undefined prediction; ALGOL 60 formal/actual-parameters fun fact), 3.3 return (returned value travels back and REPLACES the call at a call-site strip; sealed-chute machine for the console.log-vs-return confusion; window-vs-chute picture; Dartmouth BASIC 1964 GOSUB/RETURN fun fact), 3.4 function expressions & arrows (functions-are-values: memory slots holding tiny machines, typeof→"function" prediction, braces-kill-auto-return quiz gotcha; CoffeeScript => fun fact). Registry now lists all Phase 3 lessons (3.5–3.11 'planned'). Also fixed 3 pre-existing TS unused-import errors in phase 2 lessons (22, 24, 27) that broke `npm run build`; build now green. 3.1–3.4 not yet user-verified in browser. |
+| 2026-07-03 | **Phase 2 complete**: 2.7 break/continue/nested (station track with ejector seat & skip ramp, grid-multiplication viz, test-matrix quiz, Dijkstra goto fun fact), 2.8 FizzBuzz checkpoint (gate corridor walk per number, the gate-order trap prediction, full 1–15 rhythm grid, interactive FizzBuzzExplorer with Jazz-for-7 challenge, Imran Ghory/Jeff Atwood fun fact). |
+| 2026-07-03 | Fixed scroll-to-top on route change (ScrollToTop in App.tsx — React Router keeps scroll position otherwise). Built 2.4 ternary & short-circuit (value-picking fork, || default rail with the 0-stomping trap + ?? fix, && guard; C-1972 vs ??-2020 fun fact), 2.5 while (circular road + gate, laps, infinite-loop freeze; Halting Problem fun fact), 2.6 for/LoopMachine (three slots with schedules, odometer, checks=laps+1 prediction; FORTRAN "i" fun fact). |
+| 2026-07-03 | Started M2 / Phase 2: 2.1 if/else (FlowRoad — traveling token, grayed untaken road, CPU branch-prediction fun fact), 2.2 truthy/falsy (Boolean-izer funnel, the falsy six, "0"/" " surprises, document.all fun fact), 2.3 else-if & switch (gate corridor, first-true-wins prediction, switch ladder with fall-through, AT&T 1990 fun fact). Registry now lists Phase 2 lessons (2.4–2.8 planned). User requested standing "fun facts" rule → saved to memory + Next up. |
+| 2026-07-02 | Finished Phase 1 → **M1 complete**: 1.4 (ConstScene: padlocked label + TypeError bounce + var ghost), 1.5 (NumberLineViz: hops, %, the 0.1+0.2 microscope), 1.6 (StringTrain: indexed cars, gluing, template slots), 1.7 (NothingScene: undefined vs null, typeof-null gotcha), 1.8 (TypeofScene: type tags live on values), 1.9 (CoercionMachine: "5"+5 vs "5"-5, == vs ===), 1.10 (ExpressionTree: leaves-to-root evaluation, short-circuit, precedence-as-tree), 1.11 (checkpoint: Mad Libs — CheckpointScene + interactive MadLibsBuilder that writes the user's program from their inputs + real-console F12 graduation challenge). Also answered user's objects question: references/call-by-value-vs-reference live in Phase 4 lesson 4.4 (curriculum doc updated to make function-argument passing explicit). |
