@@ -25,108 +25,140 @@ const DEFINITION = `function greet(name) {
   console.log("Hello, " + name + "!");
 }`
 
-// ── the greeting machine drawing ──────────────────────────────────────────
+// ── the greeting machine: an assembly line, work visible inside ──────────
+// Left-to-right flow: a value rides the belt in through the input window,
+// the workbench inside visibly glues "Hello, " + value + "!", and the
+// finished sentence rides out toward the console. No abstract gears.
 
-type Spotlight = 'frame' | 'tape' | 'slot' | 'gear' | null
-
-function Gear({ cx, cy, turning }: { cx: number; cy: number; turning: boolean }) {
-  return (
-    <motion.g
-      animate={{ rotate: turning ? 150 : 0 }}
-      transition={{ type: 'spring', damping: 14 }}
-      style={{ originX: `${cx}px`, originY: `${cy}px` }}
-    >
-      <RoughEllipse cx={cx} cy={cy} width={44} height={44} seed={331} strokeWidth={2} />
-      {[0, 60, 120].map((deg) => (
-        <RoughLine
-          key={deg}
-          x1={cx + 21 * Math.cos((deg * Math.PI) / 180)}
-          y1={cy + 21 * Math.sin((deg * Math.PI) / 180)}
-          x2={cx - 21 * Math.cos((deg * Math.PI) / 180)}
-          y2={cy - 21 * Math.sin((deg * Math.PI) / 180)}
-          seed={332 + deg}
-          strokeWidth={1.5}
-        />
-      ))}
-    </motion.g>
-  )
-}
+type Spotlight = 'frame' | 'tape' | 'slot' | 'work' | null
 
 const SPOTLIGHTS: Record<Exclude<Spotlight, null>, { cx: number; cy: number; w: number; h: number }> = {
-  frame: { cx: 220, cy: 134, w: 230, h: 210 },
-  tape: { cx: 220, cy: 89, w: 130, h: 48 },
-  slot: { cx: 220, cy: 176, w: 130, h: 38 },
-  gear: { cx: 220, cy: 140, w: 76, h: 76 },
+  frame: { cx: 233, cy: 118, w: 268, h: 168 },
+  tape: { cx: 233, cy: 59, w: 156, h: 48 },
+  slot: { cx: 120, cy: 150, w: 78, h: 66 },
+  work: { cx: 245, cy: 101, w: 200, h: 74 },
+}
+
+/** One puzzle piece on the workbench. */
+function Piece({ x, w, text, teal, dashed }: { x: number; w: number; text: string; teal?: boolean; dashed?: boolean }) {
+  return (
+    <g>
+      <RoughRect
+        x={x}
+        y={88}
+        width={w}
+        height={26}
+        seed={410 + x}
+        fill={teal ? 'var(--color-marker-teal)' : 'var(--color-paper, #fdf8ee)'}
+        fillStyle="solid"
+        strokeWidth={1.2}
+        roughness={dashed ? 2.2 : 1.2}
+      />
+      <text
+        x={x + w / 2}
+        y={105}
+        textAnchor="middle"
+        fontFamily="var(--font-code)"
+        fontSize={11}
+        fontWeight={600}
+        fill={dashed ? 'var(--color-ink-soft)' : 'var(--color-ink)'}
+      >
+        {text}
+      </text>
+    </g>
+  )
 }
 
 function GreetMachine({
   hasTape,
   hasSlot,
-  hasGear,
+  hasWork,
   input,
-  running,
+  output,
   shake = 0,
   spotlight = null,
 }: {
   hasTape: boolean
   hasSlot: boolean
-  hasGear: boolean
+  hasWork: boolean
+  /** value currently riding the belt into the input window, e.g. '"Rosa"' */
   input: string | null
-  running: boolean
+  /** finished sentence currently riding out, e.g. 'Hello, Rosa!' */
+  output?: string | null
   shake?: number
   spotlight?: Spotlight
 }) {
-  const complete = hasTape && hasSlot && hasGear
+  const complete = hasTape && hasSlot && hasWork
   const ring = spotlight ? SPOTLIGHTS[spotlight] : null
+  // While a value is inside, the workbench shows it in the name piece.
+  const working = input !== null
   return (
-    <svg viewBox="0 0 440 250" className="w-full">
+    <svg viewBox="0 0 470 215" className="w-full">
       <motion.g
         key={shake}
         animate={shake > 0 ? { x: [0, -5, 5, -3, 3, 0] } : { x: 0 }}
         transition={{ duration: 0.45 }}
       >
-        {/* the frame — hopper, housing, chute */}
+        {/* the belt: in on the left, out on the right */}
+        <RoughLine x1={10} y1={150} x2={92} y2={150} seed={401} strokeWidth={2} />
+        <RoughLine x1={84} y1={144} x2={94} y2={150} seed={402} strokeWidth={2} />
+        <RoughLine x1={84} y1={156} x2={94} y2={150} seed={403} strokeWidth={2} />
+        <text x={8} y={196} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+          values ride in →
+        </text>
+        <RoughLine x1={352} y1={150} x2={448} y2={150} seed={404} strokeWidth={2} />
+        <RoughLine x1={440} y1={144} x2={450} y2={150} seed={405} strokeWidth={2} />
+        <RoughLine x1={440} y1={156} x2={450} y2={150} seed={406} strokeWidth={2} />
+        <text x={340} y={196} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+          → result rides out
+        </text>
+
+        {/* the frame — a pencil sketch until every part is bolted on */}
         <motion.g animate={{ opacity: complete ? 1 : 0.35 }}>
-          <RoughLine x1={155} y1={38} x2={195} y2={86} seed={333} strokeWidth={2} />
-          <RoughLine x1={285} y1={38} x2={245} y2={86} seed={334} strokeWidth={2} />
-          <text x={322} y={50} fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-ink-soft)">
-            input hopper
-          </text>
-          <RoughRect x={148} y={86} width={144} height={108} seed={335} fill="var(--color-sticky)" fillStyle="solid" />
-          <RoughLine x1={292} y1={175} x2={340} y2={215} seed={337} strokeWidth={2} />
-          <RoughLine x1={272} y1={192} x2={318} y2={230} seed={338} strokeWidth={2} />
-          <text x={348} y={202} fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-ink-soft)">
-            output chute
-          </text>
+          <RoughRect x={102} y={44} width={262} height={130} seed={407} fill="var(--color-sticky)" fillStyle="solid" />
         </motion.g>
 
+        {/* part: the name tape on top */}
         <AnimatePresence>
           {hasTape && (
             <motion.g initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }}>
-              <RoughRect x={175} y={76} width={90} height={26} seed={336} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
-              <text x={220} y={94} textAnchor="middle" fontFamily="var(--font-code)" fontSize={14} fontWeight={700} fill="var(--color-ink)">
+              <RoughRect x={173} y={46} width={120} height={26} seed={408} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
+              <text x={233} y={64} textAnchor="middle" fontFamily="var(--font-code)" fontSize={14} fontWeight={700} fill="var(--color-ink)">
                 greet
               </text>
             </motion.g>
           )}
         </AnimatePresence>
 
-        {hasGear && <Gear cx={220} cy={140} turning={running} />}
-
+        {/* part: the input window on the left wall */}
         <AnimatePresence>
           {hasSlot && (
-            <motion.text
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              x={220}
-              y={182}
-              textAnchor="middle"
-              fontFamily="var(--font-code)"
-              fontSize={11.5}
-              fill="var(--color-ink-soft)"
-            >
-              slot: name
-            </motion.text>
+            <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <RoughRect x={96} y={132} width={48} height={36} seed={409} fill="var(--color-paper, #fdf8ee)" fillStyle="solid" strokeWidth={1.5} />
+              <text x={120} y={126} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink-soft)">
+                in: name
+              </text>
+            </motion.g>
+          )}
+        </AnimatePresence>
+
+        {/* part: the workbench — the sentence being glued, visibly */}
+        <AnimatePresence>
+          {hasWork && (
+            <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+              <text x={160} y={82} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
+                the work: glue the sentence
+              </text>
+              <Piece x={158} w={62} text={'"Hello, "'} />
+              {working ? (
+                <motion.g key={input} initial={{ scale: 0.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} style={{ originX: '256px', originY: '101px' }}>
+                  <Piece x={224} w={64} text={input ?? ''} teal />
+                </motion.g>
+              ) : (
+                <Piece x={224} w={64} text="name" dashed />
+              )}
+              <Piece x={292} w={28} text={'"!"'} />
+            </motion.g>
           )}
         </AnimatePresence>
 
@@ -151,18 +183,37 @@ function GreetMachine({
         )}
       </motion.g>
 
+      {/* a value riding the belt into the input window */}
       <AnimatePresence>
         {input && (
           <motion.g
             key={input}
-            initial={{ x: 220, y: 4, opacity: 0 }}
-            animate={{ x: 220, y: 52, opacity: 1 }}
+            initial={{ x: -95, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ type: 'spring', damping: 15 }}
+            transition={{ type: 'spring', damping: 16 }}
           >
-            <RoughRect x={-42} y={-14} width={84} height={28} seed={339} fill="var(--color-marker-teal)" fillStyle="solid" strokeWidth={1.5} />
-            <text x={0} y={5} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fontWeight={600} fill="var(--color-ink)">
+            <RoughRect x={78} y={136} width={84} height={28} seed={411} fill="var(--color-marker-teal)" fillStyle="solid" strokeWidth={1.5} />
+            <text x={120} y={155} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fontWeight={600} fill="var(--color-ink)">
               {input}
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* the finished sentence riding out toward the console */}
+      <AnimatePresence>
+        {output && (
+          <motion.g
+            key={output}
+            initial={{ x: -40, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ type: 'spring', damping: 16 }}
+          >
+            <RoughRect x={342} y={124} width={120} height={26} seed={412} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
+            <text x={402} y={141} textAnchor="middle" fontFamily="var(--font-code)" fontSize={10.5} fontWeight={600} fill="var(--color-ink)">
+              {output}
             </text>
           </motion.g>
         )}
@@ -201,23 +252,24 @@ const ANATOMY: Array<{ key: string; spotlight: Spotlight; heading: string; expla
   {
     key: 'param',
     spotlight: 'slot',
-    heading: '(name) — the input slot',
+    heading: '(name) — the input window',
     explain: (
       <>
-        The <strong>input slot</strong> — the machine’s only door for stuff from outside. Whatever
-        value the caller drops in will be known as <code>name</code> while the machine runs. (Rosa’s
-        machine needs exactly one input: who just walked in.)
+        The <strong>input window</strong> — the only way in. Values ride the belt from the left and
+        enter here; whatever arrives will be known as <code>name</code> while the machine works.
+        (Rosa’s machine needs exactly one input: who just walked in.)
       </>
     ),
   },
   {
     key: 'body',
-    spotlight: 'gear',
+    spotlight: 'work',
     heading: 'the body — the work',
     explain: (
       <>
-        Between the braces lives the <strong>body</strong>: the actual work. Here it glues{' '}
-        <code>"Hello, "</code> + the name + <code>"!"</code> and prints it. One crucial secret:{' '}
+        Between the braces lives the <strong>body</strong>: the actual work. Look at the workbench
+        inside the machine — three pieces waiting to be glued: <code>"Hello, "</code>, whatever’s
+        in the window, and <code>"!"</code>. One crucial secret:{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           writing the work down does NOT do the work
         </HighlightMark>{' '}
@@ -286,14 +338,7 @@ function BlueprintChallenge({ onComplete }: { onComplete: () => void }) {
               : `${ANATOMY.filter((p) => visited[p.key]).length} of 4 parts inspected — the bright yellow ones with dashed borders are still waiting for a click. (Teal = already done.)`}
           </p>
         </div>
-        <GreetMachine
-          hasTape
-          hasSlot
-          hasGear
-          input={null}
-          running={false}
-          spotlight={activePart?.spotlight ?? null}
-        />
+        <GreetMachine hasTape hasSlot hasWork input={null} spotlight={activePart?.spotlight ?? null} />
       </div>
 
       {activePart && (
@@ -323,8 +368,8 @@ function BlueprintChallenge({ onComplete }: { onComplete: () => void }) {
 
 const PARTS = [
   { key: 'tape', code: 'greet', caption: '🏷️ the machine’s name' },
-  { key: 'slot', code: 'name', caption: '📥 the input slot' },
-  { key: 'gear', code: 'console.log("Hello, " + name + "!");', caption: '⚙️ the work' },
+  { key: 'slot', code: 'name', caption: '📥 the input window' },
+  { key: 'work', code: 'console.log("Hello, " + name + "!");', caption: '🧩 the work' },
 ] as const
 
 /** A part in the tray IS a piece of code — the caption says which part it is. */
@@ -392,7 +437,7 @@ function AssembleChallenge({ onComplete }: { onComplete: () => void }) {
             function <Blank filled={Boolean(placed.tape)} text="greet" width="5" />(
             <Blank filled={Boolean(placed.slot)} text="name" width="4" />) {'{'}
             {'\n  '}
-            <Blank filled={Boolean(placed.gear)} text='console.log("Hello, " + name + "!");' width="20" />
+            <Blank filled={Boolean(placed.work)} text='console.log("Hello, " + name + "!");' width="20" />
             {'\n'}
             {'}'}
           </pre>
@@ -416,9 +461,8 @@ function AssembleChallenge({ onComplete }: { onComplete: () => void }) {
           <GreetMachine
             hasTape={Boolean(placed.tape)}
             hasSlot={Boolean(placed.slot)}
-            hasGear={Boolean(placed.gear)}
+            hasWork={Boolean(placed.work)}
             input={null}
-            running={false}
           />
           {complete && <ConsolePane lines={[]} />}
         </div>
@@ -462,6 +506,7 @@ function GoChallenge({ onComplete }: { onComplete: () => void }) {
   const [phase, setPhase] = useState<'idle' | 'dropping' | 'rush'>('idle')
   const [served, setServed] = useState<string[]>([])
   const [dropping, setDropping] = useState<string | null>(null)
+  const [outChip, setOutChip] = useState<string | null>(null)
   const rushDone = served.length === RUSH.length
 
   function tryPlain() {
@@ -469,28 +514,36 @@ function GoChallenge({ onComplete }: { onComplete: () => void }) {
     setTriedPlain(true)
   }
 
+  // The little play: value rides in (t=0), result rides out (t≈500ms),
+  // console line lands and the belt clears (t≈1100ms).
+  function animateRun(visitor: string, andThen: () => void) {
+    setDropping(`"${visitor}"`)
+    window.setTimeout(() => setOutChip(`Hello, ${visitor}!`), 500)
+    window.setTimeout(() => {
+      setDropping(null)
+      setOutChip(null)
+      andThen()
+    }, 1100)
+  }
+
   function tryCall() {
     if (phase !== 'idle') return
     setPhase('dropping')
-    setDropping('"Rosa"')
-    window.setTimeout(() => {
+    animateRun('Rosa', () => {
       setServed(['Rosa'])
-      setDropping(null)
       setPhase('rush')
-    }, 700)
+    })
   }
 
   function serve(visitor: string) {
     if (dropping || served.includes(visitor)) return
-    setDropping(`"${visitor}"`)
-    window.setTimeout(() => {
+    animateRun(visitor, () => {
       setServed((s) => {
         const next = [...s, visitor]
         if (next.length === RUSH.length + 1) onComplete()
         return next
       })
-      setDropping(null)
-    }, 650)
+    })
   }
 
   const code = [
@@ -536,14 +589,7 @@ function GoChallenge({ onComplete }: { onComplete: () => void }) {
           )}
         </div>
         <div className="flex flex-col gap-3">
-          <GreetMachine
-            hasTape
-            hasSlot
-            hasGear
-            input={dropping}
-            running={dropping !== null}
-            shake={shake}
-          />
+          <GreetMachine hasTape hasSlot hasWork input={dropping} output={outChip} shake={shake} />
           <ConsolePane lines={served.map((n) => `Hello, ${n}!`)} />
         </div>
       </div>
