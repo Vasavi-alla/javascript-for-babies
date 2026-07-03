@@ -17,6 +17,37 @@ const CHASE_SPEED = 85 // px per second, following a finger/pencil
 
 type Mood = 'sleeping' | 'sitting' | 'walking' | 'petted'
 
+/**
+ * Optional sprite skin — the video-to-GIF trick.
+ * Drop three looping animated images into public/cat/ and Barnaby wears
+ * them instead of the built-in vector poses (behavior/chasing/petting
+ * unchanged): walk.webp|gif, sit.webp|gif, sleep.webp|gif — side view,
+ * FACING RIGHT (the app flips him left automatically), transparent
+ * background, ~240px wide. Recipe lives in public/cat/README.txt.
+ * No files → the hand-drawn vector cat below is used. All-or-nothing.
+ */
+const SPRITE_MOODS = ['walk', 'sit', 'sleep'] as const
+type SpriteSet = Record<(typeof SPRITE_MOODS)[number], string>
+
+function probeImage(src: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new Image()
+    img.onload = () => resolve(true)
+    img.onerror = () => resolve(false)
+    img.src = src
+  })
+}
+
+async function resolveSprites(): Promise<SpriteSet | null> {
+  const found = {} as SpriteSet
+  for (const mood of SPRITE_MOODS) {
+    if (await probeImage(`/cat/${mood}.webp`)) found[mood] = `/cat/${mood}.webp`
+    else if (await probeImage(`/cat/${mood}.gif`)) found[mood] = `/cat/${mood}.gif`
+    else return null
+  }
+  return found
+}
+
 export function ResidentCat() {
   const [floorRef, { width: floorWidth }] = useMeasure<HTMLDivElement>()
   const [mood, setMood] = useState<Mood>('sleeping')
@@ -26,6 +57,7 @@ export function ResidentCat() {
   const [twitch, setTwitch] = useState(0)
   const [fidget, setFidget] = useState(0) // re-arms the sitting timer on "stay" rolls
   const [frame, setFrame] = useState(0) // walk-cycle sprite frame
+  const [sprites, setSprites] = useState<SpriteSet | null>(null)
   const [hearts, setHearts] = useState<number[]>([])
   const xLive = useRef(12)
   const heartId = useRef(0)
@@ -73,13 +105,24 @@ export function ResidentCat() {
     return () => window.clearTimeout(timer)
   }, [mood, fidget, floorWidth, walkSeconds, x])
 
-  // The sprite-cycle trick: while walking, flip between drawn poses in
-  // discrete steps (no tweening) — the snap between frames reads as a gait.
+  // Wear the GIF/WebP skin if the assets exist (see public/cat/README.txt).
   useEffect(() => {
-    if (mood !== 'walking') return
+    let alive = true
+    resolveSprites().then((set) => {
+      if (alive) setSprites(set)
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  // The sprite-cycle trick (vector fallback only): while walking, flip
+  // between drawn poses in discrete steps — the snap reads as a gait.
+  useEffect(() => {
+    if (mood !== 'walking' || sprites) return
     const timer = window.setInterval(() => setFrame((f) => (f + 1) % 4), 130)
     return () => window.clearInterval(timer)
-  }, [mood])
+  }, [mood, sprites])
 
   // oneko-style: lead him with a finger, mouse, or hovering Pencil.
   function chase(e: React.PointerEvent<HTMLDivElement>) {
@@ -151,7 +194,14 @@ export function ResidentCat() {
           )}
 
           <div style={{ transform: dir === -1 ? 'scaleX(-1)' : undefined }}>
-            {mood === 'walking' ? (
+            {sprites ? (
+              <img
+                src={mood === 'walking' ? sprites.walk : mood === 'sleeping' ? sprites.sleep : sprites.sit}
+                alt=""
+                draggable={false}
+                className="pointer-events-none h-24 w-auto select-none"
+              />
+            ) : mood === 'walking' ? (
               <WalkingPose frame={frame} />
             ) : mood === 'sleeping' ? (
               <SleepingPose twitch={twitch} />
