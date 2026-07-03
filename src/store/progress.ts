@@ -11,10 +11,13 @@ interface ProgressState {
   solvedExercises: Record<string, string>
   /** mission challengeId → ISO date completed (so revisits don't restart job steps) */
   completedChallenges: Record<string, string>
+  /** local day (YYYY-MM-DD) → active study minutes; fed by the break coach */
+  studyLog: Record<string, number>
   markComplete: (lessonId: string) => void
   saveJournal: (lessonId: string, text: string) => void
   markExerciseSolved: (exerciseId: string) => void
   markChallengeComplete: (challengeId: string) => void
+  logStudyMinute: (day: string) => void
 }
 
 export const useProgress = create<ProgressState>()(
@@ -24,6 +27,7 @@ export const useProgress = create<ProgressState>()(
       journal: {},
       solvedExercises: {},
       completedChallenges: {},
+      studyLog: {},
       markComplete: (lessonId) =>
         set((s) => ({
           completedLessons: { ...s.completedLessons, [lessonId]: new Date().toISOString() },
@@ -38,6 +42,8 @@ export const useProgress = create<ProgressState>()(
         set((s) => ({
           completedChallenges: { ...s.completedChallenges, [challengeId]: new Date().toISOString() },
         })),
+      logStudyMinute: (day) =>
+        set((s) => ({ studyLog: { ...s.studyLog, [day]: (s.studyLog[day] ?? 0) + 1 } })),
     }),
     { name: 'jfb-progress' },
   ),

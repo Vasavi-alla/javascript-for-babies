@@ -5,6 +5,7 @@ import { useProgress } from '../store/progress'
 import { PaperCard } from '../design/PaperCard'
 import { TapeLabel } from '../design/TapeLabel'
 import { HighlightMark } from '../design/HighlightMark'
+import { JourneyPanel } from './JourneyPanel'
 
 /** First sentence of a phase's plain-words intro — a real teaser, not jargon. */
 function teaser(phaseNumber: number): string {
@@ -27,6 +28,8 @@ export function CurriculumMap() {
 
   return (
     <div className="flex flex-col gap-12">
+      <JourneyPanel />
+
       <p className="max-w-2xl">
         Eleven regions on the road from{' '}
         <HighlightMark type="circle" color="var(--color-marker-coral)">zero</HighlightMark> to{' '}
