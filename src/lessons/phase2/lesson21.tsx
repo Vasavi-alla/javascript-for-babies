@@ -260,11 +260,11 @@ export const lesson21: LessonDef = {
   quiz: [
     {
       kind: 'type-output',
-      question: 'How many lines does this print? Type the number.',
-      code: 'let temp = 30;\nif (temp > 25) { console.log("Hot"); }\nconsole.log("Done");',
-      accept: ['2', 'two'],
+      question: 'Same shape as the one you watched — but colder. How many lines does THIS print? Type the number.',
+      code: 'let temp = 15;\nif (temp > 25) { console.log("Hot"); }\nconsole.log("Done");',
+      accept: ['1', 'one'],
       placeholder: 'a number…',
-      why: 'Two: 30 > 25 is true → "Hot" prints, then the roads rejoin and "Done" prints regardless — it sits after the whole if. No else here: an if alone is a legal “maybe do extra” fork.',
+      why: 'One! 15 > 25 is false → the if block is skipped and "Hot" never prints — but the roads rejoin, so "Done" still runs. You watched the true branch; you just traced the false one yourself.',
     },
     {
       kind: 'type-output',

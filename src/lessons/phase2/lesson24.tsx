@@ -245,10 +245,10 @@ export const lesson24: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'user is null. Type what user && user.name evaluates to — no crash, and that’s the point:',
-      accept: ['null'],
+      question: 'Same guard, new data: type what 0 && "pizza" evaluates to.',
+      accept: ['0'],
       placeholder: 'a value…',
-      why: '&& returns its first falsy side — null — and NEVER evaluates past it, so the dangerous user.name read is unreachable. That’s what makes && a guard. (Modern cousin: user?.name — Phase 8.)',
+      why: '0 — && returns its FIRST falsy side and never evaluates past it. "pizza" is never even looked at. That stop-at-falsy behavior is exactly what made user && user.name crash-proof in the lesson. (Modern cousin: user?.name — Phase 8.)',
     },
   ],
   teachBack: {

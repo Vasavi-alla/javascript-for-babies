@@ -252,10 +252,10 @@ export const lesson110: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'Climb the tree, then type what 2 + 3 * 4 gives:',
-      accept: ['14'],
+      question: 'A tree you have not climbed yet — type what 5 + 2 * 3 gives:',
+      accept: ['11'],
       placeholder: 'a value…',
-      why: 'Precedence draws the tree: * binds tighter, so 3 * 4 is a subtree that resolves to 12, then 2 + 12 = 14. Left-to-right reading is a human habit; the machine climbs trees. Want 20? Write (2 + 3) * 4 — parentheses redraw the tree.',
+      why: 'Precedence draws the tree: * binds tighter, so 2 * 3 is a subtree that resolves to 6, then 5 + 6 = 11. Left-to-right reading is a human habit; the machine climbs trees. Want 21? Write (5 + 2) * 3 — parentheses redraw the tree.',
     },
     {
       kind: 'type-output',

@@ -238,11 +238,11 @@ export const lesson25: LessonDef = {
   quiz: [
     {
       kind: 'type-output',
-      question: 'Trace the gate lap by lap: how many times does the body run? Type the number.',
-      code: 'let n = 10;\nwhile (n > 0) {\n  n = n - 3;\n}',
-      accept: ['4', 'four'],
+      question: 'Fresh numbers — trace the gate lap by lap: how many times does the body run? Type the number.',
+      code: 'let n = 12;\nwhile (n > 0) {\n  n = n - 5;\n}',
+      accept: ['3', 'three'],
       placeholder: 'a number…',
-      why: 'Four: 10>0 run (n=7), 7>0 run (n=4), 4>0 run (n=1), 1>0 run (n=-2), then -2>0 is false → stop. And notice n ends at -2 — loops don’t stop AT the boundary, they stop when the check fails. Tracing like this is a daily testing skill.',
+      why: 'Three: 12>0 run (n=7), 7>0 run (n=2), 2>0 run (n=-3), then -3>0 is false → stop. Notice n overshoots to -3 — loops don’t stop AT the boundary, they stop when the check fails. Tracing like this is a daily testing skill.',
     },
     {
       kind: 'type-output',

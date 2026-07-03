@@ -230,11 +230,11 @@ export const lesson26: LessonDef = {
   quiz: [
     {
       kind: 'type-output',
-      question: 'Type the LAST number this prints:',
-      code: 'for (let i = 0; i < 3; i++) {\n  console.log(i);\n}',
-      accept: ['2'],
+      question: 'A loop you have NOT watched — different start, different step. Type the LAST number it prints:',
+      code: 'for (let i = 2; i <= 8; i += 2) {\n  console.log(i);\n}',
+      accept: ['8'],
       placeholder: 'a number…',
-      why: '2 — init: i = 0; laps while i < 3 print 0, 1, 2; and when i becomes 3, the check 3 < 3 fails BEFORE printing. Three laps, starting at zero. This exact shape is how you’ll walk arrays in Phase 4.',
+      why: '8 — it prints 2, 4, 6, 8; then i becomes 10 and the check 10 <= 8 fails before printing. The three slots work for ANY schedule — start anywhere, step by anything, stop on any condition.',
     },
     {
       kind: 'type-output',
@@ -245,10 +245,10 @@ export const lesson26: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'for (let i = 0; i < 3; i++) — the CHECK runs how many times in total? Type the number (careful — this is the off-by-one heart of loops).',
-      accept: ['4', 'four'],
+      question: 'for (let i = 0; i < 5; i++) — the CHECK runs how many times in total? Type the number (careful — this is the off-by-one heart of loops).',
+      accept: ['6', 'six'],
       placeholder: 'a number…',
-      why: 'Four: yes (i=0), yes (1), yes (2), and the final NO at i=3 that ends the loop. Checks = laps + 1, always — off-by-one bugs live and die on this fact. (And in testing, one loop body + n data laps is data-driven testing: when run #37 fails, the counter names the culprit.)',
+      why: 'Six: five yeses (i = 0…4) plus the final NO at i = 5 that ends the loop. Checks = laps + 1, always — off-by-one bugs live and die on this fact. (And in testing, one loop body + n data laps is data-driven testing: when run #37 fails, the counter names the culprit.)',
     },
   ],
   PlayExtra: () => <CodeExercise def={COUNTDOWN_EXERCISE} />,

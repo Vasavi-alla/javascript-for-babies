@@ -76,38 +76,39 @@ function ReassignScene({ stepIndex }: { stepIndex: number }) {
 
 const MESSAGE_EXERCISE: CodeExerciseDef = {
   id: 'd1a-message',
-  title: 'store a message',
-  task: 'Make the program remember a message, say it, then change its mind and say the new one.',
+  title: 'a sentence that grows',
+  task: 'You watched score = score + 5 with numbers — now do the same read-change-store move with TEXT: one variable, growing itself twice.',
   steps: [
     <>
-      The variable must be named <code>message</code> and first hold exactly{' '}
-      <code>"Hello, machine!"</code>, later exactly <code>"Goodbye, machine!"</code>.
+      A variable named <code>sentence</code> starts as <code>"I"</code>.
     </>,
     <>
-      It must be the <strong>same variable</strong> both times — creating a second variable is not
-      allowed.
+      Grow it twice using ITSELF on the right side — first to <code>"I love"</code>, then to{' '}
+      <code>"I love JS"</code>. Each step must read the current value and add to it:{' '}
+      <code>sentence = sentence + …</code> — retyping the whole text is not allowed.
     </>,
     <>
-      Both printed lines must come from printing the variable — printing the text directly is not
-      allowed.
+      ONE <code>console.log(sentence)</code> at the very end. (Mind the spaces — they have to
+      come from the added pieces.)
     </>,
   ],
   starter: '',
-  expectedOutput: ['Hello, machine!', 'Goodbye, machine!'],
+  expectedOutput: ['I love JS'],
   mustUse: [
-    { test: /let\s+message\s*=/, label: 'message is created with a keyword that allows change' },
-    { test: /message\s*=\s*["']Goodbye, machine!["']/, label: 'the SAME variable is given the new text' },
-    { test: /console\.log\s*\(\s*message\s*\)/, label: 'the variable itself is printed' },
+    { test: /let\s+sentence\s*=\s*["']I["']/, label: 'sentence starts as "I", created with a keyword that allows change' },
+    { test: /sentence\s*=\s*sentence\s*\+[\s\S]*sentence\s*=\s*sentence\s*\+/, label: 'it grows from ITSELF twice: sentence = sentence + …' },
+    { test: /console\.log\s*\(\s*sentence\s*\)/, label: 'the variable is printed once, at the end' },
   ],
   mustNotUse: [
-    { test: /const\s+message/, label: 'const welds the label shut — this message must change' },
-    { test: /console\.log\s*\(\s*["']/, label: 'print the variable, not the raw text' },
+    { test: /["']I love JS["']/, label: 'no retyping the finished sentence — each step builds on the current value' },
+    { test: /console\.log[\s\S]*console\.log/, label: 'exactly one console.log' },
   ],
-  modelAnswer: `let message = "Hello, machine!";
-console.log(message);
+  modelAnswer: `let sentence = "I";
 
-message = "Goodbye, machine!";
-console.log(message);`,
+sentence = sentence + " love";
+sentence = sentence + " JS";
+
+console.log(sentence);`,
 }
 
 export const lesson13: LessonDef = {

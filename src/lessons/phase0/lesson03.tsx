@@ -140,24 +140,25 @@ function TryConsole() {
 const FIRST_CODE_EXERCISE: CodeExerciseDef = {
   id: 'l03-first-code',
   title: 'your first real program',
-  task: 'Two lines of real JavaScript, written by you, actually executed. You command; the machine computes.',
+  task: 'Two lines of real JavaScript, written by you, actually executed. You command; the machine computes — with math the lesson never showed you.',
   steps: [
     <>
       First line: print exactly <code>Hello!</code>
     </>,
     <>
-      Second line: make the console show <code>5</code> — but you may not type a 5 anywhere. Make
-      the <em>machine</em> compute it from <code>2 + 3</code>.
+      Second line: make the console show <code>42</code> — but you may not type 42 anywhere. Make
+      the <em>machine</em> compute it: six times seven, using the <code>*</code> symbol (that’s
+      how keyboards multiply).
     </>,
   ],
   starter: '',
-  expectedOutput: ['Hello!', '5'],
+  expectedOutput: ['Hello!', '42'],
   mustUse: [
     { test: /console\.log\s*\(\s*["']Hello!["']\s*\)/, label: 'prints Hello! with console.log' },
-    { test: /2\s*\+\s*3/, label: 'the 5 is computed by the machine (2 + 3)' },
+    { test: /6\s*\*\s*7|7\s*\*\s*6/, label: 'the 42 is computed by the machine (6 * 7)' },
   ],
-  mustNotUse: [{ test: /console\.log\s*\(\s*["']?5/, label: 'no ready-made 5 — the machine does the math' }],
-  modelAnswer: `console.log("Hello!");\nconsole.log(2 + 3);`,
+  mustNotUse: [{ test: /42/, label: 'no ready-made 42 — the machine does the math' }],
+  modelAnswer: `console.log("Hello!");\nconsole.log(6 * 7);`,
 }
 
 export const lesson03: LessonDef = {
@@ -268,10 +269,10 @@ export const lesson03: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'Now the twin with quotes: type EXACTLY what console.log("2 + 3") prints — every character.',
-      accept: ['2 + 3'],
+      question: 'Now the twin with quotes: type EXACTLY what console.log("10 - 4") prints — every character.',
+      accept: ['10 - 4'],
       placeholder: 'exact characters…',
-      why: 'The quotes mean “literal text, don’t evaluate” — so the machine copies the characters 2, space, +, space, 3 to the console. Without quotes it would have computed 5. This tiny pair is one of the most important pictures in early programming — you’ve now beaten it on day one.',
+      why: 'The quotes mean “literal text, don’t evaluate” — so the machine copies the characters 1, 0, space, minus, space, 4 to the console. Without quotes (the previous question!) it computed 6. This tiny pair is one of the most important pictures in early programming — you’ve now beaten it on day one.',
     },
   ],
   teachBack: {
