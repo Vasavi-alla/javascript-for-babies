@@ -1,5 +1,7 @@
 import { useState, type ReactNode } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
+import { hashSeed } from '../../design/seed'
+import { RoughBox } from '../../design/RoughBox'
 import { RoughEllipse, RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import { InkButton } from '../../design/InkButton'
@@ -320,10 +322,47 @@ function BlueprintChallenge({ onComplete }: { onComplete: () => void }) {
 // ── job step 2: assemble — blanks fill in as parts bolt on ───────────────
 
 const PARTS = [
-  { key: 'tape', label: '🏷️ the name tape: greet', code: 'greet' },
-  { key: 'slot', label: '📥 the input slot: name', code: 'name' },
-  { key: 'gear', label: '⚙️ the work: print “Hello, ‹name›!”', code: 'console.log("Hello, " + name + "!");' },
+  { key: 'tape', code: 'greet', caption: '🏷️ the machine’s name' },
+  { key: 'slot', code: 'name', caption: '📥 the input slot' },
+  { key: 'gear', code: 'console.log("Hello, " + name + "!");', caption: '⚙️ the work' },
 ] as const
+
+/** A part in the tray IS a piece of code — the caption says which part it is. */
+function TrayPart({
+  id,
+  code,
+  caption,
+  placed,
+  onClick,
+}: {
+  id: string
+  code: string
+  caption: string
+  placed: boolean
+  onClick: () => void
+}) {
+  return (
+    <button
+      type="button"
+      disabled={placed}
+      onClick={onClick}
+      className="group cursor-pointer text-left disabled:cursor-not-allowed disabled:opacity-45"
+    >
+      <RoughBox
+        seed={hashSeed(id)}
+        fill={placed ? undefined : 'var(--color-marker-yellow)'}
+        fillStyle="hachure"
+        className="px-3 py-1.5 transition-transform group-hover:-translate-y-px group-active:scale-[0.97]"
+      >
+        <span className="font-mono block text-[13px] font-bold">
+          {placed ? '✓ ' : ''}
+          {code}
+        </span>
+        <span className="text-ink-soft font-hand block text-lg leading-tight">{caption}</span>
+      </RoughBox>
+    </button>
+  )
+}
 
 function Blank({ filled, text, width }: { filled: boolean; text: string; width: string }) {
   return filled ? (
@@ -357,17 +396,19 @@ function AssembleChallenge({ onComplete }: { onComplete: () => void }) {
             {'\n'}
             {'}'}
           </pre>
-          <p className="font-hand text-xl">parts tray:</p>
+          <p className="font-hand text-xl">
+            parts tray — each part is a real piece of code. Click one to bolt it into its hole:
+          </p>
           <div className="flex flex-col items-start gap-2">
             {PARTS.map((part) => (
-              <InkButton
+              <TrayPart
                 id={`m31-part-${part.key}`}
                 key={part.key}
-                disabled={Boolean(placed[part.key])}
+                code={part.code}
+                caption={part.caption}
+                placed={Boolean(placed[part.key])}
                 onClick={() => setPlaced((s) => ({ ...s, [part.key]: true }))}
-              >
-                {placed[part.key] ? `✓ ${part.label}` : part.label}
-              </InkButton>
+              />
             ))}
           </div>
         </div>
@@ -672,16 +713,19 @@ export const mission31: MissionDef = {
       prompt: (
         <p>
           Now you build. The frame is already on the bench — the word <code>function</code> and the
-          braces <code>{'{ }'}</code>. Three holes in the blueprint, three parts in the tray: bolt
-          each one in and watch the code and the machine grow <em>together</em>.
+          braces <code>{'{ }'}</code>. The blueprint has <strong>three holes</strong>, and the tray
+          holds <strong>three pieces of code</strong>. Click a piece and that exact text drops into
+          its hole — while the matching part appears on the machine drawing.
         </p>
       ),
       Interactive: AssembleChallenge,
       stuck: (
         <>
-          Click the three parts-tray buttons in any order — each fills its blank in the code AND
-          appears on the machine. When all three are in, look at the console under the machine and
-          read Rosa’s reaction. The surprise (nothing printed!) is the lesson.
+          Click the three code pieces in the tray, in any order, and watch where each one lands:{' '}
+          <code>greet</code> right after <code>function</code>, <code>name</code> between the
+          parentheses, and the <code>console.log(…)</code> line between the braces. When all three
+          are in, look at the console under the machine and read Rosa’s reaction — the surprise
+          (nothing printed!) is the lesson.
         </>
       ),
     },
