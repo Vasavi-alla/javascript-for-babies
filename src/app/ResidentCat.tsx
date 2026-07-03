@@ -105,16 +105,14 @@ export function ResidentCat() {
         }
       }, 3500 + Math.random() * 4500)
     } else {
-      // walking → sit down wherever he arrived (and trust the destination,
-      // not the animation's live readout, as his resting position)
-      timer = window.setTimeout(() => {
-        xLive.current = x
-        setMood('sitting')
-      }, walkSeconds * 1000 + 150)
+      // walking — arrival is announced by onAnimationComplete on the motion
+      // element (never a stopwatch), so the sitting sprite can only appear
+      // once the movement has ACTUALLY finished. No timer here.
+      return
     }
 
     return () => window.clearTimeout(timer)
-  }, [mood, fidget, floorWidth, walkSeconds, x])
+  }, [mood, fidget, floorWidth])
 
   // Wear the GIF/WebP skin if the assets exist (see public/cat/README.txt).
   useEffect(() => {
@@ -187,6 +185,12 @@ export function ResidentCat() {
             const v = latest.x
             const parsed = typeof v === 'number' ? v : parseFloat(String(v))
             if (!Number.isNaN(parsed)) xLive.current = parsed
+          }}
+          onAnimationComplete={() => {
+            if (mood === 'walking') {
+              xLive.current = x
+              setMood('sitting') // he sits exactly when the paws stop, never before
+            }
           }}
         >
           {/* hearts + purr, floating above whatever pose he's in */}
