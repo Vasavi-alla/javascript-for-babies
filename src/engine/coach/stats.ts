@@ -42,17 +42,48 @@ export function computeStreak(days: Set<string>): { streak: number; aliveToday: 
   return { streak, aliveToday }
 }
 
-/** The last `n` local days, oldest first, ending today. */
-export function lastNDays(n: number): Array<{ day: string; label: string }> {
-  const out: Array<{ day: string; label: string }> = []
-  const cursor = new Date()
-  cursor.setDate(cursor.getDate() - (n - 1))
-  for (let i = 0; i < n; i++) {
-    out.push({
-      day: localDay(cursor),
-      label: cursor.toLocaleDateString(undefined, { weekday: 'short' }).slice(0, 2),
-    })
-    cursor.setDate(cursor.getDate() + 1)
+export interface MonthCell {
+  day: string
+  date: number
+  isToday: boolean
+  isFuture: boolean
+}
+
+/**
+ * The current calendar month as a Monday-start grid: leading/trailing nulls
+ * pad to whole weeks. Activity state comes from activeDaySet — i.e. from the
+ * persisted progress store in localStorage.
+ */
+export function monthGrid(now: Date = new Date()): {
+  title: string
+  weekdays: string[]
+  cells: Array<MonthCell | null>
+} {
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const daysInMonth = new Date(year, month + 1, 0).getDate()
+  const mondayStartOffset = (new Date(year, month, 1).getDay() + 6) % 7
+  const todayKey = localDay(now)
+
+  const cells: Array<MonthCell | null> = Array.from({ length: mondayStartOffset }, () => null)
+  for (let d = 1; d <= daysInMonth; d++) {
+    const key = localDay(new Date(year, month, d))
+    cells.push({ day: key, date: d, isToday: key === todayKey, isFuture: key > todayKey })
   }
-  return out
+  while (cells.length % 7 !== 0) cells.push(null)
+
+  // Locale-correct two-letter weekday labels, Monday first.
+  const monday = new Date(now)
+  monday.setDate(monday.getDate() - ((monday.getDay() + 6) % 7))
+  const weekdays = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(monday)
+    d.setDate(monday.getDate() + i)
+    return d.toLocaleDateString(undefined, { weekday: 'short' }).slice(0, 2)
+  })
+
+  return {
+    title: now.toLocaleDateString(undefined, { month: 'long', year: 'numeric' }),
+    weekdays,
+    cells,
+  }
 }

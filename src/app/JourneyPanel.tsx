@@ -1,16 +1,15 @@
 import { useProgress } from '../store/progress'
-import { activeDaySet, computeStreak, lastNDays, localDay } from '../engine/coach/stats'
+import { activeDaySet, computeStreak, monthGrid, localDay } from '../engine/coach/stats'
 import { dailyMessage } from '../content/motivation'
 import { PaperCard } from '../design/PaperCard'
 import { StickyNote } from '../design/StickyNote'
-import { hashSeed, seededBetween } from '../design/seed'
 
-/** Home-page strip: streak, counters, the last week, and today's note. */
+/** Home-page strip: streak, counters, this month's activity, and today's note. */
 export function JourneyPanel() {
   const progress = useProgress()
   const days = activeDaySet(progress)
   const { streak, aliveToday } = computeStreak(days)
-  const week = lastNDays(7)
+  const month = monthGrid()
   const today = localDay()
   const lessonsDone = Object.keys(progress.completedLessons).length
   const solved = Object.keys(progress.solvedExercises).length
@@ -40,20 +39,33 @@ export function JourneyPanel() {
         </div>
 
         <div>
-          <div className="flex gap-2.5">
-            {week.map(({ day, label }) => (
-              <div key={day} className="flex flex-col items-center gap-1">
-                <span
-                  className={`h-6 w-6 rounded-full border-2 ${
-                    days.has(day) ? 'bg-marker-teal border-ink' : 'border-ink-soft/50 border-dashed'
-                  }`}
-                  style={{ rotate: `${seededBetween(hashSeed(day), -8, 8)}deg` }}
-                />
-                <span className="font-hand text-ink-soft text-sm">{label}</span>
-              </div>
+          <div className="grid grid-cols-7 gap-1">
+            {month.weekdays.map((label) => (
+              <span key={label} className="font-hand text-ink-soft text-center text-xs">
+                {label}
+              </span>
             ))}
+            {month.cells.map((cell, i) =>
+              cell === null ? (
+                <span key={`pad-${i}`} />
+              ) : (
+                <span
+                  key={cell.day}
+                  title={days.has(cell.day) ? `${cell.day} — studied ✓` : cell.day}
+                  className={`flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-semibold ${
+                    days.has(cell.day)
+                      ? 'bg-marker-teal border-ink text-ink border-2'
+                      : cell.isFuture
+                        ? 'text-ink-soft/40'
+                        : 'border-ink-soft/40 text-ink-soft border border-dashed'
+                  } ${cell.isToday ? 'ring-marker-coral ring-2' : ''}`}
+                >
+                  {cell.date}
+                </span>
+              ),
+            )}
           </div>
-          <p className="text-ink-soft font-hand mt-1 text-center text-lg">this week</p>
+          <p className="text-ink-soft font-hand mt-1 text-center text-lg">{month.title}</p>
         </div>
 
         <StickyNote id={`daily-note-${today}`} className="max-w-72">
