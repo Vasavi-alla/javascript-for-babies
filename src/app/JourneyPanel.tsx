@@ -1,8 +1,8 @@
 import { useProgress } from '../store/progress'
 import { activeDaySet, computeStreak, monthGrid, localDay } from '../engine/coach/stats'
-import { dailyMessage } from '../content/motivation'
+import { dailyNote } from '../content/motivation'
 import { PaperCard } from '../design/PaperCard'
-import { StickyNote } from '../design/StickyNote'
+import { DailySticker } from '../design/DailySticker'
 
 /** Home-page strip: streak, counters, this month's activity, and today's note. */
 export function JourneyPanel() {
@@ -68,10 +68,7 @@ export function JourneyPanel() {
           <p className="text-ink-soft font-hand mt-1 text-center text-lg">{month.title}</p>
         </div>
 
-        <StickyNote id={`daily-note-${today}`} className="max-w-72">
-          <p className="font-hand text-xl font-bold">📌 today’s note from the shop</p>
-          <p className="mt-1 text-[15px]">{dailyMessage(today)}</p>
-        </StickyNote>
+        <DailySticker day={today} {...dailyNote(today)} />
       </div>
     </PaperCard>
   )

@@ -43,9 +43,13 @@ const MESSAGES: string[] = [
   'Strong opinions about semicolons can wait. Understanding what a call stack is cannot. You’re prioritizing right.',
 ]
 
-/** The note for a given local day — stable all day, new tomorrow. */
-export function dailyMessage(day: string): string {
+/** Doodle stickers that rotate alongside the messages. */
+export type DoodleKind = 'coffee' | 'bulb' | 'sprout' | 'flag' | 'turtle' | 'spark'
+const DOODLES: DoodleKind[] = ['coffee', 'bulb', 'sprout', 'flag', 'turtle', 'spark']
+
+/** The note (message + doodle) for a local day — stable all day, new tomorrow. */
+export function dailyNote(day: string): { text: string; doodle: DoodleKind } {
   let hash = 0
   for (let i = 0; i < day.length; i++) hash = (hash * 31 + day.charCodeAt(i)) >>> 0
-  return MESSAGES[hash % MESSAGES.length]
+  return { text: MESSAGES[hash % MESSAGES.length], doodle: DOODLES[hash % DOODLES.length] }
 }
