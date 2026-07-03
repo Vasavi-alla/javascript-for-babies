@@ -60,12 +60,16 @@ export function ResidentCat() {
         }
       }, 3500 + Math.random() * 4500)
     } else {
-      // walking → sit down wherever he arrived
-      timer = window.setTimeout(() => setMood('sitting'), walkSeconds * 1000 + 150)
+      // walking → sit down wherever he arrived (and trust the destination,
+      // not the animation's live readout, as his resting position)
+      timer = window.setTimeout(() => {
+        xLive.current = x
+        setMood('sitting')
+      }, walkSeconds * 1000 + 150)
     }
 
     return () => window.clearTimeout(timer)
-  }, [mood, fidget, floorWidth, walkSeconds])
+  }, [mood, fidget, floorWidth, walkSeconds, x])
 
   function pet() {
     const id = ++heartId.current
@@ -91,7 +95,9 @@ export function ResidentCat() {
           animate={{ x }}
           transition={mood === 'walking' ? { duration: walkSeconds, ease: 'linear' } : { duration: 0.2 }}
           onUpdate={(latest) => {
-            if (typeof latest.x === 'number') xLive.current = latest.x
+            const v = latest.x
+            const parsed = typeof v === 'number' ? v : parseFloat(String(v))
+            if (!Number.isNaN(parsed)) xLive.current = parsed
           }}
         >
           {/* hearts + purr, floating above whatever pose he's in */}
@@ -281,22 +287,30 @@ function WalkingPose() {
         <path d="M115,22 L124,12 L126,25 z" fill="color-mix(in srgb, var(--color-marker-coral) 30%, transparent)" stroke={INK} strokeWidth={2} strokeLinejoin="round" />
         <circle cx={117} cy={36} r={2.1} fill={INK} />
         <path d="M124,42 l4,0 l-2,3 z" fill={INK} />
-        {/* legs: diagonal pairs swinging opposite ways */}
-        <motion.g
-          animate={{ rotate: [14, -14] }}
-          transition={{ duration: 0.45, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
-          style={{ originX: '52px', originY: '64px' }}
-        >
-          <path d="M52,64 L50,84 M96,64 L94,84" stroke={INK} strokeWidth={2.6} strokeLinecap="round" fill="none" />
-        </motion.g>
-        <motion.g
-          animate={{ rotate: [-14, 14] }}
-          transition={{ duration: 0.45, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
-          style={{ originX: '66px', originY: '64px' }}
-        >
-          <path d="M66,64 L68,84 M108,60 L112,80" stroke={INK} strokeWidth={2.6} strokeLinecap="round" fill="none" />
-        </motion.g>
+        {/* four legs, each swinging from its OWN hip — diagonal trot */}
+        <Leg x={50} phase={0} />
+        <Leg x={62} phase={1} far />
+        <Leg x={90} phase={0} far />
+        <Leg x={102} phase={1} />
       </motion.g>
     </svg>
+  )
+}
+
+/** One walking leg, pivoting at its own hip. Far-side legs sit lighter, behind. */
+function Leg({ x, phase, far = false }: { x: number; phase: 0 | 1; far?: boolean }) {
+  return (
+    <motion.path
+      d={`M${x},62 L${x},82 L${x + 4},82`}
+      fill="none"
+      stroke={INK}
+      strokeWidth={far ? 2.1 : 2.7}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      opacity={far ? 0.55 : 1}
+      animate={{ rotate: phase === 0 ? [16, -16] : [-16, 16] }}
+      transition={{ duration: 0.42, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }}
+      style={{ originX: `${x}px`, originY: '62px' }}
+    />
   )
 }
