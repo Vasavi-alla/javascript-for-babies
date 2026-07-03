@@ -51,8 +51,12 @@ export function MentorPanel({
             <input
               value={keyDraft}
               onChange={(e) => setKeyDraft(e.target.value)}
+              spellCheck={false}
+              autoCapitalize="off"
+              autoCorrect="off"
+              autoComplete="off"
               placeholder="paste your Gemini API key"
-              className="border-ink-soft/50 bg-paper-raised w-72 rounded-sm border border-dashed px-3 py-1.5 font-mono text-xs outline-none"
+              className="border-ink-soft/50 bg-paper-raised w-80 rounded-sm border border-dashed px-3 py-2 font-mono text-[16px] outline-none"
             />
             <InkButton
               id={`savekey-${id}`}

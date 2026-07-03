@@ -4,6 +4,7 @@ import { StickyNote } from '../../design/StickyNote'
 import { InkButton } from '../../design/InkButton'
 import { CodePane } from '../../design/CodePane'
 import { HighlightMark } from '../../design/HighlightMark'
+import { unsmartText } from '../practice/typing'
 
 /**
  * A final-inspection check where the learner types the exact console output —
@@ -50,12 +51,16 @@ export function TypeOutputCard({
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <input
             value={typed}
-            onChange={(e) => setTyped(e.target.value)}
+            onChange={(e) => setTyped(unsmartText(e.target.value))}
             onKeyDown={(e) => {
               if (e.key === 'Enter') check()
             }}
+            spellCheck={false}
+            autoCapitalize="off"
+            autoCorrect="off"
+            autoComplete="off"
             placeholder={placeholder}
-            className="border-ink-soft/50 bg-paper-raised focus:border-ink w-64 rounded-sm border border-dashed px-3 py-1.5 font-mono text-sm outline-none"
+            className="border-ink-soft/50 bg-paper-raised focus:border-ink w-64 rounded-sm border border-dashed px-3 py-2 font-mono text-[16px] outline-none"
           />
           <InkButton id={`typecheck-go-${index}`} onClick={check} disabled={typed.trim() === ''}>
             check
@@ -64,7 +69,7 @@ export function TypeOutputCard({
             <button
               type="button"
               onClick={() => setRevealed(true)}
-              className="text-ink-soft cursor-pointer text-sm underline"
+              className="text-ink-soft inline-block cursor-pointer px-1 py-2 text-sm underline"
             >
               show me the answer
             </button>

@@ -8,6 +8,7 @@ import { CodePane } from '../../design/CodePane'
 import { ConsolePane } from '../../design/ConsolePane'
 import { HighlightMark } from '../../design/HighlightMark'
 import { runCode, type RunResult } from './runner'
+import { unsmartText } from './typing'
 import { diffLines } from './diff'
 import { askMentor } from './gemini'
 import { MentorPanel } from './MentorPanel'
@@ -84,13 +85,14 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
         <RoughBox seed={hashSeed(`editor-${def.id}`)} className="bg-paper-shade/50">
           <textarea
             value={code}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={(e) => setCode(unsmartText(e.target.value))}
             rows={Math.max(8, code.split('\n').length + 1)}
             spellCheck={false}
             autoCapitalize="off"
             autoCorrect="off"
+            autoComplete="off"
             placeholder="// write your JavaScript here…"
-            className="w-full resize-y bg-transparent p-4 font-mono text-[14px] leading-relaxed outline-none"
+            className="w-full resize-y bg-transparent p-4 font-mono text-[16px] leading-relaxed outline-none"
           />
         </RoughBox>
       </div>
@@ -103,7 +105,7 @@ export function CodeExercise({ def, onPass }: { def: CodeExerciseDef; onPass?: (
           <button
             type="button"
             onClick={() => setRevealed(true)}
-            className="text-ink-soft cursor-pointer text-sm underline"
+            className="text-ink-soft inline-block cursor-pointer px-1 py-2 text-sm underline"
           >
             I’m stuck — show the answer
           </button>
