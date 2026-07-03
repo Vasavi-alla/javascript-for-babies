@@ -236,23 +236,35 @@ function BlueprintChallenge({ onComplete }: { onComplete: () => void }) {
     setVisited((v) => ({ ...v, [key]: true }))
   }
 
-  const tok = (key: string, text: string) => (
-    <button
-      type="button"
-      onClick={() => look(key)}
-      className="cursor-pointer rounded-sm px-0.5 font-bold transition-colors"
-      style={{
-        background:
-          active === key
-            ? 'color-mix(in srgb, var(--color-marker-yellow) 55%, transparent)'
-            : 'color-mix(in srgb, var(--color-marker-yellow) 18%, transparent)',
-        textDecoration: visited[key] ? 'none' : 'underline dashed',
-        textUnderlineOffset: 4,
-      }}
-    >
-      {text}
-    </button>
-  )
+  const tok = (key: string, text: string) => {
+    const isActive = active === key
+    const isVisited = Boolean(visited[key])
+    return (
+      <button
+        type="button"
+        onClick={() => look(key)}
+        title="click to inspect this part"
+        className="cursor-pointer rounded-sm px-1.5 py-0.5 font-bold transition-transform hover:-translate-y-px"
+        style={{
+          // three unmistakable states: to-do = bright yellow + dashed border,
+          // being inspected = coral border (matches the ring on the machine),
+          // done = calm teal tint
+          background: isActive
+            ? 'color-mix(in srgb, var(--color-marker-yellow) 75%, transparent)'
+            : isVisited
+              ? 'color-mix(in srgb, var(--color-marker-teal) 22%, transparent)'
+              : 'color-mix(in srgb, var(--color-marker-yellow) 50%, transparent)',
+          border: isActive
+            ? '1.5px solid var(--color-marker-coral)'
+            : isVisited
+              ? '1.5px solid transparent'
+              : '1.5px dashed var(--color-ink-soft)',
+        }}
+      >
+        {text}
+      </button>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-4">
@@ -269,7 +281,7 @@ function BlueprintChallenge({ onComplete }: { onComplete: () => void }) {
           <p className="text-ink-soft text-sm">
             {allVisited
               ? 'All four parts inspected ✓'
-              : `${ANATOMY.filter((p) => visited[p.key]).length} of 4 parts inspected — the dashed ones are still waiting.`}
+              : `${ANATOMY.filter((p) => visited[p.key]).length} of 4 parts inspected — the bright yellow ones with dashed borders are still waiting for a click. (Teal = already done.)`}
           </p>
         </div>
         <GreetMachine
@@ -638,9 +650,10 @@ export const mission31: MissionDef = {
       prompt: (
         <p>
           No one touches a workbench before the knowledge transfer. Below is a finished blueprint
-          for Rosa’s machine — real JavaScript. It has exactly <strong>four parts</strong>. Click
-          each highlighted part of the code to learn what it is; watch which piece of the machine
-          lights up.
+          for Rosa’s machine — real JavaScript. It has exactly <strong>four parts</strong>, marked
+          as bright yellow chips right inside the code. Click each chip to learn what that part is
+          — a coral ring will circle the matching piece of the machine, and inspected chips turn
+          teal.
         </p>
       ),
       Interactive: BlueprintChallenge,
