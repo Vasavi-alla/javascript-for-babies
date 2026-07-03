@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -99,6 +101,74 @@ function ConstScene({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const RIGHT_KEYWORD_EXERCISE: CodeExerciseDef = {
+  id: 'd1a-right-keyword',
+  title: 'the right keyword for the job',
+  task: 'Two facts to store: one will never change, one changes all the time. Picking the right keyword for each — that IS the exercise.',
+  steps: [
+    <>
+      A variable named <code>name</code> holds <code>"Lijas"</code>. A person’s name doesn’t
+      change.
+    </>,
+    <>
+      A variable named <code>mood</code> starts as <code>"sleepy"</code> — and later becomes{' '}
+      <code>"curious"</code> (the coffee kicked in).
+    </>,
+    <>
+      Print <code>name</code>, then the final <code>mood</code> — in that order.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['Lijas', 'curious'],
+  mustUse: [
+    { test: /const\s+name\s*=\s*["']Lijas["']/, label: 'the never-changing name uses the permanent keyword' },
+    { test: /let\s+mood\s*=\s*["']sleepy["']/, label: 'the changing mood uses the changeable keyword' },
+    { test: /mood\s*=\s*["']curious["']/, label: 'mood actually changes to "curious"' },
+  ],
+  mustNotUse: [{ test: /const\s+mood/, label: 'const mood would throw a TypeError the moment it changes' }],
+  modelAnswer: `const name = "Lijas";
+let mood = "sleepy";
+
+mood = "curious";
+
+console.log(name);
+console.log(mood);`,
+}
+
+const COUNTER_EXERCISE: CodeExerciseDef = {
+  id: 'd1a-counter',
+  title: 'the visitor counter',
+  task: 'A counter that counts visitors as they arrive. It has to survive being changed — twice.',
+  steps: [
+    <>
+      A variable named <code>count</code> starts at the number <code>0</code> — a number, so no
+      quotes.
+    </>,
+    <>
+      First visitor: <code>count</code> becomes <code>1</code> — print it. Second visitor: it
+      becomes <code>2</code> — print it again.
+    </>,
+    <>Same variable the whole time. Choose its keyword so the changes don’t crash.</>,
+  ],
+  starter: '',
+  expectedOutput: ['1', '2'],
+  mustUse: [
+    { test: /let\s+count\s*=\s*0/, label: 'count starts at 0 with a keyword that survives change' },
+    { test: /count\s*=\s*1/, label: 'count becomes 1' },
+    { test: /count\s*=\s*2/, label: 'count becomes 2' },
+  ],
+  mustNotUse: [
+    { test: /const\s+count/, label: 'a counter that can never count is furniture — const is the wrong tool' },
+  ],
+  modelAnswer: `let count = 0;
+
+count = 1;
+console.log(count);
+
+count = 2;
+console.log(count);`,
 }
 
 export const lesson14: LessonDef = {
@@ -224,6 +294,12 @@ export const lesson14: LessonDef = {
       why: 'var is legal and everywhere in older code — you must be able to read it. But it has leaky visibility rules that let/const fixed in 2015. Understanding old code and writing modern code are both part of the job.',
     },
   ],
+  PlayExtra: () => (
+    <>
+      <CodeExercise def={RIGHT_KEYWORD_EXERCISE} />
+      <CodeExercise def={COUNTER_EXERCISE} />
+    </>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: what’s the difference between let and const, why do professionals default to const, and what should they do when they meet var in an old tutorial?',

@@ -1,7 +1,6 @@
 import { Link, useNavigate } from 'react-router'
 import { motion } from 'motion/react'
 import { LESSONS, PHASES, lessonsForPhase, type LessonMeta } from '../content/registry'
-import { practiceSetsForPhase } from '../practice/sets'
 import { dailyNote } from '../content/motivation'
 import { LEARNER_NAME } from '../content/learner'
 import { useProgress } from '../store/progress'
@@ -50,11 +49,6 @@ export function CurriculumMap() {
   const currentPhase = next?.phase ?? PHASES.filter((p) => lessonsForPhase(p.number).length > 0).at(-1)?.number ?? 0
 
   const continueLabel = !startedEver ? 'start at page one ▸' : 'continue where I left off ▸'
-
-  // A practice bay for the current phase that still has unsolved drills.
-  const openBay = practiceSetsForPhase(currentPhase).find((set) =>
-    set.exercises.some((ex) => !solvedExercises[ex.id]),
-  )
 
   const lessonsDone = Object.keys(completedLessons).length
   const solvedCount = Object.keys(solvedExercises).length
@@ -119,14 +113,6 @@ export function CurriculumMap() {
                   </InkButton>
                 </div>
               </>
-            )}
-            {openBay && (
-              <p className="text-ink-soft mt-3 text-sm">
-                or warm up with real code:{' '}
-                <Link to={`/practice/${openBay.id}`} className="underline hover:no-underline">
-                  ⌨️ {openBay.title} →
-                </Link>
-              </p>
             )}
           </PaperCard>
         </div>

@@ -163,6 +163,45 @@ pickup("Noor", "bread");
 pickup("Eli", "cake");`,
 }
 
+const GREET_TIME_EXERCISE: CodeExerciseDef = {
+  id: 'd3a-greet-time',
+  title: 'a machine that decides',
+  task: 'Build a greeting machine with a brain: given the hour of the day, it picks the right greeting by itself. Functions meet Phase 2’s if/else.',
+  steps: [
+    <>
+      A function named <code>greetByTime</code> with one input slot: <code>hour</code> (a number,
+      0–23).
+    </>,
+    <>
+      For hours before 12 it prints exactly <code>Good morning!</code> — for every other hour,
+      exactly <code>Good evening!</code>.
+    </>,
+    <>
+      Prove it works by calling it for hour 9 and for hour 20 — matching the expected output
+      below.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['Good morning!', 'Good evening!'],
+  mustUse: [
+    { test: /function\s+greetByTime\s*\(\s*\w+\s*\)/, label: 'greetByTime is a function with one input slot' },
+    { test: /if\s*\(/, label: 'the body decides with an if' },
+    { test: /else/, label: 'the other path is covered' },
+    { test: /greetByTime\s*\(\s*9\s*\)/, label: 'called with 9' },
+    { test: /greetByTime\s*\(\s*20\s*\)/, label: 'called with 20' },
+  ],
+  modelAnswer: `function greetByTime(hour) {
+  if (hour < 12) {
+    console.log("Good morning!");
+  } else {
+    console.log("Good evening!");
+  }
+}
+
+greetByTime(9);
+greetByTime(20);`,
+}
+
 export const lesson32: LessonDef = {
   id: '3.2',
   hook: (
@@ -272,7 +311,12 @@ export const lesson32: LessonDef = {
       why: 'An argument — arguments are the VALUES that arrive at call time; parameters are the slot NAMES in the definition (customer, drink). "chai" arrives second, so it’s the argument that fills the second parameter.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={PICKUP_EXERCISE} />,
+  PlayExtra: () => (
+    <>
+      <CodeExercise def={PICKUP_EXERCISE} />
+      <CodeExercise def={GREET_TIME_EXERCISE} />
+    </>
+  ),
   teachBack: {
     prompt:
       'A friend asks: “parameter, argument — same thing, right?” Set them straight: explain the difference, and why callOut("chai", "Priya") comes out wrong even though both values are right there.',

@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -70,6 +72,42 @@ function ReassignScene({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const MESSAGE_EXERCISE: CodeExerciseDef = {
+  id: 'd1a-message',
+  title: 'store a message',
+  task: 'Make the program remember a message, say it, then change its mind and say the new one.',
+  steps: [
+    <>
+      The variable must be named <code>message</code> and first hold exactly{' '}
+      <code>"Hello, machine!"</code>, later exactly <code>"Goodbye, machine!"</code>.
+    </>,
+    <>
+      It must be the <strong>same variable</strong> both times — creating a second variable is not
+      allowed.
+    </>,
+    <>
+      Both printed lines must come from printing the variable — printing the text directly is not
+      allowed.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['Hello, machine!', 'Goodbye, machine!'],
+  mustUse: [
+    { test: /let\s+message\s*=/, label: 'message is created with a keyword that allows change' },
+    { test: /message\s*=\s*["']Goodbye, machine!["']/, label: 'the SAME variable is given the new text' },
+    { test: /console\.log\s*\(\s*message\s*\)/, label: 'the variable itself is printed' },
+  ],
+  mustNotUse: [
+    { test: /const\s+message/, label: 'const welds the label shut — this message must change' },
+    { test: /console\.log\s*\(\s*["']/, label: 'print the variable, not the raw text' },
+  ],
+  modelAnswer: `let message = "Hello, machine!";
+console.log(message);
+
+message = "Goodbye, machine!";
+console.log(message);`,
 }
 
 export const lesson13: LessonDef = {
@@ -189,6 +227,7 @@ export const lesson13: LessonDef = {
       why: 'Each line reads the CURRENT value: 100 − 30 stores 70, then 70 − 30 stores 40. Being able to run this movie in your head is exactly the skill this lesson builds.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={MESSAGE_EXERCISE} />,
   teachBack: {
     prompt:
       'Your friend says “score = score + 5 is impossible — nothing can equal itself plus 5!” Set them straight: what does = really mean, and what happens step by step?',

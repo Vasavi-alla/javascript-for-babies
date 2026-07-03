@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -103,6 +105,38 @@ function WhileTrack({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const SUM_EXERCISE: CodeExerciseDef = {
+  id: 'd2b-sum',
+  title: 'the accumulator',
+  task: 'Add up the numbers 1 through 5 and print the result — but the loop must do the adding, not you.',
+  steps: [
+    <>A loop must visit the numbers 1, 2, 3, 4, 5.</>,
+    <>
+      The result is printed once, after the loop — and the number <code>15</code> may not appear
+      anywhere in your code.
+    </>,
+    <>
+      Hint (a pattern worth owning): a “running total” variable that starts empty and grows a
+      little on every lap. It needs a name — <code>total</code> — and a starting value of 0.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['15'],
+  mustUse: [
+    { test: /let\s+total\s*=\s*0/, label: 'a running total starts at 0 before the loop' },
+    { test: /for\s*\(|while\s*\(/, label: 'a loop visits 1 through 5' },
+    { test: /total\s*\+=|total\s*=\s*total\s*\+/, label: 'every lap adds to the total' },
+  ],
+  mustNotUse: [{ test: /=\s*15\b/, label: 'no pre-computed 15 — the loop earns it' }],
+  modelAnswer: `let total = 0;
+
+for (let i = 1; i <= 5; i++) {
+  total = total + i;
+}
+
+console.log(total);`,
 }
 
 export const lesson25: LessonDef = {
@@ -225,6 +259,7 @@ export const lesson25: LessonDef = {
       why: 'One worker, one racetrack, no exits: while the single thread is trapped in an infinite loop, nothing else — clicks, rendering — can run. The page can’t even repaint. (Phase 6 turns this constraint into the async story.)',
     },
   ],
+  PlayExtra: () => <CodeExercise def={SUM_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain while loops to a friend with the circular-road picture: when is the gate checked, why can a loop run zero times, and what exactly makes a loop infinite (and the tab freeze)?',

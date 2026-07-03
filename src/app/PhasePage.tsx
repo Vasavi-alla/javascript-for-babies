@@ -2,7 +2,6 @@ import { Link, useParams } from 'react-router'
 import { PHASES, lessonsForPhase } from '../content/registry'
 import { PHASE_INTROS } from '../content/phase-intros'
 import { PHASE_LABS } from '../labs'
-import { practiceSetsForPhase } from '../practice/sets'
 import { useProgress } from '../store/progress'
 import { PaperCard } from '../design/PaperCard'
 import { StickyNote } from '../design/StickyNote'
@@ -11,7 +10,7 @@ import { HighlightMark } from '../design/HighlightMark'
 
 export function PhasePage() {
   const params = useParams<{ number: string }>()
-  const { completedLessons, solvedExercises } = useProgress()
+  const { completedLessons } = useProgress()
   const phaseNumber = Number(params.number)
   const phase = PHASES.find((p) => p.number === phaseNumber)
   const intro = PHASE_INTROS[phaseNumber]
@@ -153,40 +152,6 @@ export function PhasePage() {
           </p>
         )}
       </section>
-
-      {practiceSetsForPhase(phase.number).length > 0 && (
-        <section>
-          <TapeLabel id={`practice-${phase.number}`} color="var(--color-marker-teal)">
-            practice bays — write real code
-          </TapeLabel>
-          <p className="text-ink-soft mt-2 max-w-2xl text-sm">
-            No clicking through options here: you type actual JavaScript, it actually runs, and it
-            gets inspected against the expected output <em>and</em> the syntax you were meant to
-            practice.
-          </p>
-          <div className="mt-4 flex flex-col gap-4">
-            {practiceSetsForPhase(phase.number).map((set) => {
-              const solved = set.exercises.filter((ex) => solvedExercises[ex.id]).length
-              return (
-                <PaperCard id={`practice-card-${set.id}`} key={set.id} className="max-w-3xl">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <Link to={`/practice/${set.id}`} className="text-lg font-bold hover:underline">
-                      ⌨️ {set.title}
-                      {solved === set.exercises.length && (
-                        <span className="text-marker-teal font-hand ml-2 text-xl">✓ cleared</span>
-                      )}
-                    </Link>
-                    <span className="text-ink-soft font-hand text-lg">
-                      best after {set.bestAfter} · {solved}/{set.exercises.length} solved
-                    </span>
-                  </div>
-                  <p className="text-ink-soft mt-0.5">{set.blurb}</p>
-                </PaperCard>
-              )
-            })}
-          </div>
-        </section>
-      )}
 
       <nav className="border-ink-soft/30 flex justify-between border-t border-dashed pt-6">
         {prev ? (

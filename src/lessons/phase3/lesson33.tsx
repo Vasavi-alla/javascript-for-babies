@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -209,6 +211,43 @@ function ReturnChute({ stepIndex }: { stepIndex: number }) {
   )
 }
 
+const CHEER_EXERCISE: CodeExerciseDef = {
+  id: 'd3a-cheer',
+  title: 'a machine with a loop inside',
+  task: 'Build a cheering machine: tell it a number, and it cheers exactly that many times. Functions meet Phase 2’s loops.',
+  steps: [
+    <>
+      A function named <code>cheer</code> with one input slot: <code>times</code>.
+    </>,
+    <>
+      Calling it prints <code>Hip hip hooray!</code> exactly <code>times</code> times — and your
+      whole program may contain only ONE <code>console.log</code>. (DRY: the repetition is the
+      machine’s job.)
+    </>,
+    <>Prove it with <code>cheer(3)</code>.</>,
+  ],
+  starter: '',
+  expectedOutput: ['Hip hip hooray!', 'Hip hip hooray!', 'Hip hip hooray!'],
+  mustUse: [
+    { test: /function\s+cheer\s*\(\s*\w+\s*\)/, label: 'cheer is a function with one input slot' },
+    { test: /for\s*\(|while\s*\(/, label: 'a loop does the repeating' },
+    { test: /cheer\s*\(\s*3\s*\)/, label: 'called with 3' },
+  ],
+  mustNotUse: [
+    {
+      test: /console\.log[\s\S]*console\.log[\s\S]*console\.log/,
+      label: 'one console.log total — not one per cheer',
+    },
+  ],
+  modelAnswer: `function cheer(times) {
+  for (let i = 0; i < times; i++) {
+    console.log("Hip hip hooray!");
+  }
+}
+
+cheer(3);`,
+}
+
 export const lesson33: LessonDef = {
   id: '3.3',
   hook: (
@@ -335,6 +374,7 @@ export const lesson33: LessonDef = {
       why: 'The window vs the chute. Logged text goes to your eyeballs and is gone — no code can read it back. A returned value replaces the call expression, so the rest of the program can store it, add to it, or test it. This one sentence dissolves the most common beginner bug in JavaScript.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={CHEER_EXERCISE} />,
   teachBack: {
     prompt:
       'A friend writes a function that console.logs the answer, then wonders why let x = theirFunction() gives undefined. Explain the window vs chute difference — and what return actually does when it fires.',

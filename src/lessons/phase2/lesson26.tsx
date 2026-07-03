@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -100,6 +102,35 @@ function LoopMachine({ stepIndex }: { stepIndex: number }) {
       )}
     </svg>
   )
+}
+
+const COUNTDOWN_EXERCISE: CodeExerciseDef = {
+  id: 'd2b-countdown',
+  title: 'countdown',
+  task: 'A rocket launch: 3… 2… 1… Go! — where the counting is done by a loop, not by you.',
+  steps: [
+    <>
+      The three numbers must be printed by a loop counting <strong>down</strong> — writing the
+      digits 3, 2, 1 into print statements is not allowed.
+    </>,
+    <>
+      <code>Go!</code> prints exactly once, after the counting is over.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['3', '2', '1', 'Go!'],
+  mustUse: [
+    { test: /for\s*\(|while\s*\(/, label: 'a loop produces the numbers' },
+    { test: /i--|i\s*-=\s*1|i\s*=\s*i\s*-\s*1|\w+--/, label: 'the loop counts DOWN' },
+  ],
+  mustNotUse: [
+    { test: /console\.log\s*\(\s*["']?3["']?\s*\)/, label: 'no hard-coded 3 — the loop variable does the counting' },
+  ],
+  modelAnswer: `for (let i = 3; i >= 1; i--) {
+  console.log(i);
+}
+
+console.log("Go!");`,
 }
 
 export const lesson26: LessonDef = {
@@ -220,6 +251,7 @@ export const lesson26: LessonDef = {
       why: 'Four: yes (i=0), yes (1), yes (2), and the final NO at i=3 that ends the loop. Checks = laps + 1, always — off-by-one bugs live and die on this fact. (And in testing, one loop body + n data laps is data-driven testing: when run #37 fails, the counter names the culprit.)',
     },
   ],
+  PlayExtra: () => <CodeExercise def={COUNTDOWN_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain the for loop to a friend: what are the three slots, when does each run, and why do checks outnumber laps by exactly one?',

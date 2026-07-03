@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -86,6 +88,34 @@ function StringTrain({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const FULLNAME_EXERCISE: CodeExerciseDef = {
+  id: 'd1b-fullname',
+  title: 'glue a full name',
+  task: 'Two halves of a name live in two variables. Produce the full name — without ever typing it yourself.',
+  steps: [
+    <>
+      <code>firstName</code> holds <code>"Ada"</code>; <code>lastName</code> holds{' '}
+      <code>"Lovelace"</code>.
+    </>,
+    <>
+      Exactly ONE <code>console.log</code>, and the full name must be <em>built from the two
+      variables</em> — the text <code>"Ada Lovelace"</code> may not appear in your code.
+    </>,
+    <>Check the expected output closely: there’s a space between the names. It has to come from somewhere.</>,
+  ],
+  starter: '',
+  expectedOutput: ['Ada Lovelace'],
+  mustUse: [
+    { test: /firstName\s*\+/, label: 'the sentence is glued from the firstName variable' },
+    { test: /["']\s["']/, label: 'the space is supplied as its own piece' },
+  ],
+  mustNotUse: [{ test: /["']Ada Lovelace["']/, label: 'the finished name may not be typed by hand' }],
+  modelAnswer: `const firstName = "Ada";
+const lastName = "Lovelace";
+
+console.log(firstName + " " + lastName);`,
 }
 
 export const lesson16: LessonDef = {
@@ -197,6 +227,7 @@ export const lesson16: LessonDef = {
       why: 'Inside ${…} the machine EVALUATES (work-it-out-first, lesson 0.3), then splices the result into the train: "Score: 20". Ordinary quotes would have printed the slot literally — backticks are what switch the slots on.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={FULLNAME_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain to a friend: what is a string really (use the train picture), why does counting start at 0, and what makes backtick strings special?',

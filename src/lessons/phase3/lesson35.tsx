@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -183,6 +185,47 @@ function ScopeLens({ stepIndex }: { stepIndex: number }) {
   )
 }
 
+const PRICE_TAG_EXERCISE: CodeExerciseDef = {
+  id: 'd3a-price-tag',
+  title: 'everything at once',
+  task: 'A store prints price tags: item, price, and the store’s name on every tag. The function reads a constant from the OUTER bubble — scope in action.',
+  steps: [
+    <>
+      The store’s name — <code>"Code Corner"</code> — lives in a variable named{' '}
+      <code>shopName</code>, declared OUTSIDE the function. It never changes; store it accordingly.
+    </>,
+    <>
+      A function named <code>priceTag</code> takes two inputs: <code>item</code> first, then{' '}
+      <code>price</code> — and its lookup ray reaches outward to find <code>shopName</code>.
+    </>,
+    <>
+      Each call prints one tag matching the expected output below <em>exactly</em> — built from
+      the inputs and <code>shopName</code>, never typed by hand. (Copy the long dash — from the
+      expected output; it’s not the minus key.)
+    </>,
+    <>Two tags to print: gear at 5, spring at 2.</>,
+  ],
+  starter: '',
+  expectedOutput: ['gear — $5 (at Code Corner)', 'spring — $2 (at Code Corner)'],
+  mustUse: [
+    { test: /const\s+shopName\s*=\s*["']Code Corner["']/, label: 'the never-changing store name is stored permanently' },
+    { test: /function\s+priceTag\s*\(\s*\w+\s*,\s*\w+\s*\)/, label: 'priceTag is a function with two input slots' },
+    { test: /priceTag\s*\(\s*["']gear["']\s*,\s*5\s*\)/, label: 'called for gear at 5 — item first, price second' },
+    { test: /priceTag\s*\(\s*["']spring["']\s*,\s*2\s*\)/, label: 'called for spring at 2' },
+  ],
+  mustNotUse: [
+    { test: /console\.log\s*\(\s*["'](gear|spring)/, label: 'tags are built from the slots — no hand-typed tags' },
+  ],
+  modelAnswer: `const shopName = "Code Corner";
+
+function priceTag(item, price) {
+  console.log(item + " — $" + price + " (at " + shopName + ")");
+}
+
+priceTag("gear", 5);
+priceTag("spring", 2);`,
+}
+
 export const lesson35: LessonDef = {
   id: '3.5',
   hook: (
@@ -314,6 +357,7 @@ export const lesson35: LessonDef = {
       why: 'Shadowing: two separate variables, same name, different bubbles. The lookup stops at the first match — the nearest bubble — so the inner "in" wins and the outer x is invisible from inside. Legal, but use sparingly.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={PRICE_TAG_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain scope to a friend using the bubbles-and-ray picture: where do variables live, which direction can lookups travel, and what happens when two bubbles use the same name?',

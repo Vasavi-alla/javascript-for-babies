@@ -4,6 +4,8 @@ import { RoughRect } from '../../design/rough-svg'
 import { StickyNote } from '../../design/StickyNote'
 import { InkButton } from '../../design/InkButton'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -135,6 +137,29 @@ function TryConsole() {
   )
 }
 
+const FIRST_CODE_EXERCISE: CodeExerciseDef = {
+  id: 'l03-first-code',
+  title: 'your first real program',
+  task: 'Two lines of real JavaScript, written by you, actually executed. You command; the machine computes.',
+  steps: [
+    <>
+      First line: print exactly <code>Hello!</code>
+    </>,
+    <>
+      Second line: make the console show <code>5</code> — but you may not type a 5 anywhere. Make
+      the <em>machine</em> compute it from <code>2 + 3</code>.
+    </>,
+  ],
+  starter: '',
+  expectedOutput: ['Hello!', '5'],
+  mustUse: [
+    { test: /console\.log\s*\(\s*["']Hello!["']\s*\)/, label: 'prints Hello! with console.log' },
+    { test: /2\s*\+\s*3/, label: 'the 5 is computed by the machine (2 + 3)' },
+  ],
+  mustNotUse: [{ test: /console\.log\s*\(\s*["']?5/, label: 'no ready-made 5 — the machine does the math' }],
+  modelAnswer: `console.log("Hello!");\nconsole.log(2 + 3);`,
+}
+
 export const lesson03: LessonDef = {
   id: '0.3',
   hook: (
@@ -260,5 +285,10 @@ export const lesson03: LessonDef = {
     'Quotes mean literal text, copied exactly. No quotes means an expression, worked out first.',
     'The machine always evaluates what’s inside parentheses BEFORE handing it over — a rule you’ll meet everywhere.',
   ],
-  PlayExtra: TryConsole,
+  PlayExtra: () => (
+    <>
+      <TryConsole />
+      <CodeExercise def={FIRST_CODE_EXERCISE} />
+    </>
+  ),
 }

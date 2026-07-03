@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughLine } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -107,6 +109,33 @@ function NumberLineViz({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const AGE_EXERCISE: CodeExerciseDef = {
+  id: 'd1b-age',
+  title: 'the machine does your math',
+  task: 'Compute an age from a birth year. Programmers don’t do arithmetic in their heads — they write the formula, so the answer stays right when the inputs change.',
+  steps: [
+    <>
+      <code>birthYear</code> holds the number <code>2000</code> and never changes.
+    </>,
+    <>
+      A variable named <code>age</code> gets the age in the year 2026 — <em>calculated by the
+      machine</em> from those two numbers. The number 26 may not appear in your code.
+    </>,
+    <>Print <code>age</code>.</>,
+  ],
+  starter: '',
+  expectedOutput: ['26'],
+  mustUse: [
+    { test: /const\s+birthYear\s*=\s*2000/, label: 'birthYear is stored as a never-changing 2000' },
+    { test: /2026\s*-\s*birthYear/, label: 'age is CALCULATED from 2026 and birthYear' },
+  ],
+  mustNotUse: [{ test: /=\s*26\b/, label: 'no pre-computed 26 — the subtraction is the machine’s job' }],
+  modelAnswer: `const birthYear = 2000;
+const age = 2026 - birthYear;
+
+console.log(age);`,
 }
 
 export const lesson15: LessonDef = {
@@ -237,6 +266,7 @@ export const lesson15: LessonDef = {
       why: 'JavaScript never crashes on this — it answers with the special value Infinity (capital I) and keeps running. (0 / 0, where even infinity makes no sense, gives NaN instead.) Programs surviving weird math is very JavaScript — you’ll learn to test for these values.',
     },
   ],
+  PlayExtra: () => <CodeExercise def={AGE_EXERCISE} />,
   teachBack: {
     prompt:
       'Explain to a friend why the computer says 0.1 + 0.2 is 0.30000000000000004 — using the 1/3 analogy — and what programmers do about it.',

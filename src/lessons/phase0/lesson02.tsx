@@ -181,6 +181,13 @@ export const lesson02: LessonDef = {
         etc. meaning versions of the standard.)
       </p>
       <p>
+        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> Chrome’s engine
+        is literally named after a car engine — the <strong>V8</strong>, eight cylinders of
+        muscle-car power — because Google wanted the name itself to promise speed. And the joke
+        continues inside it: V8’s two main parts are called <em>Ignition</em> (the interpreter
+        that starts your code) and <em>TurboFan</em> (the optimizer that makes hot code fly).
+      </p>
+      <p>
         <strong>Node.js</strong> = the V8 engine + extra abilities the browser deliberately doesn’t
         grant (reading files on your disk, running servers, talking to the operating system) — and{' '}
         <em>minus</em> the page itself (there’s no HTML in Node; nothing to click). That trade is

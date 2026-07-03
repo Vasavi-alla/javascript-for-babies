@@ -287,11 +287,11 @@ export const lesson31: LessonDef = {
         built.
       </p>
       <p>
-        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> in 1995 Brendan
-        Eich joined Netscape to put <em>Scheme</em> — a language built entirely around functions —
-        into the browser. Management demanded it “look like Java,” so Eich kept the Java-ish braces
-        but smuggled Scheme’s function-loving soul inside, building the first version in about ten
-        days. The syntax is a costume; underneath, functions rule.
+        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> JavaScript has
+        almost nothing to do with Java. The language was born as <em>LiveScript</em> — and
+        Netscape renamed it “JavaScript” in December 1995 purely to surf the hype of Java, the
+        hottest language of the moment. Pure marketing, zero family relation. Programmers still
+        groan about it in one line: <em>“Java is to JavaScript as ham is to hamster.”</em>
       </p>
     </>
   ),

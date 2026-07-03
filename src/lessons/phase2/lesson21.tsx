@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { RoughEllipse, RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
+import { CodeExercise } from '../../engine/practice/CodeExercise'
+import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
@@ -84,6 +86,80 @@ function FlowRoad({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
     </svg>
   )
+}
+
+const WEATHER_EXERCISE: CodeExerciseDef = {
+  id: 'd2a-weather',
+  title: 'a message that depends',
+  task: 'The program looks at the temperature and decides which of two messages to remember — then says the one it chose.',
+  steps: [
+    <>
+      The first line is given: <code>let temperature = 35;</code> — it’s already in the editor.
+    </>,
+    <>
+      If the temperature is above 30, the message is <code>"Stay hydrated!"</code> — otherwise it’s{' '}
+      <code>"Nice weather!"</code>.
+    </>,
+    <>
+      The chosen text must end up in a variable named <code>message</code>, and exactly ONE{' '}
+      <code>console.log</code> — placed after the decision — prints it. The decision chooses the
+      value, not the printing.
+    </>,
+  ],
+  starter: 'let temperature = 35;\n\n',
+  expectedOutput: ['Stay hydrated!'],
+  mustUse: [
+    { test: /let\s+message/, label: 'a message variable holds the result' },
+    { test: /if\s*\(\s*temperature\s*>\s*30\s*\)/, label: 'the decision checks temperature > 30' },
+    { test: /else/, label: 'the other path is covered too' },
+    { test: /console\.log\s*\(\s*message\s*\)/, label: 'the message variable is printed after deciding' },
+  ],
+  mustNotUse: [
+    { test: /console\.log[\s\S]*console\.log/, label: 'exactly one console.log in the whole program' },
+  ],
+  modelAnswer: `let temperature = 35;
+
+let message;
+if (temperature > 30) {
+  message = "Stay hydrated!";
+} else {
+  message = "Nice weather!";
+}
+
+console.log(message);`,
+}
+
+const ODDEVEN_EXERCISE: CodeExerciseDef = {
+  id: 'd2a-oddeven',
+  title: 'odd or even',
+  task: 'Tell whether a number is odd or even. (A number is even exactly when dividing it by 2 leaves remainder 0 — and there’s an operator for remainders.)',
+  steps: [
+    <>
+      The first line is given: <code>const number = 7;</code>
+    </>,
+    <>
+      Print exactly <code>odd</code> or exactly <code>even</code> — lowercase, no punctuation —
+      depending on the number.
+    </>,
+    <>
+      Your decision must use the remainder operator <code>%</code>, and the code must still be
+      correct if someone edits the 7 to an 8.
+    </>,
+  ],
+  starter: 'const number = 7;\n\n',
+  expectedOutput: ['odd'],
+  mustUse: [
+    { test: /number\s*%\s*2/, label: 'the remainder operator does the checking' },
+    { test: /if\s*\(/, label: 'an if makes the decision' },
+    { test: /else/, label: 'the other case is handled' },
+  ],
+  modelAnswer: `const number = 7;
+
+if (number % 2 === 0) {
+  console.log("even");
+} else {
+  console.log("odd");
+}`,
 }
 
 export const lesson21: LessonDef = {
@@ -206,6 +282,12 @@ export const lesson21: LessonDef = {
       why: 'The fork asks one yes/no question. Whatever sits in the parentheses — comparison, && tree, even a lone variable — gets evaluated down to one true or false. (What if it isn’t a boolean at all? That’s truthy/falsy — next lesson.)',
     },
   ],
+  PlayExtra: () => (
+    <>
+      <CodeExercise def={WEATHER_EXERCISE} />
+      <CodeExercise def={ODDEVEN_EXERCISE} />
+    </>
+  ),
   teachBack: {
     prompt:
       'Explain if/else to a friend using the fork-in-the-road picture: what happens at the fork, what happens to the road not taken, and where do the roads rejoin?',
