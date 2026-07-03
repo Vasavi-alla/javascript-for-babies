@@ -134,19 +134,25 @@ export function ResidentCat() {
     return () => window.clearInterval(timer)
   }, [mood, sprites])
 
-  // oneko-style: lead him with a finger, mouse, or hovering Pencil.
-  function chase(e: React.PointerEvent<HTMLDivElement>) {
-    if (mood === 'petted') return
-    const rect = e.currentTarget.getBoundingClientRect()
-    const roamMax = Math.max(4, rect.width - CAT_WIDTH - 4)
-    const target = Math.min(roamMax, Math.max(4, e.clientX - rect.left - CAT_WIDTH / 2))
-    const distance = Math.abs(target - xLive.current)
-    if (distance < 28) return // close enough — cats don't fuss
-    setDir(target > xLive.current ? 1 : -1)
-    setWalkSeconds(distance / CHASE_SPEED)
-    setX(target)
-    setMood('walking')
-  }
+  // oneko-style: lead him with a finger, mouse, or hovering Pencil — the
+  // listener lives on window (his strip is click-transparent), and only
+  // pointers near the bottom of the screen count as "on the desk".
+  useEffect(() => {
+    function onMove(e: PointerEvent) {
+      if (mood === 'petted') return
+      if (e.clientY < window.innerHeight - 150) return
+      const roamMax = Math.max(4, floorWidth - CAT_WIDTH - 4)
+      const target = Math.min(roamMax, Math.max(4, e.clientX - CAT_WIDTH / 2))
+      const distance = Math.abs(target - xLive.current)
+      if (distance < 28) return // close enough — cats don't fuss
+      setDir(target > xLive.current ? 1 : -1)
+      setWalkSeconds(distance / CHASE_SPEED)
+      setX(target)
+      setMood('walking')
+    }
+    window.addEventListener('pointermove', onMove)
+    return () => window.removeEventListener('pointermove', onMove)
+  }, [mood, floorWidth])
 
   function pet() {
     const id = ++heartId.current
@@ -161,14 +167,16 @@ export function ResidentCat() {
   }
 
   return (
-    <div className="flex min-w-64 flex-1 flex-col self-stretch">
-      <div ref={floorRef} onPointerMove={chase} className="relative min-h-28 flex-1" style={{ touchAction: 'none' }}>
+    // pinned to the bottom of the screen, on every page; the strip itself
+    // never eats clicks — only the cat is interactive
+    <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40">
+      <div ref={floorRef} className="relative h-28 w-full">
         <motion.button
           type="button"
           onClick={pet}
           aria-label="pet Barnaby the cat"
           title="pet the cat"
-          className="absolute bottom-0.5 left-0 cursor-pointer"
+          className="pointer-events-auto absolute bottom-0 left-0 cursor-pointer"
           animate={{ x }}
           transition={mood === 'walking' ? { duration: walkSeconds, ease: 'linear' } : { duration: 0.2 }}
           onUpdate={(latest) => {
@@ -228,13 +236,7 @@ export function ResidentCat() {
             )}
           </div>
         </motion.button>
-        {/* the edge of the desk he patrols */}
-        <div aria-hidden className="border-ink-soft/40 absolute right-0 bottom-0 left-0 border-t-2 border-dashed" />
       </div>
-      <p className="text-ink-soft font-hand mt-1.5 text-center text-sm leading-tight">
-        Barnaby, the resident cat. does nothing. essential.{' '}
-        <span className="italic">(pet him — or lead him around with your finger)</span>
-      </p>
     </div>
   )
 }

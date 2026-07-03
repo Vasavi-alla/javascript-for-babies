@@ -1,10 +1,13 @@
 import { NavLink, Outlet } from 'react-router'
 import { BreakCoach } from '../engine/coach/BreakCoach'
+import { ResidentCat } from './ResidentCat'
 
 export function Layout() {
   return (
-    <div className="mx-auto max-w-5xl px-6 pb-24">
+    // extra bottom padding keeps content clear of Barnaby's fixed strip
+    <div className="mx-auto max-w-5xl px-6 pb-36">
       <BreakCoach />
+      <ResidentCat />
       <header className="flex flex-wrap items-end justify-between gap-4 pt-8 pb-10">
         <NavLink to="/" className="leading-none">
           <span className="font-hand text-5xl font-bold">JS for babies</span>

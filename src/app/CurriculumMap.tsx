@@ -11,7 +11,6 @@ import { InkButton } from '../design/InkButton'
 import { HighlightMark } from '../design/HighlightMark'
 import { DailySticker } from '../design/DailySticker'
 import { RoughEllipse } from '../design/rough-svg'
-import { ResidentCat } from './ResidentCat'
 
 /**
  * The landing page, as a notebook spread:
@@ -249,10 +248,6 @@ export function CurriculumMap() {
         </div>
       </section>
 
-      {/* ── 3 · the desk ─────────────────────────────────────── */}
-      <section>
-        <ResidentCat />
-      </section>
     </div>
   )
 }
