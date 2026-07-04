@@ -38,6 +38,37 @@ import { lesson41 } from './phase4/lesson41'
 import { lesson42 } from './phase4/lesson42'
 import { lesson43 } from './phase4/lesson43'
 import { lesson44 } from './phase4/lesson44'
+import { lesson45 } from './phase4/lesson45'
+import { lesson46 } from './phase4/lesson46'
+import { lesson47 } from './phase4/lesson47'
+import { lesson48 } from './phase4/lesson48'
+import { lesson49 } from './phase4/lesson49'
+import { lesson410 } from './phase4/lesson410'
+import { lesson411 } from './phase4/lesson411'
+import { lesson412 } from './phase4/lesson412'
+import { lesson413 } from './phase4/lesson413'
+import { lesson51 } from './phase5/lesson51'
+import { lesson52 } from './phase5/lesson52'
+import { lesson53 } from './phase5/lesson53'
+import { lesson54 } from './phase5/lesson54'
+import { lesson55 } from './phase5/lesson55'
+import { lesson56 } from './phase5/lesson56'
+import { lesson57 } from './phase5/lesson57'
+import { lesson58 } from './phase5/lesson58'
+import { lesson59 } from './phase5/lesson59'
+import { lesson61 } from './phase6/lesson61'
+import { lesson62 } from './phase6/lesson62'
+import { lesson63 } from './phase6/lesson63'
+import { lesson64 } from './phase6/lesson64'
+import { lesson65 } from './phase6/lesson65'
+import { lesson66 } from './phase6/lesson66'
+import { lesson67 } from './phase6/lesson67'
+import { lesson68 } from './phase6/lesson68'
+import { lesson69 } from './phase6/lesson69'
+import { lesson71 } from './phase7/lesson71'
+import { lesson72 } from './phase7/lesson72'
+import { lesson73 } from './phase7/lesson73'
+import { lesson74 } from './phase7/lesson74'
 
 /** Built lessons, by id. A lesson must also be 'available' in content/registry.ts. */
 export const LESSON_DEFS: Record<string, LessonDef> = {
@@ -80,4 +111,35 @@ export const LESSON_DEFS: Record<string, LessonDef> = {
   '4.2': lesson42,
   '4.3': lesson43,
   '4.4': lesson44,
+  '4.5': lesson45,
+  '4.6': lesson46,
+  '4.7': lesson47,
+  '4.8': lesson48,
+  '4.9': lesson49,
+  '4.10': lesson410,
+  '4.11': lesson411,
+  '4.12': lesson412,
+  '4.13': lesson413,
+  '5.1': lesson51,
+  '5.2': lesson52,
+  '5.3': lesson53,
+  '5.4': lesson54,
+  '5.5': lesson55,
+  '5.6': lesson56,
+  '5.7': lesson57,
+  '5.8': lesson58,
+  '5.9': lesson59,
+  '6.1': lesson61,
+  '6.2': lesson62,
+  '6.3': lesson63,
+  '6.4': lesson64,
+  '6.5': lesson65,
+  '6.6': lesson66,
+  '6.7': lesson67,
+  '6.8': lesson68,
+  '6.9': lesson69,
+  '7.1': lesson71,
+  '7.2': lesson72,
+  '7.3': lesson73,
+  '7.4': lesson74,
 }

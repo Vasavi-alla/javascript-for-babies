@@ -1,344 +1,273 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { HandArrow, RoughRect } from '../../design/rough-svg'
+import { RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
- * 4.4 — Primitives vs references (THE lesson of this phase)
- * Viz: MemoryDiagram in heap mode. The stack on the left (one slot per
- * variable), the heap on the right (where objects live). Primitive slots hold
- * the value itself; object slots hold an ARROW into the heap. Copying copies
- * whatever is in the slot — the value, or the arrow. Act two replays 3.2's
- * "fresh slots per call" with the upgraded picture: call by value vs call by
- * sharing. Pays off the "const, but we changed its contents?!" tease from
- * 4.1 and 4.3.
+ * 4.4 — Objects
+ * Viz: ObjectLocker — the object as labeled compartments (key → value).
+ * Dot access shines a lookup on a label; bracket access holds a paper note
+ * (the variable's value) up against the labels; a nested object is a smaller
+ * locker inside a compartment; assigning to a missing key creates one.
  */
 
-const CODE_A = `let score = 10;
-let backup = score;
-backup = 99;
-console.log(score);
+const CODE = `const book = {
+  title: "The Hobbit",
+  pages: 310,
+  author: { name: "Tolkien", born: 1892 },
+};
 
-const cat = { name: "Biscuit", age: 3 };
-const alias = cat;
-alias.age = 4;
-console.log(cat.age);`
+console.log(book.title);
+console.log(book.author.name);
 
-const CODE_B = `function bump(n) {
-  n = n + 1;
+console.log(book["pages"]);
+
+book.rating = 5;
+console.log(book.publisher);`
+
+const GREET_CODE = `const greetings = {
+  en: "Hello!",
+  ta: "Vanakkam!",
+  hi: "Namaste!",
+};
+
+// which language? decided while the app RUNS —
+// the phone's settings, a dropdown, a login…
+const lang = "ta";
+
+console.log(greetings[lang]);
+console.log(greetings.lang);`
+
+interface Compartment {
+  k: string
+  v: string
+  nested?: { k: string; v: string }[]
+  state?: 'read' | 'new' | 'ghost'
 }
 
-let lives = 9;
-bump(lives);
-console.log(lives);
-
-function birthday(pet) {
-  pet.age = pet.age + 1;
-}
-
-const dog = { age: 5 };
-birthday(dog);
-console.log(dog.age);`
-
-interface SlotV {
-  name: string
-  val?: string
-  arrow?: boolean
-  hot?: boolean
-  inFrame?: boolean
-  /** where this slot's arrow lands on the heap object (y) */
-  arrowY?: number
-}
 interface View {
-  slots: SlotV[]
-  obj: { text: string; hot?: boolean }[] | null
-  frameLabel?: string
+  comps: Compartment[]
+  /** the variable name shown on the object's tag */
+  name?: string
+  /** the paper note used for bracket access */
+  note: string | null
+  outToken: string | null
   console: string[]
-  note?: { text: string; color: 'teal' | 'coral' }
 }
+
+const BASE: Compartment[] = [
+  { k: 'title', v: '"The Hobbit"' },
+  { k: 'pages', v: '310' },
+  { k: 'author', v: '', nested: [{ k: 'name', v: '"Tolkien"' }, { k: 'born', v: '1892' }] },
+]
+
+const GREET: Compartment[] = [
+  { k: 'en', v: '"Hello!"' },
+  { k: 'ta', v: '"Vanakkam!"' },
+  { k: 'hi', v: '"Namaste!"' },
+]
 
 const VIEWS: View[] = [
+  { comps: BASE, note: null, outToken: null, console: [] },
   {
-    slots: [{ name: 'score', val: '10' }, { name: 'backup', val: '10', hot: true }],
-    obj: null,
-    console: [],
-    note: { text: 'copying a primitive copies the VALUE — two independent 10s', color: 'teal' },
+    comps: [{ ...BASE[0], state: 'read' }, BASE[1], BASE[2]],
+    note: null, outToken: '"The Hobbit"', console: ['The Hobbit'],
   },
   {
-    slots: [{ name: 'score', val: '10' }, { name: 'backup', val: '99', hot: true }],
-    obj: null,
-    console: ['10'],
-    note: { text: 'backup changed; score never felt a thing', color: 'teal' },
+    comps: [BASE[0], BASE[1], { ...BASE[2], state: 'read' }],
+    note: null, outToken: '"Tolkien"', console: ['The Hobbit', 'Tolkien'],
   },
   {
-    slots: [{ name: 'cat', arrow: true, arrowY: 116 }],
-    obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 3' }],
-    console: ['10'],
-    note: { text: 'the object lives in the heap — cat’s slot holds only an ARROW to it', color: 'teal' },
+    comps: [BASE[0], { ...BASE[1], state: 'read' }, BASE[2]],
+    note: '"pages" — written right there', outToken: '310', console: ['The Hobbit', 'Tolkien', '310'],
   },
   {
-    slots: [
-      { name: 'cat', arrow: true, arrowY: 112 },
-      { name: 'alias', arrow: true, hot: true, arrowY: 134 },
-    ],
-    obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 3' }],
-    console: ['10'],
-    note: { text: '= copied the ARROW, not the object: two arrows, ONE object', color: 'coral' },
+    comps: [GREET[0], { ...GREET[1], state: 'read' }, GREET[2]],
+    name: 'greetings',
+    note: 'lang  →  "ta"', outToken: '"Vanakkam!"', console: ['Vanakkam!', 'undefined'],
   },
   {
-    slots: [
-      { name: 'cat', arrow: true, arrowY: 112 },
-      { name: 'alias', arrow: true, hot: true, arrowY: 134 },
-    ],
-    obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 4', hot: true }],
-    console: ['10', '4'],
-    note: { text: 'const locked each ARROW in place — nobody ever locked the object', color: 'coral' },
+    comps: [...BASE, { k: 'rating', v: '5', state: 'new' }],
+    note: null, outToken: null, console: ['The Hobbit', 'Tolkien', '310'],
   },
   {
-    slots: [
-      { name: 'lives', val: '9' },
-      { name: 'n', val: '10', hot: true, inFrame: true },
-    ],
-    obj: null,
-    frameLabel: 'bump’s call frame — fresh slots per call (lesson 3.2)',
-    console: ['9'],
-    note: { text: 'n received a COPY of the value 9 — call by value. lives untouched.', color: 'teal' },
-  },
-  {
-    slots: [
-      { name: 'dog', arrow: true, arrowY: 112 },
-      { name: 'pet', arrow: true, hot: true, inFrame: true, arrowY: 134 },
-    ],
-    obj: [{ text: 'age: 6', hot: true }],
-    frameLabel: 'birthday’s call frame',
-    console: ['9', '6'],
-    note: { text: 'pet received a copy of the ARROW — call by sharing. One object, mutated.', color: 'coral' },
+    comps: [...BASE, { k: 'rating', v: '5' }, { k: 'publisher', v: '', state: 'ghost' }],
+    note: null, outToken: 'undefined', console: ['The Hobbit', 'Tolkien', '310', 'undefined'],
   },
 ]
 
-function HeapDiagram({ stepIndex }: { stepIndex: number }) {
+function ObjectLocker({ stepIndex }: { stepIndex: number }) {
   const view = VIEWS[stepIndex] ?? VIEWS[0]
-  const frameSlots = view.slots.filter((s) => s.inFrame)
   return (
-    <svg viewBox="0 0 440 330" className="w-full">
-      {/* stack side */}
-      <text x={24} y={38} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        the stack — one slot per variable
+    <svg viewBox="0 0 440 320" className="w-full">
+      <RoughRect x={20} y={18} width={92} height={26} seed={471} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
+      <text x={66} y={36} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill="var(--color-ink)">
+        {view.name ?? 'book'}
       </text>
-      {view.slots.map((slot, i) => {
-        const y = 56 + i * 52
+      <text x={120} y={36} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+        — properties: key → value, fetched by NAME
+      </text>
+
+      {view.comps.map((c, i) => {
+        const y = 56 + i * 46
+        const ghost = c.state === 'ghost'
         return (
-          <motion.g key={slot.name} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }}>
+          <motion.g key={c.k} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * i }}>
+            {/* key label */}
             <RoughRect
-              x={24}
+              x={40}
               y={y}
-              width={128}
-              height={38}
-              seed={520 + i}
-              strokeWidth={slot.hot ? 2.5 : 1.8}
-              stroke={slot.hot ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
-              fill="var(--color-paper-raised, #fff)"
+              width={104}
+              height={34}
+              seed={480 + i}
+              strokeWidth={c.state === 'read' ? 2.6 : 1.6}
+              stroke={ghost ? 'var(--color-ink-soft)' : c.state === 'read' ? 'var(--color-marker-teal)' : c.state === 'new' ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
+              roughness={ghost ? 2.4 : 1.2}
+              fill={c.state === 'new' ? 'color-mix(in srgb, var(--color-marker-coral) 20%, transparent)' : 'var(--color-sticky)'}
               fillStyle="solid"
             />
-            <text x={32} y={y - 4} fontFamily="var(--font-code)" fontSize={11.5} fontWeight={700} fill="var(--color-ink)">
-              {slot.name}
+            <text x={92} y={y + 22} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill={ghost ? 'var(--color-ink-soft)' : 'var(--color-ink)'}>
+              {c.k}
             </text>
-            {slot.val && (
-              <AnimatePresence mode="popLayout">
-                <motion.text
-                  key={slot.val}
-                  initial={{ opacity: 0, y: -8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  x={88}
-                  y={y + 24}
-                  textAnchor="middle"
-                  fontFamily="var(--font-code)"
-                  fontSize={15}
-                  fontWeight={700}
-                  fill="var(--color-ink)"
-                >
-                  {slot.val}
-                </motion.text>
-              </AnimatePresence>
-            )}
-            {slot.arrow && (
-              <circle cx={140} cy={y + 19} r={4} fill={slot.hot ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'} />
+            <RoughLine x1={144} y1={y + 17} x2={172} y2={y + 17} seed={490 + i} strokeWidth={1.6} stroke={ghost ? 'var(--color-ink-soft)' : 'var(--color-ink)'} />
+
+            {/* value side */}
+            {c.nested ? (
+              <g>
+                <RoughRect x={176} y={y - 2} width={196} height={40} seed={500 + i} strokeWidth={1.6} stroke={c.state === 'read' ? 'var(--color-marker-teal)' : 'var(--color-ink)'} fill="var(--color-paper-raised, #fff)" fillStyle="solid" />
+                <text x={186} y={y - 6} fontFamily="var(--font-hand)" fontSize={12} fill="var(--color-ink-soft)">
+                  another object, living inside a property
+                </text>
+                {c.nested.map((n, j) => (
+                  <text key={n.k} x={188 + j * 96} y={y + 22} fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink)">
+                    <tspan fontWeight={700}>{n.k}</tspan>: {n.v}
+                  </text>
+                ))}
+              </g>
+            ) : ghost ? (
+              <text x={186} y={y + 22} fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
+                no such property…
+              </text>
+            ) : (
+              <text x={186} y={y + 22} fontFamily="var(--font-code)" fontSize={13} fill="var(--color-ink)">
+                {c.v}
+              </text>
             )}
           </motion.g>
         )
       })}
 
-      {/* frame around a function call's fresh slots */}
-      {frameSlots.length > 0 && (
-        <g>
-          <RoughRect
-            x={14}
-            y={56 + view.slots.findIndex((s) => s.inFrame) * 52 - 14}
-            width={150}
-            height={frameSlots.length * 52 + 12}
-            seed={531}
-            strokeWidth={1.5}
-            stroke="var(--color-pencil-blue)"
-            roughness={2.2}
-          />
-          <text
-            x={20}
-            y={56 + view.slots.findIndex((s) => s.inFrame) * 52 + frameSlots.length * 52 + 12}
-            fontFamily="var(--font-hand)"
-            fontSize={12.5}
-            fill="var(--color-pencil-blue)"
-          >
-            {view.frameLabel}
-          </text>
-        </g>
-      )}
-
-      {/* heap side */}
-      <text x={250} y={38} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        the heap — where objects live
-      </text>
-      <RoughRect x={246} y={48} width={176} height={150} seed={532} strokeWidth={1.4} roughness={2.4} stroke="var(--color-ink-soft)" />
+      {/* the bracket-access paper note */}
       <AnimatePresence>
-        {view.obj && (
-          <motion.g initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
-            <RoughRect x={262} y={92} width={144} height={26 + view.obj.length * 22} seed={533} strokeWidth={2} fill="var(--color-sticky)" fillStyle="solid" />
-            <text x={270} y={88} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
-              one object, at one address
+        {view.note && (
+          <motion.g initial={{ opacity: 0, rotate: -6, y: -10 }} animate={{ opacity: 1, rotate: -4, y: 0 }} exit={{ opacity: 0 }}>
+            <RoughRect x={286} y={116} width={136} height={30} seed={511} fill="var(--color-sticky-pink, #fbd8dd)" fillStyle="solid" strokeWidth={1.5} />
+            <text x={354} y={136} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={600} fill="var(--color-ink)">
+              {view.note}
             </text>
-            {view.obj.map((line, j) => (
-              <motion.text
-                key={line.text}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                x={274}
-                y={116 + j * 22}
-                fontFamily="var(--font-code)"
-                fontSize={12}
-                fontWeight={line.hot ? 700 : 400}
-                fill={line.hot ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
-              >
-                {line.text}
-              </motion.text>
-            ))}
+            <text x={354} y={110} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+              brackets read the note, then find the label
+            </text>
           </motion.g>
         )}
       </AnimatePresence>
 
-      {/* arrows from slots into the heap */}
-      {view.obj &&
-        view.slots.map((slot, i) =>
-          slot.arrow ? (
-            <HandArrow
-              key={`arrow-${slot.name}`}
-              from={{ x: 146, y: 56 + i * 52 + 19 }}
-              to={{ x: 262, y: slot.arrowY ?? 116 }}
-              curve={0.1}
-              seed={540 + i}
-              stroke={slot.hot ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}
-              strokeWidth={2.4}
-              headLength={10}
-            />
-          ) : null,
-        )}
-
-      {/* the step's one-line verdict */}
-      <AnimatePresence mode="wait">
-        {view.note && (
-          <motion.text
-            key={view.note.text}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
+      {/* value token */}
+      <AnimatePresence>
+        {view.outToken && (
+          <motion.g
+            key={view.outToken}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            x={220}
-            y={252}
-            textAnchor="middle"
-            fontFamily="var(--font-hand)"
-            fontSize={15.5}
-            fontWeight={700}
-            fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}
+            transition={{ type: 'spring', damping: 15 }}
           >
-            {view.note.text}
-          </motion.text>
+            <RoughRect
+              x={300}
+              y={20}
+              width={116}
+              height={26}
+              seed={512}
+              fill={view.outToken === 'undefined' ? 'color-mix(in srgb, var(--color-marker-coral) 35%, transparent)' : 'var(--color-marker-yellow)'}
+              fillStyle="solid"
+              strokeWidth={1.5}
+            />
+            <text x={358} y={38} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={700} fill="var(--color-ink)">
+              {view.outToken}
+            </text>
+          </motion.g>
         )}
       </AnimatePresence>
 
       {/* console strip */}
-      <RoughRect x={40} y={268} width={360} height={48} seed={534} strokeWidth={1.5} />
+      <RoughRect x={40} y={268} width={360} height={44} seed={513} strokeWidth={1.5} />
       <text x={52} y={264} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
         console
       </text>
       {view.console.length === 0 ? (
-        <text x={220} y={296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+        <text x={220} y={294} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
           (nothing printed yet)
         </text>
       ) : (
-        view.console.map((line, i) => (
-          <motion.text
-            key={`${line}-${i}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            x={58 + i * 60}
-            y={296}
-            fontFamily="var(--font-code)"
-            fontSize={13}
-            fontWeight={600}
-            fill="var(--color-ink)"
-          >
-            {line}
-          </motion.text>
-        ))
+        <text x={58} y={294} fontFamily="var(--font-code)" fontSize={11.5} fill="var(--color-ink)">
+          {view.console.slice(-1)[0] === 'undefined' ? (
+            <tspan fill="var(--color-marker-coral)">undefined</tspan>
+          ) : (
+            view.console.slice(-1)[0]
+          )}
+          <tspan fill="var(--color-ink-soft)" fontFamily="var(--font-hand)" fontSize={12}>
+            {'   '}(latest line)
+          </tspan>
+        </text>
       )}
     </svg>
   )
 }
 
-const SCOREBOARD_EXERCISE: CodeExerciseDef = {
-  id: 'l44-scoreboard',
-  title: 'one player, two names',
-  task: 'A scoreboard bug hunt, in reverse: build the situation where two variables and a function parameter all reach ONE object — and prove it with an identity check.',
+const PET_EXERCISE: CodeExerciseDef = {
+  id: 'l43-pet',
+  title: 'a record with a birthday',
+  task: 'Model a pet as an object, celebrate its birthday by computing from what the object already knows, and attach a property whose key contains a space.',
   steps: [
     <>
-      Create an object <code>alice</code> with <code>name</code> = <code>"Alice"</code> and{' '}
-      <code>score</code> = <code>10</code>.
+      Create an object named <code>pet</code> with three properties, in this order:{' '}
+      <code>name</code> = <code>"Biscuit"</code>, <code>kind</code> = <code>"hamster"</code>,{' '}
+      <code>age</code> = <code>2</code>.
     </>,
     <>
-      Create <code>sameAlice</code> so that it points at <strong>the same object</strong> — no new
-      object may be built.
+      Birthday! Increase <code>pet.age</code> by 1 — computed <em>from its current value</em>, not
+      typed as a fresh number.
     </>,
     <>
-      Write a function <code>addPoints(player, points)</code> that increases the player's{' '}
-      <code>score</code> by <code>points</code> — computed from the current score.
+      Add a brand-new property whose key is <code>favorite toy</code> (yes, with the space) and
+      value <code>"tiny wheel"</code>. Choose your accessor accordingly.
     </>,
     <>
-      Call <code>addPoints</code> passing <code>sameAlice</code> and <code>5</code>. Then print{' '}
-      <code>alice.score</code>, and print <code>alice === sameAlice</code>.
+      Print <code>pet.name</code>, then print the whole object.
     </>,
   ],
   starter: '',
-  expectedOutput: ['15', 'true'],
+  expectedOutput: ['Biscuit', '{"name":"Biscuit","kind":"hamster","age":3,"favorite toy":"tiny wheel"}'],
   mustUse: [
-    { test: /sameAlice\s*=\s*alice\b/, label: 'sameAlice receives alice — copying the reference' },
-    { test: /player\.score\s*(\+=\s*points|=\s*player\.score\s*\+\s*points)/, label: 'the score grows from its current value, by points' },
-    { test: /console\.log\s*\(\s*alice\s*===\s*sameAlice\s*\)/, label: 'identity is proven with ===' },
+    { test: /pet\.age\s*(\+=\s*1|=\s*pet\.age\s*\+\s*1)|pet\[\s*["']age["']\s*\]\s*(\+=\s*1|=\s*pet\[\s*["']age["']\s*\]\s*\+\s*1)/, label: 'the new age is computed from the current age' },
+    { test: /pet\s*\[\s*["']favorite toy["']\s*\]\s*=/, label: 'a key with a space can only be reached with brackets' },
   ],
   mustNotUse: [
-    { test: /\b15\b/, label: 'no hand-typed 15 — the function must earn it' },
-    { test: /sameAlice\s*=\s*\{/, label: 'sameAlice must not be a second object — copy the reference, not the shape' },
+    { test: /age\s*[:=]\s*3\b/, label: 'no hand-typed 3 — the object computes its own birthday' },
   ],
-  modelAnswer: `function addPoints(player, points) {
-  player.score = player.score + points;
-}
+  modelAnswer: `const pet = {
+  name: "Biscuit",
+  kind: "hamster",
+  age: 2,
+};
 
-const alice = { name: "Alice", score: 10 };
-const sameAlice = alice;
+pet.age = pet.age + 1;
+pet["favorite toy"] = "tiny wheel";
 
-addPoints(sameAlice, 5);
-
-console.log(alice.score);
-console.log(alice === sameAlice);`,
+console.log(pet.name);
+console.log(pet);`,
 }
 
 export const lesson44: LessonDef = {
@@ -346,94 +275,92 @@ export const lesson44: LessonDef = {
   hook: (
     <>
       <p>
-        Two lessons ago you caught JavaScript doing something suspicious: <code>scores</code> was
-        declared with <code>const</code>, yet <code>scores[1] = 96</code> worked. Then objects did
-        it too. Today the mystery resolves — and the answer is the single most important fact in
-        this phase, the one behind the <strong>#1 source of real-world JavaScript bugs</strong>.
+        Arrays answer “give me element number 2” — perfect when order is the point. But describe{' '}
+        <em>one book</em> with an array and you get <code>["The Hobbit", 310, true]</code>… and a
+        quiz: what did position 1 mean again? Pages? Rating? Data about <em>one thing</em> has
+        parts with <strong>names</strong>, not positions.
       </p>
       <p>
-        Here it is:{' '}
+        An{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
-          a variable's slot never holds an object — it holds a reference to where the object lives
+          object
         </HighlightMark>{' '}
-        (you'll see it drawn as an arrow). Numbers and strings sit <em>in</em> the slot; objects
-        and arrays live elsewhere, in a region of memory called the <strong>heap</strong>, and the
-        slot only points at them. Every "spooky action at a distance" bug you will ever debug —
-        two variables mysteriously changing together — is this one picture.
+        stores <strong>properties</strong> — <code>key: value</code> pairs — under one name, and
+        you fetch each value <em>by its key</em>: <code>book.title</code>, never “whatever sits
+        third.” Arrays for many-of-the-same in order; objects for one-thing-with-named-parts.
+        Nearly every piece of data your future tests receive is built from these two, nested into
+        each other.
       </p>
     </>
   ),
-  code: CODE_A,
+  code: CODE,
   steps: [
     {
-      id: 'copy-value',
+      id: 'create',
       caption:
-        'Act one: primitives. score holds 10 — a number is a primitive, small enough to sit right in the slot. Line 2 copies it: backup gets its OWN 10. Two slots, two separate values. This is everything you learned in 1.3, unchanged.',
-      highlightLines: [1, 2],
+        'Curly braces build the object. Each property is a key → value pair: title holds "The Hobbit", pages holds 310 — and author holds a whole OTHER OBJECT as its value. Values can be anything, including more objects; that’s how real-world data gets its shape.',
+      highlightLines: [1, 2, 3, 4, 5],
     },
     {
-      id: 'independent',
+      id: 'dot',
       caption:
-        'backup = 99 rewrites backup’s slot — and score’s slot is a different slot. Printing score gives 10, untouched. Copies of primitives are fully independent. Keep this boring picture in mind; the contrast is about to arrive.',
-      highlightLines: [3, 4],
-    },
-    {
-      id: 'heap',
-      caption:
-        'Line 6 creates an object — and watch WHERE it goes. The object itself is built in the heap, off to the right. cat’s slot on the stack holds only a REFERENCE: the object’s address, drawn as an arrow. The object could hold two properties or two thousand; cat’s slot stays one arrow, always the same size.',
-      highlightLines: [6],
-    },
-    {
-      id: 'copy-arrow',
-      caption:
-        'Line 7 looks exactly like line 2 — same = sign — but copying a slot copies WHAT THE SLOT HOLDS. backup got a copy of a value. alias gets a copy of the ARROW. Count the objects on the right: still one. Two variables, two arrows, ONE object. alias is not a copy of the cat — it’s a second name for the same cat.',
+        'book.title is dot access: “in book, fetch the property whose key is title.” No counting, no positions — the key IS the address. This is the everyday way to read a property when you know its name while writing the code.',
       highlightLines: [7],
     },
     {
-      id: 'aliasing',
+      id: 'chain',
       caption:
-        'alias.age = 4 follows alias’s arrow and changes the one object — so cat.age, following cat’s arrow to that SAME object, reads 4. Nobody touched cat, and yet cat changed: the aliasing bug, seen in daylight. And the const mystery dissolves: const locks the ARROW in the slot (cat can never point elsewhere) — but the object at the end of the arrow was never locked. scores[1] = 96 changed the object, not the arrow.',
-      highlightLines: [8, 9],
+        'book.author.name is two lookups, read left to right: first book.author fetches the inner object, then .name fetches from THAT. Chains like response.user.address.city are everyday JavaScript — each dot is one hop deeper.',
+      highlightLines: [8],
     },
     {
-      id: 'call-by-value',
+      id: 'bracket-literal',
       caption:
-        'Act two: functions — new code, same picture. Lesson 3.2 taught that each call gets fresh parameter slots. Now upgrade it: the fresh slot receives a copy of WHAT THE ARGUMENT’S SLOT HOLDS. lives holds the value 9, so n gets a copy of 9. Inside, n becomes 10 — in bump’s own frame. lives never felt it: 9. This is CALL BY VALUE.',
-      codeOverride: CODE_B,
-      highlightLines: [1, 2, 3, 5, 6, 7],
+        'The second way to read a property: brackets with a string — book["pages"] → 310. Notice: this is EXACTLY the same lookup as book.pages, character for character slower to type. If this were all brackets did, they’d be pointless decoration. So why do they exist? Because of what goes INSIDE them — next step, and it’s a power dot simply doesn’t have.',
+      highlightLines: [10],
     },
     {
-      id: 'call-by-sharing',
+      id: 'bracket-dynamic',
       caption:
-        'Pass an object and the same rule produces the opposite outcome: dog’s slot holds an ARROW, so pet’s fresh slot gets a copy of the ARROW — pointing at the caller’s one object. pet.age = pet.age + 1 mutates it; dog.age reads 6. This is CALL BY SHARING (you’ll often hear it loosely called call by reference). One nuance seals it: REASSIGNING pet = {} inside would only re-point pet’s local arrow — dog would be untouched. Functions can mutate what you pass; they can never re-point your variable.',
-      highlightLines: [9, 10, 11, 13, 14, 15],
+        'New scene: an app greeting its user. Which language? You CANNOT know while writing the code — it depends on whose phone opens the app. It arrives at runtime, in a variable: lang holds "ta". And here’s the bracket superpower: brackets EVALUATE what’s inside first. greetings[lang] → greetings["ta"] → "Vanakkam!". A dot can’t do this — greetings.lang hunts for a property literally named lang and finds undefined (see the console!). This is the real reason brackets exist: keys chosen while the program runs — the user’s language, settings[whicheverToggleWasClicked], config[environment] picking the right server in your future test suites.',
+      codeOverride: GREET_CODE,
+      highlightLines: [9, 11, 12],
+    },
+    {
+      id: 'add',
+      caption:
+        'Back to the book. Assigning to a key that doesn’t exist CREATES the property: book.rating = 5 grew the object by one compartment. No declaration ceremony — objects grow the moment you write into them. (Same const-but-changed mystery as 4.1. Lesson 4.6 is coming for it.)',
+      highlightLines: [12],
+    },
+    {
+      id: 'missing',
+      caption:
+        'Reading a key that isn’t there — book.publisher — gives undefined, exactly like reading past an array’s end. No error, just “no such property.” Typos in property names fail SILENTLY this way, which makes book.titel one of the sneakiest bugs a beginner meets.',
+      highlightLines: [13],
     },
   ],
-  Viz: HeapDiagram,
+  Viz: ObjectLocker,
   underTheHood: (
     <>
       <p>
-        One rule runs this whole lesson: <strong>copying a slot copies what the slot holds</strong>
-        . Primitives (numbers, strings, booleans, <code>null</code>, <code>undefined</code>) sit
-        directly in the slot, so copies are independent. Objects and arrays live in the heap, and
-        slots hold only their reference — so <code>=</code>, function arguments, even{' '}
-        <code>push</code>-ing an object into an array, all copy <em>arrows</em>, never the object.
+        Property keys are strings under the hood (<code>{'{ title: … }'}</code> is shorthand for{' '}
+        <code>{'{ "title": … }'}</code>), which is why any text can be a key — including{' '}
+        <code>"favorite toy"</code> with a space, reachable only through brackets. Dot access is
+        just bracket access with the string fixed at writing time: <code>book.title</code> and{' '}
+        <code>book["title"]</code> are the same lookup.
       </p>
       <p>
-        Technically JavaScript is <em>always</em> call by value — it's just that for objects, the
-        value being copied <strong>is the reference</strong>. That's why the polite name is{' '}
-        <strong>call by sharing</strong>: caller and function share one object. Mutating through
-        the parameter reaches it; reassigning the parameter only re-points the local copy. And{' '}
-        <code>===</code> on two references asks one question: same arrow? — which is why two
-        variables naming one object are <code>===</code>, and why <code>{'{} === {}'}</code> is{' '}
-        <code>false</code> (two objects, two addresses — lesson 4.5 runs with this).
+        The two access styles split one job: <strong>dot</strong> when you know the key while
+        writing the code, <strong>brackets</strong> when the key arrives at runtime — in a
+        variable, from user input, built from other strings. Writing works through both, and
+        writing to a missing key creates it; reading a missing key returns <code>undefined</code>{' '}
+        without complaint.
       </p>
       <p>
-        <strong>Fun fact:</strong> you already use both models daily. Emailing someone a Word{' '}
-        <em>attachment</em> is a primitive copy — they edit their copy, yours never changes.
-        Sending a Google Docs <em>link</em> is a reference copy — one document, and their edits
-        appear in "your" file, because it was never <em>your</em> file. Every aliasing bug is a
-        Google-Docs link someone mistook for an attachment.
+        <strong>Fun fact:</strong> a paper dictionary works exactly like an object. Nobody asks for
+        “the word on page 412” (position); you look up <em>pizza</em> (the key) and read its
+        definition (the value). Other languages even name this structure a <em>dictionary</em> —
+        JavaScript just says object.
       </p>
     </>
   ),
@@ -441,38 +368,38 @@ export const lesson44: LessonDef = {
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'const team = ["Ana", "Ben"];\nconst squad = team;\nsquad.push("Cara");\nconsole.log(team.length);',
-      accept: ['3'],
+      code: 'const user = { name: "Mia", age: 30 };\nconst k = "age";\nconsole.log(user[k]);',
+      accept: ['30'],
       placeholder: 'type the console output…',
-      why: 'squad = team copied the arrow — both variables point at ONE array. squad.push grew that array, so team (same arrow, same array) counts 3. Arrays are objects: reference rules apply.',
+      why: 'Brackets evaluate what’s inside first: k holds "age", so user[k] is user["age"] → 30. With a dot, user.k would hunt for a property literally named k — and find undefined.',
     },
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'let gold = 50;\nlet silver = gold;\nsilver = silver + 10;\nconsole.log(gold);',
-      accept: ['50'],
+      code: 'const user = { name: "Mia" };\nconsole.log(user.email);',
+      accept: ['undefined'],
       placeholder: 'type the console output…',
-      why: 'Numbers are primitives: silver received its own copy of 50. Changing the copy can’t reach the original — gold is still 50. Same = sign as the array question, opposite outcome; the difference is what the slot held.',
+      why: 'No email property exists, so the lookup answers undefined — no error. Misspelled keys fail the same silent way, which is why this one’s worth typing with your own hands.',
     },
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'function rename(user) {\n  user.name = "Zoe";\n}\n\nconst u = { name: "Mia" };\nrename(u);\nconsole.log(u.name);',
-      accept: ['Zoe'],
+      code: 'const cfg = { theme: { dark: true } };\nconsole.log(cfg.theme.dark);',
+      accept: ['true'],
       placeholder: 'type the console output…',
-      why: 'u’s slot holds an arrow, so the parameter user got a copy of that arrow — call by sharing. user.name = "Zoe" mutated the one shared object, and the caller sees it. (Had rename done user = { name: "Zoe" } instead, u would still say Mia — reassigning only re-points the local arrow.)',
+      why: 'Left to right, one hop per dot: cfg.theme fetches the inner object, then .dark fetches true from it. Nesting is just objects holding objects.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={SCOREBOARD_EXERCISE} />,
+  PlayExtra: () => <CodeExercise def={PET_EXERCISE} />,
   teachBack: {
     prompt:
-      'The interview classic — a friend shows you: const a = { n: 1 }; const b = a; b.n = 2; and is horrified that a.n is now 2. Explain what b = a really copied, why const didn’t prevent any of it, and what a function could and couldn’t do if they passed a to it.',
+      'A friend asks: “when do I use book.title and when book[something]? Aren’t they the same?” Explain the real difference — and what happens when the property doesn’t exist.',
     modelAnswer:
-      'a’s slot never held the object — objects live in the heap, and the slot holds a reference (an arrow) to it. So const b = a copied the ARROW, not the object: two variables, one object, and b.n = 2 edited the single shared object that a also points at. const was never violated — const locks the arrow in the slot (you can’t re-point b at something else), but the object at the end of the arrow was never locked. Pass a to a function and the parameter receives a copy of the arrow too (call by sharing): the function CAN mutate the object (obj.n = 5 shows up everywhere), but it CANNOT re-point the caller’s variable — reassigning the parameter only moves the function’s local arrow. Primitives are the opposite: the slot holds the value itself, so every copy is independent — that’s call by value.',
+      'They’re the same lookup underneath — every key is a string — but they get the key differently. Dot uses the exact name written in the code: book.title always means the "title" property. Brackets EVALUATE whatever is inside first: if key holds "pages", book[key] reads book["pages"] — so brackets are for keys that arrive at runtime (in variables, from input) or keys a dot can’t express, like "favorite toy" with a space. Reading a property that doesn’t exist returns undefined instead of erroring — handy, but it means a typo like book.titel fails silently. Writing is different: assigning to a missing key CREATES the property.',
   },
   recap: [
-    'Slots hold primitives directly, but only REFERENCES (arrows) to objects/arrays — the objects themselves live in the heap.',
-    'Copying a slot copies what it holds: primitives → independent copies; objects → two arrows, ONE object (aliasing).',
-    'const locks the arrow, never the object’s contents. Functions get a copy of the arrow: they can MUTATE what you pass, never re-point your variable.',
+    'An object stores properties — key: value pairs — and you fetch values by KEY: one thing, named parts.',
+    'Dot for keys known when you write the code; brackets evaluate an expression to get the key at runtime (and handle keys like "favorite toy").',
+    'Reading a missing key → undefined (silent, typo-prone). Writing to a missing key → creates the property. Chains like a.b.c hop one property per dot.',
   ],
 }

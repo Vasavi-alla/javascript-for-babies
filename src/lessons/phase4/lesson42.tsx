@@ -1,218 +1,248 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { RoughRect } from '../../design/rough-svg'
+import { RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
- * 4.2 — Growing & shrinking (push / pop / shift / unshift)
- * Viz: the array cells physically MOVE. push appends at the end (nothing else
- * moves); shift removes element 0 and every remaining element slides one
- * position left — the honest, visible cost. Removed elements fly out as
- * returned-value tokens; push shows its returned new length.
+ * 4.2 — Inside an array: memory & the O(1) trick
+ * Viz: a strip of the memory wall (0.4 returns!) with REAL addresses. The
+ * array is a contiguous run of slots; reading scores[i] is address arithmetic:
+ * start + i × slotSize → one jump. A tiny hand-drawn cost graph introduces
+ * O(1) vs O(n) honestly.
  */
 
-const CODE = `const orders = ["latte", "mocha"];
+const CODE = `const scores = [82, 95, 71];
 
-orders.push("chai");
-console.log(orders);
+// the engine's arithmetic for scores[2]:
+//   address = start + index × slotSize
+//           = 5000  +   2   ×    8
+//           = 5016  → jump straight there
 
-const next = orders.shift();
-console.log(next);
-
-orders.unshift("espresso");
-console.log(orders);
-
-orders.pop();
-console.log(orders.length);`
+console.log(scores[2]);
+console.log(scores.length);
+console.log(scores[9]);`
 
 interface View {
-  cells: string[]
-  /** which end just changed, for a colored flash */
-  flash: 'front' | 'end' | null
-  /** everyone slid this way (drawn as motion arrows under the cells) */
-  slid: 'left' | 'right' | null
-  /** token that flew out or in */
-  token: { label: string; value: string } | null
+  /** which slot the jump lands on (0-2), or null */
+  jumpTo: number | null
+  formula: string | null
+  showGraph: boolean
+  showLength: boolean
+  ghostAddress: boolean
   console: string[]
+  note?: { text: string; color: 'teal' | 'coral' }
 }
 
 const VIEWS: View[] = [
-  { cells: ['latte', 'mocha'], flash: null, slid: null, token: null, console: [] },
   {
-    cells: ['latte', 'mocha', 'chai'], flash: 'end', slid: null,
-    token: { label: 'push returned (new length)', value: '3' },
-    console: ['["latte","mocha","chai"]'],
+    jumpTo: null, formula: null, showGraph: false, showLength: false, ghostAddress: false, console: [],
+    note: { text: 'an array = a CONTIGUOUS run of memory slots — side by side, no gaps', color: 'teal' },
   },
   {
-    cells: ['mocha', 'chai'], flash: 'front', slid: 'left',
-    token: { label: 'shift returned (the removed element)', value: '"latte"' },
-    console: ['["latte","mocha","chai"]', 'latte'],
+    jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: false, showLength: false, ghostAddress: false, console: [],
+    note: { text: 'no searching: one multiply, one add, one jump', color: 'teal' },
   },
   {
-    cells: ['espresso', 'mocha', 'chai'], flash: 'front', slid: 'right',
-    token: null,
-    console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]'],
+    jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: true, showLength: false, ghostAddress: false, console: ['71'],
+    note: { text: 'same arithmetic for index 2 or index 2,000,000 — programmers call it O(1)', color: 'teal' },
   },
   {
-    cells: ['espresso', 'mocha'], flash: 'end', slid: null,
-    token: { label: 'pop returned (the removed element)', value: '"chai"' },
-    console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]', '2'],
+    jumpTo: null, formula: null, showGraph: false, showLength: true, ghostAddress: false, console: ['71', '3'],
+    note: { text: '.length is bookkeeping the array keeps up to date — no counting happens', color: 'teal' },
+  },
+  {
+    jumpTo: null, formula: '5000 + 9 × 8 = 5072 …not ours!', showGraph: false, showLength: false, ghostAddress: true, console: ['71', '3', 'undefined'],
+    note: { text: 'the math happily computes 5072 — but the array never claimed that slot: undefined', color: 'coral' },
+  },
+  {
+    jumpTo: null, formula: null, showGraph: false, showLength: false, ghostAddress: false, console: ['71', '3', 'undefined'],
+    note: { text: 'the catch: the run MUST stay contiguous… so what happens when element 0 leaves?', color: 'coral' },
   },
 ]
 
-const CELL_W = 104
-const CELL_X0 = 44
+const ADDRESSES = ['5000', '5008', '5016']
+const VALUES = ['82', '95', '71']
 
-function GrowShrinkShelf({ stepIndex }: { stepIndex: number }) {
+function MemoryStrip({ stepIndex }: { stepIndex: number }) {
   const view = VIEWS[stepIndex] ?? VIEWS[0]
   return (
-    <svg viewBox="0 0 440 310" className="w-full">
-      <RoughRect x={20} y={20} width={88} height={26} seed={441} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
-      <text x={64} y={38} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill="var(--color-ink)">
-        orders
-      </text>
-      <text x={120} y={38} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        — the SAME array the whole time
+    <svg viewBox="0 0 440 320" className="w-full">
+      <text x={24} y={30} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+        a strip of the memory wall (lesson 0.4) — every slot has an ADDRESS
       </text>
 
-      {/* cells — layout animation slides them when indexes change */}
-      {view.cells.map((value, i) => {
-        const flashing = (view.flash === 'front' && i === 0) || (view.flash === 'end' && i === view.cells.length - 1)
-        return (
-          <motion.g key={value} layout transition={{ type: 'spring', damping: 18 }}>
-            <motion.g
-              animate={{ x: CELL_X0 + i * CELL_W, y: 78 }}
-              initial={{ x: CELL_X0 + i * CELL_W, y: 78 }}
-              transition={{ type: 'spring', damping: 17 }}
-            >
-              <RoughRect
-                x={0}
-                y={0}
-                width={CELL_W - 12}
-                height={52}
-                seed={450 + (value.length % 7)}
-                strokeWidth={flashing ? 2.6 : 1.8}
-                stroke={flashing ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
-                fill={flashing ? 'color-mix(in srgb, var(--color-marker-coral) 18%, transparent)' : 'var(--color-paper-raised, #fff)'}
-                fillStyle="solid"
-              />
-              <text x={(CELL_W - 12) / 2} y={32} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13.5} fontWeight={600} fill="var(--color-ink)">
-                {value}
-              </text>
-              <text x={(CELL_W - 12) / 2} y={72} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fill="var(--color-ink-soft)">
-                {i}
-              </text>
-            </motion.g>
-          </motion.g>
-        )
-      })}
-
-      {/* the re-indexing callout */}
-      <AnimatePresence>
-        {view.slid && (
-          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <text x={CELL_X0 + 2} y={178} fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-marker-coral)" fontWeight={700}>
-              {view.slid === 'left'
-                ? '← every element slid one position left — all re-indexed'
-                : '→ every element slid one position right to make room at 0'}
-            </text>
-          </motion.g>
-        )}
-      </AnimatePresence>
-
-      {/* returned-value token */}
-      <AnimatePresence>
-        {view.token && (
-          <motion.g
-            key={view.token.value}
-            initial={{ opacity: 0, y: 96 }}
-            animate={{ opacity: 1, y: 196 }}
-            exit={{ opacity: 0 }}
-            transition={{ type: 'spring', damping: 16 }}
-          >
-            <RoughRect x={140} y={0} width={160} height={26} seed={461} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
-            <text x={220} y={17} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill="var(--color-ink)">
-              {view.token.value}
-            </text>
-            <text x={220} y={44} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
-              {view.token.label}
-            </text>
-          </motion.g>
-        )}
-      </AnimatePresence>
-
-      {/* console strip */}
-      <RoughRect x={40} y={252} width={360} height={52} seed={462} strokeWidth={1.5} />
-      <text x={52} y={248} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        console
+      {/* neighboring foreign slots to show contiguity */}
+      <RoughRect x={16} y={46} width={44} height={50} seed={700} strokeWidth={1.2} stroke="var(--color-ink-soft)" roughness={2.2} />
+      <text x={38} y={76} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11} fill="var(--color-ink-soft)">
+        …
       </text>
-      {view.console.length === 0 ? (
-        <text x={220} y={282} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-          (nothing printed yet)
-        </text>
+
+      {VALUES.map((v, i) => (
+        <g key={i}>
+          <RoughRect
+            x={66 + i * 96}
+            y={46}
+            width={88}
+            height={50}
+            seed={701 + i}
+            strokeWidth={view.jumpTo === i ? 2.8 : 1.8}
+            stroke={view.jumpTo === i ? 'var(--color-marker-teal)' : 'var(--color-ink)'}
+            fill={view.jumpTo === i ? 'color-mix(in srgb, var(--color-marker-teal) 14%, transparent)' : 'var(--color-paper-raised, #fff)'}
+            fillStyle="solid"
+          />
+          <text x={110 + i * 96} y={76} textAnchor="middle" fontFamily="var(--font-code)" fontSize={15} fontWeight={700} fill="var(--color-ink)">
+            {v}
+          </text>
+          <text x={110 + i * 96} y={112} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink-soft)">
+            addr {ADDRESSES[i]}
+          </text>
+          <text x={110 + i * 96} y={128} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={600} fill="var(--color-ink)">
+            index {i}
+          </text>
+        </g>
+      ))}
+
+      {/* ghost slot at index 9 territory */}
+      {view.ghostAddress ? (
+        <g>
+          <RoughRect x={354} y={46} width={72} height={50} seed={706} strokeWidth={1.5} stroke="var(--color-marker-coral)" roughness={2.6} />
+          <text x={390} y={70} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11.5} fill="var(--color-marker-coral)">
+            5072 —
+          </text>
+          <text x={390} y={85} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11.5} fill="var(--color-marker-coral)">
+            not ours
+          </text>
+        </g>
       ) : (
-        view.console.slice(-2).map((line, i) => (
-          <motion.text
-            key={`${line}-${i}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            x={58}
-            y={270 + i * 16}
-            fontFamily="var(--font-code)"
-            fontSize={11.5}
-            fill="var(--color-ink)"
-          >
-            {line}
+        <g>
+          <RoughRect x={354} y={46} width={44} height={50} seed={707} strokeWidth={1.2} stroke="var(--color-ink-soft)" roughness={2.2} />
+          <text x={376} y={76} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11} fill="var(--color-ink-soft)">
+            …
+          </text>
+        </g>
+      )}
+
+      {/* the arithmetic card */}
+      <AnimatePresence mode="wait">
+        {view.formula && (
+          <motion.g key={view.formula} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
+            <RoughRect x={90} y={150} width={260} height={54} seed={708} strokeWidth={2} fill="var(--color-marker-yellow)" fillStyle="solid" />
+            <text x={220} y={170} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+              address = start + index × slotSize
+            </text>
+            <text x={220} y={192} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill="var(--color-ink)">
+              {view.formula}
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* length badge */}
+      <AnimatePresence>
+        {view.showLength && (
+          <motion.g initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
+            <RoughRect x={150} y={156} width={140} height={40} seed={709} strokeWidth={1.8} fill="var(--color-marker-teal)" fillStyle="hachure" />
+            <text x={220} y={181} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13.5} fontWeight={700} fill="var(--color-ink)">
+              .length = 3
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* the tiny cost graph: O(1) flat, O(n) rising */}
+      <AnimatePresence>
+        {view.showGraph && (
+          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <RoughLine x1={70} y1={262} x2={70} y2={216} seed={710} strokeWidth={1.6} stroke="var(--color-ink-soft)" />
+            <RoughLine x1={70} y1={262} x2={200} y2={262} seed={711} strokeWidth={1.6} stroke="var(--color-ink-soft)" />
+            <text x={135} y={278} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11.5} fill="var(--color-ink-soft)">
+              array size →
+            </text>
+            <text x={58} y={240} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11.5} fill="var(--color-ink-soft)" transform="rotate(-90 58 240)">
+              cost
+            </text>
+            {/* O(n) rising */}
+            <RoughLine x1={74} y1={258} x2={196} y2={220} seed={712} strokeWidth={2} stroke="var(--color-marker-coral)" />
+            <text x={204} y={222} fontFamily="var(--font-code)" fontSize={11.5} fontWeight={700} fill="var(--color-marker-coral)">
+              O(n) — grows
+            </text>
+            {/* O(1) flat */}
+            <RoughLine x1={74} y1={246} x2={196} y2={245} seed={713} strokeWidth={2.2} stroke="var(--color-marker-teal)" />
+            <text x={204} y={248} fontFamily="var(--font-code)" fontSize={11.5} fontWeight={700} fill="var(--color-marker-teal)">
+              O(1) — flat
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* verdict */}
+      <AnimatePresence mode="wait">
+        {view.note && (
+          <motion.text key={view.note.text} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={view.showGraph ? 300 : 232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}>
+            {view.note.text}
           </motion.text>
-        ))
+        )}
+      </AnimatePresence>
+
+      {/* console */}
+      {!view.showGraph && (
+        <g>
+          <RoughRect x={40} y={248} width={360} height={40} seed={714} strokeWidth={1.5} />
+          <text x={52} y={244} fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
+            console
+          </text>
+          {view.console.length === 0 ? (
+            <text x={220} y={273} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
+              (nothing printed yet)
+            </text>
+          ) : (
+            <text x={58} y={273} fontFamily="var(--font-code)" fontSize={12} fill="var(--color-ink)">
+              {view.console.join('   ·   ')}
+            </text>
+          )}
+        </g>
       )}
     </svg>
   )
 }
 
-const TODOS_EXERCISE: CodeExerciseDef = {
-  id: 'l42-todos',
-  title: 'a day in a to-do list',
-  task: 'Your to-do list changes all day: urgent things cut the line, finished things leave, new things join at the back. Mutate ONE array through the whole day — never rebuild it by hand.',
+const THOUSAND_EXERCISE: CodeExerciseDef = {
+  id: 'l42-thousand',
+  title: 'a thousand elements, one jump',
+  task: 'Prove the O(1) claim with your own hands: build a 1000-element array, then read its two ends — the far end must cost the same one line as the near end.',
   steps: [
     <>
-      Start with an array named <code>todos</code> holding <code>"email boss"</code> and{' '}
-      <code>"water plants"</code>, in that order.
+      Create an empty array <code>big</code>, then use a loop (lesson 2.6 style) to fill it:
+      element at index <code>i</code> holds <code>i * 2</code>, for indexes 0 through 999.
     </>,
     <>
-      An urgent task arrives: <code>"call plumber"</code> must enter at the <strong>front</strong>{' '}
-      of the array.
+      Print the FIRST element, then the LAST element — the last one's index must be{' '}
+      <em>computed from the array's length</em>, no hand-typed 999.
     </>,
-    <>
-      You do the front task immediately — remove it from the <strong>front</strong>.
-    </>,
-    <>
-      Add <code>"gym"</code> at the <strong>end</strong>, then print the array, then print how
-      many tasks it holds.
-    </>,
+    <>Print the length itself.</>,
   ],
   starter: '',
-  expectedOutput: ['["email boss","water plants","gym"]', '3'],
+  expectedOutput: ['0', '1998', '1000'],
   mustUse: [
-    { test: /todos\.unshift\s*\(/, label: 'entering at the front is unshift' },
-    { test: /todos\.shift\s*\(\s*\)/, label: 'leaving from the front is shift' },
-    { test: /todos\.push\s*\(/, label: 'joining at the end is push' },
-    { test: /todos\.length/, label: 'the count comes from .length' },
+    { test: /for\s*\(/, label: 'the array is filled by a loop' },
+    { test: /big\s*\[\s*i\s*\]\s*=|big\s*\[\s*\w+\s*\]\s*=\s*\w+\s*\*\s*2/, label: 'elements are written by index: big[i] = i * 2' },
+    { test: /big\s*\[\s*big\.length\s*-\s*1\s*\]/, label: 'the last element is read via big.length - 1' },
   ],
   mustNotUse: [
-    { test: /=\s*\[[^\]]*gym/, label: 'the array must be CHANGED by methods — not rebuilt by hand with gym inside' },
-    { test: /console\.log\s*\(\s*3\s*\)/, label: 'no hand-typed 3 — ask the array' },
+    { test: /\[\s*999\s*\]/, label: 'no hand-typed index 999 — length does the counting' },
+    { test: /1998/, label: 'no hand-typed 1998 — the array must produce it' },
   ],
-  modelAnswer: `const todos = ["email boss", "water plants"];
+  modelAnswer: `const big = [];
 
-todos.unshift("call plumber");
-todos.shift();
-todos.push("gym");
+for (let i = 0; i < 1000; i++) {
+  big[i] = i * 2;
+}
 
-console.log(todos);
-console.log(todos.length);`,
+console.log(big[0]);
+console.log(big[big.length - 1]);
+console.log(big.length);`,
 }
 
 export const lesson42: LessonDef = {
@@ -220,114 +250,121 @@ export const lesson42: LessonDef = {
   hook: (
     <>
       <p>
-        Real collections never sit still. A café's order list grows as people order and shrinks as
-        drinks go out. A browser's history grows with every page. Yesterday's array-by-index tricks
-        can't do this — assigning to <code>orders[2]</code> replaces an element, but it can't{' '}
-        <em>make room</em> or <em>close a gap</em>.
+        Yesterday you read <code>scores[2]</code> and the value just… appeared. Here's the question
+        that separates people who <em>use</em> arrays from people who <em>understand</em> them:
+        if the array had <strong>two million</strong> elements, would <code>scores[1999999]</code>{' '}
+        be slower? Intuition says the engine must walk two million cells to get there. Intuition is
+        wrong.
       </p>
       <p>
-        Arrays carry four built-in methods for exactly this, two per end:{' '}
+        The answer is one line of arithmetic, and it's the reason arrays exist at all:{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
-          push and pop work at the end; unshift and shift work at the front
+          address = start + index × slot size
         </HighlightMark>
-        . Same four verbs power everything from undo stacks to print queues — and one of them is
-        secretly more expensive than the others. You'll <em>see</em> which.
+        . Today you learn how an array actually sits in memory (lesson 0.4's wall of slots
+        returns), why that makes every index lookup a single jump — and the name professionals use
+        for that kind of cost: <strong>O(1)</strong>. This is your first piece of real computer
+        science, and interviewers love asking about it.
       </p>
     </>
   ),
   code: CODE,
   steps: [
     {
-      id: 'start',
+      id: 'contiguous',
       caption:
-        'The café opens with two orders. Watch the cells and their indexes below — the whole lesson is about what happens to EXISTING elements when the array grows or shrinks.',
+        'When line 1 runs, the array asks memory for a CONTIGUOUS run of slots — side by side, no gaps, in one block. Say each slot is 8 bytes and the block starts at address 5000: element 0 lives at 5000, element 1 at 5008, element 2 at 5016. The array remembers ONE number: where the block starts.',
       highlightLines: [1],
     },
     {
-      id: 'push',
+      id: 'arithmetic',
       caption:
-        'orders.push("chai") appends a new element after the current last one. Nothing else moved — latte and mocha kept their indexes. And push hands something back: the array’s NEW LENGTH, 3. (Every one of today’s four methods returns something. That detail writes half of tomorrow’s bugs.)',
-      highlightLines: [3, 4],
+        'Now scores[2]. The engine does NOT walk the array. It computes: start + index × slotSize = 5000 + 2 × 8 = 5016 — and jumps straight to that address. One multiplication, one addition, one jump. THAT is what an index really is: not a label, a distance the engine can do math on. (And it’s the real reason indexes start at 0 — element 0 is 0 × 8 bytes from the start.)',
+      highlightLines: [3, 4, 5, 6, 8],
     },
     {
-      id: 'shift',
+      id: 'o1',
       caption:
-        'orders.shift() removes the element at index 0 AND returns it — so const next = orders.shift() catches "latte" as it leaves. Now watch the shelf: mocha slid from index 1 to 0, chai from 2 to 1. shift re-indexes EVERY remaining element. On three elements that’s invisible; on a million-element array, that’s a million moves for one removal.',
-      highlightLines: [6, 7],
+        'Here’s the beautiful part: the formula doesn’t care how big the array is. Index 2 or index 2,000,000 — same multiply, same add, same single jump. Programmers write this as O(1), read “constant time”: the cost stays FLAT as the data grows. The graph shows the two cost shapes you’ll meet again and again: O(1) flat, O(n) climbing with size (n = the number of elements).',
+      highlightLines: [8],
     },
     {
-      id: 'unshift',
+      id: 'length',
       caption:
-        'orders.unshift("espresso") is the reverse: first every element slides one position RIGHT to clear index 0, then the new element drops in at the front. Same cost story as shift — front-of-array work moves everyone.',
-      highlightLines: [9, 10],
+        'scores.length is also O(1) — and not because the engine counts quickly. It never counts at all: the array carries a length number in its own bookkeeping and updates it on every change. Asking for it is just reading one stored value.',
+      highlightLines: [9],
     },
     {
-      id: 'pop',
+      id: 'bounds',
       caption:
-        'orders.pop() removes the LAST element and returns it — we let "chai" go without storing it. End-of-array again: nobody else moved. Final count: 2. The pattern to keep: end work (push/pop) is cheap, front work (shift/unshift) moves everyone.',
-      highlightLines: [12, 13],
+        'scores[9]: the arithmetic shrugs and computes 5000 + 9 × 8 = 5072… but that slot was never part of the array’s block — it might belong to a completely different variable! JavaScript checks the index against the length first and answers undefined instead of raiding a stranger’s memory. (Writing past the end is different: big[50] = 1 makes the array grow to reach it.)',
+      highlightLines: [10],
+    },
+    {
+      id: 'the-catch',
+      caption:
+        'One law made all this speed possible: the block must stay CONTIGUOUS. No gaps, ever. So think ahead: if element 0 is removed, a gap appears at the start — and the only way to close it is to move every remaining element one slot over. Hold that thought for exactly one lesson: it’s about to become a bill, and its name is O(n).',
+      highlightLines: [1],
     },
   ],
-  Viz: GrowShrinkShelf,
+  Viz: MemoryStrip,
   underTheHood: (
     <>
       <p>
-        All four methods <strong>mutate</strong> the array — they change the one you already have
-        rather than making a new one. The variable still points at the <em>same array</em>; only
-        its contents and <code>.length</code> changed. (Keep the phrase “the same array” in your
-        pocket — lesson 4.4 turns it into the most important idea of this phase.)
+        Big-O notation is nothing more than a label for <em>how cost grows with data size</em>.
+        O(1): flat — index reads, <code>.length</code>, writing <code>a[i]</code>. O(n): grows in
+        step with the element count — anything that must visit or move every element. You now own
+        the two labels that describe 90% of everyday performance conversations (and a healthy
+        share of interview questions).
       </p>
       <p>
-        Each also returns a value, and mixing them up is a classic bug: <code>pop</code> and{' '}
-        <code>shift</code> return <em>the removed element</em>; <code>push</code> and{' '}
-        <code>unshift</code> return <em>the new length</em>. So{' '}
-        <code>const t = list.push("x")</code> puts a <em>number</em> in <code>t</code>, not the
-        text — a mistake you'll now spot at a glance.
+        Honesty note: JavaScript engines are craftier than one diagram — an array of mixed types,
+        or one with holes, makes V8 fall back to slower internal layouts. The contiguous picture
+        is the honest mental model <em>and</em> the practical advice: keep arrays same-typed and
+        gap-free, and the engine keeps the fast math.
       </p>
       <p>
-        The cost difference is real, not folklore: elements sit in order in memory, so removing the
-        front means every survivor is re-indexed, while the end just grows or shrinks in place.
-        It's the supermarket queue versus the plate stack: when the first person leaves a queue,
-        the whole line shuffles forward; the top plate lifts off a stack and no other plate moves.
+        <strong>Fun fact:</strong> hotels run on the same trick. Room 507 isn't found by checking
+        every door — the number IS the address: floor 5, corridor position 07, walk straight
+        there. An array index is a room number for memory; nobody in a hotel ever does an O(n)
+        search for their bed.
       </p>
     </>
   ),
   quiz: [
     {
       kind: 'type-output',
-      question: 'Type exactly what this prints:',
-      code: 'const q = ["ana", "ben", "cara"];\nconst x = q.shift();\nconsole.log(x);',
-      accept: ['ana'],
-      placeholder: 'type the console output…',
-      why: 'shift removes the FRONT element and returns it — x caught "ana" on the way out. The array is left holding ["ben","cara"], freshly re-indexed.',
+      question: 'An array starts at address 3000; each slot is 8 bytes. Type the address of a[3].',
+      accept: ['3024'],
+      placeholder: 'an address…',
+      why: '3000 + 3 × 8 = 3024. You just did the exact arithmetic the engine does — one multiply, one add, no walking.',
     },
     {
       kind: 'type-output',
-      question: 'Careful — type exactly what this prints:',
-      code: 'const s = [5, 6];\nconsole.log(s.push(7));',
-      accept: ['3'],
-      placeholder: 'type the console output…',
-      why: 'push appends 7, then returns the NEW LENGTH — 3. It does not return the array or the added element. pop/shift return the removed element; push/unshift return the new length.',
+      question: 'Reading a[1] costs the same on a 3-element and a 3-million-element array. Type the big-O name for that kind of cost.',
+      accept: ['O(1)', 'o(1)', 'O(1) constant time', 'constant time'],
+      placeholder: 'O(…)',
+      why: 'O(1) — constant time. The address formula never looks at the array’s size, so the cost line stays flat as data grows.',
     },
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'const t = ["x", "y", "z"];\nt.shift();\nconsole.log(t[0]);',
-      accept: ['y'],
+      code: 'const a = [1, 2];\nconsole.log(a[5]);',
+      accept: ['undefined'],
       placeholder: 'type the console output…',
-      why: 'After shift removes "x", every remaining element slides one position left — "y" now lives at index 0. That silent re-indexing is exactly why front-of-array work costs more.',
+      why: 'The formula would compute an address, but slot 5 was never part of a’s block — JavaScript checks the bounds and answers undefined rather than reading a stranger’s memory.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={TODOS_EXERCISE} />,
+  PlayExtra: () => <CodeExercise def={THOUSAND_EXERCISE} />,
   teachBack: {
     prompt:
-      'Explain to a friend why removing the first element of a huge array is slower than removing the last one — and what pop and push each hand back when called.',
+      'Explain to a friend how scores[1999999] can be just as fast as scores[2] — walk them through what an array looks like in memory, the address formula, and what O(1) means.',
     modelAnswer:
-      'Array elements sit in order, and every element’s index is its distance from the start. Remove the LAST element (pop) and nothing else is affected. Remove the FIRST (shift) and every remaining element is now one step closer to the start — the array re-indexes all of them, so on a million elements that’s a million little moves for one removal. It’s a supermarket queue versus a plate stack: the queue shuffles forward when the front person leaves; the top plate lifts off and nobody else moves. And the return values differ: pop and shift return the element they removed; push and unshift return the array’s new length — so storing push’s result gives you a number, not your item.',
+      'An array sits in memory as one contiguous block of equal-sized slots, and the array remembers where the block starts. An index isn’t a label — it’s a distance. To read scores[i], the engine computes start + i × slotSize and jumps straight to that address: one multiply, one add, one jump. Nothing about that formula depends on how many elements exist, so index 2 and index 1,999,999 cost the same — that’s O(1), “constant time”: cost stays flat as data grows (versus O(n), where cost grows with the element count, like anything that must touch every element). It’s also why indexes start at zero — the first element is zero slots from the start — and why reading past the end gives undefined: the math could compute an address, but it’s outside the array’s block, so JavaScript refuses.',
   },
   recap: [
-    'push/pop work at the END (cheap); unshift/shift work at the FRONT (every remaining element re-indexes).',
-    'pop & shift return the REMOVED ELEMENT; push & unshift return the NEW LENGTH.',
-    'All four mutate — the variable keeps pointing at the same array; its contents and .length change in place.',
+    'An array is a CONTIGUOUS block of equal-sized slots; the array stores where the block starts.',
+    'scores[i] = start + i × slotSize → one jump. O(1), constant time — flat cost no matter the size. (Index = distance, hence 0-based.)',
+    '.length is stored bookkeeping (also O(1)). Reading past the end: bounds-checked → undefined. The contiguity law is why removing the front will cost O(n) — next lesson’s bill.',
   ],
 }

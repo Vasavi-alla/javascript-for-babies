@@ -22,13 +22,25 @@ self.onmessage = function (e) {
   }
   function log() { logs.push(Array.prototype.map.call(arguments, fmt).join(' ')); }
   var fakeConsole = { log: log, info: log, warn: log, error: log };
+  // The code runs inside an async wrapper so await/promises/timers work;
+  // after it settles, a short grace window lets queued callbacks
+  // (setTimeout with small delays, promise chains) finish logging.
+  function done(err) {
+    setTimeout(function () {
+      var out = { lines: logs };
+      if (err) {
+        var name = err && err.name ? err.name + ': ' : '';
+        var msg = err && err.message ? err.message : String(err);
+        out.error = name + msg;
+      }
+      self.postMessage(out);
+    }, 250);
+  }
   try {
-    new Function('console', e.data)(fakeConsole);
-    self.postMessage({ lines: logs });
+    var r = new Function('console', 'return (async function () {\\n' + e.data + '\\n})();')(fakeConsole);
+    Promise.resolve(r).then(function () { done(); }, function (err) { done(err); });
   } catch (err) {
-    var name = err && err.name ? err.name + ': ' : '';
-    var msg = err && err.message ? err.message : String(err);
-    self.postMessage({ lines: logs, error: name + msg });
+    done(err);
   }
 };
 `

@@ -272,7 +272,7 @@ export const lesson41: LessonDef = {
     {
       id: 'write',
       caption:
-        'You can assign INTO an index: scores[1] = 96 replaces the element at index 1. The array’s shape didn’t change — same three positions — only the value at position 1 did. (Wait — scores was declared with const, and we just changed its contents? Hold that thought. Lesson 4.4 explains exactly why this is allowed, and it’s the most important idea of this phase.)',
+        'You can assign INTO an index: scores[1] = 96 replaces the element at index 1. The array’s shape didn’t change — same three positions — only the value at position 1 did. (Wait — scores was declared with const, and we just changed its contents? Hold that thought. Lesson 4.6 explains exactly why this is allowed, and it’s the most important idea of this phase.)',
       highlightLines: [6],
     },
     {
@@ -295,7 +295,7 @@ export const lesson41: LessonDef = {
         An array keeps its elements <em>in order, in memory</em>, and the index is what makes that
         useful: when you write <code>scores[2]</code>, the engine doesn't search — it jumps
         straight to position 2. Reading by index is instant whether the array holds three elements
-        or three million. That's the trade arrays make: you find things by <em>position</em>, not
+        or three million — and the address arithmetic behind that jump is the whole story of the next lesson. That's the trade arrays make: you find things by <em>position</em>, not
         by name.
       </p>
       <p>

@@ -1,248 +1,218 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { RoughLine, RoughRect } from '../../design/rough-svg'
+import { RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
- * 4.3 — Objects
- * Viz: ObjectLocker — the object as labeled compartments (key → value).
- * Dot access shines a lookup on a label; bracket access holds a paper note
- * (the variable's value) up against the labels; a nested object is a smaller
- * locker inside a compartment; assigning to a missing key creates one.
+ * 4.3 — Growing & shrinking (push / pop / shift / unshift)
+ * Viz: the array cells physically MOVE. push appends at the end (nothing else
+ * moves); shift removes element 0 and every remaining element slides one
+ * position left — the honest, visible cost. Removed elements fly out as
+ * returned-value tokens; push shows its returned new length.
  */
 
-const CODE = `const book = {
-  title: "The Hobbit",
-  pages: 310,
-  author: { name: "Tolkien", born: 1892 },
-};
+const CODE = `const orders = ["latte", "mocha"];
 
-console.log(book.title);
-console.log(book.author.name);
+orders.push("chai");
+console.log(orders);
 
-const key = "pages";
-console.log(book[key]);
+const next = orders.shift();
+console.log(next);
 
-book.rating = 5;
-console.log(book.publisher);`
+orders.unshift("espresso");
+console.log(orders);
 
-interface Compartment {
-  k: string
-  v: string
-  nested?: { k: string; v: string }[]
-  state?: 'read' | 'new' | 'ghost'
-}
+orders.pop();
+console.log(orders.length);`
 
 interface View {
-  comps: Compartment[]
-  /** the paper note used for bracket access */
-  note: string | null
-  outToken: string | null
+  cells: string[]
+  /** which end just changed, for a colored flash */
+  flash: 'front' | 'end' | null
+  /** everyone slid this way (drawn as motion arrows under the cells) */
+  slid: 'left' | 'right' | null
+  /** token that flew out or in */
+  token: { label: string; value: string } | null
   console: string[]
 }
 
-const BASE: Compartment[] = [
-  { k: 'title', v: '"The Hobbit"' },
-  { k: 'pages', v: '310' },
-  { k: 'author', v: '', nested: [{ k: 'name', v: '"Tolkien"' }, { k: 'born', v: '1892' }] },
-]
-
 const VIEWS: View[] = [
-  { comps: BASE, note: null, outToken: null, console: [] },
+  { cells: ['latte', 'mocha'], flash: null, slid: null, token: null, console: [] },
   {
-    comps: [{ ...BASE[0], state: 'read' }, BASE[1], BASE[2]],
-    note: null, outToken: '"The Hobbit"', console: ['The Hobbit'],
+    cells: ['latte', 'mocha', 'chai'], flash: 'end', slid: null,
+    token: { label: 'push returned (new length)', value: '3' },
+    console: ['["latte","mocha","chai"]'],
   },
   {
-    comps: [BASE[0], BASE[1], { ...BASE[2], state: 'read' }],
-    note: null, outToken: '"Tolkien"', console: ['The Hobbit', 'Tolkien'],
+    cells: ['mocha', 'chai'], flash: 'front', slid: 'left',
+    token: { label: 'shift returned (the removed element)', value: '"latte"' },
+    console: ['["latte","mocha","chai"]', 'latte'],
   },
   {
-    comps: [BASE[0], { ...BASE[1], state: 'read' }, BASE[2]],
-    note: 'key  →  "pages"', outToken: '310', console: ['The Hobbit', 'Tolkien', '310'],
+    cells: ['espresso', 'mocha', 'chai'], flash: 'front', slid: 'right',
+    token: null,
+    console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]'],
   },
   {
-    comps: [...BASE, { k: 'rating', v: '5', state: 'new' }],
-    note: null, outToken: null, console: ['The Hobbit', 'Tolkien', '310'],
-  },
-  {
-    comps: [...BASE, { k: 'rating', v: '5' }, { k: 'publisher', v: '', state: 'ghost' }],
-    note: null, outToken: 'undefined', console: ['The Hobbit', 'Tolkien', '310', 'undefined'],
+    cells: ['espresso', 'mocha'], flash: 'end', slid: null,
+    token: { label: 'pop returned (the removed element)', value: '"chai"' },
+    console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]', '2'],
   },
 ]
 
-function ObjectLocker({ stepIndex }: { stepIndex: number }) {
+const CELL_W = 104
+const CELL_X0 = 44
+
+function GrowShrinkShelf({ stepIndex }: { stepIndex: number }) {
   const view = VIEWS[stepIndex] ?? VIEWS[0]
   return (
-    <svg viewBox="0 0 440 320" className="w-full">
-      <RoughRect x={20} y={18} width={70} height={26} seed={471} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
-      <text x={55} y={36} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill="var(--color-ink)">
-        book
+    <svg viewBox="0 0 440 310" className="w-full">
+      <RoughRect x={20} y={20} width={88} height={26} seed={441} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
+      <text x={64} y={38} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill="var(--color-ink)">
+        orders
       </text>
-      <text x={100} y={36} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        — properties: key → value, fetched by NAME
+      <text x={120} y={38} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+        — the SAME array the whole time
       </text>
 
-      {view.comps.map((c, i) => {
-        const y = 56 + i * 46
-        const ghost = c.state === 'ghost'
+      {/* cells — layout animation slides them when indexes change */}
+      {view.cells.map((value, i) => {
+        const flashing = (view.flash === 'front' && i === 0) || (view.flash === 'end' && i === view.cells.length - 1)
         return (
-          <motion.g key={c.k} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.04 * i }}>
-            {/* key label */}
-            <RoughRect
-              x={40}
-              y={y}
-              width={104}
-              height={34}
-              seed={480 + i}
-              strokeWidth={c.state === 'read' ? 2.6 : 1.6}
-              stroke={ghost ? 'var(--color-ink-soft)' : c.state === 'read' ? 'var(--color-marker-teal)' : c.state === 'new' ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
-              roughness={ghost ? 2.4 : 1.2}
-              fill={c.state === 'new' ? 'color-mix(in srgb, var(--color-marker-coral) 20%, transparent)' : 'var(--color-sticky)'}
-              fillStyle="solid"
-            />
-            <text x={92} y={y + 22} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill={ghost ? 'var(--color-ink-soft)' : 'var(--color-ink)'}>
-              {c.k}
-            </text>
-            <RoughLine x1={144} y1={y + 17} x2={172} y2={y + 17} seed={490 + i} strokeWidth={1.6} stroke={ghost ? 'var(--color-ink-soft)' : 'var(--color-ink)'} />
-
-            {/* value side */}
-            {c.nested ? (
-              <g>
-                <RoughRect x={176} y={y - 2} width={196} height={40} seed={500 + i} strokeWidth={1.6} stroke={c.state === 'read' ? 'var(--color-marker-teal)' : 'var(--color-ink)'} fill="var(--color-paper-raised, #fff)" fillStyle="solid" />
-                <text x={186} y={y - 6} fontFamily="var(--font-hand)" fontSize={12} fill="var(--color-ink-soft)">
-                  another object, living inside a property
-                </text>
-                {c.nested.map((n, j) => (
-                  <text key={n.k} x={188 + j * 96} y={y + 22} fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink)">
-                    <tspan fontWeight={700}>{n.k}</tspan>: {n.v}
-                  </text>
-                ))}
-              </g>
-            ) : ghost ? (
-              <text x={186} y={y + 22} fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
-                no such property…
+          <motion.g key={value} layout transition={{ type: 'spring', damping: 18 }}>
+            <motion.g
+              animate={{ x: CELL_X0 + i * CELL_W, y: 78 }}
+              initial={{ x: CELL_X0 + i * CELL_W, y: 78 }}
+              transition={{ type: 'spring', damping: 17 }}
+            >
+              <RoughRect
+                x={0}
+                y={0}
+                width={CELL_W - 12}
+                height={52}
+                seed={450 + (value.length % 7)}
+                strokeWidth={flashing ? 2.6 : 1.8}
+                stroke={flashing ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
+                fill={flashing ? 'color-mix(in srgb, var(--color-marker-coral) 18%, transparent)' : 'var(--color-paper-raised, #fff)'}
+                fillStyle="solid"
+              />
+              <text x={(CELL_W - 12) / 2} y={32} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13.5} fontWeight={600} fill="var(--color-ink)">
+                {value}
               </text>
-            ) : (
-              <text x={186} y={y + 22} fontFamily="var(--font-code)" fontSize={13} fill="var(--color-ink)">
-                {c.v}
+              <text x={(CELL_W - 12) / 2} y={72} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fill="var(--color-ink-soft)">
+                {i}
               </text>
-            )}
+            </motion.g>
           </motion.g>
         )
       })}
 
-      {/* the bracket-access paper note */}
+      {/* the re-indexing callout */}
       <AnimatePresence>
-        {view.note && (
-          <motion.g initial={{ opacity: 0, rotate: -6, y: -10 }} animate={{ opacity: 1, rotate: -4, y: 0 }} exit={{ opacity: 0 }}>
-            <RoughRect x={286} y={116} width={136} height={30} seed={511} fill="var(--color-sticky-pink, #fbd8dd)" fillStyle="solid" strokeWidth={1.5} />
-            <text x={354} y={136} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={600} fill="var(--color-ink)">
-              {view.note}
-            </text>
-            <text x={354} y={110} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
-              brackets read the note, then find the label
+        {view.slid && (
+          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <text x={CELL_X0 + 2} y={178} fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-marker-coral)" fontWeight={700}>
+              {view.slid === 'left'
+                ? '← every element slid one position left — all re-indexed'
+                : '→ every element slid one position right to make room at 0'}
             </text>
           </motion.g>
         )}
       </AnimatePresence>
 
-      {/* value token */}
+      {/* returned-value token */}
       <AnimatePresence>
-        {view.outToken && (
+        {view.token && (
           <motion.g
-            key={view.outToken}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            key={view.token.value}
+            initial={{ opacity: 0, y: 96 }}
+            animate={{ opacity: 1, y: 196 }}
             exit={{ opacity: 0 }}
-            transition={{ type: 'spring', damping: 15 }}
+            transition={{ type: 'spring', damping: 16 }}
           >
-            <RoughRect
-              x={300}
-              y={20}
-              width={116}
-              height={26}
-              seed={512}
-              fill={view.outToken === 'undefined' ? 'color-mix(in srgb, var(--color-marker-coral) 35%, transparent)' : 'var(--color-marker-yellow)'}
-              fillStyle="solid"
-              strokeWidth={1.5}
-            />
-            <text x={358} y={38} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={700} fill="var(--color-ink)">
-              {view.outToken}
+            <RoughRect x={140} y={0} width={160} height={26} seed={461} fill="var(--color-marker-yellow)" fillStyle="solid" strokeWidth={1.5} />
+            <text x={220} y={17} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill="var(--color-ink)">
+              {view.token.value}
+            </text>
+            <text x={220} y={44} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
+              {view.token.label}
             </text>
           </motion.g>
         )}
       </AnimatePresence>
 
       {/* console strip */}
-      <RoughRect x={40} y={268} width={360} height={44} seed={513} strokeWidth={1.5} />
-      <text x={52} y={264} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+      <RoughRect x={40} y={252} width={360} height={52} seed={462} strokeWidth={1.5} />
+      <text x={52} y={248} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
         console
       </text>
       {view.console.length === 0 ? (
-        <text x={220} y={294} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
+        <text x={220} y={282} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
           (nothing printed yet)
         </text>
       ) : (
-        <text x={58} y={294} fontFamily="var(--font-code)" fontSize={11.5} fill="var(--color-ink)">
-          {view.console.slice(-1)[0] === 'undefined' ? (
-            <tspan fill="var(--color-marker-coral)">undefined</tspan>
-          ) : (
-            view.console.slice(-1)[0]
-          )}
-          <tspan fill="var(--color-ink-soft)" fontFamily="var(--font-hand)" fontSize={12}>
-            {'   '}(latest line)
-          </tspan>
-        </text>
+        view.console.slice(-2).map((line, i) => (
+          <motion.text
+            key={`${line}-${i}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            x={58}
+            y={270 + i * 16}
+            fontFamily="var(--font-code)"
+            fontSize={11.5}
+            fill="var(--color-ink)"
+          >
+            {line}
+          </motion.text>
+        ))
       )}
     </svg>
   )
 }
 
-const PET_EXERCISE: CodeExerciseDef = {
-  id: 'l43-pet',
-  title: 'a record with a birthday',
-  task: 'Model a pet as an object, celebrate its birthday by computing from what the object already knows, and attach a property whose key contains a space.',
+const TODOS_EXERCISE: CodeExerciseDef = {
+  id: 'l42-todos',
+  title: 'a day in a to-do list',
+  task: 'Your to-do list changes all day: urgent things cut the line, finished things leave, new things join at the back. Mutate ONE array through the whole day — never rebuild it by hand.',
   steps: [
     <>
-      Create an object named <code>pet</code> with three properties, in this order:{' '}
-      <code>name</code> = <code>"Biscuit"</code>, <code>kind</code> = <code>"hamster"</code>,{' '}
-      <code>age</code> = <code>2</code>.
+      Start with an array named <code>todos</code> holding <code>"email boss"</code> and{' '}
+      <code>"water plants"</code>, in that order.
     </>,
     <>
-      Birthday! Increase <code>pet.age</code> by 1 — computed <em>from its current value</em>, not
-      typed as a fresh number.
+      An urgent task arrives: <code>"call plumber"</code> must enter at the <strong>front</strong>{' '}
+      of the array.
     </>,
     <>
-      Add a brand-new property whose key is <code>favorite toy</code> (yes, with the space) and
-      value <code>"tiny wheel"</code>. Choose your accessor accordingly.
+      You do the front task immediately — remove it from the <strong>front</strong>.
     </>,
     <>
-      Print <code>pet.name</code>, then print the whole object.
+      Add <code>"gym"</code> at the <strong>end</strong>, then print the array, then print how
+      many tasks it holds.
     </>,
   ],
   starter: '',
-  expectedOutput: ['Biscuit', '{"name":"Biscuit","kind":"hamster","age":3,"favorite toy":"tiny wheel"}'],
+  expectedOutput: ['["email boss","water plants","gym"]', '3'],
   mustUse: [
-    { test: /pet\.age\s*(\+=\s*1|=\s*pet\.age\s*\+\s*1)|pet\[\s*["']age["']\s*\]\s*(\+=\s*1|=\s*pet\[\s*["']age["']\s*\]\s*\+\s*1)/, label: 'the new age is computed from the current age' },
-    { test: /pet\s*\[\s*["']favorite toy["']\s*\]\s*=/, label: 'a key with a space can only be reached with brackets' },
+    { test: /todos\.unshift\s*\(/, label: 'entering at the front is unshift' },
+    { test: /todos\.shift\s*\(\s*\)/, label: 'leaving from the front is shift' },
+    { test: /todos\.push\s*\(/, label: 'joining at the end is push' },
+    { test: /todos\.length/, label: 'the count comes from .length' },
   ],
   mustNotUse: [
-    { test: /age\s*[:=]\s*3\b/, label: 'no hand-typed 3 — the object computes its own birthday' },
+    { test: /=\s*\[[^\]]*gym/, label: 'the array must be CHANGED by methods — not rebuilt by hand with gym inside' },
+    { test: /console\.log\s*\(\s*3\s*\)/, label: 'no hand-typed 3 — ask the array' },
   ],
-  modelAnswer: `const pet = {
-  name: "Biscuit",
-  kind: "hamster",
-  age: 2,
-};
+  modelAnswer: `const todos = ["email boss", "water plants"];
 
-pet.age = pet.age + 1;
-pet["favorite toy"] = "tiny wheel";
+todos.unshift("call plumber");
+todos.shift();
+todos.push("gym");
 
-console.log(pet.name);
-console.log(pet);`,
+console.log(todos);
+console.log(todos.length);`,
 }
 
 export const lesson43: LessonDef = {
@@ -250,85 +220,75 @@ export const lesson43: LessonDef = {
   hook: (
     <>
       <p>
-        Arrays answer “give me element number 2” — perfect when order is the point. But describe{' '}
-        <em>one book</em> with an array and you get <code>["The Hobbit", 310, true]</code>… and a
-        quiz: what did position 1 mean again? Pages? Rating? Data about <em>one thing</em> has
-        parts with <strong>names</strong>, not positions.
+        Real collections never sit still. A café's order list grows as people order and shrinks as
+        drinks go out. A browser's history grows with every page. Yesterday's array-by-index tricks
+        can't do this — assigning to <code>orders[2]</code> replaces an element, but it can't{' '}
+        <em>make room</em> or <em>close a gap</em>.
       </p>
       <p>
-        An{' '}
+        Arrays carry four built-in methods for exactly this, two per end:{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
-          object
-        </HighlightMark>{' '}
-        stores <strong>properties</strong> — <code>key: value</code> pairs — under one name, and
-        you fetch each value <em>by its key</em>: <code>book.title</code>, never “whatever sits
-        third.” Arrays for many-of-the-same in order; objects for one-thing-with-named-parts.
-        Nearly every piece of data your future tests receive is built from these two, nested into
-        each other.
+          push and pop work at the end; unshift and shift work at the front
+        </HighlightMark>
+        . Same four verbs power everything from undo stacks to print queues — and one of them is
+        secretly more expensive than the others. You'll <em>see</em> which.
       </p>
     </>
   ),
   code: CODE,
   steps: [
     {
-      id: 'create',
+      id: 'start',
       caption:
-        'Curly braces build the object. Each property is a key → value pair: title holds "The Hobbit", pages holds 310 — and author holds a whole OTHER OBJECT as its value. Values can be anything, including more objects; that’s how real-world data gets its shape.',
-      highlightLines: [1, 2, 3, 4, 5],
+        'The café opens with two orders. Watch the cells and their indexes below — the whole lesson is about what happens to EXISTING elements when the array grows or shrinks.',
+      highlightLines: [1],
     },
     {
-      id: 'dot',
+      id: 'push',
       caption:
-        'book.title is dot access: “in book, fetch the property whose key is title.” No counting, no positions — the key IS the address. This is the everyday way to read a property when you know its name while writing the code.',
-      highlightLines: [7],
+        'orders.push("chai") appends a new element after the current last one. Nothing else moved — latte and mocha kept their indexes. And push hands something back: the array’s NEW LENGTH, 3. (Every one of today’s four methods returns something. That detail writes half of tomorrow’s bugs.)',
+      highlightLines: [3, 4],
     },
     {
-      id: 'chain',
+      id: 'shift',
       caption:
-        'book.author.name is two lookups, read left to right: first book.author fetches the inner object, then .name fetches from THAT. Chains like response.user.address.city are everyday JavaScript — each dot is one hop deeper.',
-      highlightLines: [8],
+        'orders.shift() removes the element at index 0 AND returns it — so const next = orders.shift() catches "latte" as it leaves. Now watch the shelf: mocha slid from index 1 to 0, chai from 2 to 1. shift re-indexes EVERY remaining element. On three elements that’s invisible; on a million-element array, that’s a million moves for one removal — the O(n) bill lesson 4.2 warned about.',
+      highlightLines: [6, 7],
     },
     {
-      id: 'bracket',
+      id: 'unshift',
       caption:
-        'Bracket access: book[key]. The brackets don’t look for a property literally called “key” — they first EVALUATE what’s inside. key holds "pages", so this reads book’s pages property: 310. Dot is a fixed name written in your code; brackets take any expression — a variable, a computed string. When the property name isn’t known until the program runs, brackets are the only way.',
-      highlightLines: [10, 11],
+        'orders.unshift("espresso") is the reverse: first every element slides one position RIGHT to clear index 0, then the new element drops in at the front. Same cost story as shift — front-of-array work moves everyone.',
+      highlightLines: [9, 10],
     },
     {
-      id: 'add',
+      id: 'pop',
       caption:
-        'Assigning to a key that doesn’t exist CREATES the property: book.rating = 5 grew the object by one compartment. No declaration ceremony — objects grow the moment you write into them. (Same const-but-changed mystery as 4.1. Lesson 4.4 is coming for it.)',
-      highlightLines: [13],
-    },
-    {
-      id: 'missing',
-      caption:
-        'Reading a key that isn’t there — book.publisher — gives undefined, exactly like reading past an array’s end. No error, just “no such property.” Typos in property names fail SILENTLY this way, which makes book.titel one of the sneakiest bugs a beginner meets.',
-      highlightLines: [14],
+        'orders.pop() removes the LAST element and returns it — we let "chai" go without storing it. End-of-array again: nobody else moved. Final count: 2. The pattern to keep: end work (push/pop) is cheap, front work (shift/unshift) moves everyone.',
+      highlightLines: [12, 13],
     },
   ],
-  Viz: ObjectLocker,
+  Viz: GrowShrinkShelf,
   underTheHood: (
     <>
       <p>
-        Property keys are strings under the hood (<code>{'{ title: … }'}</code> is shorthand for{' '}
-        <code>{'{ "title": … }'}</code>), which is why any text can be a key — including{' '}
-        <code>"favorite toy"</code> with a space, reachable only through brackets. Dot access is
-        just bracket access with the string fixed at writing time: <code>book.title</code> and{' '}
-        <code>book["title"]</code> are the same lookup.
+        All four methods <strong>mutate</strong> the array — they change the one you already have
+        rather than making a new one. The variable still points at the <em>same array</em>; only
+        its contents and <code>.length</code> changed. (Keep the phrase “the same array” in your
+        pocket — lesson 4.6 turns it into the most important idea of this phase.)
       </p>
       <p>
-        The two access styles split one job: <strong>dot</strong> when you know the key while
-        writing the code, <strong>brackets</strong> when the key arrives at runtime — in a
-        variable, from user input, built from other strings. Writing works through both, and
-        writing to a missing key creates it; reading a missing key returns <code>undefined</code>{' '}
-        without complaint.
+        Each also returns a value, and mixing them up is a classic bug: <code>pop</code> and{' '}
+        <code>shift</code> return <em>the removed element</em>; <code>push</code> and{' '}
+        <code>unshift</code> return <em>the new length</em>. So{' '}
+        <code>const t = list.push("x")</code> puts a <em>number</em> in <code>t</code>, not the
+        text — a mistake you'll now spot at a glance.
       </p>
       <p>
-        <strong>Fun fact:</strong> a paper dictionary works exactly like an object. Nobody asks for
-        “the word on page 412” (position); you look up <em>pizza</em> (the key) and read its
-        definition (the value). Other languages even name this structure a <em>dictionary</em> —
-        JavaScript just says object.
+        The cost difference is real, not folklore — end work is O(1), front work O(n), in lesson 4.2’s labels: elements sit in order in memory, so removing the
+        front means every survivor is re-indexed, while the end just grows or shrinks in place.
+        It's the supermarket queue versus the plate stack: when the first person leaves a queue,
+        the whole line shuffles forward; the top plate lifts off a stack and no other plate moves.
       </p>
     </>
   ),
@@ -336,38 +296,38 @@ export const lesson43: LessonDef = {
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'const user = { name: "Mia", age: 30 };\nconst k = "age";\nconsole.log(user[k]);',
-      accept: ['30'],
+      code: 'const q = ["ana", "ben", "cara"];\nconst x = q.shift();\nconsole.log(x);',
+      accept: ['ana'],
       placeholder: 'type the console output…',
-      why: 'Brackets evaluate what’s inside first: k holds "age", so user[k] is user["age"] → 30. With a dot, user.k would hunt for a property literally named k — and find undefined.',
+      why: 'shift removes the FRONT element and returns it — x caught "ana" on the way out. The array is left holding ["ben","cara"], freshly re-indexed.',
+    },
+    {
+      kind: 'type-output',
+      question: 'Careful — type exactly what this prints:',
+      code: 'const s = [5, 6];\nconsole.log(s.push(7));',
+      accept: ['3'],
+      placeholder: 'type the console output…',
+      why: 'push appends 7, then returns the NEW LENGTH — 3. It does not return the array or the added element. pop/shift return the removed element; push/unshift return the new length.',
     },
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'const user = { name: "Mia" };\nconsole.log(user.email);',
-      accept: ['undefined'],
+      code: 'const t = ["x", "y", "z"];\nt.shift();\nconsole.log(t[0]);',
+      accept: ['y'],
       placeholder: 'type the console output…',
-      why: 'No email property exists, so the lookup answers undefined — no error. Misspelled keys fail the same silent way, which is why this one’s worth typing with your own hands.',
-    },
-    {
-      kind: 'type-output',
-      question: 'Type exactly what this prints:',
-      code: 'const cfg = { theme: { dark: true } };\nconsole.log(cfg.theme.dark);',
-      accept: ['true'],
-      placeholder: 'type the console output…',
-      why: 'Left to right, one hop per dot: cfg.theme fetches the inner object, then .dark fetches true from it. Nesting is just objects holding objects.',
+      why: 'After shift removes "x", every remaining element slides one position left — "y" now lives at index 0. That silent re-indexing is exactly why front-of-array work costs more.',
     },
   ],
-  PlayExtra: () => <CodeExercise def={PET_EXERCISE} />,
+  PlayExtra: () => <CodeExercise def={TODOS_EXERCISE} />,
   teachBack: {
     prompt:
-      'A friend asks: “when do I use book.title and when book[something]? Aren’t they the same?” Explain the real difference — and what happens when the property doesn’t exist.',
+      'Explain to a friend why removing the first element of a huge array is slower than removing the last one — and what pop and push each hand back when called.',
     modelAnswer:
-      'They’re the same lookup underneath — every key is a string — but they get the key differently. Dot uses the exact name written in the code: book.title always means the "title" property. Brackets EVALUATE whatever is inside first: if key holds "pages", book[key] reads book["pages"] — so brackets are for keys that arrive at runtime (in variables, from input) or keys a dot can’t express, like "favorite toy" with a space. Reading a property that doesn’t exist returns undefined instead of erroring — handy, but it means a typo like book.titel fails silently. Writing is different: assigning to a missing key CREATES the property.',
+      'Array elements sit in order, and every element’s index is its distance from the start. Remove the LAST element (pop) and nothing else is affected. Remove the FIRST (shift) and every remaining element is now one step closer to the start — the array re-indexes all of them, so on a million elements that’s a million little moves for one removal. It’s a supermarket queue versus a plate stack: the queue shuffles forward when the front person leaves; the top plate lifts off and nobody else moves. And the return values differ: pop and shift return the element they removed; push and unshift return the array’s new length — so storing push’s result gives you a number, not your item.',
   },
   recap: [
-    'An object stores properties — key: value pairs — and you fetch values by KEY: one thing, named parts.',
-    'Dot for keys known when you write the code; brackets evaluate an expression to get the key at runtime (and handle keys like "favorite toy").',
-    'Reading a missing key → undefined (silent, typo-prone). Writing to a missing key → creates the property. Chains like a.b.c hop one property per dot.',
+    'push/pop work at the END (cheap); unshift/shift work at the FRONT (every remaining element re-indexes).',
+    'pop & shift return the REMOVED ELEMENT; push & unshift return the NEW LENGTH.',
+    'All four mutate — the variable keeps pointing at the same array; its contents and .length change in place.',
   ],
 }

@@ -70,17 +70,19 @@ Legend: 🎬 = flagship animation worth extra polish.
 
 | # | Lesson | What's understood afterward | Viz |
 |---|---|---|---|
-| 4.1 | Arrays | Ordered shelf of slots; index from 0; `.length`; read/write by index | ArrayShelf — a hand-drawn shelf; items slide in/out |
-| 4.2 | Growing & shrinking | push/pop/shift/unshift/slice/splice — each animated honestly (shift = everything moves!) | ArrayShelf — shift shows every element physically sliding left (why it's "expensive") |
-| 4.3 | Objects | Labeled compartments (key → value); dot vs bracket access; nesting | ObjectLocker — a locker with labeled drawers; nested = a locker inside a drawer |
-| 4.4 | 🎬 Primitives vs references | THE lesson: `let b = a` copies the value for primitives, copies the *arrow* for objects/arrays; why mutating `b` changes `a`; explicitly teach **call by value vs call by reference (sharing)** — what functions receive when you pass a primitive vs an object (revisits 3.2 with the upgraded picture) | MemoryDiagram (heap mode) — stack slots hold arrows pointing into a heap area; the aliasing bug animated; a FunctionMachine receiving a copy vs an arrow |
-| 4.5 | Copying & equality | Shallow vs deep copy; spread `...`; why `{} !== {}` | MemoryDiagram — spread clones the top layer, inner arrows still shared (highlighted in coral) |
-| 4.6 | Iterating collections | `for...of`, `for...in`, `Object.keys/values/entries` | ArrayShelf/ObjectLocker — an iterator token hops item to item |
-| 4.7 | 🎬 map / filter / reduce | The transform trio as assembly lines; each element's journey traced | 🎬 PipelineBelt — conveyor belt; map = stamping station, filter = trapdoor gate, reduce = accumulator jar filling up |
-| 4.8 | Sorting & finding | sort (and its string-default gotcha), find, some, every, includes | PipelineBelt — sort's compare-function shown as a referee comparing pairs |
-| 4.9 | Destructuring, spread & rest | Unpacking shapes; swapping; function param destructuring | ObjectLocker — drawers popping out into fresh labeled slots |
-| 4.10 | Map, Set & JSON | When objects aren't enough; JSON as the wire format (critical for API testing later) | ObjectLocker variants; JSONizer — an object flattened into a text ribbon and re-inflated |
-| ✅ | **Checkpoint project: "Test-results dashboard"** | Given an array of fake test-run objects, compute pass rates, group failures, render a mini chart — foreshadows the QA job | PipelineBelt replays their map/filter/reduce chain |
+| 4.1 | Arrays | One name, many values; index = distance from start; `.length`; read/write by index; past-the-end undefined | ArrayShelf — indexed cells; ghost cell past the end |
+| 4.2 | 🎬 Inside an array: memory & O(1) | Contiguous slots with REAL addresses; `address = start + index × slotSize` → one jump; big-O introduced (O(1) flat vs O(n) climbing); .length as stored bookkeeping; bounds checks | MemoryStrip — the 0.4 memory wall returns with addresses; the arithmetic card; a tiny hand-drawn cost graph |
+| 4.3 | Growing & shrinking | push/pop (end, O(1)) vs shift/unshift (front, O(n) — everyone re-indexes); return values: element vs new length | ArrayShelf — shift physically slides every element left |
+| 4.4 | Objects | Properties: key → value; fetch by NAME; dot vs bracket (brackets evaluate); nesting; missing key → undefined, assignment creates | ObjectLocker — labeled compartments, nested mini-locker, bracket paper-note |
+| 4.5 | 🎬 Inside an object: the hash trick | How a WORD becomes an address: hash function (fast, deterministic) → bucket → value; collisions honestly; O(1) by name; "hash map" named | HashMachine — key enters the scrambler, number lights a bucket; collision pile |
+| 4.6 | 🎬 Primitives vs references | THE lesson: slots hold primitives directly but only ARROWS to heap objects; aliasing; const locks the arrow; **call by value vs call by sharing** (what functions receive) — revisits 3.2 upgraded | HeapDiagram — stack vs heap, arrow copies, two-act codeOverride (number vs object into a function) |
+| 4.7 | Copying & equality | === compares addresses ({} !== {}); spread = shallow (one layer; inner arrows shared); structuredClone = deep | SpreadDiagram — two-level heap; the shared inner arrow in coral |
+| 4.8 | Iterating collections | `for...of` (elements), `for...in` (keys), Object.keys/values/entries — the object→array bridge | IterHop — token hops cells/keys; derived-array cards |
+| 4.9 | 🎬 map / filter / reduce | The transform trio; callbacks pay off; non-mutating; reduce lap-by-lap with the accumulator | 🎬 PipelineBelt — stamping station, trapdoor gate, accumulator jar |
+| 4.10 | Sorting & finding | sort's string-default gotcha + comparator sign; sort mutates; find/some/every/includes (short-circuiting; includes is === on addresses) | SortScan — the referee compares pairs; scanner ray with ✓/✗ |
+| 4.11 | Destructuring, spread & rest | Unpacking shapes; holes; swap; param destructuring; rest gathers | ObjectLocker — drawers popping into fresh labeled slots |
+| 4.12 | Map, Set & JSON | When objects aren't enough (Map = the 4.5 hash machinery as a tool; Set = uniqueness); JSON as the wire format (critical for API testing later) | JSONizer — object flattened to a text ribbon and re-inflated |
+| ✅ | **Checkpoint project: "Test-results dashboard"** | Given an array of fake test-run objects, compute pass rates, group failures — foreshadows the QA job | PipelineBelt replays their map/filter/reduce chain |
 
 ## Phase 5 — Under the Hood
 *Goal: the accurate model of how JS executes — the learner can now explain hoisting, `this`, and prototypes in an interview.*
