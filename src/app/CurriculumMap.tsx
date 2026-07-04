@@ -1,9 +1,9 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { motion } from 'motion/react'
 import { LESSONS, PHASES, lessonsForPhase, type LessonMeta } from '../content/registry'
 import { dailyNote } from '../content/motivation'
-import { LEARNER_NAME } from '../content/learner'
+import { DEFAULT_NAME, nameSlug, useLearnerName } from '../content/learner'
 import { useProgress } from '../store/progress'
 import { activeDaySet, computeStreak, localDay, monthGrid } from '../engine/coach/stats'
 import { PaperCard } from '../design/PaperCard'
@@ -30,6 +30,89 @@ function greetingByHour(): string {
   if (hour < 12) return '☀️ Good morning'
   if (hour < 17) return '🌤️ Good afternoon'
   return '🌙 Good evening'
+}
+
+/**
+ * The learner's name in the headline — click it, type, Enter. Saved via
+ * useLearnerName (localStorage). Saving a real name also gives the page its
+ * /<name>-journey address (cosmetic; the route never reads the slug back).
+ */
+function EditableName() {
+  const [name, setName] = useLearnerName()
+  const navigate = useNavigate()
+  const [editing, setEditing] = useState(false)
+  const [draft, setDraft] = useState('')
+  // set once Enter/Escape has handled the edit, so the input's own blur
+  // (which fires right after) can't double-commit or save a cancelled edit
+  const done = useRef(false)
+
+  const startEditing = () => {
+    done.current = false
+    setDraft(name === DEFAULT_NAME ? '' : name)
+    setEditing(true)
+  }
+
+  const commit = () => {
+    if (done.current) return
+    done.current = true
+    setEditing(false)
+    const saved = setName(draft)
+    const slug = nameSlug(saved)
+    if (saved !== DEFAULT_NAME && slug) navigate(`/${slug}-journey`, { replace: true })
+  }
+
+  const cancel = () => {
+    done.current = true
+    setEditing(false)
+  }
+
+  if (editing) {
+    return (
+      <input
+        autoFocus
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+        onBlur={commit}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') commit()
+          if (e.key === 'Escape') cancel()
+        }}
+        maxLength={30}
+        size={Math.max(draft.length, 8)}
+        placeholder="your name"
+        aria-label="your name"
+        autoCapitalize="words"
+        autoCorrect="off"
+        autoComplete="off"
+        spellCheck={false}
+        enterKeyHint="done"
+        className="bg-transparent outline-none"
+        style={{ font: 'inherit', color: 'inherit', borderBottom: '3px dashed var(--color-ink-soft)' }}
+      />
+    )
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={startEditing}
+      title="click to change the name"
+      className="cursor-pointer"
+      style={{
+        font: 'inherit',
+        color: 'inherit',
+        background: 'none',
+        border: 'none',
+        padding: 0,
+        textDecoration: 'underline dashed var(--color-ink-soft)',
+        textDecorationThickness: '2px',
+        textUnderlineOffset: '6px',
+      }}
+    >
+      {name}
+      <span aria-hidden className="ml-1 align-middle text-3xl">✏️</span>
+    </button>
+  )
 }
 
 /** First unfinished, already-built lesson — the single thing to do next. */
@@ -78,7 +161,7 @@ export function CurriculumMap() {
         <div className="min-w-64 flex-1">
           <p className="text-ink-soft font-hand text-2xl">{greetingByHour()}</p>
           <h1 className="font-hand mt-1 text-5xl font-bold sm:text-6xl">
-            Welcome{startedEver ? ' back' : ''}, {LEARNER_NAME}
+            Welcome{startedEver ? ' back' : ''}, <EditableName />
           </h1>
           <p className="mt-3 max-w-xl text-lg">
             {streak > 0 ? (
