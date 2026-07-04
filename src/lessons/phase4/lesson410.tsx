@@ -220,8 +220,7 @@ export const lesson410: LessonDef = {
     <>
       <p>
         Two jobs remain in every list-worker's toolbelt: putting elements <em>in order</em>, and{' '}
-        <em>asking questions</em> about them — is X in here? does anything pass? does everything
-        pass? Which one's the first that passes?
+        <em>asking questions</em> about them.
       </p>
       <p>
         The question-askers (<code>find</code>, <code>some</code>, <code>every</code>,{' '}
@@ -287,6 +286,8 @@ export const lesson410: LessonDef = {
       <p>
         The scanners short-circuit smartly: <code>find</code> and <code>some</code> stop at the
         first ✓, <code>every</code> stops at the first ✗ — on a million-element array that matters.
+      </p>
+      <p>
         <code>includes</code> uses exact <code>===</code> comparison, which means (4.6 forever) it
         matches objects only by <em>address</em>: <code>list.includes({'{ id: 1 }'})</code> is
         false even if a same-shaped object sits right there — for objects, ask{' '}

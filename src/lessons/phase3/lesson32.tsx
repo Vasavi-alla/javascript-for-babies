@@ -54,6 +54,12 @@ const SCENES: Scene[] = [
     ghost: true,
     lines: ['Priya, your chai is ready!', 'chai, your Priya is ready!', 'Aisha, your undefined is ready!'],
   }, // wrap — slots gone again
+  {
+    customer: null,
+    drink: null,
+    ghost: true,
+    lines: ['Priya, your chai is ready!', 'chai, your Priya is ready!', 'Aisha, your undefined is ready!'],
+  }, // fresh-slots teaser
 ]
 
 function Slot({ x, label, value, ghost }: { x: number; label: string; value: string | null; ghost: boolean }) {
@@ -255,7 +261,11 @@ export const lesson32: LessonDef = {
     {
       id: 'wrap',
       caption:
-        'The vocabulary: the slot NAMES in the definition (customer, drink) are parameters. The VALUES you pass at a call ("Priya", "chai") are arguments. First argument → first parameter, always. And remember: every call got brand-new empty slots — hold that thought for lesson 3.7.',
+        'The vocabulary: the slot NAMES in the definition (customer, drink) are parameters. The VALUES you pass at a call ("Priya", "chai") are arguments. First argument → first parameter, always.',
+    },
+    {
+      id: 'wrap-fresh-slots',
+      caption: 'And remember: every call got brand-new empty slots — hold that thought for lesson 3.7.',
     },
   ],
   Viz: SlotMachine,
@@ -271,10 +281,12 @@ export const lesson32: LessonDef = {
       </p>
       <p>
         Too few arguments? No error — the leftover slot holds <code>undefined</code>, the same
-        “never set” value from lesson 1.7, and the body runs with it. Too many? The extras are
-        quietly ignored. Both are famous sources of sneaky bugs, because nothing crashes — the
-        program just produces confident nonsense, which is exactly what automation testers get paid
-        to catch.
+        “never set” value from lesson 1.7, and the body runs with it.
+      </p>
+      <p>
+        Too many? The extras are quietly ignored. Both are famous sources of sneaky bugs, because
+        nothing crashes — the program just produces confident nonsense, which is exactly what
+        automation testers get paid to catch.
       </p>
       <p>
         One more thing you saw without noticing: every call gets <strong>brand-new, empty

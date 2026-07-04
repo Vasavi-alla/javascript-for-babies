@@ -261,9 +261,12 @@ export const lesson51: LessonDef = {
         </HighlightMark>
         . Pass one — the <strong>creation phase</strong> — sweeps the scope and registers every
         declaration into a memory table. Pass two — the <strong>execution phase</strong> — actually
-        runs the lines. The table plus the code being run is called an{' '}
-        <strong>execution context</strong>, and it is THE concept this whole phase is built on:
-        hoisting, scope chain, closures-done-precisely, even <code>this</code> all live here.
+        runs the lines.
+      </p>
+      <p>
+        The table plus the code being run is called an <strong>execution context</strong>, and it
+        is THE concept this whole phase is built on: hoisting, scope chain, closures-done-precisely,
+        even <code>this</code> all live here.
       </p>
     </>
   ),
@@ -336,14 +339,20 @@ export const lesson51: LessonDef = {
       <p>
         Precision matters here: nothing physically moves in your file. "Hoisting" describes the{' '}
         <em>effect</em> of the creation phase — names are registered before any line runs, so they
-        behave as if declared at the top. What differs per declaration kind (var / let / const /
-        function) is <em>how</em> they're registered — that's the entire next lesson.
+        behave as if declared at the top.
+      </p>
+      <p>
+        What differs per declaration kind (var / let / const / function) is <em>how</em> they're
+        registered — that's the entire next lesson.
       </p>
       <p>
         The execution context is the phase's master picture: each one holds its memory table, a
         reference to its outer scope (lesson 5.3's chain), and — for function calls — its own{' '}
-        <code>this</code> (lesson 5.4). The call stack from 3.6 is, precisely, a stack of execution
-        contexts. One concept, four lessons of payoff.
+        <code>this</code> (lesson 5.4).
+      </p>
+      <p>
+        The call stack from 3.6 is, precisely, a stack of execution contexts. One concept, four
+        lessons of payoff.
       </p>
       <p>
         <strong>Fun fact:</strong> you use two-pass reading too. Skim a recipe before cooking —

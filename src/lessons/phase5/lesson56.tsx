@@ -252,8 +252,11 @@ export const lesson56: LessonDef = {
         The word matters: <em>handwriting</em>, not new machinery. A class builds exactly the
         prototype chains of 5.5 — methods land on a shared prototype, <code>new</code> creates and
         links instances, <code>extends</code> just makes the chain longer. Today you'll watch class
-        syntax <em>desugar</em> into the diagram you already own. (And this is career-critical
-        syntax: Playwright's Page Object Model — lesson 11.7 — is classes, wall to wall.)
+        syntax <em>desugar</em> into the diagram you already own.
+      </p>
+      <p>
+        And this is career-critical syntax: Playwright's Page Object Model — lesson 11.7 — is
+        classes, wall to wall.
       </p>
     </>
   ),
@@ -322,18 +325,24 @@ export const lesson56: LessonDef = {
       </p>
       <p>
         Details that bite in interviews: class bodies run in strict mode automatically (5.4's{' '}
-        <code>undefined</code>-this rule applies inside); calling a class <em>without</em>{' '}
-        <code>new</code> throws a TypeError (unlike old constructor functions, which silently
-        polluted globals); and a child constructor must call <code>super(...)</code> before
-        touching <code>this</code> — step 1 of the four (creating the object) is delegated to the
-        parent.
+        <code>undefined</code>-this rule applies inside).
+      </p>
+      <p>
+        Calling a class <em>without</em> <code>new</code> throws a TypeError (unlike old
+        constructor functions, which silently polluted globals).
+      </p>
+      <p>
+        And a child constructor must call <code>super(...)</code> before touching <code>this</code>{' '}
+        — step 1 of the four (creating the object) is delegated to the parent.
       </p>
       <p>
         Where you'll live in this syntax: lesson 11.7's Page Object Model —{' '}
         <code>class LoginPage</code> holding locators as properties and actions as methods, one
-        instance per test. Even the errors you'll catch in 5.8 are classes (<code>Error</code>,
-        with <code>TypeError extends Error</code> — a real chain you've already met in stack
-        traces).
+        instance per test.
+      </p>
+      <p>
+        Even the errors you'll catch in 5.8 are classes (<code>Error</code>, with{' '}
+        <code>TypeError extends Error</code> — a real chain you've already met in stack traces).
       </p>
     </>
   ),

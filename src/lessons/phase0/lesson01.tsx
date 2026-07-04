@@ -171,15 +171,20 @@ export const lesson01: LessonDef = {
       <p>
         A processor doesn’t understand English — or even JavaScript. Deep down it only understands{' '}
         <strong>machine code</strong>: unimaginably tiny steps like “copy this number over there.”
+      </p>
+      <p>
         Something has to translate your JavaScript into those tiny steps — that translator is the{' '}
         <strong>engine</strong>, and it’s the star of the next lesson.
       </p>
       <p>
         About speed: a modern processor performs <strong>billions</strong> of those tiny steps per
         second. That’s the entire trade: the machine brings speed and perfect obedience; you bring
-        the thinking. Programming is deciding <em>exactly</em> what should happen — because the
-        machine will never fill in a gap for you. “Make it look nice” is not an instruction it can
-        execute; that vagueness is precisely why programming languages exist.
+        the thinking.
+      </p>
+      <p>
+        And that thinking has to be exact. Programming is deciding precisely what should happen —
+        the machine never fills in a gap for you. “Make it look nice” is not an instruction it can
+        execute; that vagueness is exactly why programming languages exist.
       </p>
       <p>
         One more property, and it’s the foundation of your future career: programs are{' '}

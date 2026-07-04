@@ -1,212 +1,133 @@
-import { AnimatePresence, motion } from 'motion/react'
-import { RoughRect } from '../../design/rough-svg'
+import { motion } from 'motion/react'
+import { HandArrow, RoughRect } from '../../design/rough-svg'
+import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 
 /**
- * 4.13 — Checkpoint: the test-results dashboard
- * The whole phase in one dataset: an array of objects (THE shape of real test
- * reports), chained through filter → map, folded with reduce. Two exercises:
- * a pass rate, and a find-the-slowest-failure chain. This is literally the
- * learner's future job, four phases early.
+ * 4.13 — JSON
+ * The bridge out of the program entirely: an object in the heap (addresses,
+ * arrows, engine internals) can't cross a network wire or land in a file —
+ * only TEXT can. JSON.stringify flattens; JSON.parse rebuilds. Split out of
+ * the old "Map, Set & JSON" lesson so this topic gets its own room to land.
  */
 
-const CODE = `const runs = [
-  { name: "login",  passed: true,  ms: 320 },
-  { name: "search", passed: false, ms: 810 },
-  { name: "cart",   passed: true,  ms: 150 },
-  { name: "pay",    passed: false, ms: 990 },
-];
+const CODE = `const order = { id: 7, items: ["mug", "pen"] };
 
-const failed = runs.filter(r => !r.passed);
-console.log(failed.length);
+const text = JSON.stringify(order);
+console.log(text);
 
-const names = failed.map(r => r.name);
-console.log(names);
-
-const totalMs = runs.reduce((s, r) => s + r.ms, 0);
-console.log(totalMs);`
+const back = JSON.parse(text);
+console.log(back.items[1]);`
 
 interface View {
-  /** which runs are highlighted (by index) */
-  hot: number[]
-  stage: 'data' | 'filter' | 'map' | 'reduce' | 'done'
+  mode: 'why' | 'stringify' | 'parse'
   console: string[]
   note: string
 }
 
 const VIEWS: View[] = [
-  { hot: [], stage: 'data', console: [], note: 'an ARRAY of OBJECTS — the exact shape every real test report has' },
-  { hot: [1, 3], stage: 'filter', console: ['2'], note: 'filter with !r.passed keeps the failures — objects pass through the gate whole' },
-  { hot: [1, 3], stage: 'map', console: ['2', '["search","pay"]'], note: 'chain: the filtered array feeds map, which plucks one property from each object' },
-  { hot: [0, 1, 2, 3], stage: 'reduce', console: ['2', '["search","pay"]', '2270'], note: 'reduce folds a property across ALL runs: 0+320+810+150+990 = 2270' },
-  { hot: [], stage: 'done', console: ['2', '["search","pay"]', '2270'], note: 'failures counted, named, and timed — you just wrote a QA dashboard' },
+  { mode: 'why', console: [], note: 'order lives in the heap — addresses, arrows, engine internals' },
+  { mode: 'why', console: [], note: 'a network wire or a file can carry none of that — only pure TEXT travels' },
+  { mode: 'stringify', console: [], note: 'JSON.stringify(order) flattens the whole object into one string' },
+  { mode: 'stringify', console: ['{"id":7,"items":["mug","pen"]}'], note: 'nested parts included: the array inside got flattened too, in one pass' },
+  { mode: 'stringify', console: ['{"id":7,"items":["mug","pen"]}'], note: 'JSON’s dialect is strict: every key double-quoted, no functions, no undefined' },
+  { mode: 'parse', console: ['{"id":7,"items":["mug","pen"]}'], note: 'JSON.parse(text) is the return trip: read the characters, build an object' },
+  { mode: 'parse', console: ['{"id":7,"items":["mug","pen"]}', 'pen'], note: 'back.items[1] → "pen": fully usable data again — dot access, math, everything' },
+  { mode: 'parse', console: ['{"id":7,"items":["mug","pen"]}', 'pen'], note: 'but it’s a BRAND-NEW object — fresh heap address (back === order would be false; 4.7 nods)' },
 ]
 
-const RUNS = [
-  { name: 'login', passed: true, ms: 320 },
-  { name: 'search', passed: false, ms: 810 },
-  { name: 'cart', passed: true, ms: 150 },
-  { name: 'pay', passed: false, ms: 990 },
-]
-
-function DashboardBelt({ stepIndex }: { stepIndex: number }) {
+function JsonBridge({ stepIndex }: { stepIndex: number }) {
   const view = VIEWS[stepIndex] ?? VIEWS[0]
+  const showRibbon = view.mode !== 'why'
   return (
     <svg viewBox="0 0 440 300" className="w-full">
-      <text x={24} y={34} fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
-        runs — four little test-run records
+      {/* object side */}
+      <RoughRect x={30} y={56} width={140} height={80} seed={801} strokeWidth={2} fill="var(--color-sticky)" fillStyle="solid" />
+      <text x={38} y={50} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+        {view.mode === 'parse' ? 'back — a NEW object' : 'order — an object in the heap'}
       </text>
-      {RUNS.map((r, i) => {
-        const hot = view.hot.includes(i)
-        return (
-          <g key={r.name}>
-            <RoughRect
-              x={26 + i * 102}
-              y={44}
-              width={92}
-              height={64}
-              seed={811 + i}
-              strokeWidth={hot ? 2.4 : 1.6}
-              stroke={hot ? (r.passed ? 'var(--color-marker-teal)' : 'var(--color-marker-coral)') : 'var(--color-ink)'}
-              fill={r.passed ? 'color-mix(in srgb, var(--color-marker-teal) 10%, transparent)' : 'color-mix(in srgb, var(--color-marker-coral) 10%, transparent)'}
-              fillStyle="solid"
-            />
-            <text x={72 + i * 102} y={62} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fontWeight={700} fill="var(--color-ink)">{r.name}</text>
-            <text x={72 + i * 102} y={80} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill={r.passed ? 'var(--color-ink)' : 'var(--color-marker-coral)'}>{r.passed ? '✓ passed' : '✗ failed'}</text>
-            <text x={72 + i * 102} y={98} textAnchor="middle" fontFamily="var(--font-code)" fontSize={10.5} fill="var(--color-ink-soft)">{r.ms} ms</text>
-          </g>
-        )
-      })}
+      <text x={44} y={84} fontFamily="var(--font-code)" fontSize={11.5} fill="var(--color-ink)">id: 7</text>
+      <text x={44} y={106} fontFamily="var(--font-code)" fontSize={11.5} fill="var(--color-ink)">items: ➝ ["mug","pen"]</text>
 
-      {/* stage card */}
-      <AnimatePresence mode="wait">
-        <motion.g key={view.stage} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-          {view.stage === 'filter' && (
-            <g>
-              <RoughRect x={110} y={132} width={220} height={40} seed={821} strokeWidth={2} fill="var(--color-marker-yellow)" fillStyle="solid" />
-              <text x={220} y={157} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill="var(--color-ink)">filter(r =&gt; !r.passed)</text>
-            </g>
-          )}
-          {view.stage === 'map' && (
-            <g>
-              <RoughRect x={80} y={132} width={280} height={40} seed={822} strokeWidth={2} fill="var(--color-marker-yellow)" fillStyle="solid" />
-              <text x={220} y={157} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12.5} fontWeight={700} fill="var(--color-ink)">failed.map(r =&gt; r.name) → ["search","pay"]</text>
-            </g>
-          )}
-          {view.stage === 'reduce' && (
-            <g>
-              <RoughRect x={80} y={132} width={280} height={40} seed={823} strokeWidth={2} fill="var(--color-marker-yellow)" fillStyle="solid" />
-              <text x={220} y={157} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fontWeight={700} fill="var(--color-ink)">reduce: 0 → 320 → 1130 → 1280 → 2270</text>
-            </g>
-          )}
-          {view.stage === 'done' && (
-            <g>
-              <RoughRect x={110} y={126} width={220} height={62} seed={824} strokeWidth={2.2} stroke="var(--color-marker-teal)" fill="color-mix(in srgb, var(--color-marker-teal) 12%, transparent)" fillStyle="solid" />
-              <text x={220} y={150} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-ink)">2 failed: search, pay</text>
-              <text x={220} y={172} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">suite time: 2270 ms</text>
-            </g>
-          )}
+      {/* the ribbon */}
+      {showRibbon && (
+        <motion.g key={view.mode} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <RoughRect x={30} y={176} width={384} height={34} seed={802} strokeWidth={1.8} stroke="var(--color-pencil-blue)" />
+          <text x={222} y={198} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink)">
+            {'{"id":7,"items":["mug","pen"]}'}
+          </text>
+          <text x={38} y={170} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-pencil-blue)">
+            pure text — every character just a character
+          </text>
         </motion.g>
-      </AnimatePresence>
+      )}
 
-      <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
-      </AnimatePresence>
+      {view.mode === 'stringify' && (
+        <>
+          <HandArrow from={{ x: 110, y: 140 }} to={{ x: 130, y: 172 }} curve={0.15} seed={803} stroke="var(--color-marker-teal)" strokeWidth={2.4} headLength={10} />
+          <text x={250} y={130} fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)">
+            JSON.stringify — flatten ↓
+          </text>
+        </>
+      )}
+      {view.mode === 'parse' && (
+        <>
+          <HandArrow from={{ x: 130, y: 172 }} to={{ x: 110, y: 140 }} curve={-0.15} seed={804} stroke="var(--color-marker-coral)" strokeWidth={2.4} headLength={10} />
+          <text x={250} y={130} fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-coral)">
+            JSON.parse — rebuild ↑
+          </text>
+        </>
+      )}
 
-      <RoughRect x={40} y={240} width={360} height={40} seed={825} strokeWidth={1.5} />
-      <text x={52} y={236} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">console</text>
+      <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-teal)">
+        {view.note}
+      </motion.text>
+
+      <RoughRect x={40} y={252} width={360} height={38} seed={806} strokeWidth={1.5} />
+      <text x={52} y={248} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">console</text>
       {view.console.length === 0 ? (
-        <text x={220} y={265} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">(nothing printed yet)</text>
+        <text x={220} y={276} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">(nothing printed yet)</text>
       ) : (
-        <text x={58} y={265} fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink)">{view.console.join('   ·   ')}</text>
+        <text x={58} y={276} fontFamily="var(--font-code)" fontSize={10.5} fill="var(--color-ink)">{view.console.slice(-2).join('   ·   ')}</text>
       )}
     </svg>
   )
 }
 
-const PASSRATE_EXERCISE: CodeExerciseDef = {
-  id: 'l413-passrate',
-  title: 'part 1 — the pass rate',
-  task: 'The number every manager asks for first. Given a run of results, compute what percentage passed — computed from the data, so tomorrow’s 400-test run needs zero edits.',
+const REPORT_EXERCISE: CodeExerciseDef = {
+  id: 'l413-json-report',
+  title: 'package the report',
+  task: 'A test finished. Turn the RESULT — a plain object — into the JSON text a server expects, then read a value back out of it.',
   steps: [
     <>
-      Start with <code>results</code>: objects for <code>"signup"</code> (passed true),{' '}
-      <code>"logout"</code> (false), <code>"search"</code> (true), <code>"upload"</code> (true) —
-      each shaped <code>{'{ test: "…", passed: … }'}</code>.
+      Start with <code>result</code> = <code>{'{ name: "login", passed: true, ms: 320 }'}</code>.
     </>,
     <>
-      Count the passing runs (a filter and a length), divide by the TOTAL count, scale to 100.
+      Turn it into JSON text with <code>JSON.stringify</code> and print the text.
     </>,
     <>
-      Print the rate with a percent sign glued on: <code>75%</code>.
+      Then <code>JSON.parse</code> that same text back into an object, and print just its{' '}
+      <code>ms</code> field.
     </>,
   ],
   starter: '',
-  expectedOutput: ['75%'],
+  expectedOutput: ['{"name":"login","passed":true,"ms":320}', '320'],
   mustUse: [
-    { test: /\.filter\s*\(/, label: 'the passers are selected with filter' },
-    { test: /\/\s*results\.length/, label: 'the rate divides by results.length — never a hand-count' },
+    { test: /JSON\.stringify\s*\(/, label: 'the object is turned into text with JSON.stringify' },
+    { test: /JSON\.parse\s*\(/, label: 'the text is rebuilt into an object with JSON.parse' },
   ],
   mustNotUse: [
-    { test: /75/, label: 'no hand-typed 75 — the data must produce it' },
-    { test: /0\.75/, label: 'no precomputed 0.75 either' },
+    { test: /console\.log\s*\(\s*["']\{/, label: 'the JSON text must come from stringify, not be typed by hand' },
   ],
-  modelAnswer: `const results = [
-  { test: "signup", passed: true },
-  { test: "logout", passed: false },
-  { test: "search", passed: true },
-  { test: "upload", passed: true },
-];
+  modelAnswer: `const result = { name: "login", passed: true, ms: 320 };
 
-const passedCount = results.filter(r => r.passed).length;
-const rate = (passedCount / results.length) * 100;
+const text = JSON.stringify(result);
+console.log(text);
 
-console.log(rate + "%");`,
-}
-
-const SLOWEST_EXERCISE: CodeExerciseDef = {
-  id: 'l413-slowest',
-  title: 'part 2 — the slowest failure',
-  task: 'Triage time: of all the FAILED runs, which took longest? (Slow failures usually hide timeouts — every QA engineer hunts these.) One chain: keep the failures, order them, take the top.',
-  steps: [
-    <>
-      Start with <code>runs</code>: <code>"a11y"</code> failed in <code>420</code> ms,{' '}
-      <code>"api"</code> passed in <code>90</code> ms, <code>"e2e"</code> failed in{' '}
-      <code>1400</code> ms — each shaped <code>{'{ name, passed, ms }'}</code>.
-    </>,
-    <>
-      Build ONE chain: keep only failures, then sort them slowest-first (mind 4.10's comparator).
-    </>,
-    <>
-      Take the first element of the chained result using array destructuring (4.11), and print its{' '}
-      <code>name</code>.
-    </>,
-  ],
-  starter: '',
-  expectedOutput: ['e2e'],
-  mustUse: [
-    { test: /\.filter\s*\(/, label: 'failures are selected with filter' },
-    { test: /\.sort\s*\(\s*\(/, label: 'ordering uses sort with a comparator' },
-    { test: /const\s*\[\s*\w+\s*\]\s*=/, label: 'the top element is taken by destructuring: const [top] = …' },
-  ],
-  mustNotUse: [
-    { test: /console\.log\s*\(\s*["']e2e["']\s*\)/, label: 'no hand-typed "e2e" — the chain must find it' },
-  ],
-  modelAnswer: `const runs = [
-  { name: "a11y", passed: false, ms: 420 },
-  { name: "api",  passed: true,  ms: 90 },
-  { name: "e2e",  passed: false, ms: 1400 },
-];
-
-const [slowest] = runs
-  .filter(r => !r.passed)
-  .sort((a, b) => b.ms - a.ms);
-
-console.log(slowest.name);`,
+const rebuilt = JSON.parse(text);
+console.log(rebuilt.ms);`,
 }
 
 export const lesson413: LessonDef = {
@@ -214,116 +135,134 @@ export const lesson413: LessonDef = {
   hook: (
     <>
       <p>
-        Checkpoint. No new syntax today — instead, a look at your actual future. When a Playwright
-        suite finishes, it hands you exactly one thing: <strong>an array of objects</strong>, one
-        per test — name, passed or failed, how long it took. Someone has to turn that raw pile
-        into answers: <em>how many failed? which ones? how slow are we?</em>
+        Your objects have a hidden weakness. Everything you've built this phase — arrays, objects,
+        the arrows connecting them — lives inside the engine's memory, in the heap (4.6). The
+        moment your program needs to send data somewhere else — over a network, into a file — that
+        picture breaks down completely.
       </p>
       <p>
-        That someone is about to be you. Everything Phase 4 built — objects (4.4), references
-        (4.6), the trio (4.9), sorting (4.10), destructuring (4.11) — chains together here into a
-        working test-results dashboard. This is the phase's promise kept: not toy data, your
-        job, four phases early.
+        A network wire or a file can only carry one thing:{' '}
+        <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
+          text
+        </HighlightMark>
+        . <strong>JSON</strong> is the bridge — a way to flatten any object into text and rebuild
+        it back. It's the format every API your future tests will talk to actually speaks.
       </p>
     </>
   ),
   code: CODE,
   steps: [
     {
-      id: 'the-shape',
+      id: 'why-1',
       caption:
-        'Memorize this shape — you will see it weekly for the rest of your career: an ARRAY (the suite) of OBJECTS (one per test), each with a name, a boolean verdict, and a duration. Everything a dashboard shows is computed from a pile shaped exactly like this.',
-      highlightLines: [1, 2, 3, 4, 5, 6],
+        'Your order object lives in the heap: an address, with an arrow pointing at its items array — engine internals, not something you can mail anywhere.',
+      highlightLines: [1],
     },
     {
-      id: 'filter-failures',
+      id: 'why-2',
       caption:
-        'Question one: how many failed? runs.filter(r => !r.passed) — the gate function reads each object’s passed property and flips it with ! (lesson 2.x’s NOT, still earning). Objects pass through the gate WHOLE — failed is an array of the two complete failure records, not just names. And per 4.6: it holds arrows to the SAME objects, not copies.',
-      highlightLines: [8, 9],
+        'A network wire or a file can carry none of that. They only carry TEXT — a plain sequence of characters, nothing else. Objects and text are two completely different worlds.',
+      highlightLines: [1],
     },
     {
-      id: 'chain-map',
+      id: 'stringify-call',
       caption:
-        'Question two: WHICH failed? Chain it: the array filter produced feeds straight into map, which plucks one property from each record — failed.map(r => r.name) → ["search", "pay"]. Read chains as a sentence: “keep the failures, then take their names.” Output of one link, input of the next.',
-      highlightLines: [11, 12],
+        'JSON.stringify(order) builds the bridge: it walks the whole object and flattens it into one string. It LOOKS like code, but it is just characters now — no addresses, no arrows.',
+      highlightLines: [3, 4],
     },
     {
-      id: 'reduce-time',
+      id: 'stringify-nested',
       caption:
-        'Question three: how long was the whole suite? A fold across ALL runs: reduce((s, r) => s + r.ms, 0). The accumulator starts at 0 and grows lap by lap — 320, 1130, 1280, 2270. Note it reads r.ms: reducing works on any property of the objects flowing past.',
-      highlightLines: [14, 15],
+        'Look closely at the result: the nested items array got flattened too, in the same pass. stringify walks everything reachable from the object, however deep.',
+      highlightLines: [3, 4],
     },
     {
-      id: 'dashboard',
+      id: 'dialect',
       caption:
-        '2 failed — search and pay — in a 2270 ms suite. Three questions, three one-liners, zero hand-written loops. In Phase 10 a real test runner will PRODUCE this data and in Phase 11 Playwright will produce it at scale; the crunching you just watched is already yours. Now build the two dashboard widgets below yourself.',
-      highlightLines: [8, 11, 14],
+        'Note the dialect: every key is in double quotes, and only objects, arrays, strings, numbers, booleans and null survive. Functions and undefined quietly vanish — there is no way to write them as text.',
+      highlightLines: [3, 4],
+    },
+    {
+      id: 'parse-call',
+      caption:
+        'JSON.parse(text) is the return trip: it reads the characters and builds a BRAND-NEW object out of them — new heap address, fresh arrows, all rebuilt from scratch.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'parse-result',
+      caption:
+        'back.items[1] → "pen": fully usable data again. Dot access, math, everything works — it is ordinary data now, not text pretending to be data.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'fresh-object',
+      caption:
+        'One catch worth remembering (4.7 nods): back is a NEW object, not the same one as order. back === order would be false — parse always reconstructs, it never hands back the original.',
+      highlightLines: [6],
     },
   ],
-  Viz: DashboardBelt,
+  Viz: JsonBridge,
   underTheHood: (
     <>
       <p>
-        The pattern you've just used has a name in data work: <strong>select → project →
-        aggregate</strong>. filter selects the rows you care about, map projects each row down to
-        the field you need, reduce aggregates many values into one. Every dashboard, every report,
-        every analytics query in existence is some arrangement of those three verbs — SQL calls
-        them WHERE, SELECT and SUM, spreadsheets call them filters and pivot tables.
+        JSON (JavaScript Object Notation) is a <em>stricter dialect</em> than JS literal syntax:
+        keys must be double-quoted, strings double-quoted, and only objects, arrays, strings,
+        numbers, booleans and <code>null</code> exist.
       </p>
       <p>
-        One reference-rules reminder while chaining (4.6 never sleeps): filter and map build new{' '}
-        <em>arrays</em>, but the <em>objects inside</em> are the same ones — arrows. Mutating{' '}
-        <code>failed[0].name</code> would change the original run in <code>runs</code>. Chains
-        make new containers, never new contents.
+        <code>undefined</code>, functions and dates don't survive the trip (dates become plain
+        strings) — which is exactly why the old <code>JSON.parse(JSON.stringify(x))</code>{' '}
+        deep-copy trick from 4.7 is lossy.
       </p>
       <p>
-        And a promise for later: in lesson 10.5, Vitest will print its own version of this exact
-        dashboard after every run — red and green, counts and timings. You'll read it like an
-        author, because you've now written one.
+        It stopped being "JavaScript's format" long ago: Python, Java, databases, and every REST
+        API speak it. When lesson 9.7 has you <code>fetch</code> an API from a Node script and
+        Phase 11 has you assert on API responses, the payload will be JSON text and{' '}
+        <code>parse</code>/<code>stringify</code> will be the door in and out.
+      </p>
+      <p>
+        <strong>Fun fact:</strong> this very notebook runs on it. Your streak, your finished
+        lessons, your journal — one object, <code>JSON.stringify</code>-ed into your browser's
+        localStorage after every change. Open DevTools → Application → Local Storage and you can
+        read your own progress as JSON, right now.
       </p>
     </>
   ),
   quiz: [
     {
       kind: 'type-output',
-      question: 'Type exactly what this prints:',
-      code: 'const rs = [\n  { ok: true, ms: 10 },\n  { ok: false, ms: 30 },\n  { ok: false, ms: 20 },\n];\nconsole.log(rs.filter(r => !r.ok).length);',
-      accept: ['2'],
+      question: 'Type the exact string this prints (every character counts):',
+      code: 'console.log(JSON.stringify({ a: 1 }));',
+      accept: ['{"a":1}'],
       placeholder: 'type the console output…',
-      why: 'The gate keeps records whose ok is false — two of them. filter + length is THE failure counter.',
+      why: 'JSON’s dialect: the key gets double quotes, no spaces are added — {"a":1}. If you typed {a:1}, that’s JS literal syntax, not JSON; the quoted key is the tell.',
     },
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'const rs = [\n  { ms: 10 },\n  { ms: 30 },\n];\nconsole.log(rs.reduce((s, r) => s + r.ms, 5));',
-      accept: ['45'],
+      code: "const o = JSON.parse('{\"n\":5}');\nconsole.log(o.n + 1);",
+      accept: ['6'],
       placeholder: 'type the console output…',
-      why: 'Starting value 5, then (5,10)→15, (15,30)→45. Always read reduce’s second argument before predicting — it’s part of the answer.',
+      why: 'parse rebuilt a real object from the text, so o.n is the number 5 and o.n + 1 is 6. After parse, it’s ordinary data again — dot access, math, everything.',
     },
     {
       kind: 'type-output',
-      question: 'After this chain, what does top.name hold? Type it:',
-      code: 'const rs = [\n  { name: "a", ms: 50 },\n  { name: "b", ms: 90 },\n];\nconst [top] = rs.sort((x, y) => y.ms - x.ms);',
-      accept: ['b'],
-      placeholder: 'a value…',
-      why: 'y.ms - x.ms sorts DESCENDING (biggest first — 4.10’s comparator sign), and destructuring takes index 0: the record named "b" with 90 ms.',
+      question: 'JSON.parse(JSON.stringify(original)) — is the result === original? Type true or false.',
+      accept: ['false'],
+      placeholder: 'true / false…',
+      why: 'False — parse always builds a BRAND-NEW object with a fresh heap address, even when the contents match exactly. Same shape, different object (4.7’s reference rules, still in force).',
     },
   ],
-  PlayExtra: () => (
-    <>
-      <CodeExercise def={PASSRATE_EXERCISE} />
-      <CodeExercise def={SLOWEST_EXERCISE} />
-    </>
-  ),
+  PlayExtra: () => <CodeExercise def={REPORT_EXERCISE} />,
   teachBack: {
     prompt:
-      'A project manager hands you an array of test-run objects and asks for “failure count, failing test names, and total runtime.” Explain — in plain words, method by method — how you’d compute all three without writing a single loop.',
+      'Explain to a friend: why can’t you just send a JavaScript object over a network, what do JSON.stringify and JSON.parse actually do, and what gets lost along the way?',
     modelAnswer:
-      'The data is an array of objects — one record per test with a name, a passed boolean, and a duration. Failure count: filter the array with a function that keeps records where passed is false, and take the resulting array’s length. Failing names: chain a map onto that filtered array to pluck each record’s name — filter selects the rows, map projects the field, so runs.filter(r => !r.passed).map(r => r.name). Total runtime: reduce across ALL runs with an accumulator starting at 0, adding each record’s ms per lap — the final accumulator is the suite time. Three questions, three expressions: select with filter, project with map, aggregate with reduce — the same select/project/aggregate pattern behind every dashboard and SQL query. And none of it mutates the original array — the chains build new containers around the same records.',
+      'A JavaScript object lives in the engine’s heap as addresses and arrows — that’s meaningless outside the program, and a network wire or a file can only carry text. JSON.stringify walks an object (nested parts included) and flattens it into one string of text, following a strict dialect: double-quoted keys, and only objects, arrays, strings, numbers, booleans and null — functions and undefined just disappear. JSON.parse does the reverse: it reads that text and builds a brand-new object from scratch, with a fresh address — so parse(stringify(x)) looks identical to x but is never the same object. Together they’re the bridge: stringify to send or save, parse to receive or load — and it’s exactly what happens every time your future tests read an API response.',
   },
   recap: [
-    'Real test reports are arrays of objects: { name, passed, ms }. Every dashboard number is a chain over that shape.',
-    'select → project → aggregate: filter picks rows, map plucks fields, reduce folds to one value. Read chains as sentences.',
-    'Chains build new ARRAYS, but the objects inside are the same ones (arrows!) — mutate a chained record and the original changes.',
+    'Objects live in the heap; only TEXT can cross a wire or land in a file. JSON is the bridge.',
+    'JSON.stringify: object → strict text (double-quoted keys; no undefined/functions/dates survive).',
+    'JSON.parse: text → brand-new object (fresh address, never === the original). The wire format of every API.',
   ],
 }

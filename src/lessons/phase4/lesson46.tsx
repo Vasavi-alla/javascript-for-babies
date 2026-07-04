@@ -42,6 +42,14 @@ const dog = { age: 5 };
 birthday(dog);
 console.log(dog.age);`
 
+const CODE_C = `function replace(pet) {
+  pet = { age: 100 };
+}
+
+const dog2 = { age: 5 };
+replace(dog2);
+console.log(dog2.age);`
+
 interface SlotV {
   name: string
   val?: string
@@ -50,10 +58,14 @@ interface SlotV {
   inFrame?: boolean
   /** where this slot's arrow lands on the heap object (y) */
   arrowY?: number
+  /** which heap box this slot's arrow points at — defaults to the first */
+  heapTarget?: 2
 }
 interface View {
   slots: SlotV[]
   obj: { text: string; hot?: boolean }[] | null
+  /** a second, separate heap object — only used for the reassign-param step */
+  obj2?: { text: string; hot?: boolean }[] | null
   frameLabel?: string
   console: string[]
   note?: { text: string; color: 'teal' | 'coral' }
@@ -115,6 +127,17 @@ const VIEWS: View[] = [
     frameLabel: 'birthday’s call frame',
     console: ['9', '6'],
     note: { text: 'pet received a copy of the ARROW — call by sharing. One object, mutated.', color: 'coral' },
+  },
+  {
+    slots: [
+      { name: 'dog2', arrow: true, arrowY: 112 },
+      { name: 'pet', arrow: true, hot: true, inFrame: true, heapTarget: 2, arrowY: 236 },
+    ],
+    obj: [{ text: 'age: 5' }],
+    obj2: [{ text: 'age: 100', hot: true }],
+    frameLabel: 'replace’s call frame',
+    console: ['5'],
+    note: { text: 'pet now points at a BRAND NEW object — dog2’s arrow never moved', color: 'teal' },
   },
 ]
 
@@ -206,7 +229,7 @@ function HeapDiagram({ stepIndex }: { stepIndex: number }) {
           <motion.g initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
             <RoughRect x={262} y={92} width={144} height={26 + view.obj.length * 22} seed={533} strokeWidth={2} fill="var(--color-sticky)" fillStyle="solid" />
             <text x={270} y={88} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
-              one object, at one address
+              {view.obj2 ? 'two objects now, two addresses' : 'one object, at one address'}
             </text>
             {view.obj.map((line, j) => (
               <motion.text
@@ -227,6 +250,33 @@ function HeapDiagram({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
 
+      {/* the second heap object — only appears for the reassign-param step */}
+      <AnimatePresence>
+        {view.obj2 && (
+          <motion.g initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
+            <RoughRect x={262} y={214} width={144} height={26 + view.obj2.length * 22} seed={536} strokeWidth={2} fill="var(--color-sticky)" fillStyle="solid" />
+            <text x={270} y={210} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+              a brand-new object
+            </text>
+            {view.obj2.map((line, j) => (
+              <motion.text
+                key={line.text}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                x={274}
+                y={238 + j * 22}
+                fontFamily="var(--font-code)"
+                fontSize={12}
+                fontWeight={line.hot ? 700 : 400}
+                fill={line.hot ? 'var(--color-marker-coral)' : 'var(--color-ink)'}
+              >
+                {line.text}
+              </motion.text>
+            ))}
+          </motion.g>
+        )}
+      </AnimatePresence>
+
       {/* arrows from slots into the heap */}
       {view.obj &&
         view.slots.map((slot, i) =>
@@ -234,7 +284,7 @@ function HeapDiagram({ stepIndex }: { stepIndex: number }) {
             <HandArrow
               key={`arrow-${slot.name}`}
               from={{ x: 146, y: 56 + i * 52 + 19 }}
-              to={{ x: 262, y: slot.arrowY ?? 116 }}
+              to={{ x: 262, y: slot.arrowY ?? (slot.heapTarget === 2 ? 236 : 116) }}
               curve={0.1}
               seed={540 + i}
               stroke={slot.hot ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}
@@ -358,8 +408,11 @@ export const lesson46: LessonDef = {
         </HighlightMark>{' '}
         (you'll see it drawn as an arrow). Numbers and strings sit <em>in</em> the slot; objects
         and arrays live elsewhere, in a region of memory called the <strong>heap</strong>, and the
-        slot only points at them. Every "spooky action at a distance" bug you will ever debug —
-        two variables mysteriously changing together — is this one picture.
+        slot only points at them.
+      </p>
+      <p>
+        Every "spooky action at a distance" bug you will ever debug — two variables mysteriously
+        changing together — is this one picture.
       </p>
     </>
   ),
@@ -405,8 +458,15 @@ export const lesson46: LessonDef = {
     {
       id: 'call-by-sharing',
       caption:
-        'Pass an object and the same rule produces the opposite outcome: dog’s slot holds an ARROW, so pet’s fresh slot gets a copy of the ARROW — pointing at the caller’s one object. pet.age = pet.age + 1 mutates it; dog.age reads 6. This is CALL BY SHARING (you’ll often hear it loosely called call by reference). One nuance seals it: REASSIGNING pet = {} inside would only re-point pet’s local arrow — dog would be untouched. Functions can mutate what you pass; they can never re-point your variable.',
+        'Pass an object and the same rule produces the opposite outcome: dog’s slot holds an ARROW, so pet’s fresh slot gets a copy of the ARROW — pointing at the caller’s one object. pet.age = pet.age + 1 mutates it; dog.age reads 6. This is CALL BY SHARING (you’ll often hear it loosely called call by reference). One nuance left: what if, instead of mutating, the function REASSIGNS pet itself? Watch it, next.',
       highlightLines: [9, 10, 11, 13, 14, 15],
+    },
+    {
+      id: 'reassign-param',
+      caption:
+        'replace(pet) does pet = { age: 100 } — that builds a BRAND NEW object and re-points pet’s own local arrow at it. dog2’s arrow never moved; it still points at the original { age: 5 }. console.log(dog2.age) proves it: 5, unchanged. Reassigning a parameter only ever redirects the function’s own copy of the arrow — it can never reach back and repoint the caller’s variable.',
+      codeOverride: CODE_C,
+      highlightLines: [1, 2, 5, 6, 7],
     },
   ],
   Viz: HeapDiagram,
@@ -415,16 +475,26 @@ export const lesson46: LessonDef = {
       <p>
         One rule runs this whole lesson: <strong>copying a slot copies what the slot holds</strong>
         . Primitives (numbers, strings, booleans, <code>null</code>, <code>undefined</code>) sit
-        directly in the slot, so copies are independent. Objects and arrays live in the heap, and
-        slots hold only their reference — so <code>=</code>, function arguments, even{' '}
-        <code>push</code>-ing an object into an array, all copy <em>arrows</em>, never the object.
+        directly in the slot, so copies are independent.
+      </p>
+      <p>
+        The “stack” in this lesson’s diagram is the very same stack that held your call frames
+        back in lesson 3.9 — same structure, one slot per variable. This lesson just looks closer
+        at what’s actually sitting <em>inside</em> each slot: a value, or an arrow.
+      </p>
+      <p>
+        Objects and arrays live in the heap, and slots hold only their reference — so{' '}
+        <code>=</code>, function arguments, even <code>push</code>-ing an object into an array,
+        all copy <em>arrows</em>, never the object.
       </p>
       <p>
         Technically JavaScript is <em>always</em> call by value — it's just that for objects, the
         value being copied <strong>is the reference</strong>. That's why the polite name is{' '}
         <strong>call by sharing</strong>: caller and function share one object. Mutating through
-        the parameter reaches it; reassigning the parameter only re-points the local copy. And{' '}
-        <code>===</code> on two references asks one question: same arrow? — which is why two
+        the parameter reaches it; reassigning the parameter only re-points the local copy.
+      </p>
+      <p>
+        And <code>===</code> on two references asks one question: same arrow? — which is why two
         variables naming one object are <code>===</code>, and why <code>{'{} === {}'}</code> is{' '}
         <code>false</code> (two objects, two addresses — lesson 4.7 runs with this).
       </p>
@@ -461,6 +531,14 @@ export const lesson46: LessonDef = {
       accept: ['Zoe'],
       placeholder: 'type the console output…',
       why: 'u’s slot holds an arrow, so the parameter user got a copy of that arrow — call by sharing. user.name = "Zoe" mutated the one shared object, and the caller sees it. (Had rename done user = { name: "Zoe" } instead, u would still say Mia — reassigning only re-points the local arrow.)',
+    },
+    {
+      kind: 'type-output',
+      question: 'Type exactly what this prints:',
+      code: 'function reset(box) {\n  box = { count: 0 };\n}\n\nconst counter = { count: 7 };\nreset(counter);\nconsole.log(counter.count);',
+      accept: ['7'],
+      placeholder: 'type the console output…',
+      why: 'reset’s box = { count: 0 } builds a BRAND NEW object and re-points box’s own local arrow at it — counter’s arrow, back at the caller, never moves. counter.count is still 7. Compare this to the Zoe question above: mutating THROUGH the arrow (user.name = …) reaches the shared object; reassigning the arrow ITSELF does not.',
     },
   ],
   PlayExtra: () => <CodeExercise def={SCOREBOARD_EXERCISE} />,

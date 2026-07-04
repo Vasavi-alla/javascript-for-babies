@@ -198,9 +198,11 @@ export const lesson61: LessonDef = {
         So how does one thread handle slow things — a network reply taking 2 seconds, a timer, a
         file? By refusing to wait. <strong>Asynchronous</strong> means "not now — later": hand the
         waiting to the environment, keep the thread moving, and deal with the result when it
-        arrives. This lesson shows the problem raw; the next one reveals the beautiful machinery
-        that makes "later" actually work — with names you already flagged in the curriculum:{' '}
-        <em>single-threaded</em>, <em>non-blocking</em>.
+        arrives.
+      </p>
+      <p>
+        This lesson shows the problem raw; the next one reveals the beautiful machinery that makes
+        "later" actually work.
       </p>
     </>
   ),
@@ -267,11 +269,15 @@ export const lesson61: LessonDef = {
     <>
       <p>
         Vocabulary, precisely: <strong>synchronous</strong> code runs now, in order, each line
-        waiting for the previous — everything you've written until today. <strong>Asynchronous</strong>{' '}
-        code is <em>scheduled</em> now but runs later, when its moment comes (timer done, reply
-        arrived) and the stack is free. <strong>Blocking</strong> is synchronous code that takes
-        long enough to hurt — the thing async exists to avoid. JavaScript's design bet:{' '}
-        <em>never block; always schedule.</em>
+        waiting for the previous — everything you've written until today.
+      </p>
+      <p>
+        <strong>Asynchronous</strong> code is <em>scheduled</em> now but runs later, when its
+        moment comes (timer done, reply arrived) and the stack is free.
+      </p>
+      <p>
+        <strong>Blocking</strong> is synchronous code that takes long enough to hurt — the thing
+        async exists to avoid. JavaScript's design bet: <em>never block; always schedule.</em>
       </p>
       <p>
         Why one thread at all? Simplicity that pays every day: your code never runs at the same

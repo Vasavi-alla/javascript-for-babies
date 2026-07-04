@@ -230,7 +230,10 @@ export const lesson43: LessonDef = {
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           push and pop work at the end; unshift and shift work at the front
         </HighlightMark>
-        . Same four verbs power everything from undo stacks to print queues — and one of them is
+        .
+      </p>
+      <p>
+        Same four verbs power everything from undo stacks to print queues — and one of them is
         secretly more expensive than the others. You'll <em>see</em> which.
       </p>
     </>

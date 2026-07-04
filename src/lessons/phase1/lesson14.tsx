@@ -234,9 +234,14 @@ export const lesson14: LessonDef = {
       highlightLines: [3],
     },
     {
-      id: 'var',
+      id: 'var-history',
       caption:
-        'Finally, the ghost: var. It’s how ALL variables were made before 2015, so old tutorials are full of it. It works — but its rules about where the variable can be seen are leaky in ways that cause sneaky bugs (the full autopsy is a Phase 5 lesson). Recognize it, understand it, don’t write it.',
+        'Finally, the ghost: var. It’s how ALL variables were made before 2015, so old tutorials are full of it — and it still works today.',
+    },
+    {
+      id: 'var-flaw',
+      caption:
+        'But its rules about where the variable can be seen are leaky, in ways that cause sneaky bugs (the full autopsy is a Phase 5 lesson). Recognize it, understand it, don’t write it.',
     },
   ],
   Viz: ConstScene,
@@ -259,11 +264,16 @@ export const lesson14: LessonDef = {
         sense with the reference picture.
       </p>
       <p>
-        And <code>var</code>, concretely: it ignores some boundaries that let/const respect (it’s
-        “function-scoped” rather than “block-scoped”) and it behaves oddly when used before its
-        line (no error — you silently get undefined). Those words will fully click in Phases 3 and
-        5 (lessons 3.5 and 5.2). Until then the practical rule stands: <strong>read var
-        fluently, write let and const only.</strong>
+        And <code>var</code>, concretely: it ignores some boundaries that let/const respect — it’s
+        “function-scoped” rather than “block-scoped.” In plain words: <em>scope</em> just means
+        “which part of the code can see this variable” — and var leaks out of places (like the
+        inside of an <code>if</code>) that let/const would have kept it contained to (fully clicks
+        in lesson 3.5).
+      </p>
+      <p>
+        It also behaves oddly when used before its line: no error, you silently get{' '}
+        <code>undefined</code> (the full mechanism is lesson 5.2). Until both fully click, the
+        practical rule stands: <strong>read var fluently, write let and const only.</strong>
       </p>
     </>
   ),

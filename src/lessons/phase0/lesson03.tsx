@@ -228,16 +228,22 @@ export const lesson03: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Let’s name the parts of <code>console.log("Hello!");</code> properly. <code>console</code>{' '}
-        is a built-in toolbox the browser hands to every program. The dot means “look inside it,”
-        and <code>log</code> is one specific tool in that box — the “print this” tool. The
-        parentheses <code>( )</code> mean “here’s what I’m handing you,” and the semicolon{' '}
+        Let’s name the parts of <code>console.log("Hello!");</code> properly.{' '}
+        <code>console</code> is a built-in toolbox the browser hands to every program, and{' '}
+        <code>log</code> is one specific tool inside it — the “print this” tool. The dot between
+        them means “look inside.”
+      </p>
+      <p>
+        The parentheses <code>( )</code> mean “here’s what I’m handing you,” and the semicolon{' '}
         <code>;</code> ends the instruction, like a full stop ends a sentence.
       </p>
       <p>
-        Text in quotes is called a <strong>string</strong> (a string of characters — you’ll formally
-        meet it in Phase 1). Something the machine must work out, like <code>2 + 3</code>, is called
-        an <strong>expression</strong>, and working it out is called <strong>evaluating</strong>.
+        Text in quotes is called a <strong>string</strong> (a string of characters — you’ll
+        formally meet it in Phase 1).
+      </p>
+      <p>
+        Something the machine must work out, like <code>2 + 3</code>, is called an{' '}
+        <strong>expression</strong>, and working it out is called <strong>evaluating</strong>.
         Rule worth underlining: <em>expressions are always evaluated before they’re used.</em>{' '}
         That’s why <code>console.log(2 + 3)</code> receives a finished 5, never the recipe for it.
       </p>

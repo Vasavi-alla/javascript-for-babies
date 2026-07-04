@@ -264,9 +264,11 @@ export const lesson45: LessonDef = {
           turn the word into a number first
         </HighlightMark>
         . A <strong>hash function</strong> scrambles any string into a number, the number picks a
-        storage bucket, and lookup-by-name becomes lookup-by-number — O(1) again. The structure
-        this builds is called a <strong>hash map</strong>, and once you see it, half of computing
-        (and half of interview questions) clicks into place.
+        storage bucket, and lookup-by-name becomes lookup-by-number — O(1) again.
+      </p>
+      <p>
+        The structure this builds is called a <strong>hash map</strong>, and once you see it, half
+        of computing (and half of interview questions) clicks into place.
       </p>
     </>
   ),
@@ -314,10 +316,13 @@ export const lesson45: LessonDef = {
     <>
       <p>
         The full honest picture: a hash function maps a string to a number, the number is squeezed
-        into the bucket range (commonly with a remainder: <code>hash % bucketCount</code>), and
-        the key AND value are stored in that bucket. Lookup re-hashes and jumps. Collisions put a
-        small pile in one bucket; when piles grow, the engine quietly makes more buckets and
-        re-files everything — keeping average lookup O(1).
+        into the bucket range (commonly with a remainder — <code>%</code> means “what’s left over
+        after dividing”: <code>hash % bucketCount</code>), and the key AND value are stored in
+        that bucket. Lookup re-hashes and jumps.
+      </p>
+      <p>
+        Collisions put a small pile in one bucket; when piles grow, the engine quietly makes more
+        buckets and re-files everything — keeping average lookup O(1).
       </p>
       <p>
         Even more honestly: V8 gives objects an extra optimization layer first (it calls them

@@ -81,7 +81,8 @@ Legend: 🎬 = flagship animation worth extra polish.
 | 4.9 | 🎬 map / filter / reduce | The transform trio; callbacks pay off; non-mutating; reduce lap-by-lap with the accumulator | 🎬 PipelineBelt — stamping station, trapdoor gate, accumulator jar |
 | 4.10 | Sorting & finding | sort's string-default gotcha + comparator sign; sort mutates; find/some/every/includes (short-circuiting; includes is === on addresses) | SortScan — the referee compares pairs; scanner ray with ✓/✗ |
 | 4.11 | Destructuring, spread & rest | Unpacking shapes; holes; swap; param destructuring; rest gathers | ObjectLocker — drawers popping into fresh labeled slots |
-| 4.12 | Map, Set & JSON | When objects aren't enough (Map = the 4.5 hash machinery as a tool; Set = uniqueness); JSON as the wire format (critical for API testing later) | JSONizer — object flattened to a text ribbon and re-inflated |
+| 4.12 | Map & Set | When objects aren't enough: Map = the 4.5 hash machinery as a dedicated tool (keys of any type); Set = uniqueness at O(1) | SetMapViz — the uniqueness door; keys keeping their real type |
+| 4.13 | JSON | Objects live in the heap and can't cross a wire; JSON.stringify flattens to text (strict dialect), JSON.parse rebuilds a brand-new object — the wire format of every API | JsonBridge — object flattened to a text ribbon and re-inflated |
 | ✅ | **Checkpoint project: "Test-results dashboard"** | Given an array of fake test-run objects, compute pass rates, group failures — foreshadows the QA job | PipelineBelt replays their map/filter/reduce chain |
 
 ## Phase 5 — Under the Hood
@@ -180,7 +181,7 @@ Legend: 🎬 = flagship animation worth extra polish.
 | 11.5 | 🎬 Auto-waiting & web-first assertions | THE flaky-test killer: expect(locator) retries until timeout; connects back to lesson 7.8 | Timeline — assertion polling as repeated gentle checks vs the old sleep(5000) sledgehammer, side by side |
 | 11.6 | Fixtures & hooks | test/expect imports, beforeEach, page fixture, custom fixtures; test isolation | CallStackTower reframed — each test gets a fresh browser context card |
 | 11.7 | Page Object Model | Structuring suites: page classes, locators as properties, actions as methods; DRY test code | ModuleGraph — spec files pointing at page-object cards pointing at the app |
-| 11.8 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.10 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
+| 11.8 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.13 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
 | 11.9 | Auth, storage state & sessions | Log in once, reuse storageState; the cookies/localStorage knowledge from 7.7 pays off | ObjectLocker — a saved session card stamped and reused across tests |
 | 11.10 | Debugging failing tests | UI mode, trace viewer, screenshots, videos; reading a failure like a detective | Annotated trace-viewer walkthrough |
 | 11.11 | Parallelism, retries, CI | Workers, sharding, retries (and why retries hide real bugs), GitHub Actions basics | TestPyramid + a worker-lanes timeline |

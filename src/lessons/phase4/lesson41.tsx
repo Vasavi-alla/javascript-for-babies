@@ -41,6 +41,8 @@ const VIEWS: View[] = [
   { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: false, ghost: false, console: [] },
   { cells: [82, 95, 71], readIndex: 0, outToken: '82', wroteIndex: null, showLength: false, ghost: false, console: ['82'] },
   { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: true, ghost: false, console: ['82', '3'] },
+  { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: true, ghost: false, console: ['82', '3'] },
+  { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: 1, showLength: false, ghost: false, console: ['82', '3'] },
   { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: 1, showLength: false, ghost: false, console: ['82', '3'] },
   { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: false, ghost: false, console: ['82', '3', '[82,96,71]'] },
   { cells: [82, 96, 71], readIndex: 3, outToken: 'undefined', wroteIndex: null, showLength: false, ghost: true, console: ['82', '3', '[82,96,71]', 'undefined'] },
@@ -244,8 +246,11 @@ export const lesson41: LessonDef = {
         </HighlightMark>
         : an ordered collection of values under a single variable name. Each value inside is called
         an <strong>element</strong>, and each element sits at a numbered position called its{' '}
-        <strong>index</strong>. Arrays are the data structure you will meet most often for the rest
-        of your career — every list of test results Playwright hands you is one.
+        <strong>index</strong>.
+      </p>
+      <p>
+        Arrays are the data structure you will meet most often for the rest of your career — every
+        list of test results Playwright hands you is one.
       </p>
     </>
   ),
@@ -266,13 +271,25 @@ export const lesson41: LessonDef = {
     {
       id: 'length',
       caption:
-        'scores.length asks the array how many elements it currently holds: 3. Careful with the off-by-one: length COUNTS elements (starting from 1, like humans do), while indexes measure distance (starting from 0). Three elements, but the last one lives at index 2 — always length minus 1.',
+        'scores.length asks the array how many elements it currently holds: 3.',
+      highlightLines: [4],
+    },
+    {
+      id: 'length-offbyone',
+      caption:
+        'Careful with the off-by-one: length COUNTS elements (starting from 1, like humans do), while indexes measure distance (starting from 0). Three elements, but the last one lives at index 2 — always length minus 1.',
       highlightLines: [4],
     },
     {
       id: 'write',
       caption:
-        'You can assign INTO an index: scores[1] = 96 replaces the element at index 1. The array’s shape didn’t change — same three positions — only the value at position 1 did. (Wait — scores was declared with const, and we just changed its contents? Hold that thought. Lesson 4.6 explains exactly why this is allowed, and it’s the most important idea of this phase.)',
+        'You can assign INTO an index: scores[1] = 96 replaces the element at index 1. The array’s shape didn’t change — same three positions — only the value at position 1 did.',
+      highlightLines: [6],
+    },
+    {
+      id: 'write-const-tease',
+      caption:
+        'Wait — scores was declared with const, and we just changed its contents? Hold that thought. Lesson 4.6 explains exactly why this is allowed, and it’s the most important idea of this phase.',
       highlightLines: [6],
     },
     {
@@ -295,14 +312,20 @@ export const lesson41: LessonDef = {
         An array keeps its elements <em>in order, in memory</em>, and the index is what makes that
         useful: when you write <code>scores[2]</code>, the engine doesn't search — it jumps
         straight to position 2. Reading by index is instant whether the array holds three elements
-        or three million — and the address arithmetic behind that jump is the whole story of the next lesson. That's the trade arrays make: you find things by <em>position</em>, not
-        by name.
+        or three million — the address arithmetic behind that jump is the whole story of the next
+        lesson.
+      </p>
+      <p>
+        That's the trade arrays make: you find things by <em>position</em>, not by name.
       </p>
       <p>
         <code>.length</code> is not something you compute — the array maintains it live, always
-        equal to the number of elements. The last element therefore always sits at{' '}
-        <code>length - 1</code>, and asking for any index at <code>length</code> or beyond returns{' '}
-        <code>undefined</code> — no error, which is both convenient and sneaky.
+        equal to the number of elements.
+      </p>
+      <p>
+        The last element therefore always sits at <code>length - 1</code>, and asking for any
+        index at <code>length</code> or beyond returns <code>undefined</code> — no error, which is
+        both convenient and sneaky.
       </p>
       <p>
         <strong>Fun fact:</strong> indexes start at 0 for the same reason many buildings in Europe

@@ -26,7 +26,7 @@ export const PHASES: PhaseMeta[] = [
   { number: 1, title: 'Values & Variables', question: 'What happens in memory when I create a variable?', plannedLessons: 11 },
   { number: 2, title: 'Making Decisions & Repeating', question: 'How does a program choose and loop?', plannedLessons: 8 },
   { number: 3, title: 'Functions', question: 'How do we package behavior — and what are scope and closures, really?', plannedLessons: 11 },
-  { number: 4, title: 'Collections', question: 'How arrays and objects REALLY work: memory, O(1), hashing, references', plannedLessons: 13 },
+  { number: 4, title: 'Collections', question: 'How arrays and objects REALLY work: memory, O(1), hashing, references', plannedLessons: 14 },
   { number: 5, title: 'Under the Hood', question: 'Execution contexts, the call stack, hoisting, prototypes, this', plannedLessons: 9 },
   { number: 6, title: 'Time & Async', question: 'The event loop, callbacks, promises, async/await', plannedLessons: 9 },
   { number: 7, title: 'The Browser & DOM', question: 'The DOM tree, selectors, events — the automation tester’s hunting ground', plannedLessons: 9 },
@@ -89,8 +89,9 @@ export const LESSONS: LessonMeta[] = [
   { id: '4.9', slug: 'map-filter-reduce', title: 'map / filter / reduce', phase: 4, blurb: 'The transform trio — every element’s journey down the belt.', status: 'available' },
   { id: '4.10', slug: 'sorting-finding', title: 'Sorting & finding', phase: 4, blurb: 'sort’s string-default gotcha, find, some, every, includes.', status: 'available' },
   { id: '4.11', slug: 'destructuring-spread-rest', title: 'Destructuring, spread & rest', phase: 4, blurb: 'Patterns that mirror shapes — and the options-object style every modern API uses.', status: 'available' },
-  { id: '4.12', slug: 'map-set-json', title: 'Map, Set & JSON', phase: 4, blurb: 'The uniqueness door, keys of any type — and JSON, the wire format of every API.', status: 'available' },
-  { id: '4.13', slug: 'checkpoint-test-dashboard', title: 'Checkpoint: test-results dashboard', phase: 4, blurb: 'filter → map → reduce over real run data — your first QA dashboard.', status: 'available' },
+  { id: '4.12', slug: 'map-set', title: 'Map & Set', phase: 4, blurb: 'The uniqueness door, and keys of any type — the hash map, offered as dedicated tools.', status: 'available' },
+  { id: '4.13', slug: 'json', title: 'JSON', phase: 4, blurb: 'The wire format of every API — flatten an object to text, rebuild it back.', status: 'available' },
+  { id: '4.14', slug: 'checkpoint-test-dashboard', title: 'Checkpoint: test-results dashboard', phase: 4, blurb: 'filter → map → reduce over real run data — your first QA dashboard.', status: 'available' },
 
   // Phase 5 — Under the Hood
   { id: '5.1', slug: 'execution-contexts', title: 'Execution contexts: the two passes', phase: 5, blurb: 'The engine reads your code twice — creation registers names, execution runs lines.', status: 'available' },
@@ -119,11 +120,11 @@ export const LESSONS: LessonMeta[] = [
   { id: '7.2', slug: 'selecting-elements', title: 'Selecting elements', phase: 7, blurb: 'querySelector + the CSS selector language — THE locator skill of the job.', status: 'available' },
   { id: '7.3', slug: 'reading-changing-dom', title: 'Reading & changing the DOM', phase: 7, blurb: 'textContent vs innerHTML (the XSS rule), classList verbs, create → append → remove.', status: 'available' },
   { id: '7.4', slug: 'events', title: 'Events', phase: 7, blurb: 'addEventListener, the event object, the big four — what Playwright actions dispatch.', status: 'available' },
-  { id: '7.5', slug: 'bubbling-delegation', title: 'Bubbling, delegation & preventDefault', phase: 7, blurb: 'Events travel the tree — one parent listener handles a hundred children.', status: 'planned' },
-  { id: '7.6', slug: 'forms-input', title: 'Forms & user input', phase: 7, blurb: 'Values, checkboxes, validation, the submit flow — automation’s daily bread.', status: 'planned' },
-  { id: '7.7', slug: 'storage-timing', title: 'Storage & timing', phase: 7, blurb: 'localStorage/cookies (test sessions!) and DOMContentLoaded vs load.', status: 'planned' },
-  { id: '7.8', slug: 'browser-rendering', title: 'How the browser renders', phase: 7, blurb: 'Parse → render tree → layout → paint — why “not visible yet” happens.', status: 'planned' },
-  { id: '7.9', slug: 'checkpoint-todo-inspected', title: 'Checkpoint: todo app, inspected', phase: 7, blurb: 'Build it, then target it — your own app as the automation practice range.', status: 'planned' },
+  { id: '7.5', slug: 'bubbling-delegation', title: 'Bubbling, delegation & preventDefault', phase: 7, blurb: 'Events travel the tree — one parent listener handles a hundred children.', status: 'available' },
+  { id: '7.6', slug: 'forms-input', title: 'Forms & user input', phase: 7, blurb: 'Values, checkboxes, validation, the submit flow — automation’s daily bread.', status: 'available' },
+  { id: '7.7', slug: 'storage-timing', title: 'Storage & timing', phase: 7, blurb: 'localStorage/cookies (test sessions!) and DOMContentLoaded vs load.', status: 'available' },
+  { id: '7.8', slug: 'browser-rendering', title: 'How the browser renders', phase: 7, blurb: 'Parse → render tree → layout → paint — why “not visible yet” happens.', status: 'available' },
+  { id: '7.9', slug: 'checkpoint-todo-inspected', title: 'Checkpoint: todo app, inspected', phase: 7, blurb: 'Build it, then target it — your own app as the automation practice range.', status: 'available' },
 ]
 
 export function lessonsForPhase(phase: number): LessonMeta[] {

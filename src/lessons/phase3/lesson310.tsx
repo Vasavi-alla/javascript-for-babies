@@ -20,6 +20,12 @@ const DEFAULT_CODE = `function greet(name = "friend") {
 greet();
 greet("Vasavi");`
 
+const REST_CODE = `function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+
+console.log(sum(1, 2, 3, 4, 5));`
+
 const PURE_CODE = `let total = 0;
 
 function addToTotal(n) {
@@ -32,12 +38,17 @@ function add(a, b) {
 
 type Scene =
   | { mode: 'default'; slot: string; fallback: boolean; lines: string[] }
+  | { mode: 'rest'; gathered: boolean; result: number | null; lines: string[] }
   | { mode: 'pure'; focus: 'impure' | 'pure'; total: number; lines: string[] }
+
+const REST_ARGS = [1, 2, 3, 4, 5]
 
 const SCENES: Scene[] = [
   { mode: 'default', slot: '', fallback: false, lines: [] },
   { mode: 'default', slot: '"friend"', fallback: true, lines: ['Hello, friend!'] },
   { mode: 'default', slot: '"Vasavi"', fallback: false, lines: ['Hello, friend!', 'Hello, Vasavi!'] },
+  { mode: 'rest', gathered: false, result: null, lines: [] },
+  { mode: 'rest', gathered: true, result: 15, lines: ['15'] },
   { mode: 'pure', focus: 'impure', total: 5, lines: [] },
   { mode: 'pure', focus: 'pure', total: 5, lines: [] },
   { mode: 'pure', focus: 'pure', total: 5, lines: [] },
@@ -93,6 +104,53 @@ function PureViz({ stepIndex }: { stepIndex: number }) {
                 ? 'an argument arrived → the fallback stays penciled'
                 : 'a parameter with a plan B'}
           </text>
+        </svg>
+        <ConsolePane lines={scene.lines} />
+      </div>
+    )
+  }
+
+  if (scene.mode === 'rest') {
+    return (
+      <div className="flex flex-col gap-3 p-2">
+        <svg viewBox="0 0 440 210" className="w-full">
+          <text x={220} y={24} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
+            sum(1, 2, 3, 4, 5) — five separate arguments arrive
+          </text>
+          {REST_ARGS.map((n, i) => {
+            const x = 44 + i * 72
+            return (
+              <g key={i}>
+                <RoughRect x={x} y={38} width={46} height={36} seed={1030 + i} fill="var(--color-sticky)" fillStyle="solid" strokeWidth={1.5} />
+                <text x={x + 23} y={62} textAnchor="middle" fontFamily="var(--font-code)" fontSize={14} fontWeight={700} fill="var(--color-ink)">
+                  {n}
+                </text>
+              </g>
+            )
+          })}
+          <text x={220} y={98} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+            ...numbers — gather them ALL into one array
+          </text>
+          <RoughRect x={90} y={108} width={260} height={42} seed={1040} fill="var(--color-paper, #fdf8ee)" fillStyle="solid" strokeWidth={1.5} />
+          <text x={220} y={134} textAnchor="middle" fontFamily="var(--font-code)" fontSize={13} fontWeight={700} fill={scene.gathered ? 'var(--color-ink)' : 'var(--color-ink-soft)'}>
+            numbers = {scene.gathered ? `[${REST_ARGS.join(', ')}]` : '?'}
+          </text>
+          <AnimatePresence>
+            {scene.result !== null && (
+              <motion.text
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                x={220}
+                y={182}
+                textAnchor="middle"
+                fontFamily="var(--font-hand)"
+                fontSize={15}
+                fill="var(--color-marker-teal)"
+              >
+                numbers.reduce(…) → {scene.result}
+              </motion.text>
+            )}
+          </AnimatePresence>
         </svg>
         <ConsolePane lines={scene.lines} />
       </div>
@@ -186,7 +244,7 @@ export const lesson310: LessonDef = {
   hook: (
     <>
       <p>
-        Two finishing touches for your function-building skills. First, a fix for an old wound:
+        Three finishing touches for your function-building skills. First, a fix for an old wound:
         in 3.2, a missing argument left <code>undefined</code> in the parameter and the function
         shouted nonsense. Today the parameter gets a{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
@@ -195,7 +253,12 @@ export const lesson310: LessonDef = {
         — a default value that slides in whenever nothing arrives.
       </p>
       <p>
-        Second, a distinction your future employer cares about deeply: some functions are{' '}
+        Second, the opposite problem: what if you don’t know how many arguments are coming? A{' '}
+        <strong>rest parameter</strong> (<code>...numbers</code>) gathers ANY number of incoming
+        values into one real array, so the function body can work with them as a group.
+      </p>
+      <p>
+        Third, a distinction your future employer cares about deeply: some functions are{' '}
         <strong>pure</strong> — sealed boxes where the same inputs always produce the same returned
         output, touching nothing else — and some reach outside themselves and <em>change
         things</em>. Both are legal. But one of them is a dream to test, and testing is where
@@ -220,9 +283,23 @@ export const lesson310: LessonDef = {
     {
       id: 'default-overridden',
       caption:
-        'greet("Vasavi") — an argument arrived, so the fallback stays penciled and unused. Defaults never fight real arguments; they only fill silence. (Rest parameters — gathering EXTRA arguments with ...— exist too; they hand you a list, and lists are Phase 4’s whole story.)',
+        'greet("Vasavi") — an argument arrived, so the fallback stays penciled and unused. Defaults never fight real arguments; they only fill silence.',
       highlightLines: [6],
       codeOverride: DEFAULT_CODE,
+    },
+    {
+      id: 'rest-intro',
+      caption:
+        'New code, new trick: (...numbers). Three dots before a parameter name is a REST PARAMETER — “however many arguments show up, gather every single one into one real array named numbers.” One name, any number of incoming values.',
+      codeOverride: REST_CODE,
+      highlightLines: [1],
+    },
+    {
+      id: 'rest-gathered',
+      caption:
+        'sum(1, 2, 3, 4, 5) hands over five separate arguments. Rest gathers all five into numbers = [1, 2, 3, 4, 5] — then .reduce (lesson 4.9 gives it the full spotlight) adds them lap by lap to 15. Call sum with three numbers, or eight — rest never complains, it just gathers a shorter or longer array.',
+      codeOverride: REST_CODE,
+      highlightLines: [2, 5],
     },
     {
       id: 'impure',
@@ -252,14 +329,24 @@ export const lesson310: LessonDef = {
         Default parameters, precisely: <code>name = "friend"</code> evaluates the fallback only
         when the incoming argument is <code>undefined</code> — absent entirely, or explicitly
         passed as <code>undefined</code>. (Passing <code>null</code> does NOT trigger it —{' '}
-        <code>null</code> is a deliberate value, as lesson 1.7 taught.) Defaults can even use
-        earlier parameters: <code>function area(width, height = width)</code> is legal and
-        genuinely useful.
+        <code>null</code> is a deliberate value, as lesson 1.7 taught.)
+      </p>
+      <p>
+        Defaults can even use earlier parameters:{' '}
+        <code>function area(width, height = width)</code> is legal and genuinely useful.
+      </p>
+      <p>
+        A <strong>rest parameter</strong>, precisely: <code>...numbers</code> must be the LAST
+        parameter, and it always gathers into a genuine array (with <code>.reduce</code>,{' '}
+        <code>.map</code> and friends all working on it) — never a fixed count of separate slots.
+        It’s how functions like <code>Math.max(...)</code> accept any number of arguments at all.
       </p>
       <p>
         A <strong>pure function</strong> satisfies two promises: same inputs → same output, and{' '}
         <strong>no side effects</strong> — no changing outer variables, no printing, no saving, no
         network. Anything that breaks either promise makes the function <strong>impure</strong>.
+      </p>
+      <p>
         Note the fine print: even <code>console.log</code> is technically a side effect — the
         world (your console) changed. That’s why well-factored code computes with pure functions
         and keeps the printing at the edges.
@@ -281,6 +368,12 @@ export const lesson310: LessonDef = {
     },
     {
       kind: 'type-output',
+      question: 'Same sum(...numbers) function. Type what sum(10, 20, 30) returns:',
+      accept: ['60'],
+      why: 'Rest gathers however many arguments arrive — 10, 20 and 30 — into numbers = [10, 20, 30], and reduce adds them: 60. Change the count of arguments and rest just gathers a differently-sized array; nothing else in the function has to change.',
+    },
+    {
+      kind: 'type-output',
       question: 'add(2, 3) returns 5 today. Type what it returns if you call it again in five years:',
       accept: ['5'],
       why: '5, forever — that’s the pure-function promise: same inputs → same output, no dependence on anything outside. This predictability is exactly what makes purity testable with a single assertion.',
@@ -296,12 +389,13 @@ export const lesson310: LessonDef = {
   PlayExtra: () => <CodeExercise def={AREA_EXERCISE} />,
   teachBack: {
     prompt:
-      'Explain to a friend: what a default parameter does (and when it does NOT fire), and what makes a function pure — plus why testers prefer pure functions.',
+      'Explain to a friend: what a default parameter does (and when it does NOT fire), what a rest parameter gathers, and what makes a function pure — plus why testers prefer pure functions.',
     modelAnswer:
-      'A default parameter is a fallback written into the slot itself: function greet(name = "friend"). If no argument arrives — the slot would have been undefined — the fallback slides in; if a real value arrives, the default stays unused. It fires ONLY on undefined: even null, being a deliberate value, keeps the default off. A pure function makes two promises: the same inputs always produce the same returned output, and it has no side effects — it doesn’t change outer variables, print, or save anything; everything enters through parameters and leaves through return. addToTotal is impure because its whole point is changing the outer total. Testers love pure functions because they’re checkable in one line — expect(add(2, 3)).toBe(5) — with no setup or cleanup, while impure code needs its world arranged first. So: compute with pure functions, and push the messy side effects to the edges.',
+      'A default parameter is a fallback written into the slot itself: function greet(name = "friend"). If no argument arrives — the slot would have been undefined — the fallback slides in; if a real value arrives, the default stays unused. It fires ONLY on undefined: even null, being a deliberate value, keeps the default off. A rest parameter, written ...numbers, is the opposite tool: instead of one fixed slot, it gathers however many arguments actually arrive into one real array, so the function can work on them as a group (with reduce, map, and so on) no matter how many were passed. A pure function makes two promises: the same inputs always produce the same returned output, and it has no side effects — it doesn’t change outer variables, print, or save anything; everything enters through parameters and leaves through return. addToTotal is impure because its whole point is changing the outer total. Testers love pure functions because they’re checkable in one line — expect(add(2, 3)).toBe(5) — with no setup or cleanup, while impure code needs its world arranged first. So: compute with pure functions, and push the messy side effects to the edges.',
   },
   recap: [
     'Default parameter = a plan B penciled into the slot: fires only when the argument would be undefined (null doesn’t count).',
+    'Rest parameter (...numbers) = gather ANY number of incoming arguments into one real array. Must be the last parameter.',
     'Pure = same inputs → same output + zero side effects. Everything in via parameters, out via return.',
     'Impure = reaches outside: changes variables, prints, saves. Legal — but every call changes the world.',
     'Tester’s rule: compute pure, side-effect at the edges. expect(add(2,3)).toBe(5) needs no setup — that’s the payoff.',

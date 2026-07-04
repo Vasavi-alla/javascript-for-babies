@@ -39,11 +39,11 @@ function chipColor(value: string): string | undefined {
 }
 
 // which i the viz walks through, per step
-const WALK: Array<number> = [0, 0, 3, 5, 15, 15]
+const WALK: Array<number> = [0, 3, 5, 15, 15, 15, 15]
 
 function FizzBuzzGates({ stepIndex }: { stepIndex: number }) {
   const n = WALK[stepIndex] ?? 0
-  const showRun = stepIndex >= 5
+  const showRun = stepIndex >= 6
   if (showRun) {
     return (
       <svg viewBox="0 0 440 300" className="w-full">
@@ -230,7 +230,13 @@ export const lesson28: LessonDef = {
     {
       id: 'why-15',
       caption:
-        'So the specific gate goes first: %15 catches “divisible by both” (3 × 5 = 15 — a number divisible by both 3 and 5 is exactly a multiple of 15). Order = logic, exactly as lesson 2.3 warned. The alternative spelling you’ll also see: i % 3 === 0 && i % 5 === 0 — same gate, using 1.10’s &&.',
+        'So the specific gate goes first: %15 catches “divisible by both” (3 × 5 = 15 — a number divisible by both 3 and 5 is exactly a multiple of 15). Order = logic, exactly as lesson 2.3 warned.',
+      highlightLines: [2, 3],
+    },
+    {
+      id: 'why-15-alt',
+      caption:
+        'The alternative spelling you’ll also see: i % 3 === 0 && i % 5 === 0 — same gate, using 1.10’s &&.',
       highlightLines: [2, 3],
     },
     {
@@ -248,9 +254,12 @@ export const lesson28: LessonDef = {
         at once: loop mechanics, the % operator, condition <em>ordering</em> (the trap), and
         whether you check your own edges (does 15 actually print FizzBuzz? does 1 print 1?). That
         last habit — <strong>picking the inputs that would expose the bug</strong> — is literally
-        the tester’s craft. The values worth checking here: 1 (plain), 3 (Fizz), 5 (Buzz), 15 (the
-        collision), and 0 or negative if the range ever changes. Choosing revealing inputs like
-        that has a name you’ll meet formally in Phase 9: boundary testing.
+        the tester’s craft.
+      </p>
+      <p>
+        The values worth checking here: 1 (plain), 3 (Fizz), 5 (Buzz), 15 (the collision), and 0 or
+        negative if the range ever changes. Choosing revealing inputs like that has a name you’ll
+        meet formally in Phase 9: boundary testing.
       </p>
       <p>
         The dead-code failure mode deserves respect: a mis-ordered FizzBuzz never crashes, never

@@ -30,10 +30,12 @@ interface Scene {
 
 const SCENES: Scene[] = [
   { input: null, output: null, lines: [] }, // definition read — machine built
+  { input: null, output: null, lines: [] }, // the machine's three parts
   { input: null, output: null, lines: [] }, // the nothing-printed beat
   { input: '"Sam"', output: 'Hello, Sam!', lines: ['Hello, Sam!'] },
   { input: '"Maya"', output: 'Hello, Maya!', lines: ['Hello, Sam!', 'Hello, Maya!'] },
   { input: null, output: null, lines: ['Hello, Sam!', 'Hello, Maya!'] }, // anatomy wrap
+  { input: null, output: null, lines: ['Hello, Sam!', 'Hello, Maya!'] }, // forward teaser
 ]
 
 /** One puzzle piece on the workbench. */
@@ -226,9 +228,12 @@ export const lesson31: LessonDef = {
           function
         </HighlightMark>{' '}
         should exist: a machine you <em>build once</em> and <em>use forever</em>. Programmers even
-        have a rule about it — <strong>DRY: Don’t Repeat Yourself</strong>. And you’ve been{' '}
-        <em>using</em> such machines since your very first lesson: <code>console.log</code> is one.
-        Today you stop just pressing other people’s buttons and start <strong>building</strong>.
+        have a rule about it — <strong>DRY: Don’t Repeat Yourself</strong>.
+      </p>
+      <p>
+        And you’ve been <em>using</em> such machines since your very first lesson:{' '}
+        <code>console.log</code> is one. Today you stop just pressing other people’s buttons and
+        start <strong>building</strong>.
       </p>
     </>
   ),
@@ -237,7 +242,13 @@ export const lesson31: LessonDef = {
     {
       id: 'read-definition',
       caption:
-        'The engine reads lines 1–3 and does something surprising: it does NOT run the code inside the braces. It builds the machine — the name tape greet, an input window called name, and a workbench that will glue "Hello, " + name + "!" — and stores the whole thing in memory. Defining is construction, not execution.',
+        'The engine reads lines 1–3 and does something surprising: it does NOT run the code inside the braces. Defining is construction, not execution.',
+      highlightLines: [1, 2, 3],
+    },
+    {
+      id: 'read-definition-parts',
+      caption:
+        'Instead it builds the machine — the name tape greet, an input window called name, and a workbench that will glue "Hello, " + name + "!" — and stores the whole thing in memory.',
       highlightLines: [1, 2, 3],
     },
     {
@@ -261,7 +272,11 @@ export const lesson31: LessonDef = {
     {
       id: 'wrap',
       caption:
-        'The anatomy, one more time: the keyword function says “machine ahead”; greet is the name label; (name) declares the input window; the braces { } hold the body — the work. Define once (build), call many (run). Next lesson: machines with TWO input slots — and why their order matters.',
+        'The anatomy, one more time: the keyword function says “machine ahead”; greet is the name label; (name) declares the input window; the braces { } hold the body — the work. Define once (build), call many (run).',
+    },
+    {
+      id: 'wrap-next',
+      caption: 'Next lesson: machines with TWO input slots — and why their order matters.',
     },
   ],
   Viz: GreetMachine,
@@ -272,9 +287,11 @@ export const lesson31: LessonDef = {
         closing brace is a <strong>function declaration</strong>. <code>greet</code> is its{' '}
         <strong>name</strong>, <code>name</code> is a <strong>parameter</strong> (the input slot —
         next lesson is all about these), and the code between the braces is the{' '}
-        <strong>body</strong> — the work. Writing <code>greet("Sam")</code> is called{' '}
-        <strong>calling</strong> the function; the parentheses are the GO button, and without them
-        nothing runs.
+        <strong>body</strong> — the work.
+      </p>
+      <p>
+        Writing <code>greet("Sam")</code> is called <strong>calling</strong> the function; the
+        parentheses are the GO button, and without them nothing runs.
       </p>
       <p>
         Inside there’s no real belt, of course. What actually happens: the engine saves the body’s

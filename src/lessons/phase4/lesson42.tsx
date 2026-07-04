@@ -262,9 +262,11 @@ export const lesson42: LessonDef = {
           address = start + index × slot size
         </HighlightMark>
         . Today you learn how an array actually sits in memory (lesson 0.4's wall of slots
-        returns), why that makes every index lookup a single jump — and the name professionals use
-        for that kind of cost: <strong>O(1)</strong>. This is your first piece of real computer
-        science, and interviewers love asking about it.
+        returns), and why that makes every index lookup a single jump.
+      </p>
+      <p>
+        That kind of cost has a name professionals use: <strong>O(1)</strong>. This is your first
+        piece of real computer science, and interviewers love asking about it.
       </p>
     </>
   ),
@@ -297,7 +299,7 @@ export const lesson42: LessonDef = {
     {
       id: 'bounds',
       caption:
-        'scores[9]: the arithmetic shrugs and computes 5000 + 9 × 8 = 5072… but that slot was never part of the array’s block — it might belong to a completely different variable! JavaScript checks the index against the length first and answers undefined instead of raiding a stranger’s memory. (Writing past the end is different: big[50] = 1 makes the array grow to reach it.)',
+        'scores[9]: the arithmetic shrugs and computes 5000 + 9 × 8 = 5072… but that slot was never part of the array’s block — it might belong to a completely different variable! JavaScript checks the index against the length first and answers undefined instead of raiding a stranger’s memory. (Writing past the end is different, and messier: big[50] = 1 forces the array to grow all the way out to reach it — leaving a gap behind it that breaks the tidy contiguous picture. Honest details on exactly that, in a moment.)',
       highlightLines: [10],
     },
     {
@@ -312,10 +314,12 @@ export const lesson42: LessonDef = {
     <>
       <p>
         Big-O notation is nothing more than a label for <em>how cost grows with data size</em>.
-        O(1): flat — index reads, <code>.length</code>, writing <code>a[i]</code>. O(n): grows in
-        step with the element count — anything that must visit or move every element. You now own
-        the two labels that describe 90% of everyday performance conversations (and a healthy
-        share of interview questions).
+        O(1): flat — index reads, <code>.length</code>, writing <code>a[i]</code>.
+      </p>
+      <p>
+        O(n): grows in step with the element count — anything that must visit or move every
+        element. You now own the two labels that describe 90% of everyday performance
+        conversations (and a healthy share of interview questions).
       </p>
       <p>
         Honesty note: JavaScript engines are craftier than one diagram — an array of mixed types,

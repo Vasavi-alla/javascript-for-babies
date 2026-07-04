@@ -323,10 +323,12 @@ export const lesson33: LessonDef = {
       <p>
         The one rule to keep: wherever you write a call like <code>double(5)</code>, JavaScript
         replaces it with whatever the function hands back. And <em>every</em> call hands back
-        something. Wrote no <code>return</code>? The call hands back <code>undefined</code>. Even{' '}
-        <code>console.log</code> hands back <code>undefined</code> — try{' '}
-        <code>console.log(console.log("hi"))</code> in your F12 console: it prints{' '}
-        <code>hi</code>, then <code>undefined</code>.
+        something. Wrote no <code>return</code>? The call hands back <code>undefined</code>.
+      </p>
+      <p>
+        Even <code>console.log</code> hands back <code>undefined</code> — try{' '}
+        <code>console.log(console.log("hi"))</code> in your F12 console: it prints <code>hi</code>,
+        then <code>undefined</code>.
       </p>
       <p>
         This idea is the heart of your future job. A test line like{' '}

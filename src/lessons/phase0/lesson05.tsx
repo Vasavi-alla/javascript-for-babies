@@ -201,9 +201,13 @@ export const lesson05: LessonDef = {
       <p>
         Meet the big three error categories — between them they cover most of what you’ll see for
         months. <strong>SyntaxError</strong>: “I couldn’t even read this” — the grammar is broken
-        (a missing quote or bracket), so the program doesn’t start at all.{' '}
+        (a missing quote or bracket), so the program doesn’t start at all.
+      </p>
+      <p>
         <strong>ReferenceError</strong>: “you used a name that doesn’t exist anywhere” — like{' '}
-        <code>consoel.log(…)</code> or using a variable you never created.{' '}
+        <code>consoel.log(…)</code> or using a variable you never created.
+      </p>
+      <p>
         <strong>TypeError</strong>: “that thing exists, but it can’t do what you asked” — like our{' '}
         <code>console.lgo</code> (console exists; lgo isn’t something inside it you can call).
       </p>
@@ -215,11 +219,13 @@ export const lesson05: LessonDef = {
         envelope.</em>
       </p>
       <p>
-        Two professional habits to start now. First: when several errors appear,{' '}
-        <strong>read the first one</strong> — later errors are often just fallout from it. Second:
-        errors are evidence, not verdicts. Your future job description literally includes making
-        software fail on purpose and reading what it says — a tester who reads error messages
-        calmly and precisely is worth their weight in gold.
+        A professional habit to start now: when several errors appear,{' '}
+        <strong>read the first one</strong> — later errors are often just fallout from it.
+      </p>
+      <p>
+        And keep this framing forever: errors are evidence, not verdicts. Your future job
+        description literally includes making software fail on purpose and reading what it says —
+        a tester who reads error messages calmly and precisely is worth their weight in gold.
       </p>
     </>
   ),

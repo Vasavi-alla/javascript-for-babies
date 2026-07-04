@@ -23,16 +23,15 @@ function EngineDiagram({ stepIndex }: { stepIndex: number }) {
       </text>
       <RoughRect x={190} y={50} width={230} height={230} seed={80} />
 
-      {/* three languages feeding in */}
+      {/* three languages feeding in — one revealed per step */}
       <AnimatePresence>
-        {stepIndex >= 1 &&
-          LANGS.map((lang, i) => (
+        {LANGS.map((lang, i) => stepIndex >= i + 1 && (
             <motion.g
               key={lang.name}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: i * 0.15, duration: 0.4 }}
+              transition={{ duration: 0.4 }}
             >
               <RoughRect x={20} y={65 + i * 72} width={110} height={52} seed={82 + i} fill={lang.color} />
               <text x={75} y={88 + i * 72} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={21} fontWeight={700} fill="var(--color-ink)">
@@ -55,7 +54,7 @@ function EngineDiagram({ stepIndex }: { stepIndex: number }) {
 
       {/* the engine */}
       <AnimatePresence>
-        {stepIndex >= 2 && (
+        {stepIndex >= 4 && (
           <motion.g
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -82,7 +81,7 @@ function EngineDiagram({ stepIndex }: { stepIndex: number }) {
 
       {/* Node.js */}
       <AnimatePresence>
-        {stepIndex >= 4 && (
+        {stepIndex >= 6 && (
           <motion.g initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }}>
             <text x={448} y={92} fontFamily="var(--font-hand)" fontSize={22} fontWeight={700} fill="var(--color-ink)">
               Node.js
@@ -129,9 +128,17 @@ export const lesson02: LessonDef = {
         'Meet the browser — Chrome, Edge, Firefox, Safari. Here’s a thought that surprises people: the browser is itself a program that someone wrote. Its job is fetching web pages and showing them to you.',
     },
     {
-      id: 'three-langs',
+      id: 'html',
       caption:
-        'Every web page is built from three languages, each with one job. HTML is the bones (what exists: a button, a heading). CSS is the clothes (how it looks: colors, sizes). JavaScript is the muscles (what it DOES: what happens when you click). You’re here to learn the muscles.',
+        'Every web page is built from three languages, each with one job. HTML is the bones: what exists on the page at all — a button, a heading, a paragraph.',
+    },
+    {
+      id: 'css',
+      caption: 'CSS is the clothes: how everything looks — colors, sizes, spacing, fonts.',
+    },
+    {
+      id: 'js',
+      caption: 'And JavaScript is the muscles: what actually happens — what runs when you click. You’re here to learn the muscles.',
     },
     {
       id: 'engine',
@@ -170,9 +177,12 @@ export const lesson02: LessonDef = {
       <p>
         What does an engine actually do with your file? Two big moves: it <strong>parses</strong>{' '}
         the text (reads it and checks the grammar — this is where typos get caught), then{' '}
-        <strong>executes</strong> it. Modern engines even watch which parts of your code run hottest
-        and quietly translate those parts into raw machine code for extra speed (a trick called
-        JIT — just-in-time compilation). You get all of this for free.
+        <strong>executes</strong> it.
+      </p>
+      <p>
+        Modern engines add a third move for free: they watch which parts of your code run
+        hottest and quietly translate those parts into raw machine code for extra speed — a
+        trick called JIT, just-in-time compilation.
       </p>
       <p>
         Fun fact for interviews: the language’s official name is <strong>ECMAScript</strong> — a
@@ -183,16 +193,21 @@ export const lesson02: LessonDef = {
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> Chrome’s engine
         is literally named after a car engine — the <strong>V8</strong>, eight cylinders of
-        muscle-car power — because Google wanted the name itself to promise speed. And the joke
-        continues inside it: V8’s two main parts are called <em>Ignition</em> (the interpreter
-        that starts your code) and <em>TurboFan</em> (the optimizer that makes hot code fly).
+        muscle-car power — because Google wanted the name itself to promise speed.
+      </p>
+      <p>
+        The joke continues inside it, too: V8’s two main working parts are nicknamed{' '}
+        <em>Ignition</em> (starts running your code right away) and <em>TurboFan</em> (notices
+        code running a lot, and makes that part fly).
       </p>
       <p>
         <strong>Node.js</strong> = the V8 engine + extra abilities the browser deliberately doesn’t
         grant (reading files on your disk, running servers, talking to the operating system) — and{' '}
-        <em>minus</em> the page itself (there’s no HTML in Node; nothing to click). That trade is
-        exactly why test tools live there: Playwright runs in Node and reaches out to command real
-        browsers from the outside. You’ll see that architecture again in Phase 10.
+        <em>minus</em> the page itself (there’s no HTML in Node; nothing to click).
+      </p>
+      <p>
+        That trade is exactly why test tools live there: Playwright runs in Node and reaches out
+        to command real browsers from the outside. You’ll see that architecture again in Phase 10.
       </p>
     </>
   ),

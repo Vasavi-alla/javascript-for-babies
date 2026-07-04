@@ -173,7 +173,10 @@ export const lesson73: LessonDef = {
       </p>
       <p>
         Four verbs run the show: read/write text, juggle classes, set attributes, create/remove
-        nodes. Plus one security landmine (<code>innerHTML</code>) that every beginner must meet{' '}
+        nodes.
+      </p>
+      <p>
+        Plus one security landmine (<code>innerHTML</code>) that every beginner must meet{' '}
         <em>before</em> production meets them.
       </p>
     </>
@@ -230,15 +233,20 @@ export const lesson73: LessonDef = {
         Precision on the pair everyone confuses: <code>textContent</code> gets/sets the raw text
         (fast, safe, no parsing); <code>innerHTML</code> gets/sets <em>markup</em> — reading it
         serializes the subtree to a string, writing it runs the parser and REPLACES all children.
+      </p>
+      <p>
         The security rule is one sentence: <strong>if a user typed it, it goes in textContent.</strong>{' '}
         XSS — script smuggled through markup — is one of the top web vulnerabilities, and test
         suites (yours, someday) include cases that try exactly that smuggle.
       </p>
       <p>
         Every mutation also nudges the rendering pipeline — the tree changed, so layout and paint
-        re-run (lesson 7.8 walks that machinery). Batches of small edits are why real apps repaint
-        smoothly and also why "the element exists but isn't PAINTED yet" moments happen — the root
-        of flaky-test folklore, and of Playwright's auto-waiting cure (11.5).
+        re-run (lesson 7.8 walks that machinery).
+      </p>
+      <p>
+        Batches of small edits are why real apps repaint smoothly and also why "the element exists
+        but isn't PAINTED yet" moments happen — the root of flaky-test folklore, and of
+        Playwright's auto-waiting cure (11.5).
       </p>
       <p>
         And a live reference reminder (7.1 + 4.6): hold <code>const el = querySelector(…)</code>{' '}

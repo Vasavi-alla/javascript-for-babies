@@ -206,19 +206,25 @@ export const lesson39: LessonDef = {
     <>
       <p>
         Precisely: <strong>recursion</strong> is a function invoking itself; each invocation gets
-        its own stack frame with its own parameters and locals, exactly like any call (3.6). The{' '}
-        <strong>base case</strong> is the non-recursive branch that stops the growth; the{' '}
-        <strong>recursive step</strong> must move the argument strictly <em>toward</em> it. Miss
-        either and the stack hits its height limit:{' '}
+        its own stack frame with its own parameters and locals, exactly like any call (3.6).
+      </p>
+      <p>
+        The <strong>base case</strong> is the non-recursive branch that stops the growth; the{' '}
+        <strong>recursive step</strong> must move the argument strictly <em>toward</em> it.
+      </p>
+      <p>
+        Miss either and the stack hits its height limit:{' '}
         <code>RangeError: Maximum call stack size exceeded</code> — the loop-that-never-ends of
         the function world, and it even has the same fix: make progress toward stopping.
       </p>
       <p>
         Anything a loop can do, recursion can do, and vice versa — countdown could have been a
-        for-loop. So when? Loops win for flat, list-shaped work. Recursion wins when the data is{' '}
-        <em>nested</em> — a folder of folders, a menu of submenus, the browser’s DOM tree where
-        every element can contain more elements. “Handle this node, recurse into the children” is
-        a sentence you’ll live inside during Phase 7.
+        for-loop. So when? Loops win for flat, list-shaped work.
+      </p>
+      <p>
+        Recursion wins when the data is <em>nested</em> — a folder of folders, a menu of submenus,
+        the browser’s DOM tree where every element can contain more elements. “Handle this node,
+        recurse into the children” is a sentence you’ll live inside during Phase 7.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> search Google

@@ -215,10 +215,12 @@ export const lesson74: LessonDef = {
       </p>
       <p>
         You already own every ingredient: listeners are callbacks (3.8), delivered through the
-        event queue (6.2), receiving an object full of facts (4.4). And as a future automation
-        engineer, this is doubly yours: <em>every Playwright action — click, fill, press — works
-        by dispatching exactly these events</em>. Today you learn what your tests will one day
-        fire.
+        event queue (6.2), receiving an object full of facts (4.4).
+      </p>
+      <p>
+        And as a future automation engineer, this is doubly yours: <em>every Playwright action —
+        click, fill, press — works by dispatching exactly these events</em>. Today you learn what
+        your tests will one day fire.
       </p>
     </>
   ),
@@ -285,15 +287,20 @@ export const lesson74: LessonDef = {
       <p>
         The event object is per-type specialized (5.6's inheritance, again): a click hands you a
         MouseEvent (with coordinates), a keydown a KeyboardEvent (with <code>.key</code>), a
-        submit a SubmitEvent — all extending Event (<code>.type</code>, <code>.target</code>,
-        and 7.5's <code>preventDefault</code> live on the base). One family tree, one lesson —
-        yours already.
+        submit a SubmitEvent — all extending Event.
+      </p>
+      <p>
+        <code>.type</code>, <code>.target</code>, and 7.5's <code>preventDefault</code> live on the
+        base. One family tree, one lesson — yours already.
       </p>
       <p>
         Housekeeping that separates juniors from seniors: <code>removeEventListener(name, fn)</code>{' '}
         needs the SAME function reference — which is why handlers you plan to remove get names
-        instead of inline arrows. And forgotten listeners on long-lived pages are a classic 5.7
-        leak: the listener's rope keeps its closure reachable forever.
+        instead of inline arrows.
+      </p>
+      <p>
+        Forgotten listeners on long-lived pages are a classic 5.7 leak: the listener's rope keeps
+        its closure reachable forever.
       </p>
       <p>
         Your exercise builds the pattern's heart — a name → callbacks map — and it isn't a toy:
@@ -334,7 +341,7 @@ export const lesson74: LessonDef = {
   },
   recap: [
     'addEventListener(name, fn) = register a callback for a happening on an element; many can stack, firing in order.',
-    'Handlers receive the EVENT OBJECT: .type, .target (live ref), plus specifics (.key, coordinates). The big four: click, input, submit, keydown.',
+    'Handlers receive the EVENT OBJECT: .type, .target (live ref), plus specifics (.key, coordinates). Three of the big four here — click, input, keydown; submit joins them once we hit forms (7.6).',
     'Delivery = 6.2’s queue (macrotasks) — blocked stacks make clicks feel dead. Playwright actions DISPATCH these exact events.',
   ],
 }

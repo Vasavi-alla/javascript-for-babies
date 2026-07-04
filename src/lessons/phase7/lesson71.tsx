@@ -196,7 +196,7 @@ export const lesson71: LessonDef = {
     {
       id: 'parse',
       caption:
-        'The server sends TEXT — angle brackets, just characters (4.12 taught you: wires carry text). The browser’s parser reads it once and GROWS the tree. The text is scaffolding; the tree is the building.',
+        'The server sends TEXT — angle brackets, just characters (4.13 taught you: wires carry text). The browser’s parser reads it once and GROWS the tree. The text is scaffolding; the tree is the building.',
       highlightLines: [1, 2, 3, 4, 5, 6, 7, 8],
     },
     {
@@ -261,9 +261,12 @@ export const lesson71: LessonDef = {
       <p>
         Every node object comes packed with navigation (<code>parentElement</code>,{' '}
         <code>children</code>, <code>nextElementSibling</code>) and data (<code>tagName</code>,{' '}
-        <code>id</code>, <code>classList</code>, <code>textContent</code>). Under the hood they're
-        prototype chains (5.5 in the wild): an <code>li</code> is an HTMLLIElement → HTMLElement →
-        Element → Node — shared methods living once, high on the chain.
+        <code>id</code>, <code>classList</code>, <code>textContent</code>).
+      </p>
+      <p>
+        Under the hood they're prototype chains (5.5 in the wild): an <code>li</code> is an
+        HTMLLIElement → HTMLElement → Element → Node — shared methods living once, high on the
+        chain.
       </p>
       <p>
         And your exercise models the tree as plain <code>{'{ tag, children }'}</code> objects on

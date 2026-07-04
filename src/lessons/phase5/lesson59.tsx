@@ -346,7 +346,7 @@ export const lesson59: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'Walk the chain — type exactly what this prints:',
+      question: 'Walk the chain — type exactly what the FIRST console.log line prints:',
       code: 'const tool = { grip: "firm" };\nconst axe = Object.create(tool);\nconsole.log(axe.grip);\nconsole.log(Object.keys(axe).length);',
       accept: ['firm', 'firm 0'],
       placeholder: 'the first line…',

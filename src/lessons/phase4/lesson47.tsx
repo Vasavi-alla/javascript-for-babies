@@ -313,9 +313,11 @@ export const lesson47: LessonDef = {
       <p>
         <code>===</code> on objects answers one question: <em>same address?</em> It never looks
         inside. Two objects with identical contents are still <code>!==</code> — and there's no
-        built-in “same contents” operator in the language. (Test libraries add one:{' '}
-        <code>expect(a).toEqual(b)</code> unpacks structure — a Phase 10 tool built entirely on
-        today's idea.)
+        built-in “same contents” operator in the language.
+      </p>
+      <p>
+        (Test libraries add one: <code>expect(a).toEqual(b)</code> unpacks structure — a Phase 10
+        tool built entirely on today's idea.)
       </p>
       <p>
         Spread (<code>{'{ ...obj }'}</code>, <code>[...arr]</code>) and{' '}
@@ -326,10 +328,12 @@ export const lesson47: LessonDef = {
       </p>
       <p>
         The real deep copy is <code>structuredClone(value)</code> — a modern built-in that rebuilds
-        every layer. You'll still meet the old folk remedy{' '}
-        <code>JSON.parse(JSON.stringify(x))</code> in older code: it mostly works, but it silently
-        drops <code>undefined</code> and functions and mangles dates — knowing why takes exactly
-        the JSON knowledge arriving in lesson 4.12.
+        every layer.
+      </p>
+      <p>
+        You'll still meet the old folk remedy <code>JSON.parse(JSON.stringify(x))</code> in older
+        code: it mostly works, but it silently drops <code>undefined</code> and functions and
+        mangles dates — knowing why takes exactly the JSON knowledge arriving in lesson 4.13.
       </p>
     </>
   ),

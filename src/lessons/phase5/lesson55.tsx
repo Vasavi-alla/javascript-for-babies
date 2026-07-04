@@ -243,8 +243,10 @@ export const lesson55: LessonDef = {
         </HighlightMark>
         . The REAL lookup rule: check the object; on a miss, <em>climb the link</em> and check
         there; repeat until found or the chain ends. It's 5.3's rope-walk, but for object
-        properties — and it's how JavaScript shares one method among a million objects without
-        copying it once.
+        properties.
+      </p>
+      <p>
+        And it's how JavaScript shares one method among a million objects without copying it once.
       </p>
     </>
   ),
@@ -312,9 +314,12 @@ export const lesson55: LessonDef = {
         Naming, precisely — interviewers probe this: the hidden link on every object is{' '}
         <strong>[[Prototype]]</strong>, readable with <code>Object.getPrototypeOf(obj)</code>{' '}
         (you'll also meet <code>__proto__</code>, a legacy accessor for the same link — fine in
-        DevTools, avoided in code). Confusingly, <em>functions</em> also have a normal property
-        literally named <code>prototype</code> — that's a different thing: it's the object that{' '}
-        <code>new</code> will install as [[Prototype]] on instances. Next lesson makes that click.
+        DevTools, avoided in code).
+      </p>
+      <p>
+        Confusingly, <em>functions</em> also have a normal property literally named{' '}
+        <code>prototype</code> — that's a different thing: it's the object that <code>new</code>{' '}
+        will install as [[Prototype]] on instances. Next lesson makes that click.
       </p>
       <p>
         Writing never climbs: <code>rabbit.eats = false</code> creates an OWN <code>eats</code> on
@@ -325,8 +330,11 @@ export const lesson55: LessonDef = {
       <p>
         And the memory math that motivates everything: methods on the instance = one function
         object <em>per instance</em> (a thousand rabbits, a thousand sleeps). Methods on the
-        prototype = one function, ever. That's the entire reason this system exists — and exactly
-        what <code>class</code> automates next lesson.
+        prototype = one function, ever.
+      </p>
+      <p>
+        That's the entire reason this system exists — and exactly what <code>class</code> automates
+        next lesson.
       </p>
     </>
   ),

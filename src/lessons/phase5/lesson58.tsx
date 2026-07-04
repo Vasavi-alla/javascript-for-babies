@@ -224,9 +224,12 @@ export const lesson58: LessonDef = {
         Why would code deliberately crash? Because "limp onward with garbage" is worse: a{' '}
         <code>withdraw(-500)</code> that quietly proceeds corrupts an account; one that{' '}
         <code>throw</code>s stops the wrongness at its source (5.2's loud-beats-silent philosophy,
-        now as a tool you wield). And here's the career secret hiding in this lesson: a failing
-        test assertion <em>is a throw</em> — <code>expect</code> throws, the runner catches.
-        You're about to learn the exact mechanism your future job runs on.
+        now as a tool you wield).
+      </p>
+      <p>
+        And here's the career secret hiding in this lesson: a failing test assertion{' '}
+        <em>is a throw</em> — <code>expect</code> throws, the runner catches. You're about to learn
+        the exact mechanism your future job runs on.
       </p>
     </>
   ),
@@ -288,13 +291,18 @@ export const lesson58: LessonDef = {
         Error is a class with a family tree (5.6's chains, in the wild): <code>TypeError</code>,{' '}
         <code>ReferenceError</code>, <code>SyntaxError</code> all <code>extends Error</code> —
         which is why every error you've read since 0.5 had the same shape (.name, .message,
-        .stack). You can extend it too: <code>class PaymentError extends Error</code> lets a catch
-        block tell YOUR errors apart with <code>instanceof</code> (5.6's chain question, earning
-        its keep).
+        .stack).
+      </p>
+      <p>
+        You can extend it too: <code>class PaymentError extends Error</code> lets a catch block
+        tell YOUR errors apart with <code>instanceof</code> (5.6's chain question, earning its
+        keep).
       </p>
       <p>
         Throw stops functions the way return does, but travels differently: return hands a value
         to the immediate caller; throw keeps falling <em>through</em> callers until a net appears.
+      </p>
+      <p>
         Catch what you can handle, let the rest keep falling — catching everything and doing
         nothing ("swallowing") turns loud bugs back into silent ones, undoing the whole point.
       </p>

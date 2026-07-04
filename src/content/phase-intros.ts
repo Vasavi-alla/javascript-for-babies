@@ -157,13 +157,17 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       { term: 'hoisting', meaning: 'Before running your code, the engine first scans it and registers every declaration. Some things are therefore usable “early.”' },
       { term: 'this', meaning: 'A special word whose meaning is decided by HOW a function is called, not where it was written.' },
       { term: 'prototype', meaning: 'An object other objects fall back to: “if I don’t have it, ask my prototype.” How JavaScript shares abilities.' },
+      { term: 'class', meaning: 'Tidier handwriting for building objects with shared methods — under the hood, it’s still prototypes.' },
       { term: 'garbage collection', meaning: 'The engine’s cleaner: values nothing points to anymore get swept away automatically.' },
+      { term: 'try / catch / finally', meaning: 'Attempt risky code, catch what goes wrong instead of crashing, and finally always runs — cleanup you can count on.' },
     ],
     youCan: [
       'Predict the output of hoisting puzzles — and explain the two passes',
       'Narrate the call stack for any piece of code',
       'Say what this is in each of the four calling styles',
       'Explain how a to-do item “knows” methods it never defined (prototypes)',
+      'Write a class and explain what it desugars to',
+      'Catch a thrown error with try/catch/finally instead of crashing',
     ],
   },
   6: {
@@ -196,11 +200,15 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       'JavaScript exists to make web pages come alive: menus that open, forms that complain, feeds that refresh without reloading. All of it works by editing the browser’s live model of the page — the DOM. For you specifically, this phase is the job: an automated test finds elements in this tree, acts on them, and reads the results back out of it. The DOM is your future workplace.',
     ],
     plainWords: [
+      'Every web page’s structure is written in HTML — plain text wrapped in tags, like <li class="todo">buy milk</li>. The tag name (li) says what kind of thing this is; anything else inside the angle brackets, like class="todo", is an attribute — extra information about that one element. CSS is a separate language for how things LOOK (colors, spacing, layout) — and it uses the same kind of selectors you’re about to learn, just to say which elements to style instead of which ones to grab in code.',
       'A web page looks like a picture, but to the browser it’s a family tree of elements — the DOM. Every button, heading and input is a node on that tree, and JavaScript can find any node, read it, change it, or listen to it.',
       'Finding nodes is done with selectors — little address patterns like “the button inside the login form.” When a user clicks, an event ripples through the tree, and code can catch it at any level.',
       'Pay extra attention here: this tree is exactly what you’ll automate for a living. A Playwright test is, at heart, “find this element, act on it, check the result.” Testers who write good selectors are worth gold; this phase is where that skill starts.',
     ],
     keyTerms: [
+      { term: 'HTML', meaning: 'The language a web page’s structure is written in — plain text wrapped in tags.' },
+      { term: 'tag / attribute', meaning: 'A tag like <li> names what kind of thing an element is; an attribute like class="todo" (written inside the tag) adds extra information about it.' },
+      { term: 'CSS', meaning: 'A separate language for how things look — colors, spacing, layout. Uses the same kind of selectors you’ll write to find elements.' },
       { term: 'DOM', meaning: 'The Document Object Model — the live family tree the browser builds from HTML. Change the tree and the page changes instantly.' },
       { term: 'element / node', meaning: 'One item in the tree: a button, a paragraph, an image.' },
       { term: 'selector', meaning: 'A pattern for finding elements, like ".login-form button" — the address system of the page.' },
@@ -209,6 +217,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       { term: 'rendering', meaning: 'The browser turning the tree into pixels. Elements can exist before they’re visible — the root cause of flaky tests.' },
     ],
     youCan: [
+      'Read an HTML tag and its attributes, and explain what CSS is for',
       'Sketch the DOM tree for a simple page',
       'Write a selector to hit any element — first try',
       'Wire up events and explain how one listener can watch 100 buttons',
@@ -221,25 +230,48 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
     ],
     plainWords: [
       'Real projects aren’t one file — they’re many files working together, plus code written by thousands of strangers. Modules let files share code with each other; npm is the world’s shared toolbox where that stranger-code lives (Playwright itself is one of those tools).',
-      'You’ll also properly meet Node.js: a way to run JavaScript outside the browser — in the terminal, on servers, in test runners. Node is famous for exactly the ideas you learned in Phase 6: it’s event-driven and non-blocking, one efficient waiter handling thousands of orders. Every Playwright suite you’ll ever run is a Node program.',
+      'You’ll also get a first, brief look at Node.js — the way JavaScript runs outside the browser, in a terminal. Phase 9 goes deep on it; for now, just know that npm and Playwright itself are both Node programs.',
       'Add professional debugging (breakpoints instead of console.log everywhere) and a first taste of TypeScript, and you’ll be at home in any real-world test codebase.',
     ],
     keyTerms: [
       { term: 'module', meaning: 'One file that can share (export) its code and borrow (import) from others.' },
       { term: 'npm', meaning: 'The giant public library of JavaScript packages, plus the command that installs them into your project.' },
       { term: 'package', meaning: 'A ready-made bundle of someone else’s code you can install and use — like Playwright.' },
-      { term: 'Node.js', meaning: 'A program that runs JavaScript outside the browser. Event-driven and non-blocking — Phase 6’s waiter, serving at scale.' },
       { term: 'terminal / CLI', meaning: 'The text window where you type commands — how test suites are started and CI servers work.' },
       { term: 'TypeScript', meaning: 'JavaScript plus type labels the machine checks BEFORE running — catching mistakes early. Most Playwright projects use it.' },
     ],
     youCan: [
       'Split code across files with import/export',
       'Create a project, install packages, and run npm scripts',
-      'Explain what Node.js is and why “non-blocking” makes it fast',
       'Debug with breakpoints instead of console.log guesswork',
     ],
   },
   9: {
+    whyNeeded: [
+      'Every Playwright test you will ever write runs as a Node.js program, not inside a browser tab — and so does its test runner, and the CI server that runs it at 3am. If you don’t know what changes when JavaScript leaves the browser (no DOM, no window — but new powers instead), the terminal output, the CI logs, and half of Playwright’s setup will feel like unexplained magic.',
+    ],
+    plainWords: [
+      'Every lesson so far ran JavaScript inside a browser tab. Node.js is the exact same language, the exact same V8 engine (0.2) — just with the browser walls removed. No DOM, no window, nothing to click. In exchange it gets powers a browser deliberately withholds: reading and writing real files, talking to the operating system, running as a server.',
+      'You’ll work in the terminal properly for the first time: typing commands, reading a script’s output and its stack trace when it crashes, and understanding exit codes — the single number a finished script hands back that tells a CI server “I passed” or “I failed.”',
+      'This phase also revisits Phase 6’s event loop from Node’s side — same one-thread, non-blocking model, different backstage crew (libuv instead of the browser’s Web APIs) — and gives you process.argv and process.env: exactly how a real Playwright suite reads a BASE_URL or a secret without hard-coding it.',
+    ],
+    keyTerms: [
+      { term: 'Node.js', meaning: 'A program that runs JavaScript outside the browser — no DOM, no window; new powers instead (files, servers, the OS).' },
+      { term: 'terminal / CLI', meaning: 'The text window where you type commands and read a script’s output — how every real test suite actually gets run.' },
+      { term: 'REPL', meaning: 'A live JavaScript prompt in the terminal — type an expression, see its value immediately.' },
+      { term: 'process.argv', meaning: 'The list of extra words typed after a command — how a script accepts input from whoever ran it.' },
+      { term: 'process.env', meaning: 'A script’s environment variables — where secrets and settings like BASE_URL actually live in real test suites.' },
+      { term: 'exit code', meaning: 'The single number a script hands back when it finishes: 0 means success, anything else means CI marks the run failed.' },
+      { term: 'fs (file system)', meaning: 'Node’s toolbox for reading and writing real files — where test reports and screenshots actually go.' },
+    ],
+    youCan: [
+      'Explain what changes (and what doesn’t) when JS runs outside the browser',
+      'Run a script from the terminal and read its output and stack trace',
+      'Read command-line arguments and environment variables in a script',
+      'Read and write a real file with Node’s fs module',
+    ],
+  },
+  10: {
     whyNeeded: [
       'Every change to an app risks silently breaking something that used to work. Re-checking everything by hand after every change is slow, mind-numbing, and error-prone — so companies pay engineers to teach machines to do the checking instead. That job is the one you’re heading for, and this phase is its way of thinking.',
     ],
@@ -263,7 +295,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       'Place any testing task on the pyramid and justify it',
     ],
   },
-  10: {
+  11: {
     whyNeeded: [
       'Manual testing means clicking through the same login form for the thousandth time, every release, forever. Playwright gives your JavaScript robot hands: it drives a real browser through those clicks in seconds, identically, every time the code changes. It’s the fastest-growing automation tool in the industry — and the skill this entire journey was aimed at.',
     ],

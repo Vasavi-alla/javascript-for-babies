@@ -214,16 +214,20 @@ export const lesson36: LessonDef = {
         The real vocabulary: each card is a <strong>stack frame</strong> — it holds the function’s
         parameters, its local variables, and the <strong>return address</strong> (the exact spot
         to resume). The stack is LIFO — <em>last in, first out</em> — like a stack of plates: you
-        can only add or remove at the top. One frame per <em>call</em>, not per function: call the
-        same function twice and it gets two separate frames (lesson 3.9 turns this into a
-        superpower).
+        can only add or remove at the top.
+      </p>
+      <p>
+        One frame per <em>call</em>, not per function: call the same function twice and it gets two
+        separate frames (lesson 3.9 turns this into a superpower).
       </p>
       <p>
         The stack also explains the phrase <em>single-threaded</em> from lesson 2.5 more deeply:
         JavaScript has exactly ONE call stack, so exactly one top card, so exactly one thing
-        running at any instant. And the stack has a maximum height — call too deep without
-        finishing anything and the engine throws{' '}
-        <code>RangeError: Maximum call stack size exceeded</code>.
+        running at any instant.
+      </p>
+      <p>
+        And the stack has a maximum height — call too deep without finishing anything and the
+        engine throws <code>RangeError: Maximum call stack size exceeded</code>.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> that overflowing

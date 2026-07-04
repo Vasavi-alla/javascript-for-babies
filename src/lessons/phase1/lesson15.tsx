@@ -19,11 +19,11 @@ console.log(0.1 + 0.2);`
 const px = (n: number) => 30 + n * 36
 
 // per step: where the marker sits, and which hop-arc is drawn
-const MARKER: Array<number | null> = [null, 7, 3.5, 1, 1, null, null]
+const MARKER: Array<number | null> = [null, 7, 3.5, 1, 1, 1, null, null, null, null]
 
 function NumberLineViz({ stepIndex }: { stepIndex: number }) {
   const marker = MARKER[stepIndex] ?? null
-  const showZoom = stepIndex >= 5
+  const showZoom = stepIndex >= 6
   return (
     <svg viewBox="0 0 420 280" className="w-full">
       <text x={30} y={30} fontFamily="var(--font-hand)" fontSize={20} fill="var(--color-ink-soft)">
@@ -177,9 +177,14 @@ export const lesson15: LessonDef = {
       highlightLines: [2],
     },
     {
-      id: 'remainder',
+      id: 'remainder-intro',
       caption:
-        'Line 3 is the operator nobody learned in school: % — the remainder. 10 % 3 asks “how much is LEFT OVER after 3 fits into 10 as many whole times as possible?” 3 fits three times (=9), leaving 1. Weirdly useful: n % 2 tells you odd or even instantly.',
+        'Line 3 is the operator nobody learned in school: % — the remainder. 10 % 3 asks “how much is LEFT OVER after 3 fits into 10 as many whole times as possible?” 3 fits three times (=9), leaving 1.',
+      highlightLines: [3],
+    },
+    {
+      id: 'remainder-trick',
+      caption: 'Weirdly useful, worth remembering forever: n % 2 tells you odd or even, instantly.',
       highlightLines: [3],
     },
     {
@@ -204,9 +209,20 @@ export const lesson15: LessonDef = {
       highlightLines: [4],
     },
     {
-      id: 'live-with-it',
+      id: 'live-cents',
       caption:
-        'So how does the world’s software cope? Three habits: banks count in whole cents/paise (integers are always exact); displays round for humans; and comparisons allow a tolerance instead of demanding exactness. That last one matters to YOU: test assertions on decimals use “close to”, not “equals” — now you know exactly why.',
+        'So how does the world’s software cope? First habit: money code counts in whole cents or paise, never rupees or dollars as decimals — integers are always exact.',
+      highlightLines: [4],
+    },
+    {
+      id: 'live-round',
+      caption: 'Second habit: displays round for humans — you never actually see 0.30000000000000004 on a receipt.',
+      highlightLines: [4],
+    },
+    {
+      id: 'live-tolerance',
+      caption:
+        'Third habit, the one that matters most to YOU: comparisons allow a tolerance instead of demanding exactness. Test assertions on decimals use “close to”, not “equals” — now you know exactly why.',
       highlightLines: [4],
     },
   ],
@@ -216,27 +232,34 @@ export const lesson15: LessonDef = {
       <p>
         The storage format has a name worth knowing: <strong>floating point</strong> (the standard
         is called IEEE 754 — every mainstream language uses it, which is why Python and Java give
-        the same 0.30000000000000004). Each number gets 64 bits — 64 tiny on/off switches — which
-        is plenty for whole numbers up to about 9 quadrillion (
-        <code>Number.MAX_SAFE_INTEGER</code>) but means <em>some</em> decimals are stored as their
-        nearest representable neighbor. Whole numbers are always exact; it’s only certain fractions
-        that get trimmed.
+        the same 0.30000000000000004).
       </p>
       <p>
-        Two special citizens of the number type, both born from impossible math:{' '}
-        <code>1 / 0</code> gives <strong>Infinity</strong> (no crash — JavaScript answers with a
-        special value meaning “beyond all numbers”), and <code>0 / 0</code> gives{' '}
-        <strong>NaN</strong> — “Not a Number”, which is ironically itself a value of type number,
-        meaning “this calculation lost all meaning.” When you see NaN in a test report, some math
-        upstream went wrong — it spreads through calculations like ink in water, so hunt for where
-        it was born.
+        Each number gets 64 bits — 64 tiny on/off switches — which is plenty for whole numbers up
+        to about 9 quadrillion (<code>Number.MAX_SAFE_INTEGER</code>) but means <em>some</em>{' '}
+        decimals are stored as their nearest representable neighbor. Whole numbers are always
+        exact; it’s only certain fractions that get trimmed.
+      </p>
+      <p>
+        One special citizen of the number type, born from impossible math: <code>1 / 0</code>{' '}
+        gives <strong>Infinity</strong> — no crash, just a special value meaning “beyond all
+        numbers.”
+      </p>
+      <p>
+        Another: <code>0 / 0</code> gives <strong>NaN</strong> — “Not a Number”, which is ironically
+        itself a value of type number, meaning “this calculation lost all meaning.” When you see
+        NaN in a test report, some math upstream went wrong — it spreads through calculations like
+        ink in water, so hunt for where it was born.
       </p>
       <p>
         Practical toolkit: <code>Math.round(x)</code>, <code>Math.floor(x)</code> (always down),{' '}
         <code>Math.ceil(x)</code> (always up), and <code>x.toFixed(2)</code> for showing “3.50” to
-        humans. For comparing decimals in tests, remember the pattern “difference smaller than a
-        speck”: <code>Math.abs(a - b) &lt; 0.000001</code> — test frameworks wrap exactly this idea
-        in an assertion called <code>toBeCloseTo</code>, which you’ll use in Phase 9.
+        humans.
+      </p>
+      <p>
+        For comparing decimals in tests, remember the pattern “difference smaller than a speck”:{' '}
+        <code>Math.abs(a - b) &lt; 0.000001</code> — test frameworks wrap exactly this idea in an
+        assertion called <code>toBeCloseTo</code>, which you’ll use in Phase 9.
       </p>
     </>
   ),

@@ -216,11 +216,16 @@ export const lesson66: LessonDef = {
       </p>
       <p>
         Two keywords, two precise meanings. <code>async</code> before a function: "this function
-        always returns a promise." <code>await</code> before a promise: "pause <em>this
-        function</em> here — park its frame on a shelf, free the stack — and resume with the value
-        when the promise settles." Not blocking. Pausing <em>one function</em> while the world
-        keeps moving. This is the syntax your entire Playwright career will be written in —
-        today it stops being magic.
+        always returns a promise."
+      </p>
+      <p>
+        <code>await</code> before a promise: "pause <em>this function</em> here — park its frame on
+        a shelf, free the stack — and resume with the value when the promise settles." Not
+        blocking. Pausing <em>one function</em> while the world keeps moving.
+      </p>
+      <p>
+        This is the syntax your entire Playwright career will be written in — today it stops being
+        magic.
       </p>
     </>
   ),
@@ -282,9 +287,11 @@ export const lesson66: LessonDef = {
         Await accepts any promise — which is why it composes with everything:{' '}
         <code>await fetch(…)</code> (next lesson), <code>await page.click(…)</code> (Phase 11),{' '}
         <code>await Promise.all([…])</code> (6.8). Awaiting a non-promise value just continues
-        with it (wrapped in an instantly-fulfilled promise). And <code>await</code> is only legal
-        inside <code>async</code> functions (plus at the top level of modules) — the engine needs
-        permission to suspend the frame.
+        with it (wrapped in an instantly-fulfilled promise).
+      </p>
+      <p>
+        And <code>await</code> is only legal inside <code>async</code> functions (plus at the top
+        level of modules) — the engine needs permission to suspend the frame.
       </p>
       <p>
         The subtle cost that bites real test suites: <code>await a(); await b();</code> is{' '}

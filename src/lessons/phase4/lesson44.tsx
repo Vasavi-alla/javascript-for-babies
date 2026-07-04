@@ -89,6 +89,11 @@ const VIEWS: View[] = [
     note: 'lang  →  "ta"', outToken: '"Vanakkam!"', console: ['Vanakkam!', 'undefined'],
   },
   {
+    comps: [GREET[0], { ...GREET[1], state: 'read' }, GREET[2]],
+    name: 'greetings',
+    note: 'lang  →  "ta"', outToken: '"Vanakkam!"', console: ['Vanakkam!', 'undefined'],
+  },
+  {
     comps: [...BASE, { k: 'rating', v: '5', state: 'new' }],
     note: null, outToken: null, console: ['The Hobbit', 'Tolkien', '310'],
   },
@@ -288,6 +293,8 @@ export const lesson44: LessonDef = {
         stores <strong>properties</strong> — <code>key: value</code> pairs — under one name, and
         you fetch each value <em>by its key</em>: <code>book.title</code>, never “whatever sits
         third.” Arrays for many-of-the-same in order; objects for one-thing-with-named-parts.
+      </p>
+      <p>
         Nearly every piece of data your future tests receive is built from these two, nested into
         each other.
       </p>
@@ -322,7 +329,14 @@ export const lesson44: LessonDef = {
     {
       id: 'bracket-dynamic',
       caption:
-        'New scene: an app greeting its user. Which language? You CANNOT know while writing the code — it depends on whose phone opens the app. It arrives at runtime, in a variable: lang holds "ta". And here’s the bracket superpower: brackets EVALUATE what’s inside first. greetings[lang] → greetings["ta"] → "Vanakkam!". A dot can’t do this — greetings.lang hunts for a property literally named lang and finds undefined (see the console!). This is the real reason brackets exist: keys chosen while the program runs — the user’s language, settings[whicheverToggleWasClicked], config[environment] picking the right server in your future test suites.',
+        'New scene: an app greeting its user. Which language? You CANNOT know while writing the code — it depends on whose phone opens the app. It arrives at runtime, in a variable: lang holds "ta". And here’s the bracket superpower: brackets EVALUATE what’s inside first. greetings[lang] → greetings["ta"] → "Vanakkam!". A dot can’t do this — greetings.lang hunts for a property literally named lang and finds undefined (see the console!).',
+      codeOverride: GREET_CODE,
+      highlightLines: [9, 11, 12],
+    },
+    {
+      id: 'bracket-dynamic-why',
+      caption:
+        'This is the real reason brackets exist: keys chosen while the program runs — the user’s language, settings[whicheverToggleWasClicked], config[environment] picking the right server in your future test suites.',
       codeOverride: GREET_CODE,
       highlightLines: [9, 11, 12],
     },
@@ -352,9 +366,11 @@ export const lesson44: LessonDef = {
       <p>
         The two access styles split one job: <strong>dot</strong> when you know the key while
         writing the code, <strong>brackets</strong> when the key arrives at runtime — in a
-        variable, from user input, built from other strings. Writing works through both, and
-        writing to a missing key creates it; reading a missing key returns <code>undefined</code>{' '}
-        without complaint.
+        variable, from user input, built from other strings.
+      </p>
+      <p>
+        Writing works through both, and writing to a missing key creates it; reading a missing key
+        returns <code>undefined</code> without complaint.
       </p>
       <p>
         <strong>Fun fact:</strong> a paper dictionary works exactly like an object. Nobody asks for

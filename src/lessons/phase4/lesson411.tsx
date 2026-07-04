@@ -57,6 +57,7 @@ const VIEWS: View[] = [
   { mode: 'array', console: ['90', 'bronze'], note: 'arrays unpack by POSITION — the hole skips index 1 entirely' },
   { mode: 'swap', console: ['90', 'bronze', '2'], note: 'right side builds [2, 1] FIRST, then unpacks — a swap with no temp variable' },
   { mode: 'params', console: ['api.shop.com ×3'], note: 'THE real-world use: options objects — the function unpacks only what it names' },
+  { mode: 'params', console: ['api.shop.com ×3'], note: 'extra fields the function never named (log: true) are simply ignored' },
   { mode: 'rest', console: ['api.shop.com ×3', '2'], note: '...rest GATHERS the leftovers into a fresh array' },
   { mode: 'spread', console: ['api.shop.com ×3', '2', '[1,2,3]'], note: 'same dots, opposite direction: in a literal, ...spreads OUT (shallow — 4.7!)' },
 ]
@@ -256,7 +257,10 @@ export const lesson411: LessonDef = {
         But the shortcut is the small half of this lesson. The big half is <em>why it changed how
         functions are designed</em>: modern APIs take a single <strong>options object</strong> and
         destructure it in the parameter list — every Playwright call you'll ever write looks like
-        that. Plus the three dots (<code>...</code>) that gather and spread — one syntax, two
+        that.
+      </p>
+      <p>
+        Plus the three dots (<code>...</code>) that gather and spread — one syntax, two
         directions.
       </p>
     </>
@@ -290,7 +294,14 @@ export const lesson411: LessonDef = {
     {
       id: 'options-object',
       caption:
-        'Now the reason this syntax conquered JavaScript. New scene: a function with several settings. Passing them as five positional arguments is a memory test (was retries third or fourth?). Instead: the caller passes ONE object, and the function destructures it RIGHT IN THE PARAMETER LIST — connect({ url, retries }). It reads like a form: named fields, any order. And look at options: it carries log: true, which connect never names — extra fields are simply ignored. Every Playwright config and most modern APIs are shaped exactly like this.',
+        'Now the reason this syntax conquered JavaScript. New scene: a function with several settings. Passing them as five positional arguments is a memory test (was retries third or fourth?). Instead: the caller passes ONE object, and the function destructures it RIGHT IN THE PARAMETER LIST — connect({ url, retries }). It reads like a form: named fields, any order.',
+      codeOverride: OPTIONS_CODE,
+      highlightLines: [1, 2, 3, 5, 6],
+    },
+    {
+      id: 'options-object-extra',
+      caption:
+        'And look at options: it carries log: true, which connect never names — extra fields are simply ignored. Every Playwright config and most modern APIs are shaped exactly like this.',
       codeOverride: OPTIONS_CODE,
       highlightLines: [1, 2, 3, 5, 6],
     },
@@ -312,11 +323,13 @@ export const lesson411: LessonDef = {
     <>
       <p>
         Destructuring is pure convenience syntax — the engine performs the same property reads and
-        index reads you'd have written by hand, including all the reference rules of 4.6. Two
-        extras worth owning: defaults (<code>{'const { retries = 3 } = options'}</code> — used when
-        the property is missing or undefined, exactly like 3.10's parameter defaults) and renaming
-        (<code>{'const { url: address } = options'}</code> reads property <code>url</code> into a
-        variable called <code>address</code>).
+        index reads you'd have written by hand, including all the reference rules of 4.6.
+      </p>
+      <p>
+        Two extras worth owning: defaults (<code>{'const { retries = 3 } = options'}</code> — used
+        when the property is missing or undefined, exactly like 3.10's parameter defaults) and
+        renaming (<code>{'const { url: address } = options'}</code> reads property{' '}
+        <code>url</code> into a variable called <code>address</code>).
       </p>
       <p>
         The options-object pattern is the one to internalize as a future test engineer: it's why{' '}
@@ -327,8 +340,11 @@ export const lesson411: LessonDef = {
       </p>
       <p>
         Keep the dots straight forever with one sentence: <strong>in a pattern, dots gather; in a
-        literal, dots spread.</strong> Rest builds one new array from many values; spread pours one
-        collection's values into a new home. Both are shallow — arrows copy as arrows.
+        literal, dots spread.</strong>
+      </p>
+      <p>
+        Rest builds one new array from many values; spread pours one collection's values into a
+        new home. Both are shallow — arrows copy as arrows.
       </p>
     </>
   ),

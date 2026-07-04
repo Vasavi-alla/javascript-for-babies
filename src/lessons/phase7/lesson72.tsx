@@ -216,9 +216,12 @@ export const lesson72: LessonDef = {
       </p>
       <p>
         Five forms cover the working day: <code>tag</code>, <code>.class</code>, <code>#id</code>,{' '}
-        <code>[attribute]</code>, and combinations with descent. Playwright's locators accept this
-        exact language — lesson 11.3's <code>SelectorLab v2</code> is this lesson wearing a work
-        badge. Learn it here where it's calm.
+        <code>[attribute]</code>, and combinations with descent.
+      </p>
+      <p>
+        Playwright's locators accept this exact language — lesson 11.3's{' '}
+        <code>SelectorLab v2</code> is this lesson wearing a work badge. Learn it here where it's
+        calm.
       </p>
     </>
   ),
@@ -285,15 +288,20 @@ export const lesson72: LessonDef = {
       <p>
         Why does JavaScript speak CSS here? Because stylesheets needed a "which elements does this
         rule hit" language first, and it was too good not to reuse — one grammar for styling,
-        querying, and (in your future) locating. Engines match selectors <em>right to left</em>:
-        for "ul li.done" they find li.done candidates first, then verify a ul ancestor — exactly
-        how you should read them too.
+        querying, and (in your future) locating.
+      </p>
+      <p>
+        Engines match selectors <em>right to left</em>: for "ul li.done" they find li.done
+        candidates first, then verify a ul ancestor — exactly how you should read them too.
       </p>
       <p>
         More grammar when you need it: <code>ul &gt; li</code> (child only, no grandchildren),{' '}
         <code>li:first-child</code> / <code>:nth-child(3)</code> (position),{' '}
-        <code>[href^="https"]</code> (attribute prefix). Don't memorize the long tail — recognize
-        it, and keep MDN's selector page bookmarked like every professional does.
+        <code>[href^="https"]</code> (attribute prefix).
+      </p>
+      <p>
+        Don't memorize the long tail — recognize it, and keep MDN's selector page bookmarked like
+        every professional does.
       </p>
       <p>
         And the career footnote: DevTools Console understands <code>$('sel')</code> and{' '}

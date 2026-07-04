@@ -182,8 +182,11 @@ export const lesson34: LessonDef = {
         This sounds like trivia. It is the opposite: it's the idea that powers half of modern
         JavaScript. Because functions are values, they can be stored, handed to other functions
         ("run this when the button is clicked"), and returned from functions. Every Playwright
-        test you'll write leans on this. Today: two new ways to write a function that make the
-        value-ness impossible to miss — including the famous <code>=&gt;</code> arrow.
+        test you'll write leans on this.
+      </p>
+      <p>
+        Today: two new ways to write a function that make the value-ness impossible to miss —
+        including the famous <code>=&gt;</code> arrow.
       </p>
     </>
   ),
@@ -237,14 +240,18 @@ export const lesson34: LessonDef = {
       <p>
         There's a proper name for "functions are values": <strong>first-class functions</strong>.
         It means a function has all the same rights as a number or a string — it can live in a
-        variable, be handed to another function, and be handed back from one. One honest
-        disclosure: <code>typeof</code> says <code>"function"</code>, but deep down a function
-        value is a special kind of object — a bundle of stuff that happens to be runnable.
+        variable, be handed to another function, and be handed back from one.
+      </p>
+      <p>
+        One honest disclosure: <code>typeof</code> says <code>"function"</code>, but deep down a
+        function value is a special kind of object — a bundle of stuff that happens to be runnable.
         Objects are Phase 4; keep this footnote for then.
       </p>
       <p>
         The arrow rules, all of them: two or more parameters need parentheses —{' '}
         <code>(a, b) =&gt; a + b</code>. One parameter can skip them — <code>n =&gt; n * 2</code>.
+      </p>
+      <p>
         No braces means the result comes back automatically. Braces mean "normal body" — you must
         write <code>return</code> yourself, or you get <code>undefined</code>. That last one
         causes real bugs, which is why the quiz drills it.

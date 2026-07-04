@@ -241,17 +241,22 @@ export const lesson37: LessonDef = {
       <p>
         The precise definition: a <strong>closure</strong> is a function together with its{' '}
         <strong>lexical environment</strong> — the set of outer variables that were in scope where
-        the function was <em>defined</em> (not where it’s called). When the engine sees an inner
-        function referencing an outer variable, it keeps that variable alive on the heap instead
-        of destroying it with the stack frame. The inner function “closes over” the variable —
-        hence the name.
+        the function was <em>defined</em> (not where it’s called).
+      </p>
+      <p>
+        When the engine sees an inner function referencing an outer variable, it keeps that
+        variable alive on the heap instead of destroying it with the stack frame. The inner
+        function “closes over” the variable — hence the name.
       </p>
       <p>
         Two facts worth engraving: closures capture the <em>variable</em>, not a snapshot of its
         value — that’s why count keeps advancing. And each call to the outer function creates a{' '}
         <em>new</em> environment: <code>makeCounter()</code> twice gives two independent counters
-        with two private counts. This combination — persistent + private — is how JavaScript did
-        “private state” for decades before classes got <code>#private</code> fields.
+        with two private counts.
+      </p>
+      <p>
+        This combination — persistent + private — is how JavaScript did “private state” for
+        decades before classes got <code>#private</code> fields.
       </p>
       <p>
         For your testing future: closures are why a Playwright helper like{' '}

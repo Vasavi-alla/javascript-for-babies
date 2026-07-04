@@ -134,32 +134,46 @@ export const lesson04: LessonDef = {
     {
       id: 'wiped',
       caption:
-        'Wiped and re-lent. Short-term by design — and blazing fast because of it. Where do things live permanently, then? On the disk: slower, but it survives power-off. Workbench versus cupboard; you’ll use both pictures forever.',
+        'Wiped and re-lent. Short-term by design — and blazing fast because of it.',
+    },
+    {
+      id: 'disk',
+      caption:
+        'Where do things live permanently, then? On the disk: slower, but it survives power-off. Workbench versus cupboard; you’ll use both pictures forever.',
     },
   ],
   Viz: MemoryWall,
   underTheHood: (
     <>
       <p>
-        What’s actually inside a box? A tiny number — that’s all memory can physically hold. One box
-        (a <strong>byte</strong>) stores a number from 0 to 255. Everything else is built from
-        those numbers by agreement: the letter <code>A</code> is stored as 65, colors as three
-        numbers (red, green, blue), sound as thousands of numbers per second. Text, photos, games —{' '}
-        <em>all of it is numbers in boxes</em>. That’s honestly the entire secret of computers.
+        What’s actually inside a box? A tiny number — that’s all memory can physically hold. One
+        box (a <strong>byte</strong>) stores a number from 0 to 255.
+      </p>
+      <p>
+        Everything else is built from those numbers by agreement: the letter <code>A</code> is
+        stored as 65, colors as three numbers (red, green, blue), sound as thousands of numbers
+        per second. Text, photos, games — <em>all of it is numbers in boxes</em>. That’s honestly
+        the entire secret of computers.
       </p>
       <p>
         The two-tier system has real names: <strong>RAM</strong> (the workbench — fast, small-ish,
         wiped when power stops; your laptop has maybe 8–16 GB, billions of boxes) and{' '}
         <strong>storage/disk</strong> (the cupboard — much bigger, much slower, permanent; where
-        files live). A program constantly pulls things from the cupboard onto the workbench, works
-        on them there, and must deliberately put results back if it wants to keep them.
+        files live).
+      </p>
+      <p>
+        A program constantly pulls things from the cupboard onto the workbench, works on them
+        there, and must deliberately put results back if it wants to keep them.
       </p>
       <p>
         Now the good news for you specifically: in JavaScript, <strong>you will never juggle box
-        addresses yourself</strong>. The engine picks the boxes, tracks them, and even sweeps up the
-        ones you no longer need (a janitor called the <strong>garbage collector</strong> — you’ll
-        properly meet it in Phase 5). What YOU get to do is attach <em>names</em> to boxes — and
-        that, exactly that, is what a variable is. Which is the very next phase.
+        addresses yourself</strong>. The engine picks the boxes and tracks them for you.
+      </p>
+      <p>
+        It even sweeps up the ones you no longer need — a janitor called the{' '}
+        <strong>garbage collector</strong> (you’ll properly meet it in Phase 5). What YOU get to
+        do is attach <em>names</em> to boxes — and that, exactly that, is what a variable is.
+        Which is the very next phase.
       </p>
     </>
   ),

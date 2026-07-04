@@ -238,10 +238,13 @@ export const lesson38: LessonDef = {
       <p>
         The two terms, precisely: a <strong>higher-order function</strong> is any function that
         takes a function as an argument or returns one (3.7’s <code>makeCounter</code> was already
-        one — it returned a function). A <strong>callback</strong> is the function you pass in,
-        named for the promise it carries: <em>“don’t run this now — call it back when the moment
-        comes.”</em> The moment might be “each loop lap” (today), “when the timer fires” (Phase
-        6), or “when the user clicks” (Phase 7).
+        one — it returned a function).
+      </p>
+      <p>
+        A <strong>callback</strong> is the function you pass in, named for the promise it carries:{' '}
+        <em>“don’t run this now — call it back when the moment comes.”</em> The moment might be
+        “each loop lap” (today), “when the timer fires” (Phase 6), or “when the user clicks”
+        (Phase 7).
       </p>
       <p>
         The gotcha that bites everyone once: <code>repeat(3, cheer)</code> passes the function;{' '}

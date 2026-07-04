@@ -223,9 +223,11 @@ export const lesson64: LessonDef = {
         to it: "when ready, do this; if it fails, do that."
       </p>
       <p>
-        Three states, one flip, flat chains, and a single shared error drain — by the end of this
-        lesson the pyramid of doom is a straight line, and you'll have built a promise with your
-        own hands.
+        Three states, one flip: that's the whole shape of a promise.
+      </p>
+      <p>
+        Flat chains and a single shared error drain follow from it — by the end of this lesson the
+        pyramid of doom is a straight line, and you'll have built a promise with your own hands.
       </p>
     </>
   ),
@@ -292,10 +294,14 @@ export const lesson64: LessonDef = {
       <p>
         A promise is a plain object with internal state (<code>pending</code> /{' '}
         <code>fulfilled</code> / <code>rejected</code>) plus lists of reactions to run on settle.
+      </p>
+      <p>
         Precision that impresses: <code>.then</code> doesn't "wait" — it <em>registers</em> and
-        immediately returns the next promise. Attach a <code>.then</code> to an{' '}
-        <em>already-settled</em> promise and it still runs (soon, not instantly — the exact "when"
-        is next lesson's microtask story).
+        immediately returns the next promise.
+      </p>
+      <p>
+        Attach a <code>.then</code> to an <em>already-settled</em> promise and it still runs (soon,
+        not instantly — the exact "when" is next lesson's microtask story).
       </p>
       <p>
         You'll <em>consume</em> promises far more often than construct them: <code>fetch</code>{' '}
@@ -306,8 +312,10 @@ export const lesson64: LessonDef = {
       <p>
         Naming note for the wild: people say "resolved" loosely to mean fulfilled; strictly,{' '}
         <em>settled</em> = no longer pending (either outcome), <em>fulfilled</em> = success,{' '}
-        <em>rejected</em> = failure. Use the strict words in interviews; understand the loose ones
-        in blog posts.
+        <em>rejected</em> = failure.
+      </p>
+      <p>
+        Use the strict words in interviews; understand the loose ones in blog posts.
       </p>
     </>
   ),
@@ -329,7 +337,7 @@ export const lesson64: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'A promise rejects. Its chain has three .then links and one final .catch. How many of the .then links run? Type the number.',
+      question: 'The promise a chain STARTS from rejects. The chain has three .then links after it and one final .catch. How many of the .then links run? Type the number.',
       accept: ['0', 'zero', 'none', 'Zero'],
       placeholder: 'a number…',
       why: 'Zero — a rejection skips every .then and slides straight to the nearest .catch: one shared drain instead of per-level checks. (After a .catch handles it, the chain below is healthy again.)',

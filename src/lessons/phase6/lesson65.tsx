@@ -245,8 +245,11 @@ export const lesson65: LessonDef = {
         Who rides where — the practical table: <em>micro</em> = promise reactions,{' '}
         <code>queueMicrotask(fn)</code>, <code>await</code>-resumptions (next lesson!).{' '}
         <em>Macro</em> = <code>setTimeout</code>/<code>setInterval</code>, DOM events, network
-        callbacks. The drain point is precisely "each time the stack empties" — even between two
-        macrotasks, the micro lane gets fully cleared.
+        callbacks.
+      </p>
+      <p>
+        The drain point is precisely "each time the stack empties" — even between two macrotasks,
+        the micro lane gets fully cleared.
       </p>
       <p>
         Why does the language bother? Consistency guarantees: a promise reaction is guaranteed to

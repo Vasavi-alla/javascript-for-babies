@@ -248,8 +248,11 @@ export const lesson68: LessonDef = {
           Promise.all, allSettled, race, any
         </HighlightMark>{' '}
         — each answering a different question about a <em>set</em> of promises: all of them? every
-        verdict? the first to settle? the first to succeed? Plus one ordering surprise that trips
-        even seniors: results come back in <em>input</em> order, not finish order.
+        verdict? the first to settle? the first to succeed?
+      </p>
+      <p>
+        Plus one ordering surprise that trips even seniors: results come back in <em>input</em>{' '}
+        order, not finish order.
       </p>
     </>
   ),

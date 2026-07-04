@@ -48,8 +48,8 @@ function Edge({ x1, y1, x2, y2, seed }: { x1: number; y1: number; x2: number; y2
 }
 
 function ExpressionTree({ stepIndex }: { stepIndex: number }) {
-  // Scene A: age >= 18 && hasTicket (steps 1–3)
-  if (stepIndex >= 1 && stepIndex <= 3) {
+  // Scene A: age >= 18 && hasTicket (steps 2–4)
+  if (stepIndex >= 2 && stepIndex <= 4) {
     return (
       <svg viewBox="0 0 440 280" className="w-full">
         <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
@@ -59,20 +59,20 @@ function ExpressionTree({ stepIndex }: { stepIndex: number }) {
         <Edge x1={240} y1={80} x2={310} y2={140} seed={261} />
         <Edge x1={110} y1={175} x2={80} y2={215} seed={262} />
         <Edge x1={150} y1={175} x2={180} y2={215} seed={263} />
-        <Node x={220} y={65} label="&&" seed={264} result={stepIndex >= 3 ? 'true' : undefined} />
-        <Node x={130} y={158} label=">=" seed={265} result={stepIndex >= 2 ? 'true' : undefined} />
-        <Node x={310} y={158} label="hasTicket" seed={266} result={stepIndex >= 3 ? 'true' : undefined} />
-        <Node x={80} y={232} label="age" seed={267} result={stepIndex >= 2 ? '20' : undefined} />
+        <Node x={220} y={65} label="&&" seed={264} result={stepIndex >= 4 ? 'true' : undefined} />
+        <Node x={130} y={158} label=">=" seed={265} result={stepIndex >= 3 ? 'true' : undefined} />
+        <Node x={310} y={158} label="hasTicket" seed={266} result={stepIndex >= 4 ? 'true' : undefined} />
+        <Node x={80} y={232} label="age" seed={267} result={stepIndex >= 3 ? '20' : undefined} />
         <Node x={180} y={232} label="18" seed={268} />
         <text x={40} y={278} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-marker-coral)">
-          {stepIndex === 3 ? '&& asks: are BOTH branches true? yes → true' : 'values bubble UP from the leaves'}
+          {stepIndex === 4 ? '&& asks: are BOTH branches true? yes → true' : 'values bubble UP from the leaves'}
         </text>
       </svg>
     )
   }
-  // Scene B: !(age > 25) || age === 20 (steps 4–5)
-  if (stepIndex === 4 || stepIndex === 5) {
-    const done = stepIndex === 5
+  // Scene B: !(age > 25) || age === 20 (steps 5–6)
+  if (stepIndex === 5 || stepIndex === 6) {
+    const done = stepIndex === 6
     return (
       <svg viewBox="0 0 440 280" className="w-full">
         <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
@@ -93,8 +93,8 @@ function ExpressionTree({ stepIndex }: { stepIndex: number }) {
       </svg>
     )
   }
-  // Scene C: 2 + 3 * 4 (step 6)
-  if (stepIndex >= 6) {
+  // Scene C: 2 + 3 * 4 (step 7)
+  if (stepIndex >= 7) {
     return (
       <svg viewBox="0 0 440 280" className="w-full">
         <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
@@ -164,9 +164,15 @@ export const lesson110: LessonDef = {
   code: CODE,
   steps: [
     {
-      id: 'cast',
+      id: 'cast-comparisons',
       caption:
-        'The cast. Comparisons (>, >=, ===, !==…) each produce a boolean — they’re the boolean factories from lesson 1.7. Logic operators combine those booleans: && means “both must be yes,” || means “at least one yes,” ! flips a yes to a no.',
+        'The cast. Comparisons (>, >=, ===, !==…) each produce a boolean — they’re the boolean factories from lesson 1.7.',
+      highlightLines: [1, 2],
+    },
+    {
+      id: 'cast-logic',
+      caption:
+        'Logic operators combine those booleans into bigger questions: && means “both must be yes,” || means “at least one yes,” ! flips a yes to a no.',
       highlightLines: [1, 2],
     },
     {
@@ -219,19 +225,23 @@ export const lesson110: LessonDef = {
         and <code>**</code> for powers), <strong>comparison</strong> (<code>&gt; &lt; &gt;= &lt;=</code>{' '}
         and the strict pair <code>=== !==</code> you swore loyalty to in lesson 1.9),{' '}
         <strong>logical</strong> (<code>&& || !</code>), and <strong>assignment</strong> (<code>=</code>{' '}
-        plus the shortcuts <code>+= −= *= /=</code> from lesson 1.3). Precedence order, roughly:{' '}
-        <code>!</code> first, then arithmetic (<code>*</code> before <code>+</code>), then
-        comparisons, then <code>&&</code>, then <code>||</code>, with <code>=</code> dead last.
-        Don’t memorize it — parenthesize it.
+        plus the shortcuts <code>+= −= *= /=</code> from lesson 1.3).
+      </p>
+      <p>
+        Precedence order, roughly: <code>!</code> first, then arithmetic (<code>*</code> before{' '}
+        <code>+</code>), then comparisons, then <code>&&</code>, then <code>||</code>, with{' '}
+        <code>=</code> dead last. Don’t memorize it — parenthesize it.
       </p>
       <p>
         A small honest disclosure for later: <code>&&</code> and <code>||</code> secretly return{' '}
         <em>the actual value</em> of one of their sides, not always a manufactured boolean —{' '}
         <code>"hello" || "fallback"</code> gives "hello", which programmers exploit for defaults.
         That trick only makes full sense after truthy/falsy (lesson 2.2), so file it as a preview,
-        not homework. Short-circuiting is also load-bearing in real code:{' '}
-        <code>user && user.name</code> deliberately uses the skip to avoid touching{' '}
-        <code>.name</code> when there’s no user.
+        not homework.
+      </p>
+      <p>
+        Short-circuiting is also load-bearing in real code: <code>user && user.name</code>{' '}
+        deliberately uses the skip to avoid touching <code>.name</code> when there’s no user.
       </p>
       <p>
         Why this lesson matters to your career, in one sentence: <strong>a test assertion IS a

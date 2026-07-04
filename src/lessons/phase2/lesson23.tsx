@@ -142,8 +142,10 @@ export const lesson23: LessonDef = {
       <p>
         One fork gives you two roads. Real decisions often need more: grade an exam, route a
         support ticket, price by age group. Two tools today: chaining forks with{' '}
-        <code>else if</code>, and a purpose-built ladder called <code>switch</code> — which comes
-        with a famous trapdoor,{' '}
+        <code>else if</code>, and a purpose-built ladder called <code>switch</code>.
+      </p>
+      <p>
+        switch comes with a famous trapdoor,{' '}
         <HighlightMark type="underline" color="var(--color-marker-coral)">fall-through</HighlightMark>
         , that once helped take down a national phone network. Really.
       </p>
@@ -188,14 +190,26 @@ export const lesson23: LessonDef = {
     {
       id: 'fall-through',
       caption:
-        'But look — case "SAT": has NO code and NO break, so execution FALLS THROUGH into case "SUN" and runs "Weekend!". That’s deliberate here: it’s how you group cases (“SAT or SUN → same road”). Then break — the 🛑 — stops the fall. Without break, it would keep falling into "Ugh." too!',
+        'But look — case "SAT": has NO code and NO break, so execution FALLS THROUGH into case "SUN" and runs "Weekend!". That’s deliberate here: it’s how you group cases (“SAT or SUN → same road”).',
+      codeOverride: SWITCH_CODE,
+      highlightLines: [3, 4, 5, 6],
+    },
+    {
+      id: 'fall-through-break',
+      caption: 'Then break — the 🛑 — stops the fall. Without break, it would keep falling into "Ugh." too!',
       codeOverride: SWITCH_CODE,
       highlightLines: [3, 4, 5, 6],
     },
     {
       id: 'rule',
       caption:
-        'The working rules: else-if chains for ranges and mixed conditions (order = logic); switch for one-value-many-exact-options (and remember default = the ladder’s else). And treat every missing break as a bug until proven a grouping. History agrees — see below.',
+        'The working rules: else-if chains for ranges and mixed conditions (order = logic); switch for one-value-many-exact-options (and remember default = the ladder’s else).',
+      codeOverride: SWITCH_CODE,
+      highlightLines: [10, 11],
+    },
+    {
+      id: 'rule-break-discipline',
+      caption: 'Treat every missing break as a bug until proven a grouping. History agrees — see below.',
       codeOverride: SWITCH_CODE,
       highlightLines: [10, 11],
     },
@@ -206,11 +220,16 @@ export const lesson23: LessonDef = {
       <p>
         Precision notes: an else-if chain is not a special syntax — it’s literally an{' '}
         <code>else</code> whose branch contains another <code>if</code>, stacked. That’s why
-        exactly one branch ever runs. <code>switch</code> compares with <strong>strict equality
-        (===)</strong>, so <code>case "200"</code> will never match the number 200 — a
-        coercion-free zone, which is exactly why we like it. <code>default</code> can sit anywhere
-        in the ladder but belongs at the bottom by convention, and yes — it falls through too if
-        unbroken.
+        exactly one branch ever runs.
+      </p>
+      <p>
+        <code>switch</code> compares with <strong>strict equality (===)</strong>, so{' '}
+        <code>case "200"</code> will never match the number 200 — a coercion-free zone, which is
+        exactly why we like it.
+      </p>
+      <p>
+        <code>default</code> can sit anywhere in the ladder but belongs at the bottom by
+        convention, and yes — it falls through too if unbroken.
       </p>
       <p>
         For the road ahead: chains of else-if handling <em>ranges</em> (like our grades) appear

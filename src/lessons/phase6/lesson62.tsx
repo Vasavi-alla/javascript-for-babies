@@ -181,11 +181,15 @@ export const lesson62: LessonDef = {
       </p>
       <p>
         Four parts, one rule. The <strong>call stack</strong> you know. The <strong>Web APIs</strong>{' '}
-        — the environment's waiting room where timers tick and network replies land. The{' '}
-        <strong>callback queue</strong> — a first-in-first-out line of callbacks ready to run. And
-        the <strong>event loop</strong> itself, a tireless arm with a single rule:{' '}
-        <em>is the stack empty? Then move exactly one callback from the queue onto it.</em> Learn
-        this machine and <code>setTimeout(fn, 0)</code> stops being a riddle forever.
+        — the environment's waiting room where timers tick and network replies land.
+      </p>
+      <p>
+        The <strong>callback queue</strong> — a first-in-first-out line of callbacks ready to run.
+        And the <strong>event loop</strong> itself, a tireless arm with a single rule:{' '}
+        <em>is the stack empty? Then move exactly one callback from the queue onto it.</em>
+      </p>
+      <p>
+        Learn this machine and <code>setTimeout(fn, 0)</code> stops being a riddle forever.
       </p>
     </>
   ),
@@ -265,8 +269,11 @@ export const lesson62: LessonDef = {
       <p>
         Precision for interviews: the event loop is <em>not part of the JavaScript engine</em> —
         V8 has the stack and heap; the loop, the timers, the queue live in the <em>environment</em>{' '}
-        (the browser here; Node's version awaits in lesson 9.6). Also the queue is honest FIFO:
-        two timers with equal delay run in scheduling order — your exercise proves it.
+        (the browser here; Node's version awaits in lesson 9.6).
+      </p>
+      <p>
+        Also the queue is honest FIFO: two timers with equal delay run in scheduling order — your
+        exercise proves it.
       </p>
       <p>
         One seat is still empty in this diagram: promises (lesson 6.4) don't use this queue —

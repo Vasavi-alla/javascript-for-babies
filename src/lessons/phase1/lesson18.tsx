@@ -148,7 +148,13 @@ export const lesson18: LessonDef = {
     {
       id: 'roundup',
       caption:
-        'The full cheat sheet, including the crooked one: typeof null claims "object" — the permanent 1995 bug from lesson 1.7. One more handy fact: typeof never throws an error, even on names that don’t exist — which makes it a safe probe when you’re not sure something is defined.',
+        'One crooked entry worth memorizing: typeof null claims "object" — the permanent 1995 bug from lesson 1.7.',
+      highlightLines: [5],
+    },
+    {
+      id: 'roundup-safe',
+      caption:
+        'One more handy fact: typeof never throws an error, even on names that don’t exist — which makes it a safe probe when you’re not sure something is defined.',
       highlightLines: [5],
     },
   ],
@@ -157,8 +163,10 @@ export const lesson18: LessonDef = {
     <>
       <p>
         The proper vocabulary: JavaScript is <strong>dynamically typed</strong> — types are checked
-        while the program <em>runs</em>, and any variable may hold any type at any moment. The
-        opposite is <strong>statically typed</strong> (Java, C#, and JavaScript’s cousin{' '}
+        while the program <em>runs</em>, and any variable may hold any type at any moment.
+      </p>
+      <p>
+        The opposite is <strong>statically typed</strong> (Java, C#, and JavaScript’s cousin{' '}
         <strong>TypeScript</strong>): there, a variable declares its type up front and the machine
         refuses mismatches <em>before</em> the program ever runs. You’ll get a taste of TypeScript
         in Phase 8 — most Playwright projects use it precisely to catch type mix-ups early.
@@ -167,7 +175,9 @@ export const lesson18: LessonDef = {
         Because <code>typeof</code> answers with a string, the idiom you’ll see everywhere is a
         string comparison: <code>typeof x === "number"</code>. Mind the quotes on the right side —
         comparing against bare <code>number</code> would be a ReferenceError (no such variable!).
-        And a delightful brain-stretcher: <code>typeof typeof 42</code> is… <code>"string"</code> —
+      </p>
+      <p>
+        A delightful brain-stretcher: <code>typeof typeof 42</code> is… <code>"string"</code> —
         because <code>typeof 42</code> produces the string "number", and the type of a string is
         "string". Evaluate inside-out, like always.
       </p>

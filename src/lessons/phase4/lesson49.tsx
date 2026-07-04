@@ -308,8 +308,11 @@ export const lesson49: LessonDef = {
         </HighlightMark>{' '}
         — and each takes a <em>function</em> as its argument (lesson 3.8's callbacks, now earning
         their keep daily). You describe what happens to <em>one element</em>; the method runs the
-        loop. This trio is the single most-used pattern in modern JavaScript — and the exact shape
-        of every test-report you'll ever crunch.
+        loop.
+      </p>
+      <p>
+        This trio is the single most-used pattern in modern JavaScript — and the exact shape of
+        every test-report you'll ever crunch.
       </p>
     </>
   ),
@@ -354,7 +357,7 @@ export const lesson49: LessonDef = {
     {
       id: 'console',
       caption:
-        'The receipts: withTax.length is 4 (map never changes the count), cheap is [45, 80], total is 445. Say the trio in plain words and you’ll never mix them up: map TRANSFORMS each, filter KEEPS some, reduce BOILS DOWN to one. In 4.13 you’ll chain them into your first QA dashboard.',
+        'The receipts: withTax.length is 4 (map never changes the count), cheap is [45, 80], total is 445. Say the trio in plain words and you’ll never mix them up: map TRANSFORMS each, filter KEEPS some, reduce BOILS DOWN to one. In 4.14 you’ll chain them into your first QA dashboard.',
       highlightLines: [12, 13, 14],
     },
   ],
@@ -369,10 +372,13 @@ export const lesson49: LessonDef = {
       </p>
       <p>
         <code>reduce((acc, el) =&gt; …, start)</code> is the general one — map and filter could
-        both be written with it. The two classic stumbles: forgetting the starting value (JS then
-        uses the first element, which breaks on empty arrays), and forgetting to <code>return</code>{' '}
-        the next accumulator (then the next lap receives <code>undefined</code> — lesson 3.3's
-        chute rule, striking again).
+        both be written with it.
+      </p>
+      <p>
+        The two classic stumbles: forgetting the starting value (JS then uses the first element,
+        which breaks on empty arrays), and forgetting to <code>return</code> the next accumulator
+        (then the next lap receives <code>undefined</code> — lesson 3.3's chute rule, striking
+        again).
       </p>
       <p>
         <strong>Fun fact:</strong> your photo app runs this exact trio every day — “show 2024

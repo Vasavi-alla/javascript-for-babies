@@ -24,13 +24,15 @@ const STATE: Array<[number, number, boolean]> = [
   [2, 1, false],
   [0, 3, false],
   [0, 3, true],
+  [0, 3, true],
   [0, 3, true], // prediction
+  [0, 3, true],
   [0, 3, true],
 ]
 
 function WhileTrack({ stepIndex }: { stepIndex: number }) {
   const [fuel, laps, exited] = STATE[stepIndex] ?? STATE[0]
-  const infinite = stepIndex >= 5
+  const infinite = stepIndex >= 6
   return (
     <svg viewBox="0 0 440 300" className="w-full">
       {/* the circular road */}
@@ -178,7 +180,13 @@ export const lesson25: LessonDef = {
     {
       id: 'exit',
       caption:
-        '0 > 0? FALSE → the gate refuses, the loop is over, and the traveler takes the exit road to line 6: "Out of fuel." Count carefully: the body ran 3 times, but the gate was checked 4 times — the last check is the one that says no. (That off-by-one awareness will serve you forever.)',
+        '0 > 0? FALSE → the gate refuses, the loop is over, and the traveler takes the exit road to line 6: "Out of fuel."',
+      highlightLines: [6],
+    },
+    {
+      id: 'exit-count',
+      caption:
+        'Count carefully: the body ran 3 times, but the gate was checked 4 times — the last check is the one that says no. That off-by-one awareness will serve you forever.',
       highlightLines: [6],
     },
     {
@@ -197,9 +205,15 @@ export const lesson25: LessonDef = {
       },
     },
     {
-      id: 'frozen',
+      id: 'frozen-id',
       caption:
-        'THIS is the infinite loop — and why it freezes the whole tab: JavaScript is single-threaded (one worker, remember the Phase 6 preview), and that worker is now trapped on this racetrack, unable to handle your clicks or anything else. The takeaway rule for every loop you ever write: something inside the body must move the condition toward false.',
+        'THIS is the infinite loop — and why it freezes the whole tab: JavaScript is single-threaded — it has exactly one worker doing exactly one thing at a time (Phase 6 explains this properly) — and that one worker is now trapped on this racetrack, unable to handle your clicks or anything else.',
+      highlightLines: [2],
+    },
+    {
+      id: 'frozen-rule',
+      caption:
+        'The takeaway rule for every loop you ever write: something inside the body must move the condition toward false.',
       highlightLines: [2],
     },
   ],
@@ -211,6 +225,8 @@ export const lesson25: LessonDef = {
         because the gate is checked <em>before</em> each lap, a while loop can run{' '}
         <strong>zero times</strong> — if the condition is false on arrival, the body is never
         entered at all (start our fuel at 0 and you get no Vrooms, straight to "Out of fuel.").
+      </p>
+      <p>
         There’s a rarer sibling, <code>do…while</code>, that checks the gate <em>after</em> the
         lap, guaranteeing at least one run — you’ll recognize it when you meet it; almost nobody
         writes it.

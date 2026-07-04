@@ -70,22 +70,22 @@ function BooleanizerViz({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
 
-      {/* "" dropping through (steps 2–3) */}
+      {/* "" dropping through */}
       <AnimatePresence>
-        {(stepIndex === 2 || stepIndex === 3) && (
+        {(stepIndex === 3 || stepIndex === 4) && (
           <motion.g
             initial={{ x: 220, y: 45 }}
-            animate={stepIndex === 3 ? { x: 125, y: 140 } : { x: 220, y: 45 }}
+            animate={stepIndex === 4 ? { x: 125, y: 140 } : { x: 220, y: 45 }}
             transition={{ type: 'spring', damping: 15 }}
           >
-            <Chip x={0} y={0} label='username: ""' tone={stepIndex === 3 ? 'falsy' : 'neutral'} />
+            <Chip x={0} y={0} label='username: ""' tone={stepIndex === 4 ? 'falsy' : 'neutral'} />
           </motion.g>
         )}
       </AnimatePresence>
 
-      {/* the surprises (step 4+) */}
+      {/* the surprises */}
       <AnimatePresence>
-        {stepIndex >= 4 && (
+        {stepIndex >= 5 && (
           <motion.g initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 15 }}>
             <Chip x={280} y={210} label='"0"' tone="truthy" />
             <Chip x={340} y={210} label='" "' tone="truthy" />
@@ -126,9 +126,15 @@ export const lesson22: LessonDef = {
       highlightLines: [2],
     },
     {
-      id: 'falsy-six',
+      id: 'falsy-first-half',
       caption:
-        'Memorize the entire “no” bin — there are only SIX falsy values: false (obviously), 0, "" (empty string), null, undefined, and NaN. Notice the theme: they’re all flavors of nothing — no, zero, no text, deliberate nothing, never-set, failed math. EVERYTHING else in the language is truthy.',
+        'Memorize the entire “no” bin — there are only SIX falsy values. First three: false (obviously), 0, and "" (empty string).',
+      highlightLines: [2],
+    },
+    {
+      id: 'falsy-second-half',
+      caption:
+        'The other three: null, undefined, and NaN. Notice the theme — they’re all flavors of nothing: no, zero, no text, deliberate nothing, never-set, failed math. EVERYTHING else in the language is truthy.',
       highlightLines: [2],
     },
     {
@@ -155,13 +161,23 @@ export const lesson22: LessonDef = {
     {
       id: 'surprises',
       caption:
-        'Now the trap door. These land in the TRUTHY bin and surprise everyone: "0" (a string with a character in it — not the number 0!), " " (a space is a character too), "false" (five characters of text!), and every non-zero number including negatives. The bin is decided by the six-item list — never by what the value “looks like.”',
+        'Now the trap door. These land in the TRUTHY bin and surprise everyone: "0" (a string with a character in it — not the number 0!) and " " (a space is a character too).',
       highlightLines: [2],
     },
     {
-      id: 'wrap',
+      id: 'surprises-more',
       caption:
-        'When you need the conversion explicitly — say, to store the yes/no — call Boolean(value). And when precision matters more than convenience, compare directly: username === "" says exactly what you mean. Idiom for flow, precision for logic.',
+        'Also truthy: "false" (five characters of text!) and every non-zero number, including negatives. The bin is decided by the six-item list — never by what the value “looks like.”',
+      highlightLines: [2],
+    },
+    {
+      id: 'wrap-explicit',
+      caption: 'When you need the conversion explicitly — say, to store the yes/no — call Boolean(value).',
+    },
+    {
+      id: 'wrap-precision',
+      caption:
+        'And when precision matters more than convenience, compare directly: username === "" says exactly what you mean. Idiom for flow, precision for logic.',
     },
   ],
   Viz: BooleanizerViz,
@@ -169,11 +185,16 @@ export const lesson22: LessonDef = {
     <>
       <p>
         The official mechanics: conditions perform <strong>boolean coercion</strong> — the same
-        silent conversion family as lesson 1.9, aimed at true/false. The complete falsy list is
-        specified in the language standard; it’s genuinely just those six (plus two exotic cousins
-        you’ll never meet: <code>-0</code> and BigInt’s <code>0n</code>). This is why interviewers
-        love the question “name the falsy values” — it’s a five-second test of whether someone
-        knows the rulebook or just vibes.
+        silent conversion family as lesson 1.9, aimed at true/false.
+      </p>
+      <p>
+        The complete falsy list is specified in the language standard; it’s genuinely just those
+        six (plus two exotic cousins you’ll never meet: <code>-0</code> and BigInt’s{' '}
+        <code>0n</code>).
+      </p>
+      <p>
+        This is why interviewers love the question “name the falsy values” — it’s a five-second
+        test of whether someone knows the rulebook or just vibes.
       </p>
       <p>
         The tester angle is sharp here: truthy/falsy bugs are <em>silent</em>. A form that checks{' '}
@@ -183,15 +204,6 @@ export const lesson22: LessonDef = {
         themselves under deliberate test inputs — <code>0</code>, <code>""</code>, a lone space —
         which is why testers keep a mental list of “edge values” that starts suspiciously like the
         falsy list. You now own that list.
-      </p>
-      <p>
-        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> there is exactly{' '}
-        <em>one</em> object in all of JavaScript that is falsy: <code>document.all</code>, an
-        ancient browser API from the 1990s. The standard contains a special lie just for it —
-        because so many old websites used <code>if (document.all)</code> to detect ancient
-        Internet Explorer that making it truthy would have broken them all. The language
-        permanently bends its own rules for one museum piece. (Everything else object-shaped —
-        even an empty array — is truthy. That one returns in Phase 4.)
       </p>
     </>
   ),

@@ -58,7 +58,7 @@ const VIEWS: View[] = [
     note: 'the guard, always: if (!res.ok) throw',
     badge: 'skipping this and parsing an error page is the #1 rookie fetch bug',
   },
-  { phase: 'body', console: ['200', 'true', 'pikachu'], note: 'second await: res.json() streams the body in and parses the JSON (4.12!) into an object' },
+  { phase: 'body', console: ['200', 'true', 'pikachu'], note: 'second await: res.json() streams the body in and parses the JSON (4.13!) into an object' },
   { phase: 'codes', console: ['200', 'true', 'pikachu'], note: '2xx ok · 4xx your mistake · 5xx their mistake — res.ok is true only for 2xx' },
   {
     phase: 'codes', console: ['200', 'true', 'pikachu'],
@@ -206,7 +206,7 @@ export const lesson67: LessonDef = {
       <p>
         Everything async so far waited on <em>timers</em>. The real star of "later" is the{' '}
         <strong>network</strong>: your program asking another program — across the world — for
-        data. The language for that conversation is HTTP, the data format is 4.12's JSON, and the
+        data. The language for that conversation is HTTP, the data format is 4.13's JSON, and the
         JavaScript doorway is{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           <code>fetch</code>
@@ -250,7 +250,7 @@ export const lesson67: LessonDef = {
     {
       id: 'guard-fulfills',
       caption:
-        'A 404 response is still a RESPONSE — fetch’s promise fulfills! fetch only rejects when the network itself fails — no connection, DNS dead.',
+        'A 404 response is still a RESPONSE — fetch’s promise fulfills! fetch only rejects when the network itself fails — no connection, or DNS dead (DNS is the internet’s address book, translating a name like example.com into the actual address to connect to).',
       highlightLines: [9, 10, 11],
     },
     {
@@ -262,7 +262,7 @@ export const lesson67: LessonDef = {
     {
       id: 'body',
       caption:
-        'Second await: res.json() reads the body stream to its end AND runs JSON.parse on it (4.12, industrialized) — a promise of the parsed object. data.name → "pikachu". Two awaits: head, then body. Say it like a mantra.',
+        'Second await: res.json() reads the body stream to its end AND runs JSON.parse on it (4.13, industrialized) — a promise of the parsed object. data.name → "pikachu". Two awaits: head, then body. Say it like a mantra.',
       highlightLines: [13, 14],
     },
     {
@@ -283,16 +283,18 @@ export const lesson67: LessonDef = {
     <>
       <p>
         HTTP is textual and stateless: each request stands alone, carrying everything the server
-        needs (that's why sessions need cookies/storage — lesson 7.7). Beyond GET: POST sends data
-        (a body on the request, plus options:{' '}
+        needs (that's why sessions need cookies/storage — lesson 7.7).
+      </p>
+      <p>
+        Beyond GET: POST sends data (a body on the request, plus options:{' '}
         <code>{'fetch(url, { method: "POST", body: JSON.stringify(…) })'}</code> — the options
         object of 4.11!), PUT updates, DELETE removes. Same envelope dance, different verbs.
       </p>
       <p>
         The two promises exist because bodies can be huge: the head arrives first and fast, so you
-        can decide (ok? content-type right?) before paying for the body.{' '}
-        <code>res.json()</code> is the JSON body reader; <code>res.text()</code> exists for
-        everything else.
+        can decide — is it ok? does its content-type header say "this is really JSON"? — before
+        paying for the body. <code>res.json()</code> is the JSON body reader; <code>res.text()</code>{' '}
+        exists for everything else.
       </p>
       <p>
         The exercise uses a <em>fake</em> fetch on purpose — the sandbox has no network, and

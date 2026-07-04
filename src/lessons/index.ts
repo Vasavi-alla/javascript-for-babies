@@ -47,6 +47,7 @@ import { lesson410 } from './phase4/lesson410'
 import { lesson411 } from './phase4/lesson411'
 import { lesson412 } from './phase4/lesson412'
 import { lesson413 } from './phase4/lesson413'
+import { lesson414 } from './phase4/lesson414'
 import { lesson51 } from './phase5/lesson51'
 import { lesson52 } from './phase5/lesson52'
 import { lesson53 } from './phase5/lesson53'
@@ -69,6 +70,11 @@ import { lesson71 } from './phase7/lesson71'
 import { lesson72 } from './phase7/lesson72'
 import { lesson73 } from './phase7/lesson73'
 import { lesson74 } from './phase7/lesson74'
+import { lesson75 } from './phase7/lesson75'
+import { lesson76 } from './phase7/lesson76'
+import { lesson77 } from './phase7/lesson77'
+import { lesson78 } from './phase7/lesson78'
+import { lesson79 } from './phase7/lesson79'
 
 /** Built lessons, by id. A lesson must also be 'available' in content/registry.ts. */
 export const LESSON_DEFS: Record<string, LessonDef> = {
@@ -120,6 +126,7 @@ export const LESSON_DEFS: Record<string, LessonDef> = {
   '4.11': lesson411,
   '4.12': lesson412,
   '4.13': lesson413,
+  '4.14': lesson414,
   '5.1': lesson51,
   '5.2': lesson52,
   '5.3': lesson53,
@@ -142,4 +149,9 @@ export const LESSON_DEFS: Record<string, LessonDef> = {
   '7.2': lesson72,
   '7.3': lesson73,
   '7.4': lesson74,
+  '7.5': lesson75,
+  '7.6': lesson76,
+  '7.7': lesson77,
+  '7.8': lesson78,
+  '7.9': lesson79,
 }

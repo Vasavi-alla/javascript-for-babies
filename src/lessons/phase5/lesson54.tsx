@@ -13,7 +13,7 @@ import type { LessonDef } from '../../engine/lesson/types'
  * four different ways, filling in a growing comparison table — same
  * function, different answer, every row. Four rules: implicit (dot),
  * default (bare), explicit (bind/call/apply). Arrows have NO own this —
- * they borrow lexically. Pays 3.4's `this` IOU.
+ * they borrow lexically.
  */
 
 const CODE = `function whoAmI() {
@@ -248,8 +248,9 @@ export const lesson54: LessonDef = {
   hook: (
     <>
       <p>
-        Lesson 3.4 promised the full story of <code>this</code> would arrive in Phase 5. Here it
-        is — and it fits in one sentence that most JavaScript developers never learn precisely:{' '}
+        Every function you’ve written since Phase 3 has quietly avoided one keyword:{' '}
+        <code>this</code>. Here’s its full, precise story — and it fits in one sentence that most
+        JavaScript developers never learn precisely:{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           <code>this</code> is decided at CALL time, by HOW the call is made
         </HighlightMark>
@@ -355,10 +356,12 @@ export const lesson54: LessonDef = {
       <p>
         The rules compose with everything you know: <code>this</code> is stored per{' '}
         <em>execution context</em> (each call's context gets its own), which is exactly why arrows
-        — which don't create a <code>this</code> in their context — fall back to the rope. And the
-        table's whole point is honest: the same function object can be attached to different
-        owners freely — borrow a method with <code>a.speak = b.speak</code> and the dot rule
-        follows whoever calls.
+        — which don't create a <code>this</code> in their context — fall back to the rope.
+      </p>
+      <p>
+        And the table's whole point is honest: the same function object can be attached to
+        different owners freely — borrow a method with <code>a.speak = b.speak</code> and the dot
+        rule follows whoever calls.
       </p>
       <p>
         Job note: Playwright test code uses arrows almost everywhere precisely to avoid this

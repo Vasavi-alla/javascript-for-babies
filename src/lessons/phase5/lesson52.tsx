@@ -247,8 +247,11 @@ export const lesson52: LessonDef = {
         <strong>three different registrations</strong>. <code>var</code> → name + <code>undefined</code>{' '}
         (reads early, silently wrong). <code>let</code>/<code>const</code> → name registered but{' '}
         <em>untouchable</em> until their line (the <strong>temporal dead zone</strong> — reads
-        throw, loudly). Function declarations → registered <em>complete</em>. Learn the table and
-        every hoisting puzzle ever written becomes arithmetic.
+        throw, loudly).
+      </p>
+      <p>
+        Function declarations → registered <em>complete</em>. Learn the table and every hoisting
+        puzzle ever written becomes arithmetic.
       </p>
     </>
   ),
@@ -310,10 +313,12 @@ export const lesson52: LessonDef = {
       <p>
         The full table, worth memorizing: <code>function f() {'{}'}</code> → registered complete.{' '}
         <code>var x</code> → registered as <code>undefined</code>. <code>let</code>/<code>const</code>{' '}
-        → registered uninitialized (TDZ; reads throw ReferenceError). And <code>var</code> has a
-        second leak this table explains: it ignores block scope — a <code>var</code> inside an{' '}
-        <code>if</code> registers on the whole <em>function's</em> context, escaping the braces
-        that 3.5 said contain things.
+        → registered uninitialized (TDZ; reads throw ReferenceError).
+      </p>
+      <p>
+        And <code>var</code> has a second leak this table explains: it ignores block scope — a{' '}
+        <code>var</code> inside an <code>if</code> registers on the whole <em>function's</em>{' '}
+        context, escaping the braces that 3.5 said contain things.
       </p>
       <p>
         Why does <code>var</code> still exist? Compatibility — the web never breaks old pages. Your

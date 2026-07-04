@@ -152,16 +152,21 @@ export const lesson12: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The proper vocabulary, worth owning: <code>let</code> is a <strong>keyword</strong> (a word
-        reserved by the language), <code>age</code> is an <strong>identifier</strong> (a name you
-        chose), <code>=</code> is the <strong>assignment operator</strong>, and the whole line is a{' '}
+        The proper vocabulary, worth owning: <code>let</code> is a <strong>keyword</strong> (a
+        word reserved by the language), and <code>age</code> is an <strong>identifier</strong> (a
+        name you chose).
+      </p>
+      <p>
+        <code>=</code> is the <strong>assignment operator</strong>, and the whole line is a{' '}
         <strong>declaration</strong> with an <strong>initial value</strong>. When someone says
-        “declare a variable and initialize it to 25,” they mean exactly the three pictures you just
-        watched: reserve a box, place a value, bind a name.
+        “declare a variable and initialize it to 25,” they mean exactly the three pictures you
+        just watched: reserve a box, place a value, bind a name.
       </p>
       <p>
         That word <strong>bind</strong> is the precise one: the engine keeps a private table
         mapping names to boxes — “age → box #7,204” — and consults it every time a name appears.
+      </p>
+      <p>
         You never see the table, but knowing it exists explains so much: why a name used before
         it’s created gives a ReferenceError (nothing in the table yet!), and why two variables can
         hold the same value without being connected (two boxes, two labels).

@@ -217,8 +217,11 @@ export const lesson57: LessonDef = {
         The rule is <strong>reachability</strong>: start from the <em>roots</em> — global
         variables, the currently running call stack — and walk every rope and arrow you can
         (4.6's references, 5.3's outer links). Everything reached: kept. Everything unreached: an
-        island, swept. That one rule explains why closures "magically" stay alive — and exactly
-        how real programs leak memory anyway.
+        island, swept.
+      </p>
+      <p>
+        That one rule explains why closures "magically" stay alive — and exactly how real programs
+        leak memory anyway.
       </p>
     </>
   ),
@@ -278,10 +281,12 @@ export const lesson57: LessonDef = {
     <>
       <p>
         Engines implement reachability with mark-and-sweep: periodically mark everything walkable
-        from the roots, then sweep the unmarked. V8 runs this in generations (new objects are
-        checked often — most die young; survivors graduate to a rarely-checked old space) and
-        mostly in tiny pauses interleaved with your code. When exactly? The engine decides; no API
-        asks it to run.
+        from the roots, then sweep the unmarked.
+      </p>
+      <p>
+        V8 runs this in generations (new objects are checked often — most die young; survivors
+        graduate to a rarely-checked old space) and mostly in tiny pauses interleaved with your
+        code. When exactly? The engine decides; no API asks it to run.
       </p>
       <p>
         The practical posture: <em>don't fear creating objects; fear holding them forever.</em>{' '}

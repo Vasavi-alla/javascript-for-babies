@@ -237,9 +237,14 @@ export const lesson53: LessonDef = {
         Here it is: every execution context carries, besides its memory table, one <strong>outer
         link</strong> — a rope to another context. Which one? The context of the place the function
         was <em>written</em> (that's what "lexical scoping" means — decided by text position, fixed
-        forever, regardless of who calls it). Name lookup is a rope-walk: check the current table,
-        miss, follow the rope, repeat — until found, or the global table misses too and you get a{' '}
-        <code>ReferenceError</code>. And with this one picture, closures stop being magic for good.
+        forever, regardless of who calls it).
+      </p>
+      <p>
+        Name lookup is a rope-walk: check the current table, miss, follow the rope, repeat — until
+        found, or the global table misses too and you get a <code>ReferenceError</code>.
+      </p>
+      <p>
+        And with this one picture, closures stop being magic for good.
       </p>
     </>
   ),
@@ -301,15 +306,20 @@ export const lesson53: LessonDef = {
         "Lexical" (or "static") scoping means the ropes are tied by <em>where code is written</em>,
         not where it's called from. Call <code>inner</code> from anywhere — pass it around, store
         it in an array, invoke it in another function — its rope still points at <code>outer</code>
-        's context. This is exactly the property <code>this</code> does NOT have (next lesson's
-        drama: <code>this</code> is decided at call time).
+        's context.
+      </p>
+      <p>
+        This is exactly the property <code>this</code> does NOT have (next lesson's drama:{' '}
+        <code>this</code> is decided at call time).
       </p>
       <p>
         The precise closure story: a returned inner function keeps a reference to its outer
         context, so the garbage collector (lesson 5.7) cannot sweep that context — its variables
-        stay alive and privately reachable only through the rope. One maker call = one kept
-        context, which is why two counters from the same factory never share a count (3.7's
-        independent counters, explained).
+        stay alive and privately reachable only through the rope.
+      </p>
+      <p>
+        One maker call = one kept context, which is why two counters from the same factory never
+        share a count (3.7's independent counters, explained).
       </p>
       <p>
         Blocks count too: every <code>{'{ }'}</code> with a <code>let</code>/<code>const</code>{' '}

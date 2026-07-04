@@ -27,6 +27,7 @@ const TOKEN: Array<{ x: number; y: number } | null> = [
   { x: 320, y: 185 },
   { x: 220, y: 262 },
   { x: 220, y: 262 },
+  { x: 220, y: 262 },
 ]
 
 function FlowRoad({ stepIndex }: { stepIndex: number }) {
@@ -223,8 +224,12 @@ export const lesson21: LessonDef = {
     },
     {
       id: 'wrap',
+      caption: 'That’s the whole machine: evaluate one boolean, walk one road, rejoin.',
+    },
+    {
+      id: 'else-optional',
       caption:
-        'That’s the whole machine: evaluate one boolean, walk one road, rejoin. else is optional, by the way — an if alone just means “maybe do this extra bit, then continue.” Everything else in this phase is variations on this fork.',
+        'One more thing worth knowing: else is optional. An if alone just means “maybe do this extra bit, then continue.” Everything else in this phase is variations on this fork.',
     },
   ],
   Viz: FlowRoad,
@@ -233,12 +238,21 @@ export const lesson21: LessonDef = {
       <p>
         Anatomy, properly named: <code>if</code> is a keyword; the parenthesized part is the{' '}
         <strong>condition</strong> (any expression — it gets evaluated to a boolean, coercing if it
-        must, which is tomorrow’s lesson); each braced section is a <strong>block</strong>; and the
-        two blocks are the <strong>branches</strong>. Programmers say “the code branches” or “take
-        the else branch” — the road picture, in words. A subtlety worth knowing early: the braces
-        are technically optional for single statements, but professionals write them <em>always</em>{' '}
-        — a famous Apple security bug (“goto fail”, 2014) happened exactly because an unbraced
-        branch silently swallowed a second line.
+        must, which is tomorrow’s lesson).
+      </p>
+      <p>
+        Each braced section is a <strong>block</strong>, and the two blocks are the{' '}
+        <strong>branches</strong>. Programmers say “the code branches” or “take the else branch” —
+        the road picture, in words.
+      </p>
+      <p>
+        A subtlety worth knowing early: the braces are technically optional for single statements,
+        but professionals write them <em>always</em>.
+      </p>
+      <p>
+        Why so strict? A famous Apple security bug (“goto fail”, 2014) happened exactly because an
+        unbraced branch silently swallowed a second line — a missing pair of braces, one real
+        security hole.
       </p>
       <p>
         For your future job: test code is <em>full</em> of forks — “if the element is visible,

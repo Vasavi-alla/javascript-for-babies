@@ -310,9 +310,11 @@ export const lesson35: LessonDef = {
         Real names: each bubble is a <strong>scope</strong> — global scope, function scope, block
         scope. What we drew as a ray is the engine walking the <strong>scope chain</strong>:
         current scope first, then outward, one level at a time, stopping at the first match.
-        Exhaust the chain without a match → <code>ReferenceError</code>. This is called{' '}
-        <strong>lexical scoping</strong>: the chain is fixed by where the code is <em>written</em>{' '}
-        (where the braces are), not by how it's called.
+        Exhaust the chain without a match → <code>ReferenceError</code>.
+      </p>
+      <p>
+        This is called <strong>lexical scoping</strong>: the chain is fixed by where the code is{' '}
+        <em>written</em> (where the braces are), not by how it's called.
       </p>
       <p>
         Remember leaky <code>var</code> from lesson 1.4? Now you can say precisely why it leaks:{' '}

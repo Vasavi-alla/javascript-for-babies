@@ -180,12 +180,16 @@ export const lesson13: LessonDef = {
     <>
       <p>
         The <code>=</code> sign is the <strong>assignment operator</strong>, and the golden rule
-        is: <strong>right side first, completely, then store left</strong>. The left side isn’t a
-        value at all — it’s a <em>destination</em> (which box to fill). That’s why{' '}
-        <code>10 = score</code> is an error: 10 isn’t a box. Programmers hear “score gets 15” in
-        their heads, never “score equals 15” — adopt that reading today and the confusion never
-        returns. (The “does it equal?” question uses different symbols, <code>===</code>, coming in
-        lesson 1.9.)
+        is: <strong>right side first, completely, then store left</strong>.
+      </p>
+      <p>
+        The left side isn’t a value at all — it’s a <em>destination</em> (which box to fill).
+        That’s why <code>10 = score</code> is an error: 10 isn’t a box.
+      </p>
+      <p>
+        Programmers hear “score gets 15” in their heads, never “score equals 15” — adopt that
+        reading today and the confusion never returns. (The “does it equal?” question uses
+        different symbols, <code>===</code>, coming in lesson 1.9.)
       </p>
       <p>
         The read-change-store pattern is so common that JavaScript ships shortcuts:{' '}

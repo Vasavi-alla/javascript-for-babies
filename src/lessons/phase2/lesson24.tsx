@@ -57,7 +57,7 @@ function TernaryScene({ stepIndex }: { stepIndex: number }) {
       </svg>
     )
   }
-  if (stepIndex <= 3) {
+  if (stepIndex <= 4) {
     const resolved = stepIndex >= 3
     return (
       <svg viewBox="0 0 440 280" className="w-full">
@@ -142,8 +142,11 @@ export const lesson24: LessonDef = {
         JavaScript has decisions that are <em>expressions</em>: the{' '}
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           ternary operator
-        </HighlightMark>{' '}
-        — and a secret lesson 1.10 already whispered: <code>||</code> and <code>&&</code> don’t
+        </HighlightMark>
+        .
+      </p>
+      <p>
+        And a secret lesson 1.10 already whispered: <code>||</code> and <code>&&</code> don’t
         return manufactured booleans, they return one of their own sides. Today that secret becomes
         two of the most-used idioms in all of JavaScript.
       </p>
@@ -181,7 +184,13 @@ export const lesson24: LessonDef = {
     {
       id: 'default-idiom',
       caption:
-        'nickname gets "Anonymous" — a fallback in one line. One caution, straight from lesson 2.2: || treats ALL falsy values as “missing”, so a legitimate 0 or "" gets replaced too. Modern JavaScript added ?? (nullish coalescing) for exactly that: it falls back ONLY on null/undefined, letting 0 and "" through. Prefer ?? when zero is a real answer.',
+        'nickname gets "Anonymous" — a fallback in one line. One caution, straight from lesson 2.2: || treats ALL falsy values as “missing”, so a legitimate 0 or "" gets replaced too.',
+      highlightLines: [4, 5],
+    },
+    {
+      id: 'nullish-coalescing',
+      caption:
+        'Modern JavaScript added ?? (nullish coalescing) for exactly that: it falls back ONLY on null/undefined, letting 0 and "" through. Prefer ?? when zero is a real answer.',
       highlightLines: [4, 5],
     },
     {
@@ -210,11 +219,16 @@ export const lesson24: LessonDef = {
       <p>
         The exact return rules, for reference: <code>a || b</code> → a if a is truthy, else b.{' '}
         <code>a && b</code> → a if a is <em>falsy</em>, else b. <code>a ?? b</code> → a unless a is
-        null/undefined, else b. All three short-circuit: the right side isn’t just ignored — it’s{' '}
-        <em>never evaluated</em>, side effects and all. In test code you’ll constantly read
-        patterns like <code>config.timeout ?? 30000</code> (“use the configured timeout, defaulting
-        to 30 seconds”) and <code>element && element.click()</code> — and now they read like
-        sentences.
+        null/undefined, else b.
+      </p>
+      <p>
+        All three short-circuit: the right side isn’t just ignored — it’s <em>never evaluated</em>,
+        side effects and all.
+      </p>
+      <p>
+        In test code you’ll constantly read patterns like <code>config.timeout ?? 30000</code>{' '}
+        (“use the configured timeout, defaulting to 30 seconds”) and{' '}
+        <code>element && element.click()</code> — and now they read like sentences.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the{' '}

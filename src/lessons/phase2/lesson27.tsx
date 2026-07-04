@@ -111,8 +111,8 @@ function GridDraw({ cells }: { cells: number }) {
 
 function EscapeViz({ stepIndex }: { stepIndex: number }) {
   if (stepIndex <= 1) return <StationTrack mode="break" />
-  if (stepIndex <= 3) return <StationTrack mode="continue" />
-  const cells = stepIndex === 4 ? 5 : 12
+  if (stepIndex <= 4) return <StationTrack mode="continue" />
+  const cells = stepIndex === 5 ? 5 : 12
   return <GridDraw cells={cells} />
 }
 
@@ -127,8 +127,11 @@ export const lesson27: LessonDef = {
         <HighlightMark type="underline" color="var(--color-marker-coral)">break</HighlightMark>{' '}
         (eject from the whole loop) and{' '}
         <HighlightMark type="underline" color="var(--color-marker-coral)">continue</HighlightMark>{' '}
-        (abandon this lap only). And then the multiplier: loops <em>inside</em> loops, which is how
-        programs sweep grids, tables… and test matrices.
+        (abandon this lap only).
+      </p>
+      <p>
+        And then the multiplier: loops <em>inside</em> loops, which is how programs sweep grids,
+        tables… and test matrices.
       </p>
     </>
   ),
@@ -165,7 +168,14 @@ export const lesson27: LessonDef = {
     {
       id: 'continue',
       caption:
-        'Station 3 gets bypassed on the skip ramp; everything else prints: 1 2 4 5. Typical use: “if this entry is invalid, skip it” — filtering without stopping. One caution: in a while loop, make sure your counter updates BEFORE the continue, or you’ve built lesson 2.5’s infinite loop with extra steps.',
+        'Station 3 gets bypassed on the skip ramp; everything else prints: 1 2 4 5. Typical use: “if this entry is invalid, skip it” — filtering without stopping.',
+      codeOverride: CONTINUE_CODE,
+      highlightLines: [3, 5],
+    },
+    {
+      id: 'continue-caution',
+      caption:
+        'One caution: in a while loop, make sure your counter updates BEFORE the continue, or you’ve built lesson 2.5’s infinite loop with extra steps.',
       codeOverride: CONTINUE_CODE,
       highlightLines: [3, 5],
     },
@@ -179,7 +189,14 @@ export const lesson27: LessonDef = {
     {
       id: 'grid-done',
       caption:
-        '3 outer laps × 4 inner laps = 12 prints — nested loops MULTIPLY. (That’s also the warning: nest a 1,000-lap loop inside another and you’ve ordered a million iterations.) And a subtle rule: break/continue only affect the loop they sit in — the INNERMOST one. Escaping an inner loop lands you in the outer lap, not outside everything.',
+        '3 outer laps × 4 inner laps = 12 prints — nested loops MULTIPLY. That’s also the warning: nest a 1,000-lap loop inside another and you’ve ordered a million iterations.',
+      codeOverride: NESTED_CODE,
+      highlightLines: [2, 3],
+    },
+    {
+      id: 'grid-scope',
+      caption:
+        'A subtle rule: break/continue only affect the loop they sit in — the INNERMOST one. Escaping an inner loop lands you in the outer lap, not outside everything.',
       codeOverride: NESTED_CODE,
       highlightLines: [2, 3],
     },
@@ -198,20 +215,19 @@ export const lesson27: LessonDef = {
       <p>
         About that “innermost only” rule: JavaScript does have an escape for it — you can label a
         loop (<code>outer: for (…)</code>) and write <code>break outer;</code> to eject from both
-        levels at once. It’s legal, rare, and worth recognizing more than writing; if you find
-        yourself needing labels often, the code is usually asking to be reorganized into a
-        function (Phase 3 gives you that tool — <code>return</code> is the cleanest escape hatch
-        of all).
+        levels at once. It’s legal, rare, and worth recognizing more than writing.
+      </p>
+      <p>
+        If you find yourself needing labels often, the code is usually asking to be reorganized
+        into a function — Phase 3 gives you that tool, where <code>return</code> is the cleanest
+        escape hatch of all.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> break and
-        continue are the tamed descendants of a notorious ancestor: <code>goto</code>, the command
-        that let old programs jump ANYWHERE, producing what programmers called spaghetti code. In
-        1968, Edsger Dijkstra published one of the most famous letters in computing history — “Go
-        To Statement Considered Harmful” — and the ensuing revolution (structured programming) gave
-        us the disciplined jumps you learned today: loops with single entrances, and only
-        well-behaved exits like break, continue and return. Even the letter’s title became a meme:
-        half a century later, tech articles are still titled “X Considered Harmful.”
+        continue are the tamed descendants of a notorious ancestor: <code>goto</code>, an old
+        command that let programs jump to ANY line — producing what programmers called spaghetti
+        code, tangled and nearly impossible to follow. break, continue and return are the
+        disciplined version that survived: loops with one entrance, and only clearly-marked exits.
       </p>
     </>
   ),

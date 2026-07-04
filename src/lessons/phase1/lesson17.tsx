@@ -159,11 +159,17 @@ export const lesson17: LessonDef = {
     <>
       <p>
         The clean mental model: <strong>undefined is the machine’s nothing; null is the
-        programmer’s nothing.</strong> undefined shows up uninvited in exact, predictable places:
-        a declared-but-unassigned variable (you just saw it), a function that returns nothing
-        (Phase 3), a missing property on an object, an off-the-end position of an array (Phase 4).
-        null never appears on its own — if you see null, a human (or an API) put it there to say
-        “this field is intentionally empty.”
+        programmer’s nothing.</strong>
+      </p>
+      <p>
+        undefined shows up uninvited in a few predictable places: a declared-but-unassigned
+        variable (you just saw it), a function that returns nothing (Phase 3), a missing property
+        on an object or an off-the-end array position (both Phase 4).
+      </p>
+      <p>
+        null never appears on its own — if you see null, a human (or an API — the way your code
+        asks another program, often a server, for data) put it there to say “this field is
+        intentionally empty.”
       </p>
       <p>
         <span style={{ color: 'var(--color-marker-coral)', fontWeight: 700 }}>Gotcha! </span>
@@ -178,9 +184,12 @@ export const lesson17: LessonDef = {
         <code>"middleName": null</code> means the field exists and is deliberately empty), while
         undefined typically means a field is <em>missing entirely</em> — and “empty on purpose”
         versus “forgot to include it” are different bugs with different fixes. Your future
-        assertions will distinguish the two constantly. One preview for lesson 1.9:{' '}
-        <code>null == undefined</code> is true, but <code>null === undefined</code> is false — the
-        loose comparison considers the two nothings equal, the strict one knows better.
+        assertions will distinguish the two constantly.
+      </p>
+      <p>
+        One preview for lesson 1.9: <code>null == undefined</code> is true, but{' '}
+        <code>null === undefined</code> is false — the loose comparison considers the two
+        nothings equal, the strict one knows better.
       </p>
     </>
   ),

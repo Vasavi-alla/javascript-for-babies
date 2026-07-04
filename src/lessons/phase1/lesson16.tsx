@@ -188,18 +188,42 @@ export const lesson16: LessonDef = {
         still points at "Ada" until you reassign it.
       </p>
       <p>
-        Strings come with a rich toolbox attached (all reachable with the dot):{' '}
-        <code>.toUpperCase()</code> / <code>.toLowerCase()</code>, <code>.trim()</code> (strips
-        spaces from the ends — form input’s best friend), <code>.includes("da")</code> (is this
-        aboard?), <code>.slice(0, 2)</code> (copy cars 0 up to but not including 2 → "Ad"). No need
-        to memorize them today — recognize the pattern: <em>string, dot, tool</em>.
+        Strings come with a rich toolbox attached, all reachable with the dot — recognize the
+        pattern <em>string, dot, tool</em>, no need to memorize the list today.
+      </p>
+      <p>
+        <code>.toUpperCase()</code> and <code>.toLowerCase()</code> build a new train with every
+        letter recased.
+      </p>
+      <p>
+        <code>.trim()</code> strips spaces from the ends — form input’s best friend, since users
+        love adding stray spaces.
+      </p>
+      <p>
+        <code>.includes("da")</code> asks “is this bit aboard, anywhere in the train?” — true or
+        false.
+      </p>
+      <p>
+        <code>.slice(0, 2)</code> copies out cars 0 up to but not including 2, giving you "Ad".
       </p>
       <p>
         Why three kinds of quotes? <code>"double"</code> and <code>'single'</code> are identical —
-        pick one, stay consistent. Backticks <code>`…`</code> are the upgrade: they allow{' '}
-        <code>${'{expression}'}</code> slots (anything inside is <em>evaluated</em> — the rule from
-        lesson 0.3 — so <code>`Total: ${'{2 + 3}'}`</code> becomes "Total: 5") and they can span
-        multiple lines. For a future automation tester this is daily bread:{' '}
+        pick one, stay consistent.
+      </p>
+      <p>
+        Backticks <code>`…`</code> are the upgrade: they allow <code>${'{expression}'}</code> slots.
+        Anything inside is <em>evaluated</em> first — the rule from lesson 0.3 — so{' '}
+        <code>`Total: ${'{2 + 3}'}`</code> becomes "Total: 5".
+      </p>
+      <p>
+        Backtick strings can also span multiple lines with a real line break inside them — no{' '}
+        <code>+</code> gluing needed:
+      </p>
+      <p>
+        <code>{'`Line one\nLine two`'}</code> is one single string containing an actual newline.
+      </p>
+      <p>
+        For a future automation tester this is daily bread:{' '}
         <code>`Expected ${'{expected}'} but got ${'{actual}'}`</code> is the shape of every good
         failure message you’ll ever write.
       </p>

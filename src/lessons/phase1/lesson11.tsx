@@ -133,12 +133,17 @@ export const lesson11: LessonDef = {
   underTheHood: (
     <>
       <p>
-        JavaScript has <strong>seven primitive types</strong> in total. You now know the big three:{' '}
-        <code>number</code>, <code>string</code>, <code>boolean</code>. Coming soon:{' '}
-        <code>undefined</code> and <code>null</code> (two flavors of “nothing”, lesson 1.7), plus
-        two rare ones (<code>bigint</code> for astronomically large numbers, <code>symbol</code> for
-        special labels) that you can safely ignore for months. “Primitive” means a single, simple
-        value — as opposed to collections like arrays and objects, which arrive in Phase 4.
+        JavaScript has <strong>seven primitive types</strong> in total. You now know the big
+        three: <code>number</code>, <code>string</code>, <code>boolean</code>.
+      </p>
+      <p>
+        Coming soon: <code>undefined</code> and <code>null</code> (two flavors of “nothing”,
+        lesson 1.7), plus two rare ones (<code>bigint</code> for astronomically large numbers,{' '}
+        <code>symbol</code> for special labels) that you can safely ignore for months.
+      </p>
+      <p>
+        “Primitive” means a single, simple value — as opposed to collections like arrays and
+        objects, which arrive in Phase 4.
       </p>
       <p>
         Why do types exist at all? Because the machine stores everything as numbers-in-boxes

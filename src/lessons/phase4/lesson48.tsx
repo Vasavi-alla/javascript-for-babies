@@ -44,6 +44,8 @@ const VIEWS: View[] = [
   { mode: 'array', tokenAt: 0, tokenLabel: 'item = "pen"', derived: null, console: ['pen'], note: 'each lap, item is a fresh binding holding the current element' },
   { mode: 'array', tokenAt: 2, tokenLabel: 'item = "fan"', derived: null, console: ['pen', 'mug', 'fan'], note: 'three elements, three laps, done — the loop ran itself' },
   { mode: 'object', tokenAt: 0, tokenLabel: 'key = "pen"', derived: null, console: ['pen'], note: 'for...in visits KEYS (as strings) — values need prices[key]' },
+  { mode: 'object', tokenAt: 0, tokenLabel: 'key = "pen"', derived: null, console: ['pen'], note: 'prices[key] fetches the value at runtime — exactly what 4.4’s dynamic brackets were built for' },
+  { mode: 'object', tokenAt: 0, tokenLabel: 'key = "pen"', derived: null, console: ['pen'], note: 'house rule: for...of for arrays, for...in for objects' },
   { mode: 'object', tokenAt: null, derived: { label: 'Object.keys(prices)', value: '["pen","mug"]' }, console: ['pen', 'mug', '["pen","mug"]'], note: 'keys() hands you a real ARRAY of the keys' },
   { mode: 'object', tokenAt: null, derived: { label: 'Object.values(prices)', value: '[2,9]' }, console: ['["pen","mug"]', '[2,9]'], note: 'values() — just the values, as an array' },
   { mode: 'object', tokenAt: null, derived: { label: 'Object.entries(prices)', value: '[["pen",2],["mug",9]]' }, console: ['[2,9]', '[["pen",2],["mug",9]]'], note: 'entries() turns the whole object into an array of [key, value] pairs' },
@@ -201,8 +203,11 @@ export const lesson48: LessonDef = {
           <code>for...of</code> hands you each array element; <code>for...in</code> hands you each
           object key
         </HighlightMark>
-        ; and <code>Object.keys / values / entries</code> convert an object into arrays — the
-        bridge that lets every array tool (including next lesson's big three) work on objects too.
+        .
+      </p>
+      <p>
+        And <code>Object.keys / values / entries</code> convert an object into arrays — the bridge
+        that lets every array tool (including next lesson's big three) work on objects too.
       </p>
     </>
   ),
@@ -223,7 +228,19 @@ export const lesson48: LessonDef = {
     {
       id: 'for-in',
       caption:
-        'Objects aren’t ordered shelves, so they get their own loop: for (const key in prices) visits the KEYS — "pen", then "mug" — always as strings. Want the values while looping? prices[key] — and notice this is EXACTLY what 4.4’s dynamic keys were built for: the loop hands you each key at RUNTIME, so brackets are the only accessor that can follow along. House rule worth adopting: for...of for arrays, for...in for objects. (for...in on an ARRAY hands you index strings "0", "1" — almost never what you meant.)',
+        'Objects aren’t ordered shelves, so they get their own loop: for (const key in prices) visits the KEYS — "pen", then "mug" — always as strings.',
+      highlightLines: [9, 10, 11],
+    },
+    {
+      id: 'for-in-values',
+      caption:
+        'Want the values while looping? prices[key] — and notice this is EXACTLY what 4.4’s dynamic keys were built for: the loop hands you each key at RUNTIME, so brackets are the only accessor that can follow along.',
+      highlightLines: [9, 10, 11],
+    },
+    {
+      id: 'for-in-rule',
+      caption:
+        'House rule worth adopting: for...of for arrays, for...in for objects. (for...in on an ARRAY hands you index strings "0", "1" — almost never what you meant.)',
       highlightLines: [9, 10, 11],
     },
     {
@@ -249,10 +266,12 @@ export const lesson48: LessonDef = {
     <>
       <p>
         <code>for...of</code> works on anything <em>iterable</em> — arrays, strings (character by
-        character), and two structures arriving in 4.12 (Map and Set). Plain objects are{' '}
-        <em>not</em> iterable — that's why they need <code>for...in</code> or the{' '}
-        <code>Object.*</code> converters instead, and why <code>for (const x of {'{}'})</code>{' '}
-        throws a TypeError.
+        character), and two structures arriving in 4.12 (Map and Set).
+      </p>
+      <p>
+        Plain objects are <em>not</em> iterable — that's why they need <code>for...in</code> or
+        the <code>Object.*</code> converters instead, and why{' '}
+        <code>for (const x of {'{}'})</code> throws a TypeError.
       </p>
       <p>
         The three converters return <em>plain arrays</em>, built fresh at that moment — snapshots,

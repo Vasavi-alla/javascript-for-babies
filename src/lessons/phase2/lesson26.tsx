@@ -24,6 +24,7 @@ const STATE: Array<[number, number, number, boolean]> = [
   [3, 2, 1, false],
   [3, 2, 1, false], // prediction
   [2, 6, 5, true],
+  [2, 6, 5, true],
 ]
 
 const SLOTS = [
@@ -192,8 +193,13 @@ export const lesson26: LessonDef = {
     },
     {
       id: 'exit',
+      caption: 'And there’s the ending: i reaches 6, the check says no, exit to "All done!".',
+      highlightLines: [4],
+    },
+    {
+      id: 'exit-common-shape',
       caption:
-        'And there’s the ending: i reaches 6, the check says no, exit to "All done!". You’ll soon write the most common for loop in existence: for (let i = 0; i < list.length; i++) — starting at 0 because positions start at 0 (lesson 1.6!), and using i++ as the one-keystroke version of i = i + 1.',
+        'You’ll soon write the most common for loop in existence: for (let i = 0; i < list.length; i++) — starting at 0 because positions start at 0 (lesson 1.6!), and using i++ as the one-keystroke version of i = i + 1.',
       highlightLines: [4],
     },
   ],
@@ -212,18 +218,12 @@ export const lesson26: LessonDef = {
         Two idioms to absorb now: counting from zero (<code>let i = 0; i &lt; n</code> — five laps,
         i taking 0,1,2,3,4) is the standard because it matches string and array positions; and{' '}
         <code>i++</code> (“increment”) is the universal shorthand for <code>i = i + 1</code>{' '}
-        (<code>i--</code> counts down). In your automation future, for loops drive data-driven
-        tests: “for each of these 50 usernames, run the login test” — one body, fifty laps, and
-        the counter tells you exactly which lap failed.
+        (<code>i--</code> counts down).
       </p>
       <p>
-        <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> why is the
-        counter always called <code>i</code>? The habit predates JavaScript by four decades — it
-        comes from FORTRAN (1957), one of the first programming languages ever, where variables
-        beginning with the letters I through N were automatically integers. Counters became i,
-        then j and k for nested ones… and 70 years later, programmers who’ve never seen a line of
-        FORTRAN still write <code>let i = 0</code> by pure cultural inheritance. (And i itself
-        stands for the mathematician’s <em>index</em>.)
+        In your automation future, for loops drive data-driven tests: “for each of these 50
+        usernames, run the login test” — one body, fifty laps, and the counter tells you exactly
+        which lap failed.
       </p>
     </>
   ),
