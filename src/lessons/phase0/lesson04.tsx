@@ -119,7 +119,7 @@ export const lesson04: LessonDef = {
     },
     {
       id: 'predict-wipe',
-      caption: 'Now the program finishes — say, you close the tab. Predict what happens to its boxes.',
+      caption: 'Now the program finishes — say, you close the tab. What happens to the values it stored in its boxes?',
       prediction: {
         question: 'The program ends (you close the tab). What happens to the values it stored in memory?',
         options: [

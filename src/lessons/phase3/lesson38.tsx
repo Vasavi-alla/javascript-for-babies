@@ -256,8 +256,8 @@ export const lesson38: LessonDef = {
       </p>
       <p>
         In memory (the Phase 1 picture, now in real words): the parameter <code>action</code>{' '}
-        simply holds a reference to the same function value that <code>cheer</code> holds —
-        nothing is copied, no magic. Phase 4 makes “references” exact.
+        simply points at the same function value that <code>cheer</code> points at — nothing is
+        copied, no magic. (Phase 4 gives this pointing its precise name: a reference.)
       </p>
     </>
   ),

@@ -333,7 +333,7 @@ export const lesson49: LessonDef = {
     {
       id: 'non-mutating',
       caption:
-        'Check the input belt: prices is exactly as it was. The whole trio is non-mutating — unlike push/pop/shift (4.2), these build new arrays and leave the original alone. (That habit has a name — pure functions, lesson 3.10 — and it’s why this style is so easy to test.)',
+        'Check the input belt: prices is exactly as it was. The whole trio is non-mutating — unlike push/pop/shift (4.3), these build new arrays and leave the original alone. (That habit has a name — pure functions, lesson 3.10 — and it’s why this style is so easy to test.)',
       highlightLines: [3],
     },
     {

@@ -128,7 +128,7 @@ export const lesson17: LessonDef = {
     },
     {
       id: 'predict-undefined',
-      caption: 'So what happens when line 4 opens that empty box? Predict.',
+      caption: 'So what happens when line 4 opens that empty box?',
       highlightLines: [4],
       prediction: {
         question: 'nickname was declared but never given a value. What does console.log(nickname) print?',
@@ -187,9 +187,10 @@ export const lesson17: LessonDef = {
         assertions will distinguish the two constantly.
       </p>
       <p>
-        One preview for lesson 1.9: <code>null == undefined</code> is true, but{' '}
-        <code>null === undefined</code> is false — the loose comparison considers the two
-        nothings equal, the strict one knows better.
+        One preview for lesson 1.9, where you’ll meet JavaScript’s two ways of asking “are these
+        equal?”: the loose way (written <code>==</code>) considers the two nothings equal —{' '}
+        <code>null == undefined</code> is true — while the strict way (<code>===</code>) knows
+        better: <code>null === undefined</code> is false.
       </p>
     </>
   ),

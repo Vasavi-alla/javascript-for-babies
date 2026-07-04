@@ -223,8 +223,8 @@ export const lesson413: LessonDef = {
       <p>
         <strong>Fun fact:</strong> this very notebook runs on it. Your streak, your finished
         lessons, your journal — one object, <code>JSON.stringify</code>-ed into your browser's
-        localStorage after every change. Open DevTools → Application → Local Storage and you can
-        read your own progress as JSON, right now.
+        localStorage after every change. On a computer, open DevTools → Application → Local
+        Storage and you can read your own progress as JSON, right now.
       </p>
     </>
   ),

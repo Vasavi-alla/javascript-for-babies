@@ -79,9 +79,41 @@ function EngineDiagram({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
 
-      {/* Node.js */}
+      {/* the where-does-it-run beat */}
+      <AnimatePresence>
+        {stepIndex === 5 && (
+          <motion.text
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            x={280}
+            y={302}
+            textAnchor="middle"
+            fontFamily="var(--font-hand)"
+            fontSize={17}
+            fontWeight={700}
+            fill="var(--color-marker-coral)"
+          >
+            you WRITE it on your machine… but where does it RUN?
+          </motion.text>
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {stepIndex >= 6 && (
+          <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <text x={305} y={72} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={16} fontWeight={700} fill="var(--color-marker-coral)">
+              = the VISITOR’s machine
+            </text>
+            <text x={280} y={302} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={15} fill="var(--color-ink-soft)">
+              a million visitors = a million computers running your code
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* Node.js */}
+      <AnimatePresence>
+        {stepIndex >= 7 && (
           <motion.g initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ duration: 0.45 }}>
             <text x={448} y={92} fontFamily="var(--font-hand)" fontSize={22} fontWeight={700} fill="var(--color-ink)">
               Node.js
@@ -146,19 +178,14 @@ export const lesson02: LessonDef = {
         'Hidden deep inside every browser sits the engine — the part that reads JavaScript and executes it, exactly like the obedient cook from lesson 0.1. Chrome’s engine is called V8. Other browsers have their own; they all speak the same JavaScript.',
     },
     {
-      id: 'predict-where',
-      caption: 'Here’s the question that confuses almost every beginner. Think carefully before answering.',
-      prediction: {
-        question:
-          'You build a website with JavaScript. Your friend in another country opens it on their laptop. Where does your JavaScript actually run?',
-        options: [
-          'On the website’s server, somewhere far away',
-          'On YOUR computer, since you wrote it',
-          'Inside your friend’s browser — on their laptop',
-        ],
-        correctIndex: 2,
-        why: 'The code travels to whoever opens the page, and THEIR browser’s engine runs it on THEIR machine. A million visitors = your code running on a million computers. This is why JavaScript is everywhere — and why, as a tester, you’ll care which browsers you test in.',
-      },
+      id: 'where-question',
+      caption:
+        'Now the question that confuses almost every beginner. You write some JavaScript and put it on a website. A friend in another country opens that site on their laptop. Where does your code actually RUN — on your computer, on the website’s server, or on their laptop?',
+    },
+    {
+      id: 'where-answer',
+      caption:
+        'On THEIR laptop. The code travels to whoever opens the page, and THEIR browser’s engine runs it on THEIR machine. A million visitors = your code running on a million different computers. This is why JavaScript is everywhere — and why, as a tester, you’ll care which browsers you test in.',
     },
     {
       id: 'node',
@@ -207,7 +234,7 @@ export const lesson02: LessonDef = {
       </p>
       <p>
         That trade is exactly why test tools live there: Playwright runs in Node and reaches out
-        to command real browsers from the outside. You’ll see that architecture again in Phase 10.
+        to command real browsers from the outside. You’ll see that architecture again in Phase 11.
       </p>
     </>
   ),

@@ -61,7 +61,7 @@ function GateRow({ y, label, verdict, seed }: { y: number; label: string; verdic
 
 function ChainAndSwitch({ stepIndex }: { stepIndex: number }) {
   // steps 0–2: the gate chain; steps 3–5: the switch ladder
-  if (stepIndex <= 2) {
+  if (stepIndex <= 3) {
     const decided = stepIndex >= 1
     return (
       <svg viewBox="0 0 440 300" className="w-full">
@@ -83,7 +83,7 @@ function ChainAndSwitch({ stepIndex }: { stepIndex: number }) {
       </svg>
     )
   }
-  const fell = stepIndex >= 4
+  const fell = stepIndex >= 5
   return (
     <svg viewBox="0 0 440 300" className="w-full">
       <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
@@ -131,6 +131,16 @@ function ChainAndSwitch({ stepIndex }: { stepIndex: number }) {
           </motion.g>
         )}
       </AnimatePresence>
+      {stepIndex === 7 && (
+        <text x={220} y={292} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)">
+          working rules: else-if chains for RANGES · switch for one-value-exact-options
+        </text>
+      )}
+      {stepIndex >= 8 && (
+        <text x={220} y={292} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-coral)">
+          treat every missing break as a bug — until proven a grouping
+        </text>
+      )}
     </svg>
   )
 }
@@ -167,18 +177,15 @@ export const lesson23: LessonDef = {
     },
     {
       id: 'predict-order',
-      caption: 'Now the question that catches almost everyone. Suppose grade were 95. Walk the gates before answering.',
+      caption:
+        'Now the question that catches almost everyone. Suppose grade were 95 — that satisfies >= 90 AND >= 80 AND >= 70, all three gates at once. Walk the corridor in your head: what prints?',
       highlightLines: [2, 4],
-      prediction: {
-        question: 'If grade were 95: it satisfies >= 90 AND >= 80 AND >= 70. What prints?',
-        options: [
-          '"A", "B" and "C" — it passes all three checks',
-          'Only "A" — the first true gate wins and the rest are never even checked',
-          'An error — ambiguous conditions',
-        ],
-        correctIndex: 1,
-        why: 'The chain stops at the FIRST true. 95 >= 90 → "A", corridor over — the later gates never run, so overlapping conditions are fine AS LONG AS you order them correctly. Flip the order (>= 70 first) and every grade above 70 would print "C". The order IS the logic.',
-      },
+    },
+    {
+      id: 'order-answer',
+      caption:
+        'Only “A”. The first true gate wins and the corridor is OVER — the later gates are never even checked, so overlapping conditions are fine AS LONG AS you order them correctly. Flip the order (>= 70 first) and every grade above 70 would print “C”. The order IS the logic.',
+      highlightLines: [2, 4],
     },
     {
       id: 'switch',

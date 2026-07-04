@@ -252,7 +252,7 @@ export const lesson56: LessonDef = {
         The word matters: <em>handwriting</em>, not new machinery. A class builds exactly the
         prototype chains of 5.5 — methods land on a shared prototype, <code>new</code> creates and
         links instances, <code>extends</code> just makes the chain longer. Today you'll watch class
-        syntax <em>desugar</em> into the diagram you already own.
+        syntax <em>desugar</em> — shed its sugar-coating — into the diagram you already own.
       </p>
       <p>
         And this is career-critical syntax: Playwright's Page Object Model — lesson 11.7 — is

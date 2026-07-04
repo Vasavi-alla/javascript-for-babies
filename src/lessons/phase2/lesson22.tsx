@@ -56,13 +56,19 @@ function BooleanizerViz({ stepIndex }: { stepIndex: number }) {
         truthy → “yes”
       </text>
 
-      {/* the falsy six */}
+      {/* the falsy six — first three, then the other three (matching the two caption steps) */}
       <AnimatePresence>
         {stepIndex >= 1 && (
           <motion.g initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
             <Chip x={80} y={210} label="false" tone="falsy" />
             <Chip x={150} y={210} label="0" tone="falsy" />
             <Chip x={80} y={242} label={'""'} tone="falsy" />
+          </motion.g>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {stepIndex >= 2 && (
+          <motion.g initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
             <Chip x={150} y={242} label="null" tone="falsy" />
             <Chip x={90} y={172} label="undefined" tone="falsy" />
             <Chip x={175} y={172} label="NaN" tone="falsy" />
@@ -97,6 +103,18 @@ function BooleanizerViz({ stepIndex }: { stepIndex: number }) {
           </motion.g>
         )}
       </AnimatePresence>
+
+      {/* closing badges */}
+      {stepIndex === 7 && (
+        <text x={220} y={140} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
+          need to KEEP the yes/no? Boolean(value) hands it to you
+        </text>
+      )}
+      {stepIndex >= 8 && (
+        <text x={220} y={140} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
+          precision beats idiom: username === "" says exactly what you mean
+        </text>
+      )}
     </svg>
   )
 }
@@ -122,7 +140,7 @@ export const lesson22: LessonDef = {
     {
       id: 'machine',
       caption:
-        'Meet the Boolean-izer. Whenever a yes/no is demanded — an if condition, a ! operator — the machine drops the value through this funnel and out comes true or false. No error, no question asked. Your job: know which bin each value lands in.',
+        'Meet the Boolean-izer. Whenever a yes/no is demanded — an if condition, a ! operator — the machine drops the value through this funnel and out comes true or false. No error, no question asked — and the value itself is only READ, never changed. Your job: know which bin each value lands in.',
       highlightLines: [2],
     },
     {

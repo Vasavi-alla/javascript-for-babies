@@ -202,7 +202,7 @@ export const lesson71: LessonDef = {
     {
       id: 'element-nodes',
       caption:
-        'Each tag becomes an ELEMENT NODE object — h1, ul, li — things with tags, attributes, and children. Nesting becomes parent-child links. Attributes like id="items" and class="todo done" ride on their element node.',
+        'Each tag becomes an ELEMENT NODE object — and the tag names are plain abbreviations: h1 = the biggest heading, ul = an Unordered (bulleted) List, li = one List Item inside it, body = everything visible on the page. Nesting becomes parent-child links, and attributes like id="items" and class="todo done" ride on their element node.',
       highlightLines: [4, 5, 6],
     },
     {

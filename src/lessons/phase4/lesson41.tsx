@@ -35,15 +35,17 @@ interface View {
   /** show the dashed ghost cell past the end */
   ghost: boolean
   console: string[]
+  /** small appearing annotation for elaboration-only steps */
+  badge?: string
 }
 
 const VIEWS: View[] = [
   { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: false, ghost: false, console: [] },
   { cells: [82, 95, 71], readIndex: 0, outToken: '82', wroteIndex: null, showLength: false, ghost: false, console: ['82'] },
   { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: true, ghost: false, console: ['82', '3'] },
-  { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: true, ghost: false, console: ['82', '3'] },
+  { cells: [82, 95, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: true, ghost: false, console: ['82', '3'], badge: 'length counts from 1, indexes from 0 — last = length − 1' },
   { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: 1, showLength: false, ghost: false, console: ['82', '3'] },
-  { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: 1, showLength: false, ghost: false, console: ['82', '3'] },
+  { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: 1, showLength: false, ghost: false, console: ['82', '3'], badge: 'const… yet the contents changed?! → lesson 4.6' },
   { cells: [82, 96, 71], readIndex: null, outToken: null, wroteIndex: null, showLength: false, ghost: false, console: ['82', '3', '[82,96,71]'] },
   { cells: [82, 96, 71], readIndex: 3, outToken: 'undefined', wroteIndex: null, showLength: false, ghost: true, console: ['82', '3', '[82,96,71]', 'undefined'] },
 ]
@@ -162,6 +164,27 @@ function ArrayShelf({ stepIndex }: { stepIndex: number }) {
               {view.outToken}
             </text>
           </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* elaboration badge */}
+      <AnimatePresence>
+        {view.badge && (
+          <motion.text
+            key={view.badge}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            x={220}
+            y={208}
+            textAnchor="middle"
+            fontFamily="var(--font-hand)"
+            fontSize={14}
+            fontWeight={700}
+            fill="var(--color-marker-coral)"
+          >
+            {view.badge}
+          </motion.text>
         )}
       </AnimatePresence>
 

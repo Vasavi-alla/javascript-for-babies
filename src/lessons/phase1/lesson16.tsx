@@ -128,7 +128,7 @@ export const lesson16: LessonDef = {
         <HighlightMark type="highlight" color="color-mix(in srgb, var(--color-marker-yellow) 45%, transparent)">
           train of characters, each with a numbered seat
         </HighlightMark>
-        . Once you see the train, lengths, positions and slicing all become obvious.
+        . Once you see the train, lengths, positions and cutting pieces out all become obvious.
       </p>
     </>
   ),
@@ -181,7 +181,9 @@ export const lesson16: LessonDef = {
     <>
       <p>
         A fact that will save you a debugging session someday: strings are{' '}
-        <strong>immutable</strong> — the train can never be modified in place. You can’t swap car 0
+        <strong>immutable</strong> — the train can never be modified in place. (And here the train
+        picture reaches its limit: real train cars are famously uncoupled and swapped around — a
+        string never allows it.) You can’t swap car 0
         of "Ada" to make "Bda"; every string operation (uppercasing, trimming, gluing) builds a{' '}
         <em>brand-new train</em> and leaves the original untouched. So{' '}
         <code>name.toUpperCase()</code> hands you "ADA" as a new string — <code>name</code> itself

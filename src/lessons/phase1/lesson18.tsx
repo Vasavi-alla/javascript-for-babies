@@ -83,6 +83,11 @@ function TypeofScene({ stepIndex }: { stepIndex: number }) {
           </motion.g>
         )}
       </AnimatePresence>
+      {stepIndex >= 6 && (
+        <text x={40} y={276} fontFamily="var(--font-hand)" fontSize={15} fontWeight={700} fill="var(--color-marker-teal)">
+          …and typeof never throws — a safe probe for maybe-missing names
+        </text>
+      )}
     </svg>
   )
 }
@@ -127,7 +132,7 @@ export const lesson18: LessonDef = {
     },
     {
       id: 'predict-typeof',
-      caption: 'So — line 4 runs typeof mystery again. Same variable, same question. Predict the answer.',
+      caption: 'So — line 4 runs typeof mystery again. Same variable, same question. Same answer?',
       highlightLines: [4],
       prediction: {
         question: 'mystery now holds "forty-two". What does typeof mystery give?',

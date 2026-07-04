@@ -166,7 +166,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       'Narrate the call stack for any piece of code',
       'Say what this is in each of the four calling styles',
       'Explain how a to-do item “knows” methods it never defined (prototypes)',
-      'Write a class and explain what it desugars to',
+      'Write a class and explain the prototype machinery it’s shorthand for',
       'Catch a thrown error with try/catch/finally instead of crashing',
     ],
   },
@@ -208,6 +208,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
     keyTerms: [
       { term: 'HTML', meaning: 'The language a web page’s structure is written in — plain text wrapped in tags.' },
       { term: 'tag / attribute', meaning: 'A tag like <li> names what kind of thing an element is; an attribute like class="todo" (written inside the tag) adds extra information about it.' },
+      { term: 'the tags you’ll keep meeting', meaning: 'body (the visible page), h1–h3 (headings), p (paragraph), ul / li (bulleted list / one item in it), a (link), button, input (a form field), form, div / span (plain boxes for grouping).' },
       { term: 'CSS', meaning: 'A separate language for how things look — colors, spacing, layout. Uses the same kind of selectors you’ll write to find elements.' },
       { term: 'DOM', meaning: 'The Document Object Model — the live family tree the browser builds from HTML. Change the tree and the page changes instantly.' },
       { term: 'element / node', meaning: 'One item in the tree: a button, a paragraph, an image.' },

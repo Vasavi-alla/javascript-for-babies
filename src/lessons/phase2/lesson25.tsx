@@ -191,7 +191,7 @@ export const lesson25: LessonDef = {
     },
     {
       id: 'predict-infinite',
-      caption: 'Now let’s vandalize it. Suppose we DELETE line 4 — fuel = fuel - 1 — and run again. Predict.',
+      caption: 'Now let’s vandalize it. Suppose we DELETE line 4 — fuel = fuel - 1 — and run again. What happens?',
       highlightLines: [4],
       prediction: {
         question: 'Without fuel = fuel - 1, what happens when this runs?',

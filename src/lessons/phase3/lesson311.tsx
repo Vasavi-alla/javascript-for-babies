@@ -242,7 +242,7 @@ export const lesson311: LessonDef = {
       <p>
         And here is your career quietly beginning: pure, composed functions are exactly what unit
         tests are written against. <code>expect(tipAmount(1200, 10)).toBe(120)</code> — one line,
-        no setup, no browser, no server. In Phase 9 you’ll write precisely that with Vitest, and
+        no setup, no browser, no server. In Phase 10 you’ll write precisely that with Vitest, and
         the functions you wrote today would pass those tests unchanged. You didn’t just finish
         functions; you built your first testable unit.
       </p>

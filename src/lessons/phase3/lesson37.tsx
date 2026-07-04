@@ -232,7 +232,7 @@ export const lesson37: LessonDef = {
     {
       id: 'wrap',
       caption:
-        'Name it: a CLOSURE is a function bundled with the variables from the place it was born. Every makeCounter() call hands out a fresh backpack — two counters never share. You’ll meet closures constantly: event handlers, Playwright helpers, React hooks — all backpacks.',
+        'Name it: a CLOSURE is a function bundled with the variables from the place it was born. Every makeCounter() call hands out a fresh backpack — two counters never share. You’ll meet closures constantly: event handlers, Playwright helpers, and half the tools in your future — all backpacks.',
     },
   ],
   Viz: ClosureBackpack,
@@ -245,8 +245,9 @@ export const lesson37: LessonDef = {
       </p>
       <p>
         When the engine sees an inner function referencing an outer variable, it keeps that
-        variable alive on the heap instead of destroying it with the stack frame. The inner
-        function “closes over” the variable — hence the name.
+        variable alive in a longer-lived area of memory (called the heap — Phase 4 draws it
+        properly) instead of destroying it with the stack frame. The inner function “closes over”
+        the variable — hence the name.
       </p>
       <p>
         Two facts worth engraving: closures capture the <em>variable</em>, not a snapshot of its

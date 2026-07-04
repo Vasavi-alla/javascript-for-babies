@@ -199,7 +199,7 @@ export const lesson03: LessonDef = {
     },
     {
       id: 'predict-math',
-      caption: 'Now look closely at line 3. No quotes this time: console.log(2 + 3). Predict before you continue.',
+      caption: 'Now look closely at line 3. No quotes this time: console.log(2 + 3). What will the console show — the math worked out, or the characters as written?',
       highlightLines: [3],
       prediction: {
         question: 'Line 3 is console.log(2 + 3) — with no quotes. What appears in the console?',
@@ -248,11 +248,13 @@ export const lesson03: LessonDef = {
         That’s why <code>console.log(2 + 3)</code> receives a finished 5, never the recipe for it.
       </p>
       <p>
-        And here’s the empowering part: <strong>you already own this tool.</strong> In your real
-        browser, right now, press <strong>F12</strong> (or right-click → Inspect) and open the{' '}
-        <strong>Console</strong> tab. Type <code>console.log("I’m talking to a machine")</code> and
-        press Enter. That console is one of the developer tools — DevTools — and as an automation
-        tester you’ll open it hundreds of times a week.
+        And here’s the empowering part: <strong>you already own this tool.</strong> On a computer,
+        press <strong>F12</strong> in your real browser right now (or right-click → Inspect) and
+        open the <strong>Console</strong> tab. Type{' '}
+        <code>console.log("I’m talking to a machine")</code> and press Enter. (On an iPad there’s
+        no F12 — use the live console below instead; it’s the same conversation.) That console is
+        one of the developer tools — DevTools — and as an automation tester you’ll open it
+        hundreds of times a week.
       </p>
     </>
   ),

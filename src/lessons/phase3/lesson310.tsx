@@ -199,6 +199,11 @@ function PureViz({ stepIndex }: { stepIndex: number }) {
             same inputs → same output, touches nothing else
           </text>
         </g>
+        {stepIndex >= 7 && (
+          <text x={220} y={205} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-teal)">
+            testable in ONE line: expect(add(2, 3)).toBe(5) — no setup, no cleanup
+          </text>
+        )}
       </svg>
       <ConsolePane lines={scene.lines} />
     </div>

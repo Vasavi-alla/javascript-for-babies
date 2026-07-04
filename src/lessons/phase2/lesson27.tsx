@@ -28,7 +28,7 @@ const NESTED_CODE = `for (let row = 1; row <= 3; row++) {
   }
 }`
 
-function StationTrack({ mode }: { mode: 'break' | 'continue' }) {
+function StationTrack({ mode, pending }: { mode: 'break' | 'continue'; pending?: boolean }) {
   const stations = mode === 'break' ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5]
   const special = mode === 'break' ? 4 : 3
   return (
@@ -38,7 +38,7 @@ function StationTrack({ mode }: { mode: 'break' | 'continue' }) {
       </text>
       {stations.map((n, idx) => {
         const x = 40 + idx * 64
-        const visited = mode === 'break' ? n < special : n !== special
+        const visited = pending ? false : mode === 'break' ? n < special : n !== special
         const isSpecial = n === special
         return (
           <g key={n} opacity={mode === 'break' && n > special ? 0.3 : 1}>
@@ -68,6 +68,10 @@ function StationTrack({ mode }: { mode: 'break' | 'continue' }) {
             EJECT — loop over, stations 5–6 never visited
           </text>
         </>
+      ) : pending ? (
+        <text x={130} y={60} fontFamily="var(--font-hand)" fontSize={16} fontWeight={700} fill="var(--color-marker-coral)">
+          i === 3 → continue… then what?
+        </text>
       ) : (
         <>
           <HandArrow from={{ x: 175, y: 100 }} to={{ x: 240, y: 100 }} seed={491} stroke="var(--color-marker-coral)" curve={-0.6} />
@@ -77,18 +81,23 @@ function StationTrack({ mode }: { mode: 'break' | 'continue' }) {
         </>
       )}
       <text x={40} y={240} fontFamily="var(--font-code)" fontSize={13} fill="var(--color-ink)">
-        console: {mode === 'break' ? '1  2  3' : '1  2  4  5'}
+        console: {pending ? '?' : mode === 'break' ? '1  2  3' : '1  2  4  5'}
       </text>
     </svg>
   )
 }
 
-function GridDraw({ cells }: { cells: number }) {
+function GridDraw({ cells, badge }: { cells: number; badge?: string }) {
   return (
     <svg viewBox="0 0 440 280" className="w-full">
       <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
         nested loops draw a grid — inner spins fast, outer clicks slow
       </text>
+      {badge && (
+        <text x={40} y={48} fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-coral)">
+          {badge}
+        </text>
+      )}
       {Array.from({ length: 12 }, (_, k) => {
         const row = Math.floor(k / 4)
         const col = k % 4
@@ -111,9 +120,10 @@ function GridDraw({ cells }: { cells: number }) {
 
 function EscapeViz({ stepIndex }: { stepIndex: number }) {
   if (stepIndex <= 1) return <StationTrack mode="break" />
+  if (stepIndex === 2) return <StationTrack mode="continue" pending />
   if (stepIndex <= 4) return <StationTrack mode="continue" />
   const cells = stepIndex === 5 ? 5 : 12
-  return <GridDraw cells={cells} />
+  return <GridDraw cells={cells} badge={stepIndex >= 7 ? 'break/continue touch only the INNERMOST loop they sit in' : undefined} />
 }
 
 export const lesson27: LessonDef = {
@@ -151,24 +161,15 @@ export const lesson27: LessonDef = {
     },
     {
       id: 'predict-continue',
-      caption: 'Now the other hatch. Same track, but at i === 3 we say continue instead. Predict the console.',
+      caption:
+        'Now the other hatch. Same track, but at i === 3 we say continue instead of break. Another ejector seat that ends the loop — or something gentler? What does the console show?',
       codeOverride: CONTINUE_CODE,
       highlightLines: [2, 3],
-      prediction: {
-        question: 'With continue when i === 3, what does this loop print?',
-        options: [
-          '1  2 — continue stops the loop like break',
-          '1  2  4  5 — lap 3 is abandoned, but the loop rolls on',
-          '1  2  3  4  5 — continue does nothing here',
-        ],
-        correctIndex: 1,
-        why: 'continue abandons the REST of the current lap (the console.log below it never runs) and jumps straight to the update-then-check. The loop itself survives: laps 4 and 5 happen normally. break kills the loop; continue only skips a lap — that’s the whole difference.',
-      },
     },
     {
       id: 'continue',
       caption:
-        'Station 3 gets bypassed on the skip ramp; everything else prints: 1 2 4 5. Typical use: “if this entry is invalid, skip it” — filtering without stopping.',
+        '1 2 4 5 — station 3 was abandoned, but the loop rolled on. continue abandons the REST of the current lap (the console.log below it never runs for i = 3) and jumps straight to update-and-check. break kills the loop; continue skips a lap. Typical use: “if this entry is invalid, skip it.”',
       codeOverride: CONTINUE_CODE,
       highlightLines: [3, 5],
     },
@@ -259,7 +260,7 @@ export const lesson27: LessonDef = {
     prompt:
       'Explain to a friend: break vs continue (ejector seat vs skip ramp), how nested loops multiply, and which loop a break inside a nested loop actually escapes.',
     modelAnswer:
-      'break and continue are a loop’s two escape hatches. break is the ejector seat: the whole loop ends instantly, remaining laps never happen — perfect when you’ve found what you were searching for. continue is the skip ramp: it abandons just the rest of the current lap and jumps to the next check, so the loop rolls on — perfect for skipping invalid entries. Nested loops are loops inside loops, and they MULTIPLY: 3 outer laps × 4 inner laps = 12 runs of the inner body, like a clock’s minute hand doing a full circle per click of the hour hand. And a break (or continue) only affects the innermost loop it sits in — escaping the inner loop just lands you in the outer loop’s next lap. Fun fact: these disciplined jumps replaced the chaotic goto after Dijkstra’s famous 1968 letter “Go To Statement Considered Harmful.”',
+      'break and continue are a loop’s two escape hatches. break is the ejector seat: the whole loop ends instantly, remaining laps never happen — perfect when you’ve found what you were searching for. continue is the skip ramp: it abandons just the rest of the current lap and jumps to the next check, so the loop rolls on — perfect for skipping invalid entries. Nested loops are loops inside loops, and they MULTIPLY: 3 outer laps × 4 inner laps = 12 runs of the inner body, like a clock’s minute hand doing a full circle per click of the hour hand. And a break (or continue) only affects the innermost loop it sits in — escaping the inner loop just lands you in the outer loop’s next lap.',
   },
   recap: [
     'break = ejector seat (whole loop ends now). continue = skip ramp (abandon this lap, keep looping).',

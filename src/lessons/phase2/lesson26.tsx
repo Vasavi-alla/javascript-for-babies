@@ -178,22 +178,13 @@ export const lesson26: LessonDef = {
     },
     {
       id: 'predict-checks',
-      caption: 'The loop will print runs #1 through #5. Here’s the counting question that separates readers from tracers:',
+      caption:
+        'The loop will print runs #1 through #5 — the body runs 5 times. Here’s the counting question that separates readers from tracers: how many times does the CHECK (i <= 5) run in total?',
       highlightLines: [1],
-      prediction: {
-        question: 'The body runs 5 times. How many times does the CHECK (i <= 5) run in total?',
-        options: [
-          '5 times — once per lap',
-          '6 times — five yeses and one final no',
-          '4 times',
-        ],
-        correctIndex: 1,
-        why: 'Same as the while gate in lesson 2.5: every lap needs a yes (5 of them), and the loop only ENDS on a no — the sixth check, when i has become 6 and 6 <= 5 fails. Checks = laps + 1. This tiny asymmetry is the root of a thousand off-by-one bugs.',
-      },
     },
     {
       id: 'exit',
-      caption: 'And there’s the ending: i reaches 6, the check says no, exit to "All done!".',
+      caption: 'Six — five yeses and one final no. i reaches 6, the check 6 <= 5 fails, exit to "All done!". Checks = laps + 1, always — this tiny asymmetry is the root of a thousand off-by-one bugs.',
       highlightLines: [4],
     },
     {
@@ -256,7 +247,7 @@ export const lesson26: LessonDef = {
     prompt:
       'Explain the for loop to a friend: what are the three slots, when does each run, and why do checks outnumber laps by exactly one?',
     modelAnswer:
-      'A for loop packs the counter pattern into three labeled slots: for (init; check; update). Init runs exactly once — it creates the counter. Then the machine cycles: check the condition; if true, run the body, then run the update, then check again. So for five laps, the check actually runs six times — five yeses and the final no that ends the loop (checks = laps + 1, the root of off-by-one bugs). It’s the same engine as a while loop, just with the counter’s whole life — birth, boundary, change — visible in one line, which is why you can’t accidentally forget the update and freeze the tab. Fun fact: counters are called i because FORTRAN made I-through-N variables integers in 1957, and the habit never died.',
+      'A for loop packs the counter pattern into three labeled slots: for (init; check; update). Init runs exactly once — it creates the counter. Then the machine cycles: check the condition; if true, run the body, then run the update, then check again. So for five laps, the check actually runs six times — five yeses and the final no that ends the loop (checks = laps + 1, the root of off-by-one bugs). It’s the same engine as a while loop, just with the counter’s whole life — birth, boundary, change — visible in one line, which is why you can’t accidentally forget the update and freeze the tab.',
   },
   recap: [
     'for (init; check; update): init once, then check → body → update forever until the check says no.',

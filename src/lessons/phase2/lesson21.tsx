@@ -85,6 +85,11 @@ function FlowRoad({ stepIndex }: { stepIndex: number }) {
           </motion.g>
         )}
       </AnimatePresence>
+      {stepIndex >= 6 && (
+        <text x={24} y={24} fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
+          else is optional — an if alone means “maybe do this, then continue”
+        </text>
+      )}
     </svg>
   )
 }
@@ -213,7 +218,7 @@ export const lesson21: LessonDef = {
     {
       id: 'else-road',
       caption:
-        'Down the false road. Look at the left branch: grayed out, never ran. Remember lesson 0.5, where an error made line 3 unreachable? Same “never ran” — but this time by design. Choosing which code does NOT run is half the power of if.',
+        '“Adults only.” — the traveler took the false road. Look at the left branch: grayed out, never ran. Remember lesson 0.5, where an error made line 3 unreachable? Same “never ran” — but this time by design. Choosing which code does NOT run is half the power of if.',
       highlightLines: [4, 5],
     },
     {

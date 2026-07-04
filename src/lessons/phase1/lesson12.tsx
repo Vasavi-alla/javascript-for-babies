@@ -122,7 +122,7 @@ export const lesson12: LessonDef = {
     },
     {
       id: 'predict-use',
-      caption: 'Now line 2 runs: console.log(age). Notice — no quotes around age. Predict.',
+      caption: 'Now line 2 runs: console.log(age). Notice — no quotes around age. So what lands in the console: the word age, or something else?',
       highlightLines: [2],
       prediction: {
         question: 'Line 2 is console.log(age) — no quotes. What appears in the console?',

@@ -280,7 +280,7 @@ export const lesson48: LessonDef = {
       </p>
       <p>
         All of today's loops <em>read</em>; none of them copy. The loop variable receives what the
-        collection holds — which, for elements that are objects, is an arrow (4.4 forever): mutate{' '}
+        collection holds — which, for elements that are objects, is an arrow (4.6 forever): mutate{' '}
         <code>item.done = true</code> inside a loop and you've changed the real thing.
       </p>
     </>

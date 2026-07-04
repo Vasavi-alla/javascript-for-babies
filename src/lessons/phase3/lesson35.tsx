@@ -324,9 +324,9 @@ export const lesson35: LessonDef = {
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the spec has a
-        deliciously spooky name for one corner of scope: the zone between entering a block and
-        reaching a <code>let</code> line — where the variable exists but may not be touched yet —
-        is officially called the <em>Temporal Dead Zone</em>. Yes, that's the real term standards
+        deliciously spooky name for one corner of scope: the stretch of code above a{' '}
+        <code>let</code> line — where using the name throws an error instead of answering — is
+        officially called the <em>Temporal Dead Zone</em>. Yes, that's the real term standards
         engineers use, and yes, it sounds like a sci-fi movie.
       </p>
     </>

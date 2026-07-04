@@ -143,7 +143,7 @@ export const lesson13: LessonDef = {
     },
     {
       id: 'predict',
-      caption: 'So knowing that = means “put into”… predict what this line actually does.',
+      caption: 'So knowing that = means “put into”… what does this line actually do?',
       highlightLines: [2],
       prediction: {
         question: 'What does score = score + 5 do?',

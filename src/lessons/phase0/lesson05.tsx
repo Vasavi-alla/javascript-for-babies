@@ -190,7 +190,7 @@ export const lesson05: LessonDef = {
     {
       id: 'fixed',
       caption:
-        'We fix the single letter — lgo → log — and run again. Everything flows. That’s the whole ritual, and you’ll repeat it thousands of times: read the category, read the message, go where it points, fix, re-run. The red text handed you the solution.',
+        'It never printed — the error stopped the program at line 2, so line 3 was never reached: everything BEFORE an error already ran, everything AFTER never runs. Now we fix the single letter — lgo → log — and run again. Everything flows. That’s the ritual you’ll repeat thousands of times: read it, go where it points, fix, re-run.',
       codeOverride: FIXED_CODE,
       highlightLines: [2],
     },

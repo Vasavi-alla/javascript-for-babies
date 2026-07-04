@@ -162,7 +162,7 @@ export const lesson15: LessonDef = {
     {
       id: 'line',
       caption:
-        'Picture every number living on a line. Math operations are just movement on it: + hops right, − hops left, * and / stretch and squeeze. The operators you know — plus two new friends coming up.',
+        'Picture every number living on a line. Math operations are just movement on it: + hops right, − hops left, * and / stretch and squeeze. The operators you know — plus one operator nobody learned in school, coming up.',
       highlightLines: [1],
     },
     {
@@ -189,7 +189,7 @@ export const lesson15: LessonDef = {
     },
     {
       id: 'predict-float',
-      caption: 'And now the famous one. Line 4: 0.1 + 0.2. Surely… 0.3? Commit to a prediction.',
+      caption: 'And now the famous one. Line 4: 0.1 + 0.2. Surely… 0.3?',
       highlightLines: [4],
       prediction: {
         question: 'What does console.log(0.1 + 0.2) print?',
@@ -259,7 +259,7 @@ export const lesson15: LessonDef = {
       <p>
         For comparing decimals in tests, remember the pattern “difference smaller than a speck”:{' '}
         <code>Math.abs(a - b) &lt; 0.000001</code> — test frameworks wrap exactly this idea in an
-        assertion called <code>toBeCloseTo</code>, which you’ll use in Phase 9.
+        assertion called <code>toBeCloseTo</code>, which you’ll use in Phase 10.
       </p>
     </>
   ),

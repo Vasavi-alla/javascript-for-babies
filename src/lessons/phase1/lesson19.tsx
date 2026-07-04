@@ -150,7 +150,7 @@ export const lesson19: LessonDef = {
     },
     {
       id: 'predict-loose',
-      caption: 'Now the comparisons. Line 3 asks: is 5 == "5"? A number versus a string. Predict.',
+      caption: 'Now the comparisons. Line 3 asks: is 5 == "5"? A number versus a string — can they be equal?',
       highlightLines: [3],
       prediction: {
         question: 'What does 5 == "5" evaluate to?',

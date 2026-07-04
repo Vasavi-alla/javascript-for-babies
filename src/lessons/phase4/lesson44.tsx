@@ -55,6 +55,8 @@ interface View {
   note: string | null
   outToken: string | null
   console: string[]
+  /** small appearing annotation for elaboration-only steps */
+  badge?: string
 }
 
 const BASE: Compartment[] = [
@@ -92,6 +94,7 @@ const VIEWS: View[] = [
     comps: [GREET[0], { ...GREET[1], state: 'read' }, GREET[2]],
     name: 'greetings',
     note: 'lang  →  "ta"', outToken: '"Vanakkam!"', console: ['Vanakkam!', 'undefined'],
+    badge: 'brackets exist for RUNTIME keys: settings[toggle], config[environment]',
   },
   {
     comps: [...BASE, { k: 'rating', v: '5', state: 'new' }],
@@ -203,6 +206,27 @@ function ObjectLocker({ stepIndex }: { stepIndex: number }) {
               {view.outToken}
             </text>
           </motion.g>
+        )}
+      </AnimatePresence>
+
+      {/* elaboration badge */}
+      <AnimatePresence>
+        {view.badge && (
+          <motion.text
+            key={view.badge}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            x={220}
+            y={250}
+            textAnchor="middle"
+            fontFamily="var(--font-hand)"
+            fontSize={12.5}
+            fontWeight={700}
+            fill="var(--color-marker-coral)"
+          >
+            {view.badge}
+          </motion.text>
         )}
       </AnimatePresence>
 

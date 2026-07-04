@@ -134,7 +134,10 @@ console.log(\`\${hero} of \${place} has power \${power}!\`);`
           <div className="border-ink-soft/40 border-t border-dashed pt-3 text-[15px]">
             <p className="font-hand text-xl font-semibold">🎓 The real graduation:</p>
             <ol className="mt-1 list-decimal pl-5">
-              <li>Press F12 in this very browser → open the Console tab.</li>
+              <li>
+                On a computer: press F12 in this very browser → open the Console tab. (On iPad
+                there’s no console — save this step for the next time you’re at a computer.)
+              </li>
               <li>Type your five lines yourself (typos welcome — you can read errors now).</li>
               <li>
                 Then break it on purpose: try reassigning hero. Read the TypeError like the old
@@ -179,7 +182,7 @@ export const lesson111: LessonDef = {
     },
     {
       id: 'predict-story',
-      caption: 'Line 5 is one template literal with three slots. Predict the exact output.',
+      caption: 'Line 5 is one template literal with three slots. What exactly comes out?',
       highlightLines: [5],
       prediction: {
         question: 'What exactly does line 5 print?',

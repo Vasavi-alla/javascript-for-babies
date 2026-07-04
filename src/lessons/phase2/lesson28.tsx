@@ -39,11 +39,12 @@ function chipColor(value: string): string | undefined {
 }
 
 // which i the viz walks through, per step
-const WALK: Array<number> = [0, 3, 5, 15, 15, 15, 15]
+const WALK: Array<number> = [0, 3, 5, 15, 15, 15, 15, 15]
 
 function FizzBuzzGates({ stepIndex }: { stepIndex: number }) {
   const n = WALK[stepIndex] ?? 0
-  const showRun = stepIndex >= 6
+  const showRun = stepIndex >= 7
+  const reordered = stepIndex === 4
   if (showRun) {
     return (
       <svg viewBox="0 0 440 300" className="w-full">
@@ -69,16 +70,22 @@ function FizzBuzzGates({ stepIndex }: { stepIndex: number }) {
       </svg>
     )
   }
-  const gates = [
-    { label: 'i % 15 === 0 ?', pass: n % 15 === 0, out: '"FizzBuzz"' },
-    { label: 'i % 3 === 0 ?', pass: n % 3 === 0, out: '"Fizz"' },
-    { label: 'i % 5 === 0 ?', pass: n % 5 === 0, out: '"Buzz"' },
-  ]
+  const gates = reordered
+    ? [
+        { label: 'i % 3 === 0 ?', pass: n % 3 === 0, out: '"Fizz"' },
+        { label: 'i % 5 === 0 ?', pass: n % 5 === 0, out: '"Buzz"' },
+        { label: 'i % 15 === 0 ?', pass: n % 15 === 0, out: '"FizzBuzz"' },
+      ]
+    : [
+        { label: 'i % 15 === 0 ?', pass: n % 15 === 0, out: '"FizzBuzz"' },
+        { label: 'i % 3 === 0 ?', pass: n % 3 === 0, out: '"Fizz"' },
+        { label: 'i % 5 === 0 ?', pass: n % 5 === 0, out: '"Buzz"' },
+      ]
   let stopped = false
   return (
     <svg viewBox="0 0 440 300" className="w-full">
       <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
-        {n === 0 ? 'the gate corridor (from lesson 2.3)' : `walking i = ${n} through the gates`}
+        {n === 0 ? 'the gate corridor (from lesson 2.3)' : reordered ? 'the TRAP: gates reordered — %3 checked first' : `walking i = ${n} through the gates`}
       </text>
       {n > 0 && (
         <g>
@@ -113,6 +120,16 @@ function FizzBuzzGates({ stepIndex }: { stepIndex: number }) {
           </g>
         )
       })}
+      {reordered && (
+        <>
+          <text x={302} y={212} fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-coral)">
+            ← never consulted:
+          </text>
+          <text x={302} y={228} fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-coral)">
+            dead code, forever
+          </text>
+        </>
+      )}
       <g opacity={n > 0 && stopped ? 0.3 : 1}>
         <RoughRect x={130} y={256} width={160} height={40} seed={536} />
         <text x={210} y={281} textAnchor="middle" fontFamily="var(--font-code)" fontSize={12} fill="var(--color-ink)">
@@ -167,9 +184,11 @@ function FizzBuzzExplorer() {
       <div className="border-ink-soft/40 mt-4 border-t border-dashed pt-3 text-[15px]">
         <p className="font-hand text-xl font-semibold">🎓 The real graduation:</p>
         <p className="mt-1">
-          Open your browser console (F12) and write FizzBuzz from scratch — no peeking at the code
-          above. Then the twist interviewers love: change it to print “Jazz” for multiples of 7.
-          Where does the new gate go, and why? (Think 21. Think 35. Think 105.)
+          On a computer, open your browser console (F12) and write FizzBuzz from scratch — no
+          peeking at the code above. (On iPad there’s no console — talk each number through the
+          gates out loud, checking yourself with the explorer above.) Then the twist interviewers
+          love: change it to print “Jazz” for multiples of 7. Where does the new gate go, and why?
+          (Think 21. Think 35. Think 105.)
         </p>
       </div>
     </StickyNote>
@@ -214,23 +233,19 @@ export const lesson28: LessonDef = {
     {
       id: 'predict-order',
       caption:
-        'Now THE trap. i = 15 is divisible by 3 AND 5 AND 15. Our corridor checks %15 first. But suppose someone “simplifies” and puts the %3 gate FIRST. Predict what happens to 15.',
+        'Now THE trap. i = 15 is divisible by 3 AND 5 AND 15. Our corridor checks %15 first. But suppose someone “simplifies” and puts the %3 gate FIRST. What happens to 15?',
       highlightLines: [2, 4],
-      prediction: {
-        question: 'If the gates were ordered %3, %5, %15 — what would print for i = 15?',
-        options: [
-          '"FizzBuzz" — 15 is divisible by 15, so that gate still catches it',
-          '"Fizz" — the %3 gate grabs 15 first, and the FizzBuzz branch becomes unreachable dead code',
-          'An error — 15 matches multiple gates',
-        ],
-        correctIndex: 1,
-        why: 'First true wins: 15 % 3 === 0 is true, so "Fizz" prints and the corridor ends — the %15 gate below is never consulted, for ANY number, ever. No error, no warning: the program runs happily and is simply wrong. This exact mistake — most specific condition not placed first — is why FizzBuzz filters candidates. You just passed.',
-      },
+    },
+    {
+      id: 'order-trap',
+      caption:
+        '“Fizz”. Watch it happen: 15 hits the %3 gate first — true — so “Fizz” prints and the corridor ends. The %15 gate below is never consulted, for ANY number, ever: the FizzBuzz branch is dead code. No error, no warning — the program runs happily and is simply wrong.',
+      highlightLines: [4, 5],
     },
     {
       id: 'why-15',
       caption:
-        'So the specific gate goes first: %15 catches “divisible by both” (3 × 5 = 15 — a number divisible by both 3 and 5 is exactly a multiple of 15). Order = logic, exactly as lesson 2.3 warned.',
+        'So the specific gate goes first: %15 catches “divisible by both” (3 × 5 = 15 — a number divisible by both 3 and 5 is exactly a multiple of 15). Order = logic, exactly as lesson 2.3 warned — and one well-chosen input, 15, exposes the whole trap.',
       highlightLines: [2, 3],
     },
     {
@@ -259,7 +274,7 @@ export const lesson28: LessonDef = {
       <p>
         The values worth checking here: 1 (plain), 3 (Fizz), 5 (Buzz), 15 (the collision), and 0 or
         negative if the range ever changes. Choosing revealing inputs like that has a name you’ll
-        meet formally in Phase 9: boundary testing.
+        meet formally in Phase 10: boundary testing.
       </p>
       <p>
         The dead-code failure mode deserves respect: a mis-ordered FizzBuzz never crashes, never

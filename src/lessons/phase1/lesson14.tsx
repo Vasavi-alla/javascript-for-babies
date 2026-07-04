@@ -208,7 +208,7 @@ export const lesson14: LessonDef = {
     },
     {
       id: 'predict-const',
-      caption: 'And now line 4 tries pi = 3.15. The machine remembers your promise. Predict.',
+      caption: 'And now line 4 tries pi = 3.15. The machine remembers your promise. What happens?',
       highlightLines: [4],
       prediction: {
         question: 'Line 4 says pi = 3.15 — but pi was declared with const. What happens?',
@@ -256,12 +256,11 @@ export const lesson14: LessonDef = {
         more about <em>communication between humans</em>.
       </p>
       <p>
-        One honest fine-print note for later: const welds the <em>label to the box</em> — it does
-        not weld the box shut. For simple values (numbers, strings, booleans) that distinction
-        doesn’t matter: they can’t be changed “in place,” so const truly freezes them. But in Phase
-        4, when boxes start holding <em>arrows</em> to bigger things, you’ll see that a const
-        arrow can still point at a thing whose insides change. File that away; it’ll make perfect
-        sense with the reference picture.
+        One honest note, because this app never lies to you: for every value you know so far —
+        numbers, strings, booleans — <code>const</code> truly freezes things, and what you learned
+        today is the whole story. In Phase 4 you’ll meet bigger kinds of values (arrays, objects)
+        where const carries one surprising piece of fine print. We’ll open it exactly when you can
+        watch it happen — lesson 4.6. A preview, not homework.
       </p>
       <p>
         And <code>var</code>, concretely: it ignores some boundaries that let/const respect — it’s

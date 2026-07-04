@@ -128,6 +128,11 @@ function TernaryScene({ stepIndex }: { stepIndex: number }) {
       <text x={40} y={262} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-ink-soft)">
         what saves us from reading .name of null
       </text>
+      {stepIndex >= 6 && (
+        <text x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
+          taste: ternaries for small either/or — two ?s deep means use if/else
+        </text>
+      )}
     </svg>
   )
 }
@@ -168,7 +173,7 @@ export const lesson24: LessonDef = {
     },
     {
       id: 'predict-default',
-      caption: 'Line 4 uses || in a way that looks odd after lesson 1.10: assigning it to a variable. Predict what nickname becomes.',
+      caption: 'Line 4 uses || in a way that looks odd after lesson 1.10: assigning it to a variable. What ends up in nickname?',
       highlightLines: [4],
       prediction: {
         question: 'let nickname = "" || "Anonymous"; — what ends up in nickname?',

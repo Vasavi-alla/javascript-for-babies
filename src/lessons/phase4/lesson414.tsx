@@ -238,7 +238,7 @@ export const lesson414: LessonDef = {
     {
       id: 'filter-failures',
       caption:
-        'Question one: how many failed? runs.filter(r => !r.passed) — the gate function reads each object’s passed property and flips it with ! (lesson 2.x’s NOT, still earning). Objects pass through the gate WHOLE — failed is an array of the two complete failure records, not just names. And per 4.6: it holds arrows to the SAME objects, not copies.',
+        'Question one: how many failed? runs.filter(r => !r.passed) — the gate function reads each object’s passed property and flips it with ! (lesson 1.10’s NOT, still earning). Objects pass through the gate WHOLE — failed is an array of the two complete failure records, not just names. And per 4.6: it holds arrows to the SAME objects, not copies.',
       highlightLines: [8, 9],
     },
     {
