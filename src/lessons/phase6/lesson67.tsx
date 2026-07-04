@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { SvgBadge } from '../../design/SvgBadge'
 
 /**
  * 6.7 — fetch & APIs
@@ -125,8 +126,7 @@ function NetworkRoundTrip({ stepIndex }: { stepIndex: number }) {
       <AnimatePresence mode="wait">
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <RoughRect x={44} y={252} width={352} height={30} seed={1073} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={271} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={9.5} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={9.5} /></text>
+            <SvgBadge text={view.badge} cx={220} cy={267} width={352} fontSize={9.5} seed={1073} color="var(--color-pencil-blue)" />
           </motion.g>
         )}
       </AnimatePresence>

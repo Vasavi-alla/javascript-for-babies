@@ -24,7 +24,8 @@ interface WrapTspansProps {
   lineHeight?: number
 }
 
-export function WrapTspans({ text, x, maxPx, fontSize, code, lineHeight }: WrapTspansProps) {
+/** Greedy word-wrap by estimated character width. Exported for components that must size a container to the text (see SvgBadge). */
+export function wrapLines(text: string, maxPx: number, fontSize: number, code?: boolean): string[] {
   const perChar = fontSize * (code ? 0.62 : 0.46)
   const maxChars = Math.max(10, Math.floor(maxPx / perChar))
 
@@ -40,7 +41,11 @@ export function WrapTspans({ text, x, maxPx, fontSize, code, lineHeight }: WrapT
     }
   }
   if (line) lines.push(line)
+  return lines
+}
 
+export function WrapTspans({ text, x, maxPx, fontSize, code, lineHeight }: WrapTspansProps) {
+  const lines = wrapLines(text, maxPx, fontSize, code)
   const lh = lineHeight ?? Math.round(fontSize * 1.15)
   return (
     <>

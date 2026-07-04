@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { SvgBadge } from '../../design/SvgBadge'
 
 /**
  * 5.1 — Execution contexts: the two passes
@@ -48,7 +49,7 @@ const VIEWS: View[] = [
   },
   {
     phase: 'scan', scanLine: null, runLine: null, registry: [], console: [],
-    note: 'that context fills in TWO visits: pass 1 — CREATION (fill the table), then pass 2 — EXECUTION (run the lines). Watch pass 1 first.',
+    note: 'the context fills in TWO visits: pass 1 CREATION (fill the table), pass 2 EXECUTION (run the lines)',
   },
   {
     phase: 'scan', scanLine: 3, runLine: null,
@@ -173,8 +174,7 @@ function TwoPassScanner({ stepIndex }: { stepIndex: number }) {
       <AnimatePresence>
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
-            <RoughRect x={40} y={190} width={360} height={30} seed={834} strokeWidth={1.8} stroke="var(--color-marker-coral)" fill="color-mix(in srgb, var(--color-marker-coral) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={209} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11} fontWeight={700} fill="var(--color-marker-coral)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={11} /></text>
+            <SvgBadge text={view.badge} cx={220} cy={205} width={360} fontSize={11} seed={834} color="var(--color-marker-coral)" />
           </motion.g>
         )}
       </AnimatePresence>

@@ -41,7 +41,7 @@ const VIEWS: View[] = [
   },
   {
     stack: ['global'], webApi: '⏲ 0ms timer + callback', queue: [], armActive: false, console: ['1'],
-    note: 'setTimeout(callback, 0) registers — the timer AND the callback move to the Web APIs, off the stack. It returns INSTANTLY; nothing here has run yet',
+    note: 'setTimeout(callback, 0) registers: timer + callback move to the Web APIs, off the stack — and it returns INSTANTLY',
   },
   {
     stack: ['global'], webApi: null, queue: ['() => log("3")'], armActive: false, console: ['1'],

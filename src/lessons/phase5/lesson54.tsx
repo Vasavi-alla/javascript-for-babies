@@ -71,7 +71,7 @@ const ROW_ARROWS_TRACE: Row = { ...ROW_ARROWS, extra: 'traced: hatch called via 
 const VIEWS: View[] = [
   {
     rows: [], console: [],
-    note: 'this.name can’t be answered by reading the function alone — it’s decided at CALL time. Watch the SAME function, called several ways, fill in the table below.',
+    note: 'this.name can’t be answered by reading the function alone — it’s decided at CALL time. Watch the table fill in.',
   },
   {
     rows: [ROW_IMPLICIT_PENDING], console: [],
@@ -87,7 +87,7 @@ const VIEWS: View[] = [
   },
   {
     rows: [ROW_IMPLICIT, ROW_DEFAULT], console: ['Biscuit', 'undefined'],
-    note: 'Revealed: this is lost. Rule two, DEFAULT: no dot means this falls back to the global object (or undefined in strict mode) — same function, different call, different answer.',
+    note: 'Revealed: this is lost. Rule two, DEFAULT: no dot → the global object (or undefined in strict mode)',
   },
   {
     rows: [ROW_IMPLICIT, ROW_DEFAULT_BUG], console: ['Biscuit', 'undefined'],

@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { SvgBadge } from '../../design/SvgBadge'
 
 /**
  * 5.5 — Prototypes
@@ -158,8 +159,7 @@ function PrototypeChain({ stepIndex }: { stepIndex: number }) {
       <AnimatePresence mode="wait">
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
-            <RoughRect x={44} y={252} width={352} height={26} seed={897} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={269} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={10} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={10} /></text>
+            <SvgBadge text={view.badge} cx={220} cy={265} width={352} fontSize={10} seed={897} color="var(--color-pencil-blue)" />
           </motion.g>
         )}
       </AnimatePresence>
