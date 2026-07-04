@@ -139,3 +139,53 @@ Swept every forward-reference phrase ("file that away", "hold that thought", "pr
 10. B/2.8: the mis-ordered-corridor visualization step.
 
 *(Also: once Phase 8+ is built, wire the same read-through against 7.9's closing pointers — it currently promises Phase 8 = tooling, Phase 9 = Node, Phase 10 = testing, Phase 11 = Playwright, which matches the registry.)*
+
+---
+
+## F. Round 2.2 — "watch it happen" completeness audit (user-requested: more slides, more explanation)
+
+**Method:** scripted census of all 76 steppers (step count + words per caption; >55 words ≈ 2–3 bundled ideas) cross-checked against the full content read. The Phase 5–7 expansion (2026-07-04) set the working beginner bar: **7–12 steps, one fact per step.** Phases 0–4 never got that pass — and the data shows exactly where they fall short.
+
+### The census verdict
+- **Phases 5–7: healthy.** 8–12 steps everywhere, isolated long captions only (5.4's table rows are legitimately caption-heavy; checkpoints 5.9/7.9 are synthesis).
+- **Phase 4 is the worst offender** — the depth-content lessons were written dense: 4.2 has SIX steps carrying five 55+-word captions (max 92 words in one step!); 4.6 (the phase hero) has six long captions in 8 steps; 4.11 five; 4.3/4.7/4.14 sit at 5 steps; 4.5/4.10 at 6 with long captions.
+- **Phase 3's middle** bundles heavily: 3.3 (the return hero, max 64w), 3.4 (max 72w), 3.5 (3 long) — all at 6–7 steps; 3.6/3.8/3.11 at 6 steps.
+- **Phase 1's foundation** is under-stepped rather than dense: 1.1, 1.3, 1.6, 1.7 at 6 steps; checkpoint 1.11 at just 4; 0.3 at 6.
+
+### Expansion plan, per lesson (proposed new slides in step order)
+
+**Tier 1 — Phase 4 (dense captions → split; ~needs 6→9–13 steps):**
+- **4.2 (6→~10):** split `arithmetic` (92w) into ① the formula fires ② "an index IS a distance" ③ why 0-based falls out of it; split `o1` into ① same math at any size ② the O(1)/O(n) graph read slowly; split `bounds` into ① the bounds check → undefined ② the write-past-the-end aside.
+- **4.6 (8→~13):** split `copy-arrow` into ① what = copies ② "count the objects: still ONE"; `aliasing` into ① the bug in daylight ② the const-mystery resolution; `call-by-value` into ① fresh slot gets a copy ② n changed, lives didn't; `call-by-sharing` into ① arrow copy arrives ② mutation reaches the caller; `reassign-param` into ① build+repoint local ② caller's arrow never moved.
+- **4.11 (8→~12):** split `mirror` (stencil metaphor / keys-do-the-matching), `sugar` (the two commented lines / 4.6-rules-apply), `array-pattern` (position-matching / the hole), `options-object` (the problem: positional-arg memory test / the pattern), `spread` (direction rule / shallow warning).
+- **4.3 (5→~8):** new step for pop/shift **return-value** contrast (currently squeezed into captions); split `shift` into ① remove+return ② watch everyone slide (the O(n) bill); give `unshift` its slide-right beat its own step.
+- **4.10 (6→~9):** split `comparator` (74w) into ① the fix ② the sign contract ③ sort MUTATES → spread-copy trick; split `every` (assert framing separate).
+- **4.5 (6→~9):** split `hash` (fast/deterministic as two beats), `bucket` (number→bucket / re-run on read), `collision` (what collides / why still O(1)).
+- **4.7 (5→~8):** split `spread` into ① new top box ② === compares addresses → {} !== {}; split `betrayal` into ① shared inner write ② structuredClone rebuilds every layer.
+- **4.4 (8→~10):** split `bracket-dynamic` (70w) into ① the runtime-key scenario ② the greetings[lang] walk; `create` (58w) optional split.
+- **4.14 (5→7):** split `filter-failures` and `dashboard` (checkpoint, but captions carry new mechanics).
+- 4.8 minor: split `entries`.
+
+**Tier 2 — Phase 3 (~6→8–10 steps):**
+- **3.3 (6→~10):** split `travel-back` (64w) into ① return fires: machine STOPS ② the value travels back ③ it REPLACES the call; split `use-it` into ① now it's just arithmetic ② calls compose anywhere a value goes; split `sealed` into ① the sealed chute ② window ≠ chute.
+- **3.4 (6→~9):** split `expression` (72w) into ① RHS produces a MACHINE as a value ② stored under the label, no own name; give arrow auto-return its own beat; split `reveal-typeof` (certificate / permission slip).
+- **3.5 (7→~10):** split `bubbles` (braces blow bubbles / vars live where declared), `lookup-inner` (fuel found local / ship one wall out), `lookup-far` (bubble POPPED / two-wall ray).
+- **3.6 (6→8):** add a "return address written on the card" beat and a LIFO/plates beat (currently prose-only).
+- **3.8 (6→8):** add the **cheer() crash case as a watched step** (currently only in UTH/quiz — it's the lesson's biggest gotcha); split `definitions` (socket promise / repeat's contract).
+- 3.11 (6→7, optional): a stack-frames beat during the relay.
+
+**Tier 3 — Phase 0–1 foundation (6→7–9 steps):**
+- **1.6 (6→~9):** add an **immutability slide** — watch `toUpperCase()` build a brand-new train while "Ada" survives (currently UTH-only, and it's the lesson's most bug-saving fact); split `template` (backticks+slots / evaluate-first inside the slot).
+- **1.7 (6→8):** add the **typeof-null gotcha as a watched step** (famous, currently UTH-only) and a side-by-side "two nothings" comparison beat.
+- **1.1 (6→8):** add "the type decides what you're ALLOWED to do" beat (multiply numbers ✓ / multiply sentences ✗) and a "there are more pens coming" roundup beat.
+- **1.3 (6→7):** split `weird-line` (= is an instruction / read it as "gets").
+- **0.3 (6→7):** add a closing "this was your first two-way conversation" beat bridging to the TryConsole below.
+- **1.11 (4→6):** checkpoint is unusually thin vs 2.8's 8 — add a per-slot template walk beat and the `"9000"+1` coercion-trap beat (currently quiz-only).
+- 1.9 (7→8): split `minus-math` (63w — operand gloss deserves its own beat). 1.10 (8→9): split `precedence` (14-not-20 / parens redraw). 0.5: split the new answer+ritual caption. 2.4: split `taste`. 2.7: split `nested` (clock metaphor / grid walk).
+
+**Phase 5–7 stragglers (optional polish):** 7.3 split `classlist` toolkit and `innerhtml-danger`; 7.5 split `delegation` (definition / matches+closest tools); 5.3 split `the-outer-link`.
+
+### Recommended execution
+Mirror the proven Phase 5–7 flow: **pilot 4.2 + 3.3** (worst density + a hero lesson), user verifies in browser, then roll out **Phase 4 → Phase 3 → Phase 1/0 → minor tier**, one phase per session, verifying `VIEWS.length === steps.length` + build per file. Every split must add a matching VIEWS/SCENES entry (or badge) so no step shows a frozen picture.
+
+**✅ EXECUTED IN FULL, 2026-07-04 (user waived the pilot).** 27 lessons expanded per the plan above (see 05-PROGRESS.md for the per-lesson step counts); every split got its own view state; scripted verification passes for all lessons; build green. Bonus: the work surfaced and fixed four pre-existing silent bugs — 4.8 (8 steps/9 views), 4.12 (9 steps/8 views), and missing per-step `codeOverride` in 4.6 (`call-by-sharing`) and 4.11 (`rest`, `spread`) which had been showing the wrong code pane, since `codeOverride` does not persist across steps. Also in this round: the SVG text-overflow fix (`WrapTspans` + 66 codemodded sites + ~20 literals — see 05-PROGRESS.md). Not committed.

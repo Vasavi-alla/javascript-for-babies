@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.1 — Arrays
@@ -182,9 +183,7 @@ function ArrayShelf({ stepIndex }: { stepIndex: number }) {
             fontSize={14}
             fontWeight={700}
             fill="var(--color-marker-coral)"
-          >
-            {view.badge}
-          </motion.text>
+          ><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={14} /></motion.text>
         )}
       </AnimatePresence>
 

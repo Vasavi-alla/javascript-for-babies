@@ -28,7 +28,7 @@ function OutputLine({ y, text, seed }: { y: number; text: string; seed: number }
 }
 
 function ErrorAnatomy({ stepIndex }: { stepIndex: number }) {
-  const fixed = stepIndex >= 7
+  const fixed = stepIndex >= 8
   const showError = stepIndex >= 2 && !fixed
   return (
     <svg viewBox="0 0 480 310" className="w-full">
@@ -188,9 +188,15 @@ export const lesson05: LessonDef = {
       },
     },
     {
+      id: 'never-printed',
+      caption:
+        'It never printed — the error stopped the program at line 2, so line 3 was never reached. Everything BEFORE an error already ran; everything AFTER never runs. That border between “ran” and “never ran” is often the biggest clue.',
+      highlightLines: [3],
+    },
+    {
       id: 'fixed',
       caption:
-        'It never printed — the error stopped the program at line 2, so line 3 was never reached: everything BEFORE an error already ran, everything AFTER never runs. Now we fix the single letter — lgo → log — and run again. Everything flows. That’s the ritual you’ll repeat thousands of times: read it, go where it points, fix, re-run.',
+        'Now we fix the single letter — lgo → log — and run again. Everything flows. That’s the ritual you’ll repeat thousands of times: read the category, read the message, go where it points, fix, re-run.',
       codeOverride: FIXED_CODE,
       highlightLines: [2],
     },

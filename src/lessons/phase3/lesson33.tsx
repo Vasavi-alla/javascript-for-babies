@@ -50,13 +50,33 @@ const VIEWS: View[] = [
     console: [],
   },
   {
+    name: 'double', input: '5', sealed: false, outToken: null,
+    expr: [{ text: 'let result = ', kind: 'plain' }, { text: 'double(5)', kind: 'call' }, { text: ' + 1;', kind: 'plain' }],
+    console: [],
+  },
+  {
     name: 'double', input: '5', sealed: false, outToken: '10',
+    expr: [{ text: 'let result = ', kind: 'plain' }, { text: 'double(5)', kind: 'call' }, { text: ' + 1;', kind: 'plain' }],
+    console: [],
+  },
+  {
+    name: 'double', input: null, sealed: false, outToken: null,
     expr: [{ text: 'let result = ', kind: 'plain' }, { text: '10', kind: 'token' }, { text: ' + 1;', kind: 'plain' }],
     console: [],
   },
   {
     name: 'double', input: null, sealed: false, outToken: null,
     expr: [{ text: 'let result = 11;', kind: 'plain' }],
+    console: ['11'],
+  },
+  {
+    name: 'double', input: null, sealed: false, outToken: null,
+    expr: [{ text: 'let result = 11;', kind: 'plain' }],
+    console: ['11'],
+  },
+  {
+    name: 'shout', input: null, sealed: true, outToken: null,
+    expr: [{ text: 'let y = ', kind: 'plain' }, { text: 'shout("hi")', kind: 'call' }, { text: ';', kind: 'plain' }],
     console: ['11'],
   },
   {
@@ -277,22 +297,46 @@ export const lesson33: LessonDef = {
       highlightLines: [1, 2, 3],
     },
     {
-      id: 'travel-back',
+      id: 'return-fires',
       caption:
-        'Line 5 calls double(5). Inside: n is 5, n * 2 evaluates to 10, and return fires — TWO things happen at once. The machine STOPS instantly (any code below a return never runs), and the value 10 travels back to the call site, where it REPLACES the call. Watch the strip: double(5) just became 10.',
+        'Line 5 calls double(5). Inside the machine: n is 5, n * 2 evaluates to 10 — and return fires. The machine STOPS instantly: any code below a return never runs.',
       highlightLines: [2, 5],
+    },
+    {
+      id: 'travels',
+      caption:
+        'And the finished value travels back — out through the chute, heading for the exact spot the call was made from. Programmers call that spot the CALL SITE.',
+      highlightLines: [2, 5],
+    },
+    {
+      id: 'replaces',
+      caption:
+        'Watch the strip: the 10 lands and REPLACES the call. double(5) is gone; a plain 10 now sits where the call used to be.',
+      highlightLines: [5],
     },
     {
       id: 'use-it',
       caption:
-        'Now line 5 is just arithmetic: 10 + 1 → 11 → stored in result. This is the superpower: because the call becomes its value, you can use calls ANYWHERE a value goes — in math, inside other calls, in an if condition. double(5) + 1 is an expression tree (lesson 1.10) with a machine as one of its leaves.',
+        'Now line 5 is just arithmetic: 10 + 1 → 11 → stored in result.',
+      highlightLines: [5, 6],
+    },
+    {
+      id: 'compose',
+      caption:
+        'This is the superpower: because a call BECOMES its value, you can use calls anywhere a value goes — in math, inside other calls, in an if condition. double(5) + 1 is an expression tree (lesson 1.10) with a machine as one of its leaves.',
       highlightLines: [5, 6],
     },
     {
       id: 'sealed',
       caption:
-        'Now the troublemaker. shout has a console.log inside but NO return — look at the machine: the chute is sealed shut. console.log is not a chute; it’s a window. During the call, text appears on the console for the human to read — but nothing is handed back to the program.',
+        'Now the troublemaker. shout has a console.log inside but NO return — look at the machine: the chute is sealed shut.',
       highlightLines: [8, 9, 10],
+    },
+    {
+      id: 'window',
+      caption:
+        'Because console.log is not a chute — it’s a WINDOW. During the call, text appears on the console for the human to read. Nothing is handed back to the program.',
+      highlightLines: [9],
     },
     {
       id: 'predict',

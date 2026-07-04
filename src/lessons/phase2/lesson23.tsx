@@ -86,7 +86,7 @@ function ChainAndSwitch({ stepIndex }: { stepIndex: number }) {
   const fell = stepIndex >= 5
   return (
     <svg viewBox="0 0 440 300" className="w-full">
-      <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
+      <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={17} fill="var(--color-ink-soft)">
         switch: one value, a ladder of cases (uses ===)
       </text>
       <RoughRect x={40} y={48} width={140} height={38} seed={370} fill="var(--color-marker-yellow)" />
@@ -133,7 +133,7 @@ function ChainAndSwitch({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
       {stepIndex === 7 && (
         <text x={220} y={292} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)">
-          working rules: else-if chains for RANGES · switch for one-value-exact-options
+          else-if chains for RANGES · switch for exact options
         </text>
       )}
       {stepIndex >= 8 && (

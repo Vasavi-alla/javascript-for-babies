@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.9 — map / filter / reduce (flagship)
@@ -232,9 +233,7 @@ function PipelineBelt({ stepIndex }: { stepIndex: number }) {
       {/* note */}
       <AnimatePresence mode="wait">
         {view.note && (
-          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={view.mode === 'idle' ? 140 : 296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
-            {view.note}
-          </motion.text>
+          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={view.mode === 'idle' ? 140 : 296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14.5} /></motion.text>
         )}
       </AnimatePresence>
 

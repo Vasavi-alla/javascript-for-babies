@@ -3,6 +3,7 @@ import { RoughRect } from '../../design/rough-svg'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 5.9 — Checkpoint: the explain-it-all interview
@@ -130,9 +131,7 @@ function InterviewBoard({ stepIndex }: { stepIndex: number }) {
         </motion.g>
       </AnimatePresence>
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={248} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={248} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14} /></motion.text>
       </AnimatePresence>
     </svg>
   )

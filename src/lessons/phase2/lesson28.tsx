@@ -64,7 +64,7 @@ function FizzBuzzGates({ stepIndex }: { stepIndex: number }) {
             </g>
           )
         })}
-        <text x={40} y={272} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-ink-soft)">
+        <text x={40} y={272} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
           the rhythm: every 3rd teal, every 5th yellow, every 15th coral
         </text>
       </svg>

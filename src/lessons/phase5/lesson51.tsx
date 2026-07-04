@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 5.1 — Execution contexts: the two passes
@@ -173,18 +174,14 @@ function TwoPassScanner({ stepIndex }: { stepIndex: number }) {
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }}>
             <RoughRect x={40} y={190} width={360} height={30} seed={834} strokeWidth={1.8} stroke="var(--color-marker-coral)" fill="color-mix(in srgb, var(--color-marker-coral) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={209} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11} fontWeight={700} fill="var(--color-marker-coral)">
-              {view.badge}
-            </text>
+            <text x={220} y={209} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={11} fontWeight={700} fill="var(--color-marker-coral)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={11} /></text>
           </motion.g>
         )}
       </AnimatePresence>
 
       {/* verdict */}
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={240} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={240} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14} /></motion.text>
       </AnimatePresence>
 
       {/* console */}

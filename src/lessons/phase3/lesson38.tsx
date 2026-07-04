@@ -35,7 +35,9 @@ interface Scene {
 
 const SCENES: Scene[] = [
   { plugged: null, lap: null, lines: [] }, // definitions
+  { plugged: null, lap: null, lines: [] }, // the contract
   { plugged: 'cheer', lap: null, lines: [] }, // cheer passed in — not called!
+  { plugged: null, lap: null, lines: [] }, // the gotcha: cheer() would deliver nothing usable
   { plugged: 'cheer', lap: 1, lines: ['Round 1: hooray!'] },
   { plugged: 'cheer', lap: 2, lines: ['Round 1: hooray!', 'Round 2: hooray!'] },
   { plugged: 'cheer', lap: 3, lines: ['Round 1: hooray!', 'Round 2: hooray!', 'Round 3: hooray!'] },
@@ -199,13 +201,25 @@ export const lesson38: LessonDef = {
     {
       id: 'definitions',
       caption:
-        'Two definitions, nothing runs. Look closely at repeat: its second parameter, action, is expected to receive a FUNCTION — and line 3 calls it: action(i). repeat doesn’t know what action will be. It just promises to run it, once per loop lap, handing over the lap number.',
+        'Two definitions, nothing runs. Look closely at repeat: its second parameter, action, is expected to receive a FUNCTION — and line 3 calls it: action(i).',
       highlightLines: [1, 2, 3],
+    },
+    {
+      id: 'the-contract',
+      caption:
+        'repeat doesn’t know what action will be. It just promises: whatever machine you plug into the socket, I’ll press its GO button once per loop lap, handing over the lap number.',
+      highlightLines: [2, 3],
     },
     {
       id: 'passing',
       caption:
         'Line 11: repeat(3, cheer) — and here is the entire lesson in one detail: cheer has NO parentheses. We are not running cheer; we are handing the function itself into the action parameter. The value that arrives is the function — pluggable, callable, waiting.',
+      highlightLines: [11],
+    },
+    {
+      id: 'the-gotcha',
+      caption:
+        'One pair of parentheses changes everything: repeat(3, cheer()) would run cheer NOW, and pass along whatever it returns — undefined, since cheer returns nothing. The socket would receive nothing usable, and repeat would crash trying undefined(1). Handing over a machine means NO parentheses.',
       highlightLines: [11],
     },
     {

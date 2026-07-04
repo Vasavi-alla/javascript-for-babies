@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.7 — Copying & equality
@@ -73,8 +74,14 @@ const VIEWS: View[] = [
   {
     slots: [{ name: 'base', to: 'base' }, { name: 'copy', to: 'copy', hot: true }],
     objs: [BASE_OBJ('dark'), COPY_OBJ('dark'), INNER('true')],
+    console: [],
+    note: { text: 'spread built a genuinely NEW object — its own box, its own address', color: 'teal' },
+  },
+  {
+    slots: [{ name: 'base', to: 'base' }, { name: 'copy', to: 'copy', hot: true }],
+    objs: [BASE_OBJ('dark'), COPY_OBJ('dark'), INNER('true')],
     console: ['false'],
-    note: { text: 'spread built a NEW object — new address, so === says false', color: 'teal' },
+    note: { text: '=== compares ADDRESSES only — matching contents don’t matter', color: 'teal' },
   },
   {
     slots: [{ name: 'base', to: 'base' }, { name: 'copy', to: 'copy' }],
@@ -95,6 +102,13 @@ const VIEWS: View[] = [
     sharedHot: true,
     console: ['false', 'dark', 'false'],
     note: { text: 'copy.flags.beta = false changed the shared object — base sees it too', color: 'coral' },
+  },
+  {
+    slots: [{ name: 'base', to: 'base' }, { name: 'copy', to: 'copy' }],
+    objs: [BASE_OBJ('dark'), COPY_OBJ('light'), INNER('false', true)],
+    sharedHot: true,
+    console: ['false', 'dark', 'false'],
+    note: { text: 'the cure: structuredClone(base) rebuilds EVERY layer — nothing shared', color: 'teal' },
   },
 ]
 
@@ -183,9 +197,7 @@ function SpreadDiagram({ stepIndex }: { stepIndex: number }) {
             fontSize={15}
             fontWeight={700}
             fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}
-          >
-            {view.note.text}
-          </motion.text>
+          ><WrapTspans text={view.note.text} x={220} maxPx={426} fontSize={15} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -285,8 +297,14 @@ export const lesson47: LessonDef = {
     {
       id: 'spread',
       caption:
-        'const copy = { ...base } — spread builds a genuinely NEW object (look: its own box in the heap, its own address) and copies base’s properties into it one by one. That’s why copy === base prints false: === on objects compares ADDRESSES, nothing else. Two boxes, two addresses — even though the contents match. {} === {} is false for exactly the same reason.',
-      highlightLines: [3, 4],
+        'const copy = { ...base } — spread builds a genuinely NEW object (look: its own box in the heap, its own address) and copies base’s properties into it, one by one.',
+      highlightLines: [3],
+    },
+    {
+      id: 'identity',
+      caption:
+        'That’s why copy === base prints false: === on objects compares ADDRESSES, nothing else. Two boxes, two addresses — even though the contents match perfectly. {} === {} is false for exactly the same reason.',
+      highlightLines: [4],
     },
     {
       id: 'top-safe',
@@ -303,7 +321,13 @@ export const lesson47: LessonDef = {
     {
       id: 'betrayal',
       caption:
-        'copy.flags.beta = false follows copy’s flags arrow — into the one shared inner object. base.flags.beta reads false too. The cancel button just corrupted the original settings. When you need every layer independent, you need a DEEP copy: structuredClone(base) rebuilds the whole tree, inner objects included.',
+        'copy.flags.beta = false follows copy’s flags arrow — into the one shared inner object. base.flags.beta reads false too. The cancel button just corrupted the original settings.',
+      highlightLines: [9, 10],
+    },
+    {
+      id: 'deep-copy',
+      caption:
+        'When you need every layer independent, you need a DEEP copy: structuredClone(base) rebuilds the whole tree — inner objects included, nothing shared at any depth.',
       highlightLines: [9, 10],
     },
   ],

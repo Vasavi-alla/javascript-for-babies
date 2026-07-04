@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.11 — Destructuring, spread & rest
@@ -52,14 +53,18 @@ interface View {
 }
 
 const VIEWS: View[] = [
-  { mode: 'object', console: [], note: 'the pattern MIRRORS the shape — variables created from properties, by KEY' },
-  { mode: 'object', console: ['90'], note: 'sugar, not magic: exactly the commented lines — copies of what the slots held (4.6 rules!)' },
+  { mode: 'object', console: [], note: 'the pattern MIRRORS the shape — variables created from properties' },
+  { mode: 'object', console: [], note: 'keys do the matching — order inside the braces is irrelevant' },
+  { mode: 'object', console: ['90'], note: 'sugar, not magic: exactly the commented lines, compressed' },
+  { mode: 'object', console: ['90'], note: 'copies of what the slots HELD: primitives independent, objects = arrows (4.6)' },
   { mode: 'array', console: ['90', 'bronze'], note: 'arrays unpack by POSITION — the hole skips index 1 entirely' },
   { mode: 'swap', console: ['90', 'bronze', '2'], note: 'right side builds [2, 1] FIRST, then unpacks — a swap with no temp variable' },
-  { mode: 'params', console: ['api.shop.com ×3'], note: 'THE real-world use: options objects — the function unpacks only what it names' },
+  { mode: 'params', console: [], note: 'ONE options object instead of five positional arguments — no order to memorize' },
+  { mode: 'params', console: ['api.shop.com ×3'], note: 'the function unpacks only what it names, right in the parameter list' },
   { mode: 'params', console: ['api.shop.com ×3'], note: 'extra fields the function never named (log: true) are simply ignored' },
   { mode: 'rest', console: ['api.shop.com ×3', '2'], note: '...rest GATHERS the leftovers into a fresh array' },
-  { mode: 'spread', console: ['api.shop.com ×3', '2', '[1,2,3]'], note: 'same dots, opposite direction: in a literal, ...spreads OUT (shallow — 4.7!)' },
+  { mode: 'spread', console: ['api.shop.com ×3', '2', '[1,2,3]'], note: 'in a literal, ...spreads OUT — a fresh array, base untouched' },
+  { mode: 'spread', console: ['api.shop.com ×3', '2', '[1,2,3]'], note: 'PATTERN = gather · LITERAL = spread — and both are shallow (4.7!)' },
 ]
 
 function UnpackBoard({ stepIndex }: { stepIndex: number }) {
@@ -183,9 +188,7 @@ function UnpackBoard({ stepIndex }: { stepIndex: number }) {
 
       {/* note + console */}
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={240} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={240} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14} /></motion.text>
       </AnimatePresence>
       <RoughRect x={40} y={256} width={360} height={36} seed={779} strokeWidth={1.5} />
       <text x={52} y={252} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">console</text>
@@ -270,19 +273,31 @@ export const lesson411: LessonDef = {
     {
       id: 'mirror',
       caption:
-        'Read line 7 as a stencil held against the object: const { hp, level } = player. The braces MIRROR the object’s shape, and each name inside becomes a real variable filled from the property with the SAME KEY. Order inside the braces is irrelevant — keys do the matching (this is object land, name-powered, like 4.4 taught).',
+        'Read line 7 as a stencil held against the object: const { hp, level } = player. The braces MIRROR the object’s shape, and each name inside becomes a real variable filled from the property with the SAME KEY.',
       highlightLines: [7, 8],
+    },
+    {
+      id: 'mirror-keys',
+      caption:
+        'Order inside the braces is irrelevant — keys do the matching. This is object land: name-powered, exactly as 4.4 taught.',
+      highlightLines: [7],
     },
     {
       id: 'sugar',
       caption:
-        'Nothing magical happened: line 7 is EXACTLY the two commented lines, compressed. Each new variable receives a copy of what the property slot held — and all of 4.6 still applies: hp got the value 90 (a primitive, independent), but destructure a property holding an object and your new variable holds an ARROW to the same object.',
+        'Nothing magical happened: line 7 is EXACTLY the two commented lines, compressed. Each new variable receives a copy of what the property slot held.',
       highlightLines: [3, 4, 5, 7],
+    },
+    {
+      id: 'sugar-arrows',
+      caption:
+        'And all of 4.6 still applies: hp got the value 90 — a primitive, fully independent. But destructure a property holding an OBJECT and your new variable holds an ARROW to the same object.',
+      highlightLines: [7],
     },
     {
       id: 'array-pattern',
       caption:
-        'Arrays destructure too — but by POSITION, not name, because that’s how arrays are found (4.2 forever). const [first, , third]: first takes index 0, the eerie empty gap is a HOLE that deliberately skips index 1, and third takes index 2. "silver" is simply never bound to anything.',
+        'Arrays destructure too — by POSITION, not name, because that’s how arrays are found (4.2 forever). const [first, , third]: first takes index 0; the eerie empty gap is a HOLE that deliberately skips index 1 ("silver" binds to nothing); third takes index 2.',
       highlightLines: [10, 11, 12],
     },
     {
@@ -292,11 +307,18 @@ export const lesson411: LessonDef = {
       highlightLines: [14, 15, 16, 17],
     },
     {
-      id: 'options-object',
+      id: 'options-problem',
       caption:
-        'Now the reason this syntax conquered JavaScript. New scene: a function with several settings. Passing them as five positional arguments is a memory test (was retries third or fourth?). Instead: the caller passes ONE object, and the function destructures it RIGHT IN THE PARAMETER LIST — connect({ url, retries }). It reads like a form: named fields, any order.',
+        'Now the reason this syntax conquered JavaScript. New scene: a function with several settings. Passing them as five positional arguments is a memory test — was retries third or fourth? Instead, the caller passes ONE object.',
       codeOverride: OPTIONS_CODE,
-      highlightLines: [1, 2, 3, 5, 6],
+      highlightLines: [5, 6],
+    },
+    {
+      id: 'options-unpack',
+      caption:
+        'And the function destructures it RIGHT IN THE PARAMETER LIST — connect({ url, retries }). It reads like a form: named fields, any order.',
+      codeOverride: OPTIONS_CODE,
+      highlightLines: [1, 2, 3],
     },
     {
       id: 'options-object-extra',
@@ -309,13 +331,22 @@ export const lesson411: LessonDef = {
       id: 'rest',
       caption:
         'Three dots in a PATTERN gather. const [winner, ...others]: winner takes the first element, then ...others sweeps every leftover into a brand-new array ["Mo", "Liv"]. Rest must come last — it hoovers up everything remaining.',
+      codeOverride: OPTIONS_CODE,
       highlightLines: [8, 9],
     },
     {
       id: 'spread',
       caption:
-        'The same three dots in a LITERAL do the opposite: spread OUT. [...base, 3] pours base’s elements into a fresh array and appends 3 — base itself is untouched. One syntax, two directions, and the position tells you which: in a pattern (left of =, or in parameters) it GATHERS; in a literal (building an array/object or calling a function) it SPREADS. And spreads are shallow — lesson 4.7’s warning travels with them.',
+        'The same three dots in a LITERAL do the opposite: spread OUT. [...base, 3] pours base’s elements into a fresh array and appends 3 — base itself is untouched.',
+      codeOverride: OPTIONS_CODE,
       highlightLines: [11, 12, 13],
+    },
+    {
+      id: 'dots-rule',
+      caption:
+        'One syntax, two directions — position tells you which: in a PATTERN (left of =, or in parameters) the dots GATHER; in a LITERAL (building an array/object, calling a function) they SPREAD. And spreads are shallow — lesson 4.7’s warning travels with them.',
+      codeOverride: OPTIONS_CODE,
+      highlightLines: [8, 11, 12],
     },
   ],
   Viz: UnpackBoard,

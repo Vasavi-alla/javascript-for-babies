@@ -129,7 +129,7 @@ function TernaryScene({ stepIndex }: { stepIndex: number }) {
         what saves us from reading .name of null
       </text>
       {stepIndex >= 6 && (
-        <text x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
+        <text x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-teal)">
           taste: ternaries for small either/or — two ?s deep means use if/else
         </text>
       )}
@@ -207,7 +207,12 @@ export const lesson24: LessonDef = {
     {
       id: 'taste',
       caption:
-        'Taste rules, honestly: ternaries shine for small either/or values and die horribly when nested — if you need two ?s, use if/else. The || default and && guard idioms are everywhere in real code; modern code often upgrades them to ?? and ?. (optional chaining — Phase 8), but you must read the originals fluently first. Now you do.',
+        'Taste rules, honestly: ternaries shine for small either/or values and die horribly when nested — if you need two ?s, use if/else.',
+    },
+    {
+      id: 'modern-cousins',
+      caption:
+        'The || default and && guard idioms are everywhere in real code; modern code often upgrades them to ?? and ?. (optional chaining — Phase 8), but you must read the originals fluently first. Now you do.',
     },
   ],
   Viz: TernaryScene,

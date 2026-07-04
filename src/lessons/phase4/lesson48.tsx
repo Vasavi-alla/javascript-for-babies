@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.8 — Iterating collections
@@ -129,9 +130,7 @@ function IterHop({ stepIndex }: { stepIndex: number }) {
       {/* note */}
       <AnimatePresence mode="wait">
         {view.note && (
-          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={15} fontWeight={700} fill="var(--color-marker-teal)">
-            {view.note}
-          </motion.text>
+          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={15} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={15} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -223,6 +222,12 @@ export const lesson48: LessonDef = {
       id: 'laps',
       caption:
         'Each lap, item is a FRESH const binding holding the current element — "pen", then "mug", then "fan" — and the body runs once per element. const is fine here because each lap gets a new item rather than reassigning the old one.',
+      highlightLines: [3, 4, 5],
+    },
+    {
+      id: 'laps-done',
+      caption:
+        'Three elements, three laps, loop over — no counter to manage, no length check to remember, no off-by-one possible. The loop ran itself.',
       highlightLines: [3, 4, 5],
     },
     {

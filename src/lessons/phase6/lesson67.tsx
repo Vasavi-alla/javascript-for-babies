@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 6.7 — fetch & APIs
@@ -125,17 +126,13 @@ function NetworkRoundTrip({ stepIndex }: { stepIndex: number }) {
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <RoughRect x={44} y={252} width={352} height={30} seed={1073} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={271} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={9.5} fontWeight={700} fill="var(--color-pencil-blue)">
-              {view.badge}
-            </text>
+            <text x={220} y={271} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={9.5} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={9.5} /></text>
           </motion.g>
         )}
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={12.5} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={310} width={360} height={32} seed={1072} strokeWidth={1.5} />

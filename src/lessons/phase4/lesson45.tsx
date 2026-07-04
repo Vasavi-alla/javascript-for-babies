@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.5 — Inside an object: the hash trick
@@ -39,11 +40,19 @@ const VIEWS: View[] = [
   },
   {
     keyIn: '"mug"', hashOut: 7, bucket: null, bucketValue: null, collision: false, console: [],
-    note: { text: 'a HASH FUNCTION scrambles any string into a number — same input, same number, every time', color: 'teal' },
+    note: { text: 'a HASH FUNCTION scrambles any string into a number — fast, one pass over the characters', color: 'teal' },
+  },
+  {
+    keyIn: '"mug"', hashOut: 7, bucket: null, bucketValue: null, collision: false, console: [],
+    note: { text: 'DETERMINISTIC: same input → same number, on any machine, forever', color: 'teal' },
+  },
+  {
+    keyIn: '"mug"', hashOut: 7, bucket: 7, bucketValue: '9', collision: false, console: [],
+    note: { text: 'the number picks a BUCKET — and the value is sitting right there', color: 'teal' },
   },
   {
     keyIn: '"mug"', hashOut: 7, bucket: 7, bucketValue: '9', collision: false, console: ['9'],
-    note: { text: 'the number picks a BUCKET — and the value is sitting right there. One trip, no scanning.', color: 'teal' },
+    note: { text: 'read = re-run the hash and jump. One trip, no scanning: O(1), by NAME', color: 'teal' },
   },
   {
     keyIn: '"fan"', hashOut: 3, bucket: 3, bucketValue: '15', collision: false, console: ['9', '15'],
@@ -51,7 +60,11 @@ const VIEWS: View[] = [
   },
   {
     keyIn: '"cap"', hashOut: 7, bucket: 7, bucketValue: null, collision: true, console: ['9', '15'],
-    note: { text: 'two keys CAN hash to one bucket (a collision) — the bucket keeps a small pile and checks it', color: 'coral' },
+    note: { text: 'two keys CAN hash to one number — a COLLISION', color: 'coral' },
+  },
+  {
+    keyIn: '"cap"', hashOut: 7, bucket: 7, bucketValue: null, collision: true, console: ['9', '15'],
+    note: { text: 'the bucket keeps a small pile and checks it — kept tiny, so cost stays ~O(1)', color: 'coral' },
   },
   {
     keyIn: null, hashOut: null, bucket: null, bucketValue: null, collision: false, console: ['9', '15'],
@@ -176,9 +189,7 @@ function HashMachine({ stepIndex }: { stepIndex: number }) {
       {/* verdict */}
       <AnimatePresence mode="wait">
         {view.note && (
-          <motion.text key={view.note.text} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}>
-            {view.note.text}
-          </motion.text>
+          <motion.text key={view.note.text} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}><WrapTspans text={view.note.text} x={220} maxPx={426} fontSize={14} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -283,13 +294,25 @@ export const lesson45: LessonDef = {
     {
       id: 'hash',
       caption:
-        'Enter the hash function: a scrambler that eats any string and spits out a number. hash("mug") → 7. Two properties make it magic: it’s FAST (a quick pass over the characters), and it’s DETERMINISTIC — "mug" hashes to 7 today, tomorrow, and on your grandmother’s laptop. Same input, same number, always.',
+        'Enter the hash function: a scrambler that eats any string and spits out a number. hash("mug") → 7. It’s FAST — one quick pass over the characters, no matter how many keys the object holds.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'hash-deterministic',
+      caption:
+        'And it’s DETERMINISTIC — "mug" hashes to 7 today, tomorrow, and on your grandmother’s laptop. Same input, same number, always. Without that promise, nothing stored under "mug" could ever be found again.',
       highlightLines: [6, 7],
     },
     {
       id: 'bucket',
       caption:
-        'That number picks a BUCKET — row 7 of the object’s internal storage — and mug’s value 9 is sitting in it. Reading prices.mug re-runs the same hash: "mug" → 7 → bucket 7 → 9. One trip, zero scanning, regardless of how many other keys exist. O(1), by NAME.',
+        'That number picks a BUCKET — row 7 of the object’s internal storage — and mug’s value 9 is sitting right in it.',
+      highlightLines: [3],
+    },
+    {
+      id: 'bucket-read',
+      caption:
+        'Reading prices.mug simply re-runs the same trip: "mug" → hash → 7 → bucket 7 → 9. One trip, zero scanning, regardless of how many other keys exist. That’s the payoff: O(1) — by NAME.',
       highlightLines: [3],
     },
     {
@@ -301,7 +324,13 @@ export const lesson45: LessonDef = {
     {
       id: 'collision',
       caption:
-        'The honest wrinkle: with limited buckets, two keys sometimes hash to the SAME number — hash("cap") might also give 7. That’s a collision. The bucket simply keeps a small pile, and lookup checks the two or three things in it. Engines keep buckets so sparse that the pile is nearly always tiny — so the cost stays effectively O(1).',
+        'The honest wrinkle: with limited buckets, two keys sometimes hash to the SAME number — hash("cap") might also give 7. That’s a COLLISION.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'collision-cost',
+      caption:
+        'The fix is mundane: the bucket simply keeps a small pile, and lookup checks the two or three things in it. Engines keep buckets so sparse that piles stay tiny — so the cost stays effectively O(1).',
       highlightLines: [6, 7],
     },
     {

@@ -196,10 +196,22 @@ export const lesson111: LessonDef = {
       },
     },
     {
+      id: 'slots-walk',
+      caption:
+        'Watch the slots fill, one by one: ${hero} — label followed, box opened, "Ada" spliced in. ${place} — "Chennai". ${power} — 9001, the RE-ASSIGNED value, because a slot reads the box as it is NOW.',
+      highlightLines: [5],
+    },
+    {
       id: 'story',
       caption:
-        'And there’s the story, built from three boxes and a template. Count what this little program used: declarations, const vs let, reassignment, numbers, strings, template slots, evaluation order, and the label-following that happens every time a name appears. That’s the entire phase, in five lines. Now scroll down — it’s your turn.',
+        'And there’s the story, built from three boxes and a template. Count what this little program used: declarations, const vs let, reassignment, numbers, strings, template slots, evaluation order, and the label-following that happens every time a name appears. That’s the entire phase, in five lines.',
       highlightLines: [5],
+    },
+    {
+      id: 'coercion-trap',
+      caption:
+        'One character could have ruined it: had line 3 been let power = "9000" — in quotes — line 4’s + would GLUE instead of add: "90001". The 1.9 trap lives everywhere form data goes. Now scroll down — it’s your turn.',
+      highlightLines: [3, 4],
     },
   ],
   Viz: CheckpointScene,

@@ -111,7 +111,7 @@ function BooleanizerViz({ stepIndex }: { stepIndex: number }) {
         </text>
       )}
       {stepIndex >= 8 && (
-        <text x={220} y={140} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
+        <text x={220} y={140} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)">
           precision beats idiom: username === "" says exactly what you mean
         </text>
       )}

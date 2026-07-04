@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.10 — Sorting & finding
@@ -60,7 +61,22 @@ const VIEWS: View[] = [
     cells: ['9', '45', '120'],
     refereeText: '(a, b) => a - b   · negative = a first',
     console: ['[120,45,9]', '[9,45,120]'],
-    note: 'a comparator makes the referee numeric: a − b sorts ascending. And sort MUTATES the array!',
+    note: 'a comparator makes the referee numeric — YOUR function decides the order',
+  },
+  {
+    mode: 'sort',
+    cells: ['9', '45', '120'],
+    refereeText: 'a − b ascends · b − a descends',
+    console: ['[120,45,9]', '[9,45,120]'],
+    note: 'the SIGN is the whole contract: negative = first argument first',
+  },
+  {
+    mode: 'sort',
+    cells: ['9', '45', '120'],
+    refereeText: 'sort changed times ITSELF — in place',
+    refereeBad: true,
+    console: ['[120,45,9]', '[9,45,120]'],
+    note: 'sort MUTATES — [...times].sort(…) keeps the original intact (4.7’s spread)',
   },
   {
     mode: 'scan',
@@ -88,6 +104,15 @@ const VIEWS: View[] = [
     result: 'true',
     console: ['Ada', 'false', 'true'],
     note: 'every asks “does everyone pass?” — one ✗ anywhere makes it false',
+  },
+  {
+    mode: 'scan',
+    cells: ['"Mo"', '"Ada"', '"Liv"'],
+    marks: ['✓', '✓', '✓'],
+    scanLabel: 'some = “anyone?” · every = “everyone?”',
+    result: 'true',
+    console: ['Ada', 'false', 'true'],
+    note: 'some/every = the exact shape of a test assertion about a whole list',
   },
 ]
 
@@ -152,9 +177,7 @@ function SortScan({ stepIndex }: { stepIndex: number }) {
       {/* note */}
       <AnimatePresence mode="wait">
         {view.note && (
-          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill={view.refereeBad ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}>
-            {view.note}
-          </motion.text>
+          <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill={view.refereeBad ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14.5} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -251,7 +274,19 @@ export const lesson410: LessonDef = {
     {
       id: 'comparator',
       caption:
-        'The fix: hand the referee YOUR comparison — times.sort((a, b) => a - b). The rule: your function returns a number; NEGATIVE means “a goes first”, positive means “b goes first”. a - b is negative exactly when a is smaller → ascending. (b - a flips it — descending.) Note well: unlike yesterday’s trio, sort MUTATES the array in place. Need the original intact? Sort a copy: [...times].sort(...) — 4.7’s spread, useful already.',
+        'The fix: hand the referee YOUR comparison — times.sort((a, b) => a - b). The rule: your function returns a number, and NEGATIVE means “a goes first”, positive means “b goes first”.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'comparator-sign',
+      caption:
+        'a - b is negative exactly when a is smaller → ascending order. Want descending? b - a flips the sign. The comparator’s SIGN is the entire contract — nothing else about your function matters.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'sort-mutates',
+      caption:
+        'Note well: unlike yesterday’s trio, sort MUTATES the array in place — times itself is now reordered. Need the original intact? Sort a copy: [...times].sort(...) — 4.7’s spread, useful already.',
       highlightLines: [6, 7],
     },
     {
@@ -269,7 +304,13 @@ export const lesson410: LessonDef = {
     {
       id: 'every',
       caption:
-        'names.every(n => n.length <= 3) asks the opposite: do ALL pass? ✓ ✓ ✓ → true. One ✗ anywhere would make it false. some = “anyone?”, every = “everyone?” — together they’re how code asserts things about whole lists. Hold that word, assert: in Phase 10 you’ll write expect-style checks that are exactly these two questions wearing a suit.',
+        'names.every(n => n.length <= 3) asks the opposite: do ALL pass? ✓ ✓ ✓ → true. One ✗ anywhere would make it false. some = “anyone?”, every = “everyone?”',
+      highlightLines: [12],
+    },
+    {
+      id: 'assert-bridge',
+      caption:
+        'Together they’re how code asserts things about whole lists. Hold that word, assert: in Phase 10 you’ll write expect-style checks that are exactly these two questions wearing a suit.',
       highlightLines: [12],
     },
   ],

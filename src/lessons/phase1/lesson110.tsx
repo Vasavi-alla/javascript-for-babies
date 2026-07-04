@@ -52,7 +52,7 @@ function ExpressionTree({ stepIndex }: { stepIndex: number }) {
   if (stepIndex >= 2 && stepIndex <= 4) {
     return (
       <svg viewBox="0 0 440 280" className="w-full">
-        <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
+        <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={17} fill="var(--color-ink-soft)">
           age &gt;= 18 && hasTicket — as the machine sees it
         </text>
         <Edge x1={200} y1={80} x2={130} y2={140} seed={260} />
@@ -86,8 +86,8 @@ function ExpressionTree({ stepIndex }: { stepIndex: number }) {
         <Node x={320} y={158} label="age === 20" seed={275} result={done ? '(skipped!)' : undefined} />
         <Node x={120} y={232} label="age > 25" seed={276} result={done ? 'false' : undefined} />
         {done && (
-          <text x={40} y={278} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-marker-coral)">
-            left side is already true → || never even looked right. Short-circuit!
+          <text x={40} y={278} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-marker-coral)">
+            left already true → right side SKIPPED. Short-circuit!
           </text>
         )}
       </svg>
@@ -109,8 +109,11 @@ function ExpressionTree({ stepIndex }: { stepIndex: number }) {
         <Node x={310} y={168} label="*" seed={286} result="12" />
         <Node x={260} y={242} label="3" seed={287} />
         <Node x={360} y={242} label="4" seed={288} />
-        <text x={40} y={278} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-marker-coral)">
-          * sits DEEPER in the tree → happens first. Want (2+3)*4? Parentheses redraw the tree.
+        <text x={40} y={263} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-marker-coral)">
+          * sits DEEPER in the tree → happens first.
+        </text>
+        <text x={40} y={278} fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-marker-coral)">
+          Want (2+3)*4? Parentheses redraw the tree.
         </text>
       </svg>
     )
@@ -213,7 +216,13 @@ export const lesson110: LessonDef = {
     {
       id: 'precedence',
       caption:
-        'Last: 2 + 3 * 4 is 14, not 20 — because * binds tighter than +, so the tree puts * deeper, and deeper runs first. That’s all “operator precedence” is: rules for drawing the tree. And the professional cheat code: when in doubt, add parentheses — they redraw the tree exactly how you want, and make your intent readable for free.',
+        'Last: 2 + 3 * 4 is 14, not 20 — because * binds tighter than +, so the tree puts * deeper, and deeper runs first. That’s all “operator precedence” is: rules for drawing the tree.',
+      highlightLines: [5],
+    },
+    {
+      id: 'parens',
+      caption:
+        'And the professional cheat code: when in doubt, add parentheses — (2 + 3) * 4 redraws the tree exactly how you want, and makes your intent readable for free. Nobody memorizes the full precedence table; everybody parenthesizes.',
       highlightLines: [5],
     },
   ],

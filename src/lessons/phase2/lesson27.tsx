@@ -64,8 +64,11 @@ function StationTrack({ mode, pending }: { mode: 'break' | 'continue'; pending?:
       {mode === 'break' ? (
         <>
           <HandArrow from={{ x: 256, y: 105 }} to={{ x: 330, y: 45 }} seed={490} stroke="var(--color-marker-coral)" curve={-0.25} />
-          <text x={300} y={35} fontFamily="var(--font-hand)" fontSize={16} fontWeight={700} fill="var(--color-marker-coral)">
-            EJECT — loop over, stations 5–6 never visited
+          <text x={430} y={28} textAnchor="end" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-coral)">
+            EJECT — loop over,
+          </text>
+          <text x={430} y={44} textAnchor="end" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-coral)">
+            stations 5–6 never visited
           </text>
         </>
       ) : pending ? (
@@ -90,8 +93,8 @@ function StationTrack({ mode, pending }: { mode: 'break' | 'continue'; pending?:
 function GridDraw({ cells, badge }: { cells: number; badge?: string }) {
   return (
     <svg viewBox="0 0 440 280" className="w-full">
-      <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={19} fill="var(--color-ink-soft)">
-        nested loops draw a grid — inner spins fast, outer clicks slow
+      <text x={40} y={30} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-ink-soft)">
+        nested loops — inner spins fast, outer clicks slow
       </text>
       {badge && (
         <text x={40} y={48} fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-coral)">
@@ -122,8 +125,8 @@ function EscapeViz({ stepIndex }: { stepIndex: number }) {
   if (stepIndex <= 1) return <StationTrack mode="break" />
   if (stepIndex === 2) return <StationTrack mode="continue" pending />
   if (stepIndex <= 4) return <StationTrack mode="continue" />
-  const cells = stepIndex === 5 ? 5 : 12
-  return <GridDraw cells={cells} badge={stepIndex >= 7 ? 'break/continue touch only the INNERMOST loop they sit in' : undefined} />
+  const cells = stepIndex === 5 ? 4 : stepIndex === 6 ? 6 : 12
+  return <GridDraw cells={cells} badge={stepIndex >= 8 ? 'break/continue touch only the INNERMOST loop they sit in' : undefined} />
 }
 
 export const lesson27: LessonDef = {
@@ -183,7 +186,14 @@ export const lesson27: LessonDef = {
     {
       id: 'nested',
       caption:
-        'Now the multiplier: a loop INSIDE a loop. Read it inside-out: for each single lap of the OUTER loop (one row), the INNER loop runs completely (all four columns). Watch the grid paint: row 1 fills cell by cell before row 2 even starts. Like a clock — the minute hand (inner) spins all the way around for each click of the hour hand (outer).',
+        'Now the multiplier: a loop INSIDE a loop. Read it inside-out: for each single lap of the OUTER loop (one row), the INNER loop runs completely (all four columns). Row 1 fills cell by cell before row 2 even starts.',
+      codeOverride: NESTED_CODE,
+      highlightLines: [1, 2],
+    },
+    {
+      id: 'grid-clock',
+      caption:
+        'Like a clock: the minute hand (the inner loop) spins all the way around for each single click of the hour hand (the outer loop). Watch row 2 begin only now — the inner loop restarts fresh for every outer lap.',
       codeOverride: NESTED_CODE,
       highlightLines: [1, 2],
     },

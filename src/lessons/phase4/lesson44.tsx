@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.4 — Objects
@@ -84,6 +85,11 @@ const VIEWS: View[] = [
   {
     comps: [BASE[0], { ...BASE[1], state: 'read' }, BASE[2]],
     note: '"pages" — written right there', outToken: '310', console: ['The Hobbit', 'Tolkien', '310'],
+  },
+  {
+    comps: [GREET[0], GREET[1], GREET[2]],
+    name: 'greetings',
+    note: null, outToken: null, console: [],
   },
   {
     comps: [GREET[0], { ...GREET[1], state: 'read' }, GREET[2]],
@@ -172,11 +178,12 @@ function ObjectLocker({ stepIndex }: { stepIndex: number }) {
         {view.note && (
           <motion.g initial={{ opacity: 0, rotate: -6, y: -10 }} animate={{ opacity: 1, rotate: -4, y: 0 }} exit={{ opacity: 0 }}>
             <RoughRect x={286} y={116} width={136} height={30} seed={511} fill="var(--color-sticky-pink, #fbd8dd)" fillStyle="solid" strokeWidth={1.5} />
-            <text x={354} y={136} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={600} fill="var(--color-ink)">
-              {view.note}
+            <text x={354} y={136} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11.5} fontWeight={600} fill="var(--color-ink)"><WrapTspans text={view.note} x={354} maxPx={158} fontSize={11.5} code /></text>
+            <text x={354} y={96} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+              brackets read the note,
             </text>
             <text x={354} y={110} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
-              brackets read the note, then find the label
+              then find the label
             </text>
           </motion.g>
         )}
@@ -224,9 +231,7 @@ function ObjectLocker({ stepIndex }: { stepIndex: number }) {
             fontSize={12.5}
             fontWeight={700}
             fill="var(--color-marker-coral)"
-          >
-            {view.badge}
-          </motion.text>
+          ><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={12.5} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -351,11 +356,18 @@ export const lesson44: LessonDef = {
       highlightLines: [10],
     },
     {
+      id: 'bracket-runtime-problem',
+      caption:
+        'New scene: an app greeting its user. Which language? You CANNOT know while writing the code — it depends on whose phone opens the app. The answer arrives while the program RUNS, in a variable: lang holds "ta".',
+      codeOverride: GREET_CODE,
+      highlightLines: [7, 8, 9],
+    },
+    {
       id: 'bracket-dynamic',
       caption:
-        'New scene: an app greeting its user. Which language? You CANNOT know while writing the code — it depends on whose phone opens the app. It arrives at runtime, in a variable: lang holds "ta". And here’s the bracket superpower: brackets EVALUATE what’s inside first. greetings[lang] → greetings["ta"] → "Vanakkam!". A dot can’t do this — greetings.lang hunts for a property literally named lang and finds undefined (see the console!).',
+        'And here’s the bracket superpower: brackets EVALUATE what’s inside first. greetings[lang] → greetings["ta"] → "Vanakkam!". A dot can’t do this — greetings.lang hunts for a property literally named lang and finds undefined (see the console!).',
       codeOverride: GREET_CODE,
-      highlightLines: [9, 11, 12],
+      highlightLines: [11, 12],
     },
     {
       id: 'bracket-dynamic-why',

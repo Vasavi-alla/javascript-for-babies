@@ -30,7 +30,7 @@ function InstructionTape({ stepIndex }: { stepIndex: number }) {
   const [current, doneCount] = STATE[stepIndex] ?? STATE[0]
   return (
     <svg viewBox="0 0 420 290" className="w-full">
-      <text x={70} y={30} fontFamily="var(--font-hand)" fontSize={22} fill="var(--color-ink-soft)">
+      <text x={70} y={30} fontFamily="var(--font-hand)" fontSize={17} fill="var(--color-ink-soft)">
         the instructions, as the machine sees them
       </text>
       {CARDS.map((label, i) => {
@@ -85,7 +85,7 @@ function InstructionTape({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
       {stepIndex >= 6 && (
-        <text x={70} y={288} fontFamily="var(--font-hand)" fontSize={20} fill="var(--color-marker-teal)">
+        <text x={70} y={288} fontFamily="var(--font-hand)" fontSize={17} fill="var(--color-marker-teal)">
           finished — in well under a millisecond ⚡
         </text>
       )}

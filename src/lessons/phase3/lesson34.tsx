@@ -31,9 +31,12 @@ interface View {
 
 const VIEWS: View[] = [
   { doubleFilled: true, tripleFilled: false, typeTag: false, console: [] },
+  { doubleFilled: true, tripleFilled: false, typeTag: false, console: [] },
+  { doubleFilled: true, tripleFilled: true, typeTag: false, console: [] },
   { doubleFilled: true, tripleFilled: true, typeTag: false, console: [] },
   { doubleFilled: true, tripleFilled: true, typeTag: false, console: ['8', '12'] },
   { doubleFilled: true, tripleFilled: true, typeTag: false, console: ['8', '12'] },
+  { doubleFilled: true, tripleFilled: true, typeTag: true, console: ['8', '12', 'function'] },
   { doubleFilled: true, tripleFilled: true, typeTag: true, console: ['8', '12', 'function'] },
   { doubleFilled: true, tripleFilled: true, typeTag: true, console: ['8', '12', 'function'] },
 ]
@@ -195,13 +198,25 @@ export const lesson34: LessonDef = {
     {
       id: 'expression',
       caption:
-        'Line 1 reads like any variable creation: const label, = , and a right-hand side. But the right-hand side is function (n) { return n * 2; } — an expression that PRODUCES A MACHINE as its value. That value drops into a memory slot and the label double ties onto it. This is called a function expression. (Notice it has no name of its own — the variable provides the name.)',
+        'Line 1 reads like any variable creation: const label, = , and a right-hand side. But the right-hand side is function (n) { return n * 2; } — an expression that PRODUCES A MACHINE as its value. That value drops into a memory slot and the label double ties onto it.',
       highlightLines: [1, 2, 3],
+    },
+    {
+      id: 'expression-name',
+      caption:
+        'This way of building a machine is called a FUNCTION EXPRESSION. Notice it has no name of its own — the variable’s label provides the name.',
+      highlightLines: [1],
     },
     {
       id: 'arrow',
       caption:
-        'Line 5 builds the exact same kind of value in a shorter costume: (n) => n * 3. Read the arrow as "goes to": n goes to n times 3. Parameters on the left, body on the right — and when the body is a single expression like this, its result is returned AUTOMATICALLY. No braces, no return keyword needed.',
+        'Line 5 builds the exact same kind of value in a shorter costume: (n) => n * 3. Read the arrow as “goes to”: n goes to n times 3. Parameters on the left, body on the right.',
+      highlightLines: [5],
+    },
+    {
+      id: 'auto-return',
+      caption:
+        'And when the body is a single expression like this, its result is returned AUTOMATICALLY — no braces, no return keyword needed. (Add braces, and you must write return yourself.)',
       highlightLines: [5],
     },
     {
@@ -225,7 +240,13 @@ export const lesson34: LessonDef = {
     {
       id: 'reveal-typeof',
       caption:
-        'typeof says "function" — the machine is certified as a value. And that certification is a permission slip: anything you can do with a value, you can do with a function. Store it (done!), pass it into another machine (lesson 3.8), even have a machine BUILD and return a new machine (lesson 3.7 — that one bends minds).',
+        'typeof says "function" — proof from a tool you already trust: the machine in that slot is a genuine VALUE, with its own type tag, a full citizen alongside "number" and "string".',
+      highlightLines: [9],
+    },
+    {
+      id: 'permission-slip',
+      caption:
+        'And that certification is a permission slip: anything you can do with a value, you can do with a function. Store it (done!), pass it into another machine (lesson 3.8), even have a machine BUILD and return a new machine (lesson 3.7 — that one bends minds).',
       highlightLines: [9],
     },
     {

@@ -34,7 +34,8 @@ function TrainCar({ x, y, char, index, seed, highlight }: { x: number; y: number
 
 function StringTrain({ stepIndex }: { stepIndex: number }) {
   const highlightZero = stepIndex === 2 || stepIndex === 3
-  const showGlued = stepIndex >= 4
+  const showImmutable = stepIndex === 4
+  const showGlued = stepIndex >= 5
   const glued = 'Hi, Ada!'
   return (
     <svg viewBox="0 0 440 280" className="w-full">
@@ -68,17 +69,34 @@ function StringTrain({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
 
+      {/* the immutable proof: a brand-new train */}
+      <AnimatePresence>
+        {showImmutable && (
+          <motion.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
+            <text x={40} y={172} fontFamily="var(--font-hand)" fontSize={20} fill="var(--color-ink-soft)">
+              name.toUpperCase() → a brand-NEW train
+            </text>
+            {'ADA'.split('').map((char, i) => (
+              <TrainCar key={i} x={60 + i * 50} y={186} char={char} seed={230 + i} />
+            ))}
+            <text x={30} y={262} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-marker-teal)">
+              “Ada” itself survives untouched — changes build NEW trains
+            </text>
+          </motion.g>
+        )}
+      </AnimatePresence>
+
       {/* the glued train */}
       <AnimatePresence>
         {showGlued && (
           <motion.g initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
             <text x={40} y={172} fontFamily="var(--font-hand)" fontSize={20} fill="var(--color-ink-soft)">
-              {stepIndex >= 5 ? '`Hi, ${name}!` builds the same train' : '"Hi, " + name + "!" — three trains glued'}
+              {stepIndex >= 6 ? '`Hi, ${name}!` builds the same train' : '"Hi, " + name + "!" — three trains glued'}
             </text>
             {glued.split('').map((char, i) => (
-              <TrainCar key={i} x={30 + i * 48} y={186} char={char} seed={200 + i} highlight={stepIndex >= 5 && i >= 4 && i <= 6} />
+              <TrainCar key={i} x={30 + i * 48} y={186} char={char} seed={200 + i} highlight={stepIndex >= 7 && i >= 4 && i <= 6} />
             ))}
-            {stepIndex >= 5 && (
+            {stepIndex >= 7 && (
               <text x={30} y={262} fontFamily="var(--font-hand)" fontSize={16} fill="var(--color-marker-coral)">
                 the ${'{name}'} slot was filled in with the variable’s value
               </text>
@@ -164,6 +182,12 @@ export const lesson16: LessonDef = {
       highlightLines: [3],
     },
     {
+      id: 'immutable',
+      caption:
+        'One secret before gluing: strings are IMMUTABLE — no car can ever be swapped in place. name.toUpperCase() doesn’t change "Ada"; it manufactures a brand-NEW train, "ADA", and hands it back. Every string “change” works this way.',
+      highlightLines: [1],
+    },
+    {
       id: 'concat',
       caption:
         'Line 4 glues trains together with +. Yes — the SAME + you used for math! With strings on board, + means “couple these trains,” not “add.” (What happens when a number and a string meet at the + …? Lesson 1.9. It’s wild.)',
@@ -172,7 +196,13 @@ export const lesson16: LessonDef = {
     {
       id: 'template',
       caption:
-        'Line 5 builds the identical train the modern way: backticks ` instead of quotes, with ${…} slots that get filled in with values. Read it aloud and notice how much more it looks like the final result. This is how professionals build text — and how you’ll build test messages and selectors.',
+        'Line 5 builds the identical train the modern way: backticks ` instead of quotes, with ${…} slots. Read it aloud and notice how much more it looks like the final result.',
+      highlightLines: [5],
+    },
+    {
+      id: 'slots-evaluated',
+      caption:
+        'Each ${…} slot is EVALUATED first — the work-it-out-first rule from 0.3 — and the result is spliced into the train. This is how professionals build text: test messages, selectors, failure reports.',
       highlightLines: [5],
     },
   ],

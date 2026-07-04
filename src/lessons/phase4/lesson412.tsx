@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.12 — Map & Set
@@ -37,6 +38,7 @@ const VIEWS: View[] = [
   { mode: 'map', console: ['2', 'true'], note: 'object keys always become strings (4.4/4.5) — a Map’s keys keep their true type' },
   { mode: 'map', console: ['2', 'true'], note: 'votes.set(7, "lucky") stores the NUMBER 7 as a genuine key, not the text "7"' },
   { mode: 'map', console: ['2', 'true', 'lucky'], note: 'set / get / size / has — the 4.5 hash map, offered as a dedicated tool' },
+  { mode: 'map', console: ['2', 'true', 'lucky'], note: 'fixed named record → plain object · runtime table / non-string keys → Map' },
 ]
 
 function SetMapViz({ stepIndex }: { stepIndex: number }) {
@@ -91,9 +93,7 @@ function SetMapViz({ stepIndex }: { stepIndex: number }) {
       )}
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={13.5} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={252} width={360} height={38} seed={806} strokeWidth={1.5} />

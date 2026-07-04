@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 1.9 — Type coercion & comparison
@@ -47,6 +48,10 @@ const SCENES: Array<Scene | null> = [
   {
     left: { label: '5', kind: 'number' }, right: { label: '5', kind: 'number' },
     op: '−', note: '− has no meaning for text → converted "5" into 5, then did math', result: { label: '0', kind: 'number' },
+  },
+  {
+    left: { label: '5', kind: 'number' }, right: { label: '5', kind: 'number' },
+    op: '−', note: 'same operands as line 1 — OPPOSITE conversion. The operator picks the direction', result: { label: '0', kind: 'number' },
   },
   {
     left: { label: '5', kind: 'number' }, right: { label: '"5"', kind: 'string' },
@@ -104,9 +109,7 @@ function CoercionMachine({ stepIndex }: { stepIndex: number }) {
 
       {/* conversion note */}
       {scene.note && (
-        <text x={40} y={282} fontFamily="var(--font-hand)" fontSize={15.5} fill="var(--color-marker-coral)">
-          {scene.note}
-        </text>
+        <text x={40} y={282} fontFamily="var(--font-hand)" fontSize={15.5} fill="var(--color-marker-coral)"><WrapTspans text={scene.note} x={40} maxPx={388} fontSize={15.5} /></text>
       )}
     </svg>
   )
@@ -145,8 +148,14 @@ export const lesson19: LessonDef = {
     {
       id: 'minus-math',
       caption:
-        'Line 2 flips it: "5" - 5. Minus has NO meaning for text — you can’t subtract trains — so this time the STRING gets converted to a number, and real math happens: 0. Same operands as before (an operand is just one of the values an operator works on — here, "5" and 5) — opposite conversion. The operator picks the direction.',
+        'Line 2 flips it: "5" - 5. Minus has NO meaning for text — you can’t subtract trains — so this time the STRING gets converted to a number, and real math happens: 0.',
       highlightLines: [2],
+    },
+    {
+      id: 'operator-decides',
+      caption:
+        'Look closely: the same operands as line 1 (an operand is just one of the values an operator works on — here, "5" and 5), but the OPPOSITE conversion. The operator picks the direction: + prefers strings, − prefers numbers.',
+      highlightLines: [1, 2],
     },
     {
       id: 'predict-loose',

@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 7.3 — Reading & changing the DOM
@@ -39,7 +40,8 @@ interface View {
 const VIEWS: View[] = [
   { el: { tag: 'h1', classes: [], attrs: [], text: 'My List' }, note: 'reading: textContent hands you the words inside — just a string' },
   { el: { tag: 'h1', classes: [], attrs: [], text: 'Shopping' }, note: 'writing textContent swaps the text node — the page repaints instantly' },
-  { el: { tag: 'h1', classes: ['big', 'dark'], attrs: [], text: 'Shopping' }, note: 'classList: add / remove / toggle / contains — never rebuild the class string by hand' },
+  { el: { tag: 'h1', classes: ['big', 'dark'], attrs: [], text: 'Shopping' }, note: 'classList: add / remove / toggle / contains — the styling-state verbs' },
+  { el: { tag: 'h1', classes: ['big', 'dark'], attrs: [], text: 'Shopping' }, note: 'the verbs are surgical — the rest of the class string is never touched' },
   { el: { tag: 'h1', classes: ['big', 'dark'], attrs: ['data-test="hdr"'], text: 'Shopping' }, note: 'setAttribute writes any attribute — including the tester hooks from 7.2' },
   { el: { tag: 'h1', classes: ['big', 'dark'], attrs: ['data-test="hdr"'], text: 'Shopping' }, extra: '<li>buy tea</li> appended to the ul', note: 'create → fill → append: a node born in JS joins the tree — and appears on screen' },
   { el: { tag: 'h1', classes: ['big', 'dark'], attrs: ['data-test="hdr"'], text: 'Shopping' }, extra: null, gone: true, note: 'li.remove() unhooks it from the tree — unreachable soon after (5.7 sweeps it)' },
@@ -47,7 +49,13 @@ const VIEWS: View[] = [
     el: { tag: 'h1', classes: ['big', 'dark'], attrs: ['data-test="hdr"'], text: 'Shopping' }, extra: null, gone: true,
     note: 'now the landmine',
     badgeLine1: 'el.innerHTML = userInput PARSES the string as HTML',
-    badgeLine2: 'user data goes through textContent, NEVER innerHTML',
+    badgeLine2: 'hostile input can smuggle EXECUTABLE markup',
+  },
+  {
+    el: { tag: 'h1', classes: ['big', 'dark'], attrs: ['data-test="hdr"'], text: 'Shopping' }, extra: null, gone: true,
+    note: 'the rule that keeps you employed',
+    badgeLine1: 'user data goes through textContent, NEVER innerHTML',
+    badgeLine2: 'the attack’s name: XSS — a top web vulnerability',
   },
 ]
 
@@ -89,9 +97,7 @@ function MutationView({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={230} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={230} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={12.5} /></motion.text>
       </AnimatePresence>
 
       {/* badge — a small two-line appearing annotation for elaboration steps */}
@@ -198,7 +204,13 @@ export const lesson73: LessonDef = {
     {
       id: 'classlist',
       caption:
-        'Element classes drive styling, so they change constantly — and classList is their proper toolkit: add("big"), remove("big"), toggle("dark") (add-if-absent, remove-if-present — every dark-mode button ever), contains("done") for checks. Never mangle the raw class string by hand; the verbs exist so you don’t have to.',
+        'Element classes drive styling, so they change constantly — and classList is their proper toolkit: add("big"), remove("big"), toggle("dark") — add-if-absent, remove-if-present, every dark-mode button ever — plus contains("done") for checks.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'classlist-rule',
+      caption:
+        'Never mangle the raw class string by hand. The verbs exist so you don’t have to — and they’re surgical: whatever other classes ride on the element stay untouched.',
       highlightLines: [6, 7],
     },
     {
@@ -222,7 +234,13 @@ export const lesson73: LessonDef = {
     {
       id: 'innerhtml-danger',
       caption:
-        'Now the landmine: el.innerHTML = "<b>hi</b>" PARSES its string as HTML — powerful, and dangerous the moment user input touches it: a username like <img onerror="stealCookies()"> would EXECUTE. The rule that keeps you employed: user data goes through textContent, never innerHTML. (The attack has a name — XSS — and testers get paid to catch it.)',
+        'Now the landmine: el.innerHTML = "<b>hi</b>" PARSES its string as HTML — powerful, and dangerous the moment user input touches it: a username like <img onerror="stealCookies()"> would EXECUTE.',
+      highlightLines: [14],
+    },
+    {
+      id: 'xss-rule',
+      caption:
+        'The rule that keeps you employed: user data goes through textContent, never innerHTML. The attack has a name — XSS — and testers get paid to catch exactly it.',
       highlightLines: [14],
     },
   ],

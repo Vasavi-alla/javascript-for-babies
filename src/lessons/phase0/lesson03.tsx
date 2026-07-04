@@ -21,7 +21,7 @@ console.log("2 + 3");`
 
 const OUTPUT = ['Hello!', 'I am your computer', '5', '2 + 3']
 // how many output lines are visible at each step
-const VISIBLE = [0, 1, 2, 2, 3, 4]
+const VISIBLE = [0, 1, 2, 2, 3, 4, 4]
 
 function ConsoleViz({ stepIndex }: { stepIndex: number }) {
   const count = VISIBLE[stepIndex] ?? 0
@@ -222,6 +222,11 @@ export const lesson03: LessonDef = {
       caption:
         'And line 4 is the twin experiment: the same characters, but wrapped in quotes. Quotes mean “don’t touch — this is literal text.” So the machine prints 2 + 3 without doing any math. One pair of quotes, completely different behavior.',
       highlightLines: [4],
+    },
+    {
+      id: 'conversation',
+      caption:
+        'Four instructions, four answers back. That’s what the console is FOR: your first two-way conversation with the machine. Scroll down — there’s a live console below, waiting for you to talk to it yourself.',
     },
   ],
   Viz: ConsoleViz,

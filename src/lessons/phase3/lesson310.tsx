@@ -195,8 +195,11 @@ function PureViz({ stepIndex }: { stepIndex: number }) {
           <text x={332} y={52} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-marker-teal)">
             pure — sealed
           </text>
-          <text x={332} y={170} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
-            same inputs → same output, touches nothing else
+          <text x={332} y={164} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+            same inputs → same output,
+          </text>
+          <text x={332} y={178} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">
+            touches nothing else
           </text>
         </g>
         {stepIndex >= 7 && (

@@ -88,7 +88,7 @@ function BrainPipeline({ stepIndex }: { stepIndex: number }) {
         <RoughLine x1={278} y1={96} x2={304} y2={96} seed={1102} strokeWidth={2} />
         <Box x={308} name="perPerson" value={scene.each} active={stepIndex >= 1} />
         <text x={220} y={168} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13.5} fill="var(--color-ink-soft)">
-          each returned value feeds the next function — no console.log inside any of them
+          each returned value feeds the next function — no console.log inside
         </text>
       </svg>
       <ConsolePane lines={scene.lines} />

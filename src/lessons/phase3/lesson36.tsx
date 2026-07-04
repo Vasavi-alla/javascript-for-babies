@@ -45,10 +45,18 @@ const SCENES: Scene[] = [
     lines: [],
   },
   {
+    frames: [
+      { name: 'makeTea()', note: '⏸ paused at line 2  ← the return address' },
+      { name: 'boilWater()', note: 'running line 7' },
+    ],
+    lines: [],
+  },
+  {
     frames: [{ name: 'makeTea()', note: '▶ resumed at line 3' }],
     lines: ['water is hot'],
   },
   { frames: [], lines: ['water is hot', 'tea is ready'] },
+  { frames: [], lines: ['water is hot', 'tea is ready'] }, // lifo
   { frames: [], lines: ['water is hot', 'tea is ready'] }, // wrap
 ]
 
@@ -190,6 +198,12 @@ export const lesson36: LessonDef = {
       highlightLines: [2],
     },
     {
+      id: 'return-address',
+      caption:
+        'Look at makeTea’s card: “paused at line 2”. That note is the RETURN ADDRESS — the exact spot to resume from. Every card carries one, and it’s the entire reason the engine never gets lost.',
+      highlightLines: [2],
+    },
+    {
       id: 'pop-boilwater',
       caption:
         'boilWater prints and reaches its end — its card is lifted OFF the stack and destroyed (its variables with it, as 3.2 taught). And look: the top card is makeTea again, still pointing at where it paused. The engine resumes there, precisely.',
@@ -200,6 +214,11 @@ export const lesson36: LessonDef = {
       caption:
         'makeTea prints its own line and finishes — its card pops too. Stack empty: the program is done. Push on call, pop on finish, top card runs. That’s the entire machine.',
       highlightLines: [3],
+    },
+    {
+      id: 'lifo',
+      caption:
+        'Notice the order: makeTea went ON first and came OFF last. Programmers call this LIFO — last in, first out — like a stack of plates: you only ever add or remove at the top.',
     },
     {
       id: 'wrap',

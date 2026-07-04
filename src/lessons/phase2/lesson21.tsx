@@ -86,8 +86,8 @@ function FlowRoad({ stepIndex }: { stepIndex: number }) {
         )}
       </AnimatePresence>
       {stepIndex >= 6 && (
-        <text x={24} y={24} fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
-          else is optional — an if alone means “maybe do this, then continue”
+        <text x={24} y={24} fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-teal)">
+          else is optional — an if can stand alone
         </text>
       )}
     </svg>

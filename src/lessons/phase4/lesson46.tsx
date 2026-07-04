@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.6 — Primitives vs references (THE lesson of this phase)
@@ -97,7 +98,25 @@ const VIEWS: View[] = [
     ],
     obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 3' }],
     console: ['10'],
-    note: { text: '= copied the ARROW, not the object: two arrows, ONE object', color: 'coral' },
+    note: { text: '= copied the ARROW, not the object', color: 'coral' },
+  },
+  {
+    slots: [
+      { name: 'cat', arrow: true, arrowY: 112 },
+      { name: 'alias', arrow: true, hot: true, arrowY: 134 },
+    ],
+    obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 3' }],
+    console: ['10'],
+    note: { text: 'count the heap boxes: still ONE — two names, one cat', color: 'coral' },
+  },
+  {
+    slots: [
+      { name: 'cat', arrow: true, arrowY: 112 },
+      { name: 'alias', arrow: true, hot: true, arrowY: 134 },
+    ],
+    obj: [{ text: 'name: "Biscuit"' }, { text: 'age: 4', hot: true }],
+    console: ['10', '4'],
+    note: { text: 'the aliasing bug: change through one name, see it through the other', color: 'coral' },
   },
   {
     slots: [
@@ -111,12 +130,32 @@ const VIEWS: View[] = [
   {
     slots: [
       { name: 'lives', val: '9' },
+      { name: 'n', val: '9', hot: true, inFrame: true },
+    ],
+    obj: null,
+    frameLabel: 'bump’s call frame — fresh slots per call (lesson 3.2)',
+    console: [],
+    note: { text: 'the fresh slot n received a COPY of the value 9', color: 'teal' },
+  },
+  {
+    slots: [
+      { name: 'lives', val: '9' },
       { name: 'n', val: '10', hot: true, inFrame: true },
     ],
     obj: null,
     frameLabel: 'bump’s call frame — fresh slots per call (lesson 3.2)',
     console: ['9'],
-    note: { text: 'n received a COPY of the value 9 — call by value. lives untouched.', color: 'teal' },
+    note: { text: 'n became 10 in bump’s own frame — lives untouched: CALL BY VALUE', color: 'teal' },
+  },
+  {
+    slots: [
+      { name: 'dog', arrow: true, arrowY: 112 },
+      { name: 'pet', arrow: true, hot: true, inFrame: true, arrowY: 134 },
+    ],
+    obj: [{ text: 'age: 5' }],
+    frameLabel: 'birthday’s call frame',
+    console: ['9'],
+    note: { text: 'pet received a copy of the ARROW — one shared object', color: 'coral' },
   },
   {
     slots: [
@@ -126,7 +165,18 @@ const VIEWS: View[] = [
     obj: [{ text: 'age: 6', hot: true }],
     frameLabel: 'birthday’s call frame',
     console: ['9', '6'],
-    note: { text: 'pet received a copy of the ARROW — call by sharing. One object, mutated.', color: 'coral' },
+    note: { text: 'mutation through the arrow reaches the caller: CALL BY SHARING', color: 'coral' },
+  },
+  {
+    slots: [
+      { name: 'dog2', arrow: true, arrowY: 112 },
+      { name: 'pet', arrow: true, hot: true, inFrame: true, heapTarget: 2, arrowY: 236 },
+    ],
+    obj: [{ text: 'age: 5' }],
+    obj2: [{ text: 'age: 100', hot: true }],
+    frameLabel: 'replace’s call frame',
+    console: [],
+    note: { text: 'pet now points at a BRAND NEW object — dog2’s arrow never moved', color: 'teal' },
   },
   {
     slots: [
@@ -137,7 +187,7 @@ const VIEWS: View[] = [
     obj2: [{ text: 'age: 100', hot: true }],
     frameLabel: 'replace’s call frame',
     console: ['5'],
-    note: { text: 'pet now points at a BRAND NEW object — dog2’s arrow never moved', color: 'teal' },
+    note: { text: 'mutate THROUGH an arrow = shared · REASSIGN the arrow = local only', color: 'teal' },
   },
 ]
 
@@ -309,9 +359,7 @@ function HeapDiagram({ stepIndex }: { stepIndex: number }) {
             fontSize={15.5}
             fontWeight={700}
             fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}
-          >
-            {view.note.text}
-          </motion.text>
+          ><WrapTspans text={view.note.text} x={220} maxPx={426} fontSize={15.5} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -439,34 +487,68 @@ export const lesson46: LessonDef = {
     {
       id: 'copy-arrow',
       caption:
-        'Line 7 looks exactly like line 2 — same = sign — but copying a slot copies WHAT THE SLOT HOLDS. backup got a copy of a value. alias gets a copy of the ARROW. Count the objects on the right: still one. Two variables, two arrows, ONE object. alias is not a copy of the cat — it’s a second name for the same cat.',
+        'Line 7 looks exactly like line 2 — same = sign — but copying a slot copies WHAT THE SLOT HOLDS. backup got a copy of a value. alias gets a copy of the ARROW.',
+      highlightLines: [7],
+    },
+    {
+      id: 'count-the-objects',
+      caption:
+        'Now count the objects on the right: still ONE. Two variables, two arrows, one object. alias is not a copy of the cat — it’s a second name for the same cat.',
       highlightLines: [7],
     },
     {
       id: 'aliasing',
       caption:
-        'alias.age = 4 follows alias’s arrow and changes the one object — so cat.age, following cat’s arrow to that SAME object, reads 4. Nobody touched cat, and yet cat changed: the aliasing bug, seen in daylight. And the const mystery dissolves: const locks the ARROW in the slot (cat can never point elsewhere) — but the object at the end of the arrow was never locked. scores[1] = 96 changed the object, not the arrow.',
+        'alias.age = 4 follows alias’s arrow and changes the one object — so cat.age, following cat’s arrow to that SAME object, reads 4. Nobody touched cat, and yet cat changed: the aliasing bug, seen in daylight.',
+      highlightLines: [8, 9],
+    },
+    {
+      id: 'const-resolved',
+      caption:
+        'And the const mystery finally dissolves: const locks the ARROW in the slot — cat can never point elsewhere — but the object at the end of the arrow was never locked. 4.1’s scores[1] = 96 changed the object, not the arrow.',
       highlightLines: [8, 9],
     },
     {
       id: 'call-by-value',
       caption:
-        'Act two: functions — new code, same picture. Lesson 3.2 taught that each call gets fresh parameter slots. Now upgrade it: the fresh slot receives a copy of WHAT THE ARGUMENT’S SLOT HOLDS. lives holds the value 9, so n gets a copy of 9. Inside, n becomes 10 — in bump’s own frame. lives never felt it: 9. This is CALL BY VALUE.',
+        'Act two: functions — new code, same picture. Lesson 3.2 taught that each call gets fresh parameter slots. Now upgrade it: the fresh slot receives a copy of WHAT THE ARGUMENT’S SLOT HOLDS. lives holds the value 9, so n gets its own copy of 9.',
       codeOverride: CODE_B,
-      highlightLines: [1, 2, 3, 5, 6, 7],
+      highlightLines: [1, 5, 6],
+    },
+    {
+      id: 'call-by-value-proof',
+      caption:
+        'Inside, n becomes 10 — in bump’s own frame. lives never felt it: the console prints 9. This is CALL BY VALUE.',
+      codeOverride: CODE_B,
+      highlightLines: [2, 7],
     },
     {
       id: 'call-by-sharing',
       caption:
-        'Pass an object and the same rule produces the opposite outcome: dog’s slot holds an ARROW, so pet’s fresh slot gets a copy of the ARROW — pointing at the caller’s one object. pet.age = pet.age + 1 mutates it; dog.age reads 6. This is CALL BY SHARING (you’ll often hear it loosely called call by reference). One nuance left: what if, instead of mutating, the function REASSIGNS pet itself? Watch it, next.',
-      highlightLines: [9, 10, 11, 13, 14, 15],
+        'Pass an object and the same rule produces the opposite outcome: dog’s slot holds an ARROW, so pet’s fresh slot gets a copy of the ARROW — pointing at the caller’s one object.',
+      codeOverride: CODE_B,
+      highlightLines: [9, 13, 14],
+    },
+    {
+      id: 'call-by-sharing-proof',
+      caption:
+        'pet.age = pet.age + 1 mutates that shared object; dog.age reads 6. This is CALL BY SHARING (you’ll often hear it loosely called call by reference). One nuance left: what if the function REASSIGNS pet itself? Watch, next.',
+      codeOverride: CODE_B,
+      highlightLines: [10, 15],
     },
     {
       id: 'reassign-param',
       caption:
-        'replace(pet) does pet = { age: 100 } — that builds a BRAND NEW object and re-points pet’s own local arrow at it. dog2’s arrow never moved; it still points at the original { age: 5 }. console.log(dog2.age) proves it: 5, unchanged. Reassigning a parameter only ever redirects the function’s own copy of the arrow — it can never reach back and repoint the caller’s variable.',
+        'replace(pet) does pet = { age: 100 } — that builds a BRAND NEW object and re-points pet’s own local arrow at it. dog2’s arrow never moved; it still points at the original { age: 5 }.',
       codeOverride: CODE_C,
-      highlightLines: [1, 2, 5, 6, 7],
+      highlightLines: [1, 2, 5, 6],
+    },
+    {
+      id: 'reassign-proof',
+      caption:
+        'console.log(dog2.age) proves it: 5, unchanged. Reassigning a parameter only ever redirects the function’s own copy of the arrow — it can never reach back and re-point the caller’s variable.',
+      codeOverride: CODE_C,
+      highlightLines: [7],
     },
   ],
   Viz: HeapDiagram,

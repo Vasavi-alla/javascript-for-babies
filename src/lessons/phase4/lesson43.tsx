@@ -42,12 +42,22 @@ const VIEWS: View[] = [
   { cells: ['latte', 'mocha'], flash: null, slid: null, token: null, console: [] },
   {
     cells: ['latte', 'mocha', 'chai'], flash: 'end', slid: null,
+    token: null,
+    console: ['["latte","mocha","chai"]'],
+  },
+  {
+    cells: ['latte', 'mocha', 'chai'], flash: 'end', slid: null,
     token: { label: 'push returned (new length)', value: '3' },
     console: ['["latte","mocha","chai"]'],
   },
   {
-    cells: ['mocha', 'chai'], flash: 'front', slid: 'left',
+    cells: ['mocha', 'chai'], flash: 'front', slid: null,
     token: { label: 'shift returned (the removed element)', value: '"latte"' },
+    console: ['["latte","mocha","chai"]', 'latte'],
+  },
+  {
+    cells: ['mocha', 'chai'], flash: null, slid: 'left',
+    token: null,
     console: ['["latte","mocha","chai"]', 'latte'],
   },
   {
@@ -58,6 +68,11 @@ const VIEWS: View[] = [
   {
     cells: ['espresso', 'mocha'], flash: 'end', slid: null,
     token: { label: 'pop returned (the removed element)', value: '"chai"' },
+    console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]', '2'],
+  },
+  {
+    cells: ['espresso', 'mocha'], flash: null, slid: null,
+    token: null,
     console: ['["latte","mocha","chai"]', 'latte', '["espresso","mocha","chai"]', '2'],
   },
 ]
@@ -249,13 +264,25 @@ export const lesson43: LessonDef = {
     {
       id: 'push',
       caption:
-        'orders.push("chai") appends a new element after the current last one. Nothing else moved — latte and mocha kept their indexes. And push hands something back: the array’s NEW LENGTH, 3. (Every one of today’s four methods returns something. That detail writes half of tomorrow’s bugs.)',
+        'orders.push("chai") appends a new element after the current last one. Nothing else moved — latte and mocha kept their indexes. End-of-array work disturbs nobody.',
+      highlightLines: [3, 4],
+    },
+    {
+      id: 'push-returns',
+      caption:
+        'And push hands something back: the array’s NEW LENGTH, 3. Every one of today’s four methods returns something — that detail writes half of tomorrow’s bugs.',
       highlightLines: [3, 4],
     },
     {
       id: 'shift',
       caption:
-        'orders.shift() removes the element at index 0 AND returns it — so const next = orders.shift() catches "latte" as it leaves. Now watch the shelf: mocha slid from index 1 to 0, chai from 2 to 1. shift re-indexes EVERY remaining element. On three elements that’s invisible; on a million-element array, that’s a million moves for one removal — the O(n) bill lesson 4.2 warned about.',
+        'orders.shift() removes the element at index 0 AND returns it — so const next = orders.shift() catches "latte" as it leaves.',
+      highlightLines: [6, 7],
+    },
+    {
+      id: 'shift-reindex',
+      caption:
+        'Now watch the shelf: mocha slid from index 1 to 0, chai from 2 to 1. shift re-indexes EVERY remaining element. On three elements that’s invisible; on a million-element array, that’s a million moves for one removal — 4.2’s O(n) bill, arriving on schedule.',
       highlightLines: [6, 7],
     },
     {
@@ -267,8 +294,14 @@ export const lesson43: LessonDef = {
     {
       id: 'pop',
       caption:
-        'orders.pop() removes the LAST element and returns it — we let "chai" go without storing it. End-of-array again: nobody else moved. Final count: 2. The pattern to keep: end work (push/pop) is cheap, front work (shift/unshift) moves everyone.',
+        'orders.pop() removes the LAST element and returns it — we let "chai" go without storing it. End-of-array again: nobody else moved. Final count: 2.',
       highlightLines: [12, 13],
+    },
+    {
+      id: 'the-pattern',
+      caption:
+        'The pattern to keep forever: END work (push/pop) is cheap — O(1), nobody moves. FRONT work (shift/unshift) moves everyone — O(n). When lists get big, which end you work at becomes a real decision.',
+      highlightLines: [3, 6, 9, 12],
     },
   ],
   Viz: GrowShrinkShelf,

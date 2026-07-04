@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 3.5 — Scope 🎬 hero lesson
@@ -54,6 +55,12 @@ const CHIP_FUEL = { x: 235, y: 142 }
 
 const VIEWS: View[] = [
   { mode: 'main', block: 'alive', rays: [], console: [] },
+  { mode: 'main', block: 'alive', rays: [], console: [] },
+  {
+    mode: 'main', block: 'alive', console: [],
+    rays: [{ from: USE_IN_BLOCK, to: { x: CHIP_FUEL.x + 30, y: CHIP_FUEL.y + 10 } }],
+    rayLabel: 'found in the block’s own bubble — search over',
+  },
   {
     mode: 'main', block: 'alive', console: ['100 left on Falcon'],
     rays: [
@@ -62,6 +69,7 @@ const VIEWS: View[] = [
     ],
     rayLabel: 'the ray shoots OUTWARD until it finds the name',
   },
+  { mode: 'main', block: 'popped', rays: [], console: ['100 left on Falcon'] },
   {
     mode: 'main', block: 'popped', console: ['100 left on Falcon', 'Falcon from Earth'],
     rays: [{ from: USE_IN_FN, to: { x: CHIP_PLANET.x + 30, y: CHIP_PLANET.y + 10 } }],
@@ -159,9 +167,7 @@ function ScopeLens({ stepIndex }: { stepIndex: number }) {
         ))}
       </AnimatePresence>
       {view.rayLabel && (
-        <text x={220} y={256} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink)">
-          {view.rayLabel}
-        </text>
+        <text x={220} y={256} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink)"><WrapTspans text={view.rayLabel} x={220} maxPx={426} fontSize={14} /></text>
       )}
 
       {/* console strip */}
@@ -253,19 +259,37 @@ export const lesson35: LessonDef = {
     {
       id: 'bubbles',
       caption:
-        'Three bubbles, drawn straight from the braces: the global bubble (the whole file), mission()’s bubble, and the if block’s bubble. Every { } pair blows a new bubble. A variable lives in the bubble where its let happened: planet in global, ship in mission, fuel in the if block.',
+        'Three bubbles, drawn straight from the braces: the global bubble (the whole file), mission()’s bubble, and the if block’s bubble. Every { } pair blows a new bubble.',
       highlightLines: [1, 4, 7],
     },
     {
-      id: 'lookup-inner',
+      id: 'residents',
       caption:
-        'Line 8 runs INSIDE the if block and needs fuel and ship. The engine shoots a lookup ray outward from where the name is used: fuel is found right here in the block’s own bubble. ship isn’t — so the ray passes through the bubble wall and finds it one bubble out, in mission(). Inner sees outer. The log works.',
+        'A variable lives in the bubble where its let happened: planet in global, ship in mission, fuel in the if block. Where the let is written decides the home — nothing else.',
+      highlightLines: [1, 4, 7],
+    },
+    {
+      id: 'lookup-local',
+      caption:
+        'Line 8 runs INSIDE the if block and needs fuel and ship. The engine shoots a lookup ray outward from where the name is used: fuel is found right here, in the block’s own bubble. Search over.',
       highlightLines: [8],
+    },
+    {
+      id: 'lookup-outward',
+      caption:
+        'ship isn’t here — so the ray passes through the bubble wall and finds it one bubble out, in mission(). Inner sees outer. The log works.',
+      highlightLines: [8],
+    },
+    {
+      id: 'bubble-pops',
+      caption:
+        'The if block ended at line 9 — and look: its bubble POPPED, taking fuel with it. Block variables live exactly as long as their block.',
+      highlightLines: [9],
     },
     {
       id: 'lookup-far',
       caption:
-        'The if block ended at line 9 — and look: its bubble POPPED, taking fuel with it. Block variables live exactly as long as their block. Now line 11 needs ship (found in this bubble) and planet — the ray travels through TWO walls to global and finds it. Rays can travel any distance, as long as the direction is outward.',
+        'Now line 11 needs ship (found in this bubble) and planet — the ray travels through TWO walls, all the way to global, and finds it. Rays can travel any distance, as long as the direction is outward.',
       highlightLines: [11],
     },
     {

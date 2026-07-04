@@ -3,6 +3,7 @@ import { RoughRect } from '../../design/rough-svg'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.14 — Checkpoint: the test-results dashboard
@@ -39,9 +40,11 @@ interface View {
 const VIEWS: View[] = [
   { hot: [], stage: 'data', console: [], note: 'an ARRAY of OBJECTS — the exact shape every real test report has' },
   { hot: [1, 3], stage: 'filter', console: ['2'], note: 'filter with !r.passed keeps the failures — objects pass through the gate whole' },
+  { hot: [1, 3], stage: 'filter', console: ['2'], note: 'failed holds ARROWS to the same two records — not copies (4.6)' },
   { hot: [1, 3], stage: 'map', console: ['2', '["search","pay"]'], note: 'chain: the filtered array feeds map, which plucks one property from each object' },
   { hot: [0, 1, 2, 3], stage: 'reduce', console: ['2', '["search","pay"]', '2270'], note: 'reduce folds a property across ALL runs: 0+320+810+150+990 = 2270' },
   { hot: [], stage: 'done', console: ['2', '["search","pay"]', '2270'], note: 'failures counted, named, and timed — you just wrote a QA dashboard' },
+  { hot: [], stage: 'done', console: ['2', '["search","pay"]', '2270'], note: 'Phase 10’s runner will PRODUCE this data; Phase 11’s Playwright, at scale' },
 ]
 
 const RUNS = [
@@ -112,9 +115,7 @@ function DashboardBelt({ stepIndex }: { stepIndex: number }) {
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={222} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={14} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={240} width={360} height={40} seed={825} strokeWidth={1.5} />
@@ -238,7 +239,13 @@ export const lesson414: LessonDef = {
     {
       id: 'filter-failures',
       caption:
-        'Question one: how many failed? runs.filter(r => !r.passed) — the gate function reads each object’s passed property and flips it with ! (lesson 1.10’s NOT, still earning). Objects pass through the gate WHOLE — failed is an array of the two complete failure records, not just names. And per 4.6: it holds arrows to the SAME objects, not copies.',
+        'Question one: how many failed? runs.filter(r => !r.passed) — the gate function reads each object’s passed property and flips it with ! (lesson 1.10’s NOT, still earning). Objects pass through the gate WHOLE — failed holds the two complete failure records, not just names.',
+      highlightLines: [8, 9],
+    },
+    {
+      id: 'filter-arrows',
+      caption:
+        'And per 4.6: the new array holds ARROWS to the SAME record objects, not copies. Chains build new containers — never new contents.',
       highlightLines: [8, 9],
     },
     {
@@ -256,7 +263,13 @@ export const lesson414: LessonDef = {
     {
       id: 'dashboard',
       caption:
-        '2 failed — search and pay — in a 2270 ms suite. Three questions, three one-liners, zero hand-written loops. In Phase 10 a real test runner will PRODUCE this data and in Phase 11 Playwright will produce it at scale; the crunching you just watched is already yours. Now build the two dashboard widgets below yourself.',
+        '2 failed — search and pay — in a 2270 ms suite. Three questions, three one-liners, zero hand-written loops.',
+      highlightLines: [8, 11, 14],
+    },
+    {
+      id: 'career-bridge',
+      caption:
+        'In Phase 10 a real test runner will PRODUCE this data, and in Phase 11 Playwright will produce it at scale — but the crunching you just watched is already yours. Now build the two dashboard widgets below yourself.',
       highlightLines: [8, 11, 14],
     },
   ],

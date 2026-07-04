@@ -120,7 +120,7 @@ function ClosureBackpack({ stepIndex }: { stepIndex: number }) {
               </motion.g>
               <RoughEllipse cx={272} cy={104} width={26} height={12} seed={707} strokeWidth={1.6} />
               <text x={320} y={216} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={13} fill="var(--color-ink-soft)">
-                the backpack: outer variables, kept alive
+                the backpack: outer variables, alive
               </text>
             </motion.g>
           )}

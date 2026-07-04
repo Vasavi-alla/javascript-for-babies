@@ -15,7 +15,7 @@ score = score + 5;
 console.log(score);`
 
 function ReassignScene({ stepIndex }: { stepIndex: number }) {
-  const value = stepIndex >= 4 ? '15' : '10'
+  const value = stepIndex >= 5 ? '15' : '10'
   return (
     <svg viewBox="0 0 420 280" className="w-full">
       <text x={230} y={36} fontFamily="var(--font-hand)" fontSize={22} fill="var(--color-ink-soft)">
@@ -46,7 +46,7 @@ function ReassignScene({ stepIndex }: { stepIndex: number }) {
 
       {/* the evaluation bubble */}
       <AnimatePresence>
-        {stepIndex === 3 && (
+        {stepIndex === 4 && (
           <motion.g initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }} style={{ transformOrigin: '200px 205px' }}>
             <RoughRect x={70} y={175} width={270} height={60} seed={30} fill="var(--color-sticky-pink)" fillStyle="solid" strokeWidth={1.5} />
             <text x={205} y={202} textAnchor="middle" fontFamily="var(--font-code)" fontSize={14} fill="var(--color-ink)">
@@ -61,7 +61,7 @@ function ReassignScene({ stepIndex }: { stepIndex: number }) {
 
       {/* console output */}
       <AnimatePresence>
-        {stepIndex >= 5 && (
+        {stepIndex >= 6 && (
           <motion.g initial={{ opacity: 0, y: -12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
             <RoughRect x={70} y={205} width={160} height={34} seed={32} fill="var(--color-sticky)" fillStyle="solid" strokeWidth={1.5} />
             <text x={85} y={227} fontFamily="var(--font-code)" fontSize={13} fill="var(--color-ink)">
@@ -138,7 +138,13 @@ export const lesson13: LessonDef = {
     {
       id: 'weird-line',
       caption:
-        'Now line 2: score = score + 5. If = meant “equals”, this line would be nonsense — nothing equals itself plus five. First truth of this lesson: = does NOT mean equals. It’s an instruction: “take what’s on the right, put it into what’s on the left.”',
+        'Now line 2: score = score + 5. If = meant “equals”, this line would be nonsense — nothing equals itself plus five. First truth of this lesson: = does NOT mean equals.',
+      highlightLines: [2],
+    },
+    {
+      id: 'gets',
+      caption:
+        '= is an INSTRUCTION: “take what’s on the right, put it into what’s on the left.” Programmers read it aloud as “gets” — score GETS score plus five.',
       highlightLines: [2],
     },
     {

@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 5.3 — The scope chain, precisely
@@ -60,6 +61,12 @@ const VIEWS: View[] = [
     console: [],
     note: 'each context ALSO carries one OUTER LINK to another context — tied at creation time to the place its function was WRITTEN',
     badge: 'picture the link as a rope: inner is written inside outer → a rope ties inner to outer',
+  },
+  {
+    frames: FRAMES_BASE,
+    console: [],
+    note: 'the rope is tied ONCE, at creation — it never re-ties, no matter who calls the function',
+    badge: 'pass inner anywhere, call it from anywhere — its rope still leads to outer',
   },
   {
     frames: FRAMES_BASE.map((f, i) => (i === 2 ? { ...f, hot: true } : f)),
@@ -155,17 +162,13 @@ function ScopeRopes({ stepIndex }: { stepIndex: number }) {
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <RoughRect x={44} y={250} width={352} height={26} seed={867} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={267} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={10} fontWeight={700} fill="var(--color-pencil-blue)">
-              {view.badge}
-            </text>
+            <text x={220} y={267} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={10} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={10} /></text>
           </motion.g>
         )}
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={298} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={298} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={12.5} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={310} width={360} height={30} seed={866} strokeWidth={1.5} />
@@ -259,7 +262,13 @@ export const lesson53: LessonDef = {
     {
       id: 'the-outer-link',
       caption:
-        'Besides its table, every context ALSO carries ONE outer link to another context — tied at creation time to the place its function’s text was WRITTEN: inner is written inside outer → linked to outer. outer is written at the top level → linked to global. Picture the link as a rope: it never re-ties, no matter who calls the function.',
+        'Besides its table, every context ALSO carries ONE outer link to another context — tied to the place its function’s text was WRITTEN: inner is written inside outer → linked to outer. outer is written at the top level → linked to global.',
+      highlightLines: [3, 6],
+    },
+    {
+      id: 'rope-never-reties',
+      caption:
+        'Picture the link as a rope, tied ONCE at creation. It never re-ties: pass the function anywhere, store it, call it from a stranger’s code — its rope still leads to its birthplace. (That permanence is exactly what this refuses to do — next lesson.)',
       highlightLines: [3, 6],
     },
     {

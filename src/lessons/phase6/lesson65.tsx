@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 6.5 — Microtasks vs macrotasks
@@ -80,14 +81,14 @@ function TwoQueues({ stepIndex }: { stepIndex: number }) {
       <text x={101} y={65} textAnchor="middle" fontFamily="var(--font-code)" fontSize={10.5} fill="var(--color-ink)">{view.stack}</text>
 
       {/* micro queue */}
-      <text x={220} y={64} fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">⚡ microtasks (express — drains COMPLETELY)</text>
+      <text x={220} y={64} fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">⚡ microtasks — drains COMPLETELY</text>
       <RoughRect x={214} y={72} width={200} height={40} seed={1032} strokeWidth={2.2} stroke="var(--color-marker-teal)" />
       {view.micro.map((m) => (
         <motion.text key={m} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} x={314} y={97} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill="var(--color-marker-teal)">{m}</motion.text>
       ))}
 
       {/* macro queue */}
-      <text x={220} y={140} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">🐢 macrotasks (regular — one per turn)</text>
+      <text x={220} y={140} fontFamily="var(--font-hand)" fontSize={12.5} fill="var(--color-ink-soft)">🐢 macrotasks — one per turn</text>
       <RoughRect x={214} y={148} width={200} height={40} seed={1033} strokeWidth={2} />
       {view.macro.map((m) => (
         <motion.text key={m} initial={{ opacity: 0, x: 8 }} animate={{ opacity: 1, x: 0 }} x={314} y={173} textAnchor="middle" fontFamily="var(--font-code)" fontSize={11} fill="var(--color-ink)">{m}</motion.text>
@@ -105,17 +106,13 @@ function TwoQueues({ stepIndex }: { stepIndex: number }) {
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <RoughRect x={44} y={196} width={352} height={30} seed={1038} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={215} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={10} fontWeight={700} fill="var(--color-pencil-blue)">
-              {view.badge}
-            </text>
+            <text x={220} y={215} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={10} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={10} /></text>
           </motion.g>
         )}
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={236} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12.5} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={12.5} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={252} width={360} height={34} seed={1037} strokeWidth={1.5} />

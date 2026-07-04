@@ -25,7 +25,7 @@ const TOKENS: Token[] = [
   { label: '"hello"', type: 'string', free: { x: 320, y: 65 }, penned: { x: 215, y: 150 }, sortAt: 2 },
   { label: 'true', type: 'boolean', free: { x: 150, y: 95 }, penned: { x: 355, y: 150 }, sortAt: 3 },
   { label: 'false', type: 'boolean', free: { x: 390, y: 45 }, penned: { x: 415, y: 150 }, sortAt: 3 },
-  { label: '"42"', type: 'string', free: { x: 280, y: 100 }, penned: { x: 275, y: 150 }, sortAt: 5 },
+  { label: '"42"', type: 'string', free: { x: 280, y: 100 }, penned: { x: 275, y: 150 }, sortAt: 6 },
 ]
 
 const PENS = [
@@ -108,6 +108,11 @@ export const lesson11: LessonDef = {
       id: 'booleans',
       caption:
         'Third pen: boolean — a type with only two values in the entire universe: true and false. It exists to answer yes/no questions, and in Phase 2 it will power every decision a program makes.',
+    },
+    {
+      id: 'rules',
+      caption:
+        'And the pen decides the RULES. Numbers can be added and compared. Strings can be glued and measured. Booleans can steer decisions. What a value is allowed to DO is set entirely by its type — that’s the whole point of sorting them.',
     },
     {
       id: 'predict-42',

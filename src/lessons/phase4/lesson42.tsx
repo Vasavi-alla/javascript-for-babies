@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 4.2 — Inside an array: memory & the O(1) trick
@@ -41,12 +42,28 @@ const VIEWS: View[] = [
     note: { text: 'an array = a CONTIGUOUS run of memory slots — side by side, no gaps', color: 'teal' },
   },
   {
+    jumpTo: null, formula: null, showGraph: false, showLength: false, ghostAddress: false, console: [],
+    note: { text: 'same-size slots, no gaps → every address is PREDICTABLE', color: 'teal' },
+  },
+  {
     jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: false, showLength: false, ghostAddress: false, console: [],
     note: { text: 'no searching: one multiply, one add, one jump', color: 'teal' },
   },
   {
-    jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: true, showLength: false, ghostAddress: false, console: ['71'],
-    note: { text: 'same arithmetic for index 2 or index 2,000,000 — programmers call it O(1)', color: 'teal' },
+    jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: false, showLength: false, ghostAddress: false, console: [],
+    note: { text: 'an index is a DISTANCE — a number the engine can do math on', color: 'teal' },
+  },
+  {
+    jumpTo: 0, formula: '5000 + 0 × 8 = 5000', showGraph: false, showLength: false, ghostAddress: false, console: [],
+    note: { text: 'element 0 sits ZERO steps from the start — that’s why indexes begin at 0', color: 'teal' },
+  },
+  {
+    jumpTo: 2, formula: '5000 + 2 × 8 = 5016', showGraph: false, showLength: false, ghostAddress: false, console: ['71'],
+    note: { text: 'index 2 or index 2,000,000 — the same three operations', color: 'teal' },
+  },
+  {
+    jumpTo: 2, formula: null, showGraph: true, showLength: false, ghostAddress: false, console: ['71'],
+    note: { text: 'O(1) = flat cost at any size. O(n) = cost grows with the element count', color: 'teal' },
   },
   {
     jumpTo: null, formula: null, showGraph: false, showLength: true, ghostAddress: false, console: ['71', '3'],
@@ -55,6 +72,10 @@ const VIEWS: View[] = [
   {
     jumpTo: null, formula: '5000 + 9 × 8 = 5072 …not ours!', showGraph: false, showLength: false, ghostAddress: true, console: ['71', '3', 'undefined'],
     note: { text: 'the math happily computes 5072 — but the array never claimed that slot: undefined', color: 'coral' },
+  },
+  {
+    jumpTo: null, formula: null, showGraph: false, showLength: false, ghostAddress: true, console: ['71', '3', 'undefined'],
+    note: { text: 'big[50] = 1 forces growth out to index 50 — the gap breaks the tidy picture', color: 'coral' },
   },
   {
     jumpTo: null, formula: null, showGraph: false, showLength: false, ghostAddress: false, console: ['71', '3', 'undefined'],
@@ -70,7 +91,7 @@ function MemoryStrip({ stepIndex }: { stepIndex: number }) {
   return (
     <svg viewBox="0 0 440 320" className="w-full">
       <text x={24} y={30} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink-soft)">
-        a strip of the memory wall (lesson 0.4) — every slot has an ADDRESS
+        the memory wall (lesson 0.4) — every slot has an ADDRESS
       </text>
 
       {/* neighboring foreign slots to show contiguity */}
@@ -180,9 +201,7 @@ function MemoryStrip({ stepIndex }: { stepIndex: number }) {
       {/* verdict */}
       <AnimatePresence mode="wait">
         {view.note && (
-          <motion.text key={view.note.text} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={view.showGraph ? 300 : 232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}>
-            {view.note.text}
-          </motion.text>
+          <motion.text key={view.note.text} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={view.showGraph ? 300 : 232} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill={view.note.color === 'coral' ? 'var(--color-marker-coral)' : 'var(--color-marker-teal)'}><WrapTspans text={view.note.text} x={220} maxPx={426} fontSize={14.5} /></motion.text>
         )}
       </AnimatePresence>
 
@@ -275,37 +294,67 @@ export const lesson42: LessonDef = {
     {
       id: 'contiguous',
       caption:
-        'When line 1 runs, the array asks memory for a CONTIGUOUS run of slots — side by side, no gaps, in one block. Say each slot is 8 bytes and the block starts at address 5000: element 0 lives at 5000, element 1 at 5008, element 2 at 5016. The array remembers ONE number: where the block starts.',
+        'When line 1 runs, the array asks memory for a CONTIGUOUS run of slots — side by side, no gaps, one block. The array itself remembers just ONE number: where the block starts. Here, address 5000.',
       highlightLines: [1],
     },
     {
-      id: 'arithmetic',
+      id: 'addresses',
       caption:
-        'Now scores[2]. The engine does NOT walk the array. It computes: start + index × slotSize = 5000 + 2 × 8 = 5016 — and jumps straight to that address. One multiplication, one addition, one jump. THAT is what an index really is: not a label, a distance the engine can do math on. (And it’s the real reason indexes start at 0 — element 0 is 0 × 8 bytes from the start.)',
+        'Every slot is the same size — say 8 bytes each. So element 0 lives at address 5000, element 1 at 5008, element 2 at 5016. Same-size slots with no gaps make every address PREDICTABLE. Hold that word.',
+      highlightLines: [1],
+    },
+    {
+      id: 'formula',
+      caption:
+        'Now scores[2]. The engine does NOT walk the array. It computes: start + index × slotSize = 5000 + 2 × 8 = 5016 — and jumps straight to that address. One multiplication, one addition, one jump.',
       highlightLines: [3, 4, 5, 6, 8],
     },
     {
-      id: 'o1',
+      id: 'index-is-distance',
       caption:
-        'Here’s the beautiful part: the formula doesn’t care how big the array is. Index 2 or index 2,000,000 — same multiply, same add, same single jump. Programmers write this as O(1), read “constant time”: the cost stays FLAT as the data grows. The graph shows the two cost shapes you’ll meet again and again: O(1) flat, O(n) climbing with size (n = the number of elements).',
+        'THAT is what an index really is: not a label — a DISTANCE the engine can do math on. scores[2] means “two slot-widths from the start.”',
+      highlightLines: [8],
+    },
+    {
+      id: 'zero-based',
+      caption:
+        'And the old zero mystery dissolves: element 0 sits 0 × 8 bytes from the start — the first element is zero steps in. Indexes start at 0 because the distance math starts at 0.',
+      highlightLines: [8],
+    },
+    {
+      id: 'same-at-any-size',
+      caption:
+        'Here’s the beautiful part: the formula doesn’t care how big the array is. Index 2 or index 2,000,000 — same multiply, same add, same single jump. The 71 arrives just as fast either way.',
+      highlightLines: [8],
+    },
+    {
+      id: 'big-o',
+      caption:
+        'That kind of cost has a name professionals use daily: O(1), read “constant time” — the cost stays FLAT as data grows. The graph shows the two shapes you’ll meet forever: O(1) flat, O(n) climbing with size (n = the number of elements).',
       highlightLines: [8],
     },
     {
       id: 'length',
       caption:
-        'scores.length is also O(1) — and not because the engine counts quickly. It never counts at all: the array carries a length number in its own bookkeeping and updates it on every change. Asking for it is just reading one stored value.',
+        'scores.length is also O(1) — and not because the engine counts quickly. It never counts at all: the array carries a length number in its own bookkeeping and updates it on every change.',
       highlightLines: [9],
     },
     {
       id: 'bounds',
       caption:
-        'scores[9]: the arithmetic shrugs and computes 5000 + 9 × 8 = 5072… but that slot was never part of the array’s block — it might belong to a completely different variable! JavaScript checks the index against the length first and answers undefined instead of raiding a stranger’s memory. (Writing past the end is different, and messier: big[50] = 1 forces the array to grow all the way out to reach it — leaving a gap behind it that breaks the tidy contiguous picture. Honest details on exactly that, in a moment.)',
+        'scores[9]: the arithmetic shrugs and computes 5000 + 9 × 8 = 5072… but that slot was never part of the array’s block — it might belong to a completely different variable! JavaScript checks the index against the length first and answers undefined instead of raiding a stranger’s memory.',
+      highlightLines: [10],
+    },
+    {
+      id: 'write-past-the-end',
+      caption:
+        'WRITING past the end is different, and messier: big[50] = 1 forces the array to grow all the way out to index 50 — leaving a gap behind that breaks the tidy contiguous picture (and the fast math with it). Honest details below.',
       highlightLines: [10],
     },
     {
       id: 'the-catch',
       caption:
-        'One law made all this speed possible: the block must stay CONTIGUOUS. No gaps, ever. So think ahead: if element 0 is removed, a gap appears at the start — and the only way to close it is to move every remaining element one slot over. Hold that thought for exactly one lesson: it’s about to become a bill, and its name is O(n).',
+        'One law made all this speed possible: the block must stay CONTIGUOUS. No gaps, ever. So think ahead: if element 0 is removed, a gap appears at the start — and the only way to close it is to move EVERY remaining element one slot over. Hold that thought for exactly one lesson: it’s about to become a bill named O(n).',
       highlightLines: [1],
     },
   ],

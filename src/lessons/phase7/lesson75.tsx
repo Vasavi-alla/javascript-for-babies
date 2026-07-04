@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { WrapTspans } from '../../design/WrapTspans'
 
 /**
  * 7.5 — Bubbling, delegation & preventDefault
@@ -82,6 +83,11 @@ const VIEWS: View[] = [
   },
   {
     markerAt: 1, phaseLabel: 'bubbling ↑ — listener fires!', lit: [3, 2], console: ['heard on: list', 'actually clicked: BUTTON'],
+    note: 'the delegation toolkit',
+    badge: 'matches(".delete") checks the clicked element · closest("li") walks UP to an ancestor',
+  },
+  {
+    markerAt: 1, phaseLabel: 'bubbling ↑ — listener fires!', lit: [3, 2], console: ['heard on: list', 'actually clicked: BUTTON'],
     note: 'and it covers the FUTURE too',
     badge: 'a new <li> added later is automatically covered — delegation relies on bubbling, not a per-element listener',
   },
@@ -136,17 +142,13 @@ function EventBubbles({ stepIndex }: { stepIndex: number }) {
         {view.badge && (
           <motion.g key={view.badge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>
             <RoughRect x={30} y={252} width={380} height={30} seed={1171} strokeWidth={1.6} stroke="var(--color-pencil-blue)" fill="color-mix(in srgb, var(--color-pencil-blue) 10%, transparent)" fillStyle="solid" />
-            <text x={220} y={271} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={9.5} fontWeight={700} fill="var(--color-pencil-blue)">
-              {view.badge}
-            </text>
+            <text x={220} y={271} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={9.5} fontWeight={700} fill="var(--color-pencil-blue)"><WrapTspans text={view.badge} x={220} maxPx={330} fontSize={9.5} /></text>
           </motion.g>
         )}
       </AnimatePresence>
 
       <AnimatePresence mode="wait">
-        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12} fontWeight={700} fill="var(--color-marker-teal)">
-          {view.note}
-        </motion.text>
+        <motion.text key={view.note} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} x={220} y={296} textAnchor="middle" fontFamily="var(--font-hand)" fontSize={12} fontWeight={700} fill="var(--color-marker-teal)"><WrapTspans text={view.note} x={220} maxPx={426} fontSize={12} /></motion.text>
       </AnimatePresence>
 
       <RoughRect x={40} y={306} width={360} height={20} seed={1172} strokeWidth={1.5} />
@@ -262,7 +264,13 @@ export const lesson75: LessonDef = {
     {
       id: 'delegation',
       caption:
-        'That distinction is the whole payoff, named: DELEGATION. One listener on a parent — checking event.target inside it — covers every child button, instead of wiring a hundred individual listeners. Two small helpers do the checking: event.target.matches(".delete") asks “does the clicked element match this selector?”, and .closest("li") walks UPWARD from it to the nearest li ancestor — the mirror image of querySelector’s downward search.',
+        'That distinction is the whole payoff, named: DELEGATION. One listener on a parent — checking event.target inside it — covers every child button, instead of wiring a hundred individual listeners.',
+      highlightLines: [7, 8],
+    },
+    {
+      id: 'delegation-tools',
+      caption:
+        'Two small helpers do the checking: event.target.matches(".delete") asks “does the clicked element match this selector?”, and .closest("li") walks UPWARD from it to the nearest li ancestor — the mirror image of querySelector’s downward search.',
       highlightLines: [7, 8],
     },
     {

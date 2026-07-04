@@ -87,6 +87,16 @@ function NothingScene({ stepIndex }: { stepIndex: number }) {
           </motion.g>
         )}
       </AnimatePresence>
+      {stepIndex === 6 && (
+        <text x={30} y={296} fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-teal)">
+          undefined = never set · null = deliberately empty
+        </text>
+      )}
+      {stepIndex >= 7 && (
+        <text x={30} y={296} fontFamily="var(--font-hand)" fontSize={14.5} fontWeight={700} fill="var(--color-marker-coral)">
+          gotcha: typeof null → "object" — the permanent 1995 bug
+        </text>
+      )}
     </svg>
   )
 }
@@ -150,7 +160,19 @@ export const lesson17: LessonDef = {
     {
       id: 'null',
       caption:
-        'Line 5 is different in spirit: middleName = null. Here a PERSON chose to store “nothing” — this user simply has no middle name, and the code says so explicitly. null is deliberate, meaningful emptiness. So: undefined = nobody ever set it. null = someone set it to “nothing” on purpose.',
+        'Line 5 is different in spirit: middleName = null. Here a PERSON chose to store “nothing” — this user simply has no middle name, and the code says so explicitly. null is deliberate, meaningful emptiness.',
+      highlightLines: [5],
+    },
+    {
+      id: 'two-nothings',
+      caption:
+        'Side by side now: undefined answers “nobody ever set this” — the machine’s nothing. null answers “deliberately left empty” — the programmer’s nothing. Two different answers to two different questions.',
+      highlightLines: [3, 5],
+    },
+    {
+      id: 'typeof-null',
+      caption:
+        'One famous crook before you go: ask typeof null and the machine answers "object". That’s flatly wrong — a 1995 bug that can never be fixed, because too much of the web depends on it. The full story waits below; interviewers adore it.',
       highlightLines: [5],
     },
   ],

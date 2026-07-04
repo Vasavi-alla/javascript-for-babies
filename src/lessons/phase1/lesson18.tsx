@@ -55,8 +55,8 @@ function TypeofScene({ stepIndex }: { stepIndex: number }) {
       <AnimatePresence>
         {showInspector && (
           <motion.g initial={{ opacity: 0, x: 18 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
-            <text x={120} y={190} fontFamily="var(--font-hand)" fontSize={21} fill="var(--color-ink)">
-              🔍 typeof: “let me read the value’s tag…”
+            <text x={120} y={190} fontFamily="var(--font-hand)" fontSize={18} fill="var(--color-ink)">
+              🔍 typeof: “read the value’s tag…”
             </text>
             <HandArrow from={{ x: 210, y: 200 }} to={{ x: 300, y: 130 }} seed={236} curve={-0.2} stroke="var(--color-marker-coral)" />
             <RoughRect x={120} y={210} width={150} height={38} seed={237} fill="var(--color-sticky)" fillStyle="solid" strokeWidth={1.5} />
@@ -71,20 +71,20 @@ function TypeofScene({ stepIndex }: { stepIndex: number }) {
       <AnimatePresence>
         {stepIndex >= 5 && (
           <motion.g initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={{ type: 'spring', damping: 16 }}>
-            <text x={40} y={195} fontFamily="var(--font-hand)" fontSize={18} fill="var(--color-ink)">
+            <text x={40} y={195} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink)">
               typeof 42 → "number"      typeof "hi" → "string"
             </text>
-            <text x={40} y={222} fontFamily="var(--font-hand)" fontSize={18} fill="var(--color-ink)">
+            <text x={40} y={222} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-ink)">
               typeof true → "boolean"   typeof undefined → "undefined"
             </text>
-            <text x={40} y={252} fontFamily="var(--font-hand)" fontSize={18} fill="var(--color-marker-coral)">
+            <text x={40} y={252} fontFamily="var(--font-hand)" fontSize={14} fill="var(--color-marker-coral)">
               typeof null → "object"  ← the 1995 bug, forever
             </text>
           </motion.g>
         )}
       </AnimatePresence>
       {stepIndex >= 6 && (
-        <text x={40} y={276} fontFamily="var(--font-hand)" fontSize={15} fontWeight={700} fill="var(--color-marker-teal)">
+        <text x={40} y={276} fontFamily="var(--font-hand)" fontSize={13} fontWeight={700} fill="var(--color-marker-teal)">
           …and typeof never throws — a safe probe for maybe-missing names
         </text>
       )}
