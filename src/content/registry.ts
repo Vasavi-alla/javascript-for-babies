@@ -33,7 +33,7 @@ export const PHASES: PhaseMeta[] = [
   { number: 8, title: 'Modern JS & Tooling', question: 'Modules, npm, debugging, ES6+, a taste of TypeScript', plannedLessons: 6 },
   { number: 9, title: 'Node.js', question: 'JS without the browser: the terminal, process & env, files, Node’s event loop — where Playwright lives', plannedLessons: 8 },
   { number: 10, title: 'Testing Mindset', question: 'Why we test, assertions, the test pyramid, Vitest', plannedLessons: 7 },
-  { number: 11, title: 'Playwright', question: 'Locators, auto-waiting, fixtures, POM, network, CI — job-ready', plannedLessons: 13 },
+  { number: 11, title: 'Playwright', question: 'Setup, config, locators, fixtures, test data, network, cross-browser, CI — job-ready', plannedLessons: 18 },
 ]
 
 export const LESSONS: LessonMeta[] = [
@@ -141,6 +141,33 @@ export const LESSONS: LessonMeta[] = [
   { id: '9.6', slug: 'node-event-loop', title: 'Node’s event loop & non-blocking I/O', phase: 9, blurb: '6.2 backstage: the libuv workshop — how one thread reads a hundred files.', status: 'available' },
   { id: '9.7', slug: 'fetch-without-browser', title: 'fetch without a browser', phase: 9, blurb: 'The envelope leaves a terminal: JSON in, JSON out — your first API check.', status: 'available' },
   { id: '9.8', slug: 'checkpoint-environment-setup', title: 'Checkpoint: environment setup', phase: 9, blurb: 'Install Node for real, init a project, aim it with env, verify the exit code.', status: 'available' },
+  // Phase 10 — Testing Mindset
+  { id: '10.1', slug: 'why-software-breaks', title: 'Why software breaks', phase: 10, blurb: 'Watch a regression happen mechanically — then price it: desk, review, QA, 2am.', status: 'available' },
+  { id: '10.2', slug: 'testing-pyramid', title: 'The testing pyramid', phase: 10, blurb: 'Unit / API / E2E — a 1000× speed spread. The shape is a budget, not a diagram.', status: 'available' },
+  { id: '10.3', slug: 'anatomy-of-a-test', title: 'Anatomy of a test', phase: 10, blurb: 'Arrange–Act–Assert on five plain lines — and where expected values MUST come from.', status: 'available' },
+  { id: '10.4', slug: 'assertions', title: 'Assertions', phase: 10, blurb: 'toBe vs toEqual — 4.6’s addresses pay off in the twin trap. Build both yourself.', status: 'available' },
+  { id: '10.5', slug: 'vitest-hands-on', title: 'Vitest hands-on', phase: 10, blurb: 'describe/it/expect, reading red like a letter, exit codes, watch mode — then build the runner.', status: 'available' },
+  { id: '10.6', slug: 'doubles-and-tdd', title: 'Test doubles & a taste of TDD', phase: 10, blurb: 'Stub, spy (a closure!), mock, fake — double at boundaries only. One red-green-refactor lap.', status: 'available' },
+  { id: '10.7', slug: 'checkpoint-test-tip-calculator', title: 'Checkpoint: test the tip calculator', phase: 10, blurb: '3.11’s brain under guard: suite, sabotage, cascade, catch — red to green in seconds.', status: 'available' },
+  // Phase 11 — Playwright
+  { id: '11.1', slug: 'what-playwright-is', title: 'What Playwright is & why teams pick it', phase: 11, blurb: 'Robot hands: a Node script driving real browsers over a bridge — and why it ended the flaky era.', status: 'available' },
+  { id: '11.2', slug: 'playwright-setup', title: 'Setup: what npm init playwright scaffolds', phase: 11, blurb: 'Four questions, four files, three real browsers — a working suite in minute one.', status: 'available' },
+  { id: '11.3', slug: 'config-decoded', title: 'The config, decoded', phase: 11, blurb: 'playwright.config.ts line by line: two nested clocks, CI-aware retries, baseURL from env, evidence policies.', status: 'available' },
+  { id: '11.4', slug: 'locators', title: 'Locators', phase: 11, blurb: 'Find things the way users do — getByRole survives the redesign that kills CSS selectors.', status: 'available' },
+  { id: '11.5', slug: 'actions', title: 'Actions', phase: 11, blurb: 'Real trusted input events — behind every click, the actionability checklist (7.8, solved).', status: 'available' },
+  { id: '11.6', slug: 'auto-waiting', title: 'Auto-waiting & web-first assertions', phase: 11, blurb: 'THE flaky-test killer: assertions that poll until truth arrives. sleep() retires forever.', status: 'available' },
+  { id: '11.7', slug: 'fixtures-hooks', title: 'Fixtures & hooks', phase: 11, blurb: 'Where { page } comes from: injected resources, fresh contexts, and the use() sandwich.', status: 'available' },
+  { id: '11.8', slug: 'test-data', title: 'Test data & parameterized tests', phase: 11, blurb: 'One test body × a table of cases — edges at a line each, unique data per run.', status: 'available' },
+  { id: '11.9', slug: 'page-object-model', title: 'Page Object Model', phase: 11, blurb: 'One class per screen: a UI rename costs ONE edit — 5.6’s classes meet their killer app.', status: 'available' },
+  { id: '11.10', slug: 'network-interception', title: 'Network interception & API testing', phase: 11, blurb: 'The envelope stopped mid-flight: sad paths on demand, plus pure API tests (9.7 delivered).', status: 'available' },
+  { id: '11.11', slug: 'auth-storage-state', title: 'Auth, storage state & sessions', phase: 11, blurb: 'Log in once, bottle the session (7.7 pays off) — 200 logins become zero.', status: 'available' },
+  { id: '11.12', slug: 'cross-browser-projects', title: 'Cross-browser projects & devices', phase: 11, blurb: 'One suite, three engines and a phone — plus webServer, the dev-server-wasn’t-running killer.', status: 'available' },
+  { id: '11.13', slug: 'tags-selective-runs', title: 'Tags, selective runs & suite hygiene', phase: 11, blurb: '@smoke, --grep, honest skips, the .only disaster — a suite, not a junk drawer.', status: 'available' },
+  { id: '11.14', slug: 'debugging-failing-tests', title: 'Debugging failing tests', phase: 11, blurb: 'Red on CI: the trace as flight recorder, time-travel snapshots, the five-question method.', status: 'available' },
+  { id: '11.15', slug: 'parallelism-retries-flakiness', title: 'Parallelism, retries & flakiness', phase: 11, blurb: 'Workers, shards, the flaky mark — and the clinic: four causes, four cures you already own.', status: 'available' },
+  { id: '11.16', slug: 'ci-pipeline-decoded', title: 'CI: the pipeline, decoded', phase: 11, blurb: 'The workflow YAML line by line — the suite becomes a gatekeeper, its report published to a URL.', status: 'available' },
+  { id: '11.17', slug: 'visual-a11y-testing', title: 'Visual & a11y testing (bonus)', phase: 11, blurb: 'Pixel-level toEqual with governed baselines, and the axe scan as an accessibility floor.', status: 'available' },
+  { id: '11.18', slug: 'capstone-full-suite', title: 'Capstone: the full test suite', phase: 11, blurb: 'A real repo, everything assembled, CI green, report live. Graduation. You are an automation tester.', status: 'available' },
 ]
 
 export function lessonsForPhase(phase: number): LessonMeta[] {

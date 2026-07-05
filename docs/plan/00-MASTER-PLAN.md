@@ -25,6 +25,7 @@ A single-page webapp where JavaScript is *seen*, not memorized. Every concept �
 | 2026-07-02 | Stack: React + TypeScript + Vite; Framer Motion; rough.js for hand-drawn SVG; Zustand + localStorage for progress | See `02-ARCHITECTURE.md` |
 | 2026-07-03 | "Watch it happen" is question-free; checks are typed-input first (MCQ only when options teach) | User: stepper interruptions broke the flow; typing = recall, clicking = recognition |
 | 2026-07-03 | ONE lesson format for all phases: the classic 6-part anatomy (+ a write-code exercise per lesson) | Mission/Machine Shop format was built, trialed, and retired — the story analogy didn't land; consistency with Phases 1–2 won |
+| 2026-07-05 | Phase 11 expanded 13 → 18 stops: dedicated setup (11.2), config-decoded (11.3), test data & parameterization (11.8), cross-browser projects/devices (11.12), tags & selective runs (11.13), CI-pipeline-decoded (11.16); dynamic-content handling named in 11.6; capstone scope widened to match | User request: explicit coverage of why/setup/config/dynamic testing/env vars/"deploy" (= CI + report publishing) + gaps found in review (data-driven, cross-browser, tags) |
 
 ## The journey at a glance (details in 01-CURRICULUM.md)
 | Phase | Title | Core question |

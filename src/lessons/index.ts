@@ -89,6 +89,31 @@ import { lesson95 } from './phase9/lesson95'
 import { lesson96 } from './phase9/lesson96'
 import { lesson97 } from './phase9/lesson97'
 import { lesson98 } from './phase9/lesson98'
+import { lesson101 } from './phase10/lesson101'
+import { lesson102 } from './phase10/lesson102'
+import { lesson103 } from './phase10/lesson103'
+import { lesson104 } from './phase10/lesson104'
+import { lesson105 } from './phase10/lesson105'
+import { lesson106 } from './phase10/lesson106'
+import { lesson107 } from './phase10/lesson107'
+import { lesson111 as lessonPw111 } from './phase11/lesson111'
+import { lesson112 } from './phase11/lesson112'
+import { lesson113 } from './phase11/lesson113'
+import { lesson114 } from './phase11/lesson114'
+import { lesson115 } from './phase11/lesson115'
+import { lesson116 } from './phase11/lesson116'
+import { lesson117 } from './phase11/lesson117'
+import { lesson118 } from './phase11/lesson118'
+import { lesson119 } from './phase11/lesson119'
+import { lesson1110 } from './phase11/lesson1110'
+import { lesson1111 } from './phase11/lesson1111'
+import { lesson1112 } from './phase11/lesson1112'
+import { lesson1113 } from './phase11/lesson1113'
+import { lesson1114 } from './phase11/lesson1114'
+import { lesson1115 } from './phase11/lesson1115'
+import { lesson1116 } from './phase11/lesson1116'
+import { lesson1117 } from './phase11/lesson1117'
+import { lesson1118 } from './phase11/lesson1118'
 
 /** Built lessons, by id. A lesson must also be 'available' in content/registry.ts. */
 export const LESSON_DEFS: Record<string, LessonDef> = {
@@ -182,4 +207,29 @@ export const LESSON_DEFS: Record<string, LessonDef> = {
   '9.6': lesson96,
   '9.7': lesson97,
   '9.8': lesson98,
+  '10.1': lesson101,
+  '10.2': lesson102,
+  '10.3': lesson103,
+  '10.4': lesson104,
+  '10.5': lesson105,
+  '10.6': lesson106,
+  '10.7': lesson107,
+  '11.1': lessonPw111,
+  '11.2': lesson112,
+  '11.3': lesson113,
+  '11.4': lesson114,
+  '11.5': lesson115,
+  '11.6': lesson116,
+  '11.7': lesson117,
+  '11.8': lesson118,
+  '11.9': lesson119,
+  '11.10': lesson1110,
+  '11.11': lesson1111,
+  '11.12': lesson1112,
+  '11.13': lesson1113,
+  '11.14': lesson1114,
+  '11.15': lesson1115,
+  '11.16': lesson1116,
+  '11.17': lesson1117,
+  '11.18': lesson1118,
 }

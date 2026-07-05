@@ -306,7 +306,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
     plainWords: [
       'Everything converges here. Playwright gives your code robot hands: it opens a real browser, clicks real buttons, types into real forms, and checks real results — exactly like a human tester, but in seconds and never bored.',
       'Your whole journey pays off at once: async/await drives every line, selectors become locators, the DOM knowledge tells you what’s clickable, JSON handles the data. Playwright’s superpower is auto-waiting — it patiently retries until elements are actually ready, killing the “flaky test” misery that older tools were famous for.',
-      'By the end you’ll structure suites professionally (page objects, fixtures), mock network calls, run tests in parallel on CI, and debug failures with traces — the actual day-to-day job of an automation tester.',
+      'By the end you’ll own the whole craft, not just the API: installing and configuring a project (every config line explained), structuring suites professionally (page objects, fixtures, tags), feeding them test data, mocking network calls, running one suite across three browsers and mobile viewports, debugging failures with traces — and wiring it all into CI so the suite guards every code change automatically. That’s the actual day-to-day job of an automation tester.',
     ],
     keyTerms: [
       { term: 'browser automation', meaning: 'Code driving a real browser — navigating, clicking, typing, reading — instead of a human.' },

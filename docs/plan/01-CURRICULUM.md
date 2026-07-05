@@ -174,19 +174,24 @@ Legend: 🎬 = flagship animation worth extra polish.
 
 | # | Lesson | What's understood afterward | Viz |
 |---|---|---|---|
-| 11.1 | What Playwright is | Browser automation architecture: your script ⇄ Playwright server ⇄ real browsers; headless vs headed | 🎬 PlaywrightBridge — script sends commands across a bridge to a puppet browser |
-| 11.2 | First test & test runner | `npx playwright test`; the config; trace viewer first look | Simulated runner + annotated real screenshots |
-| 11.3 | 🎬 Locators | getByRole/getByText/getByLabel > CSS; why user-facing locators survive redesigns; chaining & filtering | SelectorLab v2 — same lab, Playwright locator syntax; a "redesign" button restyles the page and shows which locators survive |
-| 11.4 | Actions | click/fill/press/selectOption/hover/drag; actionability checks before every action | DOMTree — before each action, Playwright's checklist (visible? stable? enabled?) ticks off item by item |
-| 11.5 | 🎬 Auto-waiting & web-first assertions | THE flaky-test killer: expect(locator) retries until timeout; connects back to lesson 7.8 | Timeline — assertion polling as repeated gentle checks vs the old sleep(5000) sledgehammer, side by side |
-| 11.6 | Fixtures & hooks | test/expect imports, beforeEach, page fixture, custom fixtures; test isolation | CallStackTower reframed — each test gets a fresh browser context card |
-| 11.7 | Page Object Model | Structuring suites: page classes, locators as properties, actions as methods; DRY test code | ModuleGraph — spec files pointing at page-object cards pointing at the app |
-| 11.8 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.13 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
-| 11.9 | Auth, storage state & sessions | Log in once, reuse storageState; the cookies/localStorage knowledge from 7.7 pays off | ObjectLocker — a saved session card stamped and reused across tests |
-| 11.10 | Debugging failing tests | UI mode, trace viewer, screenshots, videos; reading a failure like a detective | Annotated trace-viewer walkthrough |
-| 11.11 | Parallelism, retries, CI | Workers, sharding, retries (and why retries hide real bugs), GitHub Actions basics | TestPyramid + a worker-lanes timeline |
-| 11.12 | Visual & a11y testing (bonus) | toHaveScreenshot; axe integration | Diff overlay demo |
-| ✅ | **Capstone: full test suite** | A real Playwright suite (in a real repo, outside the app) against the Phase 7 todo app + a public demo site: POM, fixtures, API mocking, CI config | Graduation. You are an automation tester. |
+| 11.1 | What Playwright is & why teams pick it | Why the tool exists (manual-testing pain → robot hands); architecture: your script ⇄ Playwright server ⇄ real browsers; headless vs headed; what it fixed vs older tools (auto-waiting, one API for three browser engines) | 🎬 PlaywrightBridge — script sends commands across a bridge to a puppet browser |
+| 11.2 | Setup: what `npm init playwright` scaffolds | Installing for real (into 9.8's workspace): the init command's questions, browser-binaries download (why it's big), the scaffolded folder tour (tests/, playwright.config.ts, .github/), first `npx playwright test`, `--headed` to watch | FolderTree reprise — the scaffold materializes file by file; a terminal pane runs the first suite |
+| 11.3 | The config, decoded | 8.6's detective format on `playwright.config.ts`: testDir, timeout vs expect.timeout, fullyParallel, retries, workers, reporter, the whole `use{}` block (baseURL, trace, screenshot, video); env vars into config (dotenv + 9.4's process.env) — every line explained, nothing mysterious | CaseBoard reprise — each config line becomes a pinned sticky with its runtime effect |
+| 11.4 | 🎬 Locators | getByRole/getByText/getByLabel > CSS; why user-facing locators survive redesigns; chaining & filtering | SelectorLab v2 — same lab, Playwright locator syntax; a "redesign" button restyles the page and shows which locators survive |
+| 11.5 | Actions | click/fill/press/selectOption/hover/drag; actionability checks before every action | DOMTree — before each action, Playwright's checklist (visible? stable? enabled?) ticks off item by item |
+| 11.6 | 🎬 Auto-waiting & web-first assertions | THE flaky-test killer: expect(locator) retries until timeout; handling DYNAMIC content (spinners, late-loading lists, toasts) the right way; connects back to lesson 7.8 | Timeline — assertion polling as repeated gentle checks vs the old sleep(5000) sledgehammer, side by side |
+| 11.7 | Fixtures & hooks | test/expect imports, beforeEach, page fixture, custom fixtures; test isolation | CallStackTower reframed — each test gets a fresh browser context card |
+| 11.8 | Test data & parameterized tests | Data-driven testing: one test body, many data rows (for...of over cases generating tests); unique data per run; test data from env/files; when data-driven beats copy-paste | PipelineBelt reprise — a belt of data rows stamping out test runs from one mold |
+| 11.9 | Page Object Model | Structuring suites: page classes, locators as properties, actions as methods; DRY test code | ModuleGraph — spec files pointing at page-object cards pointing at the app |
+| 11.10 | Network interception & API testing | route/fulfill mocking; request fixture for pure API tests; the JSON skills from 4.13 pay off | NetworkRoundTrip — Playwright intercepts the envelope mid-flight and swaps its contents |
+| 11.11 | Auth, storage state & sessions | Log in once, reuse storageState; the cookies/localStorage knowledge from 7.7 pays off | ObjectLocker — a saved session card stamped and reused across tests |
+| 11.12 | Cross-browser projects & devices | The projects array: chromium/firefox/webkit from ONE suite; mobile emulation (viewport, touch); webServer (start the app before tests); when cross-browser matters vs when it's waste | Three browser lanes running the same test in parallel; a phone frame joins the grid |
+| 11.13 | Tags, selective runs & suite hygiene | @smoke/@regression tags, --grep, test.only/skip/fixme (and the .only-left-in disaster), test.step for readable reports, soft assertions | The suite as a card wall; tag chips filter it live (4.9's filter, on tests) |
+| 11.14 | Debugging failing tests | UI mode, trace viewer, screenshots/videos/traces — where artifacts land (9.5) and how to read a failure like a detective | Annotated trace-viewer walkthrough |
+| 11.15 | Parallelism, retries & flakiness | Workers, sharding, retries (and why retries hide real bugs); the flakiness clinic: top causes (race conditions, shared state, time) and their fixes | Worker-lanes timeline; a flaky test caught red-handed |
+| 11.16 | CI: the pipeline, decoded | 8.6's detective format on `.github/workflows/playwright.yml`: triggers (push/PR), the runner machine, npm ci, secrets & env vars in CI (9.4 completed), artifact upload, publishing the HTML report — "deploying" the suite so it guards every change | Annotated YAML walkthrough + a pipeline ribbon from push → green check |
+| 11.17 | Visual & a11y testing (bonus) | toHaveScreenshot; axe integration | Diff overlay demo |
+| ✅ | **Capstone: full test suite** | A real Playwright suite (in a real repo, outside the app) against the Phase 7 todo app + a public demo site: POM, fixtures, tagged smoke/regression sets, data-driven cases, API mocking, cross-browser projects, CI config with report publishing | Graduation. You are an automation tester. |
 
 ---
 
