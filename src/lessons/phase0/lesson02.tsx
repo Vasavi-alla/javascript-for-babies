@@ -233,9 +233,8 @@ export const lesson02: LessonDef = {
         And <em>minus</em> the page itself — there is no HTML in Node, nothing to click.
       </p>
       <p>
-        That trade is exactly why test tools live there. Playwright runs in Node and reaches out
-        to command real browsers from the outside. You will see that architecture again in
-        Phase 11.
+        That trade is exactly why test tools live there. Playwright runs in Node and commands
+        real browsers from the outside. You will see that architecture again in Phase 11.
       </p>
     </>
   ),
