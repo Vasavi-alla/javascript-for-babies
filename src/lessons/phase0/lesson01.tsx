@@ -169,28 +169,29 @@ export const lesson01: LessonDef = {
         the instruction said.
       </p>
       <p>
-        A processor doesn’t understand English — or even JavaScript. Deep down it only understands{' '}
-        <strong>machine code</strong>: unimaginably tiny steps like “copy this number over there.”
+        A processor does not understand English — and not JavaScript either. Deep down it
+        understands only <strong>machine code</strong>. Machine code is made of unimaginably
+        small steps, like “copy this number over there.”
       </p>
       <p>
-        Something has to translate your JavaScript into those tiny steps — that translator is the{' '}
-        <strong>engine</strong>, and it’s the star of the next lesson.
+        Something has to translate your JavaScript into those small steps. That translator is
+        the <strong>engine</strong> — the star of the next lesson.
       </p>
       <p>
-        About speed: a modern processor performs <strong>billions</strong> of those tiny steps per
-        second. That’s the entire trade: the machine brings speed and perfect obedience; you bring
-        the thinking.
+        About speed: a modern processor performs <strong>billions</strong> of those small steps
+        every second. That is the whole trade: the machine brings speed and perfect obedience;
+        you bring the thinking.
       </p>
       <p>
-        And that thinking has to be exact. Programming is deciding precisely what should happen —
-        the machine never fills in a gap for you. “Make it look nice” is not an instruction it can
-        execute; that vagueness is exactly why programming languages exist.
+        And that thinking has to be exact. Programming means deciding precisely what should
+        happen — the machine never fills a gap for you. “Make it look nice” is not an instruction
+        it can execute. That vagueness is exactly why programming languages exist.
       </p>
       <p>
-        One more property, and it’s the foundation of your future career: programs are{' '}
-        <strong>deterministic</strong> — the same program, given the same starting conditions, does
-        the same thing every single time. That reliability is what makes automated testing possible
-        at all: a test can check the same promise a thousand times and mean it.
+        One property is the foundation of your career: programs are{' '}
+        <strong>deterministic</strong>. Deterministic means: the same program, started the same
+        way, does the same thing every time. That reliability is what makes automated testing
+        possible — a test can check the same promise a thousand times and mean it.
       </p>
     </>
   ),

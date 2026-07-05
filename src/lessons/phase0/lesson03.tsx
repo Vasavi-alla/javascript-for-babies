@@ -234,7 +234,7 @@ export const lesson03: LessonDef = {
     <>
       <p>
         Let’s name the parts of <code>console.log("Hello!");</code> properly.{' '}
-        <code>console</code> is a built-in toolbox the browser hands to every program, and{' '}
+        <code>console</code> is a built-in toolbox the browser hands to every program.{' '}
         <code>log</code> is one specific tool inside it — the “print this” tool. The dot between
         them means “look inside.”
       </p>
@@ -248,18 +248,18 @@ export const lesson03: LessonDef = {
       </p>
       <p>
         Something the machine must work out, like <code>2 + 3</code>, is called an{' '}
-        <strong>expression</strong>, and working it out is called <strong>evaluating</strong>.
-        Rule worth underlining: <em>expressions are always evaluated before they’re used.</em>{' '}
-        That’s why <code>console.log(2 + 3)</code> receives a finished 5, never the recipe for it.
+        <strong>expression</strong>. Working it out is called <strong>evaluating</strong>. One
+        rule worth underlining: <em>expressions are always evaluated before they are used.</em>{' '}
+        That is why <code>console.log(2 + 3)</code> receives a finished 5, never the recipe.
       </p>
       <p>
-        And here’s the empowering part: <strong>you already own this tool.</strong> On a computer,
-        press <strong>F12</strong> in your real browser right now (or right-click → Inspect) and
+        And here is the empowering part: <strong>you already own this tool.</strong> On a
+        computer, press <strong>F12</strong> in your real browser (or right-click → Inspect) and
         open the <strong>Console</strong> tab. Type{' '}
-        <code>console.log("I’m talking to a machine")</code> and press Enter. (On an iPad there’s
-        no F12 — use the live console below instead; it’s the same conversation.) That console is
-        one of the developer tools — DevTools — and as an automation tester you’ll open it
-        hundreds of times a week.
+        <code>console.log("I’m talking to a machine")</code> and press Enter. On an iPad there is
+        no F12 — use the live console below instead; it is the same conversation. That console is
+        part of the developer tools — DevTools. As an automation tester you will open it hundreds
+        of times a week.
       </p>
     </>
   ),

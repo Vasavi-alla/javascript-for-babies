@@ -219,19 +219,20 @@ export const lesson05: LessonDef = {
       </p>
       <p>
         Real errors usually come with extra lines underneath, called a <strong>stack trace</strong>{' '}
-        — a list of “who called whom” leading to the failure. It looks scary and is actually a
-        breadcrumb trail; it becomes genuinely useful once you know functions (Phase 3), and we’ll
-        read them together then. Until that day: <em>the first line is the letter, the rest is the
-        envelope.</em>
+        — a list of “who called whom” leading to the failure. It looks scary. It is actually a
+        trail of clues. It becomes genuinely useful once you know functions (Phase 3), and we
+        will read them together then. Until that day: <em>the first line is the letter, the rest
+        is the envelope.</em>
       </p>
       <p>
         A professional habit to start now: when several errors appear,{' '}
-        <strong>read the first one</strong> — later errors are often just fallout from it.
+        <strong>read the first one</strong> — the later ones are often just fallout.
       </p>
       <p>
-        And keep this framing forever: errors are evidence, not verdicts. Your future job
-        description literally includes making software fail on purpose and reading what it says —
-        a tester who reads error messages calmly and precisely is worth their weight in gold.
+        And keep this framing forever: errors are evidence, not verdicts.{' '}
+        <strong>💼 On the job —</strong> your work includes making software fail on purpose and
+        reading what it says. A tester who reads error messages calmly and precisely is rare and
+        valuable.
       </p>
     </>
   ),

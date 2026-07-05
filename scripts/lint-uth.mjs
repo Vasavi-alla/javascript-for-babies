@@ -15,7 +15,7 @@ const IDIOMS = [
   'pays rent', 'paying rent', 'pays its rent', 'cried wolf', 'cries wolf', 'junk drawer',
   'in costume', 'wearing a costume', 'sledgehammer', 'tester gold', 'goldmine',
   'the whole nine', 'walks past everyone', 'best in the trade', 'in the trenches',
-  'day-one bug', 'arbitrage',
+  'day-one bug', 'arbitrage', 'worth their weight in gold', 'worth its weight in gold',
 ]
 // Rule 3 seed list — untaught tech names; flagged unless a gloss "(" opens within the
 // same sentence after the term.
@@ -56,7 +56,7 @@ for (const dir of fs.readdirSync(ROOT).sort()) {
     const findings = []
 
     // Rule 1: sentence density
-    for (const sentence of text.split(/(?<=[.!?])\s+/)) {
+    for (const sentence of text.split(/(?<=[.!?])["”'’)]*\s+/)) {
       const w = sentence.split(' ').filter(Boolean).length
       if (w > MAX_SENTENCE_WORDS) findings.push(`long sentence (${w}w): "${sentence.slice(0, 70)}…"`)
     }

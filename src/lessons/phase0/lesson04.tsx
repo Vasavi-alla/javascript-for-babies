@@ -150,16 +150,16 @@ export const lesson04: LessonDef = {
         box (a <strong>byte</strong>) stores a number from 0 to 255.
       </p>
       <p>
-        Everything else is built from those numbers by agreement: the letter <code>A</code> is
-        stored as 65, colors as three numbers (red, green, blue), sound as thousands of numbers
-        per second. Text, photos, games — <em>all of it is numbers in boxes</em>. That’s honestly
-        the entire secret of computers.
+        Everything else is built from those numbers by agreement. The letter <code>A</code> is
+        stored as 65. Colors are three numbers (red, green, blue). Sound is thousands of numbers
+        per second. Text, photos, games — <em>all of it is numbers in boxes</em>. That is the
+        entire secret of computers.
       </p>
       <p>
-        The two-tier system has real names: <strong>RAM</strong> (the workbench — fast, small-ish,
-        wiped when power stops; your laptop has maybe 8–16 GB, billions of boxes) and{' '}
-        <strong>storage/disk</strong> (the cupboard — much bigger, much slower, permanent; where
-        files live).
+        The two-tier system has real names. <strong>RAM</strong> is the workbench: fast, fairly
+        small, wiped when the power stops — a laptop has 8–16 GB, billions of boxes.{' '}
+        <strong>Storage</strong> (the disk) is the cupboard: much bigger, much slower, permanent
+        — where files live.
       </p>
       <p>
         A program constantly pulls things from the cupboard onto the workbench, works on them
@@ -171,9 +171,9 @@ export const lesson04: LessonDef = {
       </p>
       <p>
         It even sweeps up the ones you no longer need — a janitor called the{' '}
-        <strong>garbage collector</strong> (you’ll properly meet it in Phase 5). What YOU get to
-        do is attach <em>names</em> to boxes — and that, exactly that, is what a variable is.
-        Which is the very next phase.
+        <strong>garbage collector</strong> (properly met in Phase 5). What YOU get to do is
+        attach <em>names</em> to boxes — and exactly that is a variable. Which is the very next
+        phase.
       </p>
     </>
   ),

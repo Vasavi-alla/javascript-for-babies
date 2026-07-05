@@ -202,39 +202,40 @@ export const lesson02: LessonDef = {
   underTheHood: (
     <>
       <p>
-        What does an engine actually do with your file? Two big moves: it <strong>parses</strong>{' '}
-        the text (reads it and checks the grammar — this is where typos get caught), then{' '}
-        <strong>executes</strong> it.
+        What does an engine actually do with your file? Two big moves. First it{' '}
+        <strong>parses</strong> the text — reads it, checks the grammar; this is where typos get
+        caught. Then it <strong>executes</strong> it.
       </p>
       <p>
-        Modern engines add a third move for free: they watch which parts of your code run
-        hottest and quietly translate those parts into raw machine code for extra speed — a
-        trick called JIT, just-in-time compilation.
+        Modern engines add a third move for free. They watch which parts of your code run most
+        often. Those parts are quietly turned into raw machine code for extra speed. The trick
+        is called JIT — just-in-time compilation.
       </p>
       <p>
-        Fun fact for interviews: the language’s official name is <strong>ECMAScript</strong> — a
-        published standard that all engines agree to follow. That agreement is why the same code
-        runs in Chrome, Firefox and Safari. (“JavaScript” is the everyday name; you’ll see “ES2023”
-        etc. meaning versions of the standard.)
+        A fact worth knowing: the language’s official name is <strong>ECMAScript</strong> — a
+        published standard all engines agree to follow. That agreement is why the same code runs
+        in Chrome, Firefox and Safari. “JavaScript” is the everyday name; “ES2023” means a
+        version of the standard.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> Chrome’s engine
         is literally named after a car engine — the <strong>V8</strong>, eight cylinders of
-        muscle-car power — because Google wanted the name itself to promise speed.
+        muscle-car power. Google wanted the name itself to promise speed.
       </p>
       <p>
-        The joke continues inside it, too: V8’s two main working parts are nicknamed{' '}
+        The joke continues inside it, too. V8’s two main working parts are nicknamed{' '}
         <em>Ignition</em> (starts running your code right away) and <em>TurboFan</em> (notices
-        code running a lot, and makes that part fly).
+        code that runs a lot and makes it fly).
       </p>
       <p>
-        <strong>Node.js</strong> = the V8 engine + extra abilities the browser deliberately doesn’t
-        grant (reading files on your disk, running servers, talking to the operating system) — and{' '}
-        <em>minus</em> the page itself (there’s no HTML in Node; nothing to click).
+        <strong>Node.js</strong> = the V8 engine + extra abilities the browser deliberately does
+        not grant: reading files on your disk, running servers, talking to the operating system.
+        And <em>minus</em> the page itself — there is no HTML in Node, nothing to click.
       </p>
       <p>
-        That trade is exactly why test tools live there: Playwright runs in Node and reaches out
-        to command real browsers from the outside. You’ll see that architecture again in Phase 11.
+        That trade is exactly why test tools live there. Playwright runs in Node and reaches out
+        to command real browsers from the outside. You will see that architecture again in
+        Phase 11.
       </p>
     </>
   ),
