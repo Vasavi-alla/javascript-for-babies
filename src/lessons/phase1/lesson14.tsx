@@ -266,8 +266,7 @@ export const lesson14: LessonDef = {
         And <code>var</code>, concretely. First a word: <em>scope</em> means “which part of the
         code can see this variable”. let and const keep a variable inside the block where it was
         born — like the inside of an <code>if</code>. var ignores that boundary and leaks out.
-        Programmers say var is “function-scoped”, not “block-scoped”. This fully clicks in
-        lesson 3.5.
+        Programmers say var is “function-scoped”, not “block-scoped” (fully clicks in 3.5).
       </p>
       <p>
         It also behaves oddly when used before its line: no error, you silently get{' '}
