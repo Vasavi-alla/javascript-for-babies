@@ -184,35 +184,35 @@ export const lesson17: LessonDef = {
         programmer’s nothing.</strong>
       </p>
       <p>
-        undefined shows up uninvited in a few predictable places: a declared-but-unassigned
-        variable (you just saw it), a function that returns nothing (Phase 3), a missing property
-        on an object or an off-the-end array position (both Phase 4).
+        undefined shows up uninvited, in a few predictable places. A declared-but-unassigned
+        variable (you just saw it). A function that returns nothing (Phase 3). A missing
+        property, or an off-the-end array position (both Phase 4).
       </p>
       <p>
-        null never appears on its own — if you see null, a human (or an API — the way your code
-        asks another program, often a server, for data) put it there to say “this field is
-        intentionally empty.”
+        null never appears on its own. If you see null, someone put it there to say “this field
+        is intentionally empty.” That someone is a human — or an API (the way your code asks
+        another program, often a server, for data).
       </p>
       <p>
         <span style={{ color: 'var(--color-marker-coral)', fontWeight: 700 }}>Gotcha! </span>
         Ask the machine <code>typeof null</code> and it answers… <code>"object"</code>. That is
-        flatly wrong — null is its own primitive type — and it’s one of the most famous bugs in
-        computing history: it slipped into the very first JavaScript engine in 1995, and by the
-        time anyone could fix it, too many programs depended on it. It will never be fixed. Interviewers
-        adore this question; now you have the story, not just the trivia.
+        flatly wrong — null is its own primitive type. The wrong answer is one of the most famous
+        bugs in computing history. It slipped into the very first JavaScript engine in 1995. By
+        the time anyone could fix it, too many programs depended on it. It will never be fixed.
+        Interviewers adore this question; now you have the story, not just the trivia.
       </p>
       <p>
-        Why testers care, concretely: API responses are full of nulls (
-        <code>"middleName": null</code> means the field exists and is deliberately empty), while
-        undefined typically means a field is <em>missing entirely</em> — and “empty on purpose”
-        versus “forgot to include it” are different bugs with different fixes. Your future
-        assertions will distinguish the two constantly.
+        <strong>💼 On the job —</strong> API responses are full of nulls.{' '}
+        <code>"middleName": null</code> means the field exists and is deliberately empty.
+        undefined usually means the field is <em>missing entirely</em>. “Empty on purpose” and
+        “forgot to include it” are different bugs, with different fixes. Your future assertions
+        will distinguish the two constantly.
       </p>
       <p>
-        One preview for lesson 1.9, where you’ll meet JavaScript’s two ways of asking “are these
-        equal?”: the loose way (written <code>==</code>) considers the two nothings equal —{' '}
-        <code>null == undefined</code> is true — while the strict way (<code>===</code>) knows
-        better: <code>null === undefined</code> is false.
+        A preview for lesson 1.9, where you meet JavaScript’s two ways of asking “are these
+        equal?”. The loose way (written <code>==</code>) considers the two nothings equal:{' '}
+        <code>null == undefined</code> is true. The strict way (<code>===</code>) knows better:{' '}
+        <code>null === undefined</code> is false.
       </p>
     </>
   ),

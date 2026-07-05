@@ -211,17 +211,17 @@ export const lesson22: LessonDef = {
         <code>0n</code>).
       </p>
       <p>
-        This is why interviewers love the question “name the falsy values” — it’s a five-second
-        test of whether someone knows the rulebook or just vibes.
+        This is why interviewers love the question “name the falsy values” — it is a five-second
+        test of whether someone knows the rulebook or is guessing.
       </p>
       <p>
-        The tester angle is sharp here: truthy/falsy bugs are <em>silent</em>. A form that checks{' '}
-        <code>if (quantity)</code> will treat a legitimate quantity of <code>0</code> as “missing”
-        — the user typed zero, the code thought nothing was entered. No error is thrown; the
-        program confidently walks the wrong road. These are exactly the bugs that only reveal
-        themselves under deliberate test inputs — <code>0</code>, <code>""</code>, a lone space —
-        which is why testers keep a mental list of “edge values” that starts suspiciously like the
-        falsy list. You now own that list.
+        <strong>💼 On the job —</strong> truthy/falsy bugs are <em>silent</em>. A form that
+        checks <code>if (quantity)</code> treats a legitimate quantity of <code>0</code> as
+        “missing”. The user typed zero; the code thought nothing was entered. No error is thrown;
+        the program confidently walks the wrong road. These bugs only reveal themselves under
+        deliberate test inputs — <code>0</code>, <code>""</code>, a lone space. That is why
+        testers keep a mental list of “edge values”, and it starts suspiciously like the falsy
+        list. You now own that list.
       </p>
     </>
   ),

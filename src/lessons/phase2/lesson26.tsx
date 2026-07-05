@@ -198,22 +198,22 @@ export const lesson26: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The formal execution order, worth having exactly right: <strong>init → check → body →
-        update → check → body → update → … → check(false) → exit</strong>. Everything a for loop
-        does, a while loop can do — for is purely a tidier arrangement, keeping the counter’s
-        birth, boundary and change in one glanceable line. That tidiness is real protection: the
-        “forgot the update” infinite loop from lesson 2.5 is nearly impossible in a for loop,
-        because the update slot stares at you from the header.
+        The formal execution order, worth having exactly right:{' '}
+        <strong>init → check → body → update → check → body → … → check(false) → exit</strong>.
+        Everything a for loop does, a while loop can do. for is purely a tidier arrangement: it
+        keeps the counter’s birth, boundary and change in one line. That tidiness is real
+        protection. The “forgot the update” infinite loop from 2.5 is nearly impossible in a for
+        loop — the update slot stares at you from the header.
       </p>
       <p>
-        Two idioms to absorb now: counting from zero (<code>let i = 0; i &lt; n</code> — five laps,
-        i taking 0,1,2,3,4) is the standard because it matches string and array positions; and{' '}
-        <code>i++</code> (“increment”) is the universal shorthand for <code>i = i + 1</code>{' '}
-        (<code>i--</code> counts down).
+        Two idioms to absorb now. Counting from zero — <code>let i = 0; i &lt; n</code> — gives
+        five laps, with i taking 0,1,2,3,4. It is the standard because it matches string and
+        array positions. And <code>i++</code> (“increment”) is the universal shorthand for{' '}
+        <code>i = i + 1</code> (<code>i--</code> counts down).
       </p>
       <p>
-        In your automation future, for loops drive data-driven tests: “for each of these 50
-        usernames, run the login test” — one body, fifty laps, and the counter tells you exactly
+        <strong>💼 On the job —</strong> for loops drive data-driven tests: “for each of these 50
+        usernames, run the login test”. One body, fifty laps. And the counter tells you exactly
         which lap failed.
       </p>
     </>

@@ -265,11 +265,11 @@ export const lesson28: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why do interviewers adore something this small? Because FizzBuzz quietly tests four things
-        at once: loop mechanics, the % operator, condition <em>ordering</em> (the trap), and
-        whether you check your own edges (does 15 actually print FizzBuzz? does 1 print 1?). That
-        last habit — <strong>picking the inputs that would expose the bug</strong> — is literally
-        the tester’s craft.
+        Why do interviewers adore something this small? Because FizzBuzz quietly tests four
+        things at once. Loop mechanics. The % operator. Condition <em>ordering</em> (the trap).
+        And whether you check your own edges: does 15 actually print FizzBuzz? Does 1 print 1?
+        That last habit — <strong>picking the inputs that would expose the bug</strong> — is
+        literally the tester’s craft.
       </p>
       <p>
         The values worth checking here: 1 (plain), 3 (Fizz), 5 (Buzz), 15 (the collision), and 0 or
@@ -281,18 +281,18 @@ export const lesson28: LessonDef = {
         warns — it just silently never says FizzBuzz. Software is full of exactly this: branches
         that can’t be reached, conditions that can’t be false, tests that can’t fail (the most
         dangerous kind!). None of them announce themselves. The instinct you practiced today —
-        “walk a specific value through the gates and see which one grabs it” — is the manual
-        version of what code-coverage tools automate, and it will serve you in every code review
-        of your career.
+        “walk a specific value through the gates and see which one grabs it” — has a big future.
+        It is the manual version of what code-coverage tools automate. It will serve you in every
+        code review of your career.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> FizzBuzz began
         as a British children’s counting game (kids in a circle, replacing numbers with words,
-        giggling at whoever slips). It entered programming lore in 2007, when developer Imran Ghory
-        suggested it for screening candidates and blogger Jeff Atwood amplified it in a famous post
-        titled “Why Can’t Programmers.. Program?” — reporting that a surprising share of applicants
-        with impressive CVs couldn’t write it. Two decades later it’s still asked daily around the
-        world — and still filtering — mostly on the exact gate-order trap you just sidestepped.
+        giggling at whoever slips). It entered programming lore in 2007, when a developer
+        suggested it for screening job candidates. A famous blog post amplified it, reporting
+        that a surprising share of applicants with impressive CVs could not write it. Two decades
+        later it is still asked daily around the world — and still filtering — mostly on the
+        exact gate-order trap you just sidestepped.
       </p>
     </>
   ),

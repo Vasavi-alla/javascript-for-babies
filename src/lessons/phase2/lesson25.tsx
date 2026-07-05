@@ -221,24 +221,24 @@ export const lesson25: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Vocabulary: each trip around is an <strong>iteration</strong> (“the loop iterates”), and
+        Vocabulary: each trip around is an <strong>iteration</strong> — “the loop iterates”. And
         because the gate is checked <em>before</em> each lap, a while loop can run{' '}
-        <strong>zero times</strong> — if the condition is false on arrival, the body is never
-        entered at all (start our fuel at 0 and you get no Vrooms, straight to "Out of fuel.").
+        <strong>zero times</strong>. If the condition is false on arrival, the body is never
+        entered. Start our fuel at 0 and you get no Vrooms — straight to "Out of fuel.".
       </p>
       <p>
-        There’s a rarer sibling, <code>do…while</code>, that checks the gate <em>after</em> the
-        lap, guaranteeing at least one run — you’ll recognize it when you meet it; almost nobody
-        writes it.
+        There is a rarer sibling: <code>do…while</code>. It checks the gate <em>after</em> the
+        lap, so it guarantees at least one run. You will recognize it when you meet it; almost
+        nobody writes it.
       </p>
       <p>
-        The frozen tab, precisely: the browser gives your JavaScript one thread, and it can’t
-        repaint the page, respond to clicks, or run anything else while your code holds that
-        thread. A tight infinite loop holds it forever, so browsers eventually show the “This page
-        is slowing down your browser” dialog and offer to kill it. Real-world infinite loops are
-        rarely a deleted line — they’re usually a condition that <em>seems</em> like it changes
-        but doesn’t (updating the wrong variable, a comparison that coerces unexpectedly — your
-        lesson 1.9 senses should tingle).
+        The frozen tab, precisely. The browser gives your JavaScript one thread. While your code
+        holds that thread, the browser cannot repaint the page, respond to clicks, or run
+        anything else. A tight infinite loop holds it forever, so browsers eventually show the
+        “This page is slowing down your browser” dialog and offer to kill it. Real-world infinite
+        loops are rarely a deleted line. Usually the condition <em>seems</em> to change but does
+        not: the wrong variable gets updated, or a comparison coerces unexpectedly. Your lesson
+        1.9 alarm should ring.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> you might expect

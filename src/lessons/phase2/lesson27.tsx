@@ -216,29 +216,30 @@ export const lesson27: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The nested-loop multiplication table is worth internalizing: outer <em>m</em> laps × inner{' '}
-        <em>n</em> laps = <em>m·n</em> executions of the inner body. It’s the shape of everything
-        grid-like: pixels (rows × columns), calendars (weeks × days), comparing every item against
-        every other item. In your automation career it appears as the <strong>test matrix</strong>:
-        3 browsers × 20 test cases = 60 runs; add 2 screen sizes and you’re at 120. When a CI
-        pipeline takes hours, somewhere inside is a nested loop someone forgot was multiplying.
+        The nested-loop multiplication table is worth internalizing: outer <em>m</em> laps ×
+        inner <em>n</em> laps = <em>m·n</em> executions of the inner body. It is the shape of
+        everything grid-like. Pixels (rows × columns). Calendars (weeks × days). Comparing every
+        item against every other item. In your automation career it appears as the{' '}
+        <strong>test matrix</strong>: 3 browsers × 20 test cases = 60 runs. Add 2 screen sizes
+        and you are at 120. When a CI pipeline takes hours, somewhere inside is a nested loop
+        that someone forgot was multiplying.
       </p>
       <p>
-        About that “innermost only” rule: JavaScript does have an escape for it — you can label a
-        loop (<code>outer: for (…)</code>) and write <code>break outer;</code> to eject from both
-        levels at once. It’s legal, rare, and worth recognizing more than writing.
+        About that “innermost only” rule: JavaScript does have an escape. You can label a loop
+        (<code>outer: for (…)</code>) and write <code>break outer;</code> to exit both levels at
+        once. It is legal, rare, and worth recognizing more than writing.
       </p>
       <p>
-        If you find yourself needing labels often, the code is usually asking to be reorganized
-        into a function — Phase 3 gives you that tool, where <code>return</code> is the cleanest
-        escape hatch of all.
+        If you need labels often, the code is usually asking to be reorganized into a function.
+        Phase 3 gives you that tool — and there, <code>return</code> is the cleanest escape of
+        all.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> break and
         continue are the tamed descendants of a notorious ancestor: <code>goto</code>, an old
-        command that let programs jump to ANY line — producing what programmers called spaghetti
-        code, tangled and nearly impossible to follow. break, continue and return are the
-        disciplined version that survived: loops with one entrance, and only clearly-marked exits.
+        command that let programs jump to ANY line. The result was called spaghetti code —
+        tangled, and nearly impossible to follow. break, continue and return are the disciplined
+        version that survived. Loops with one entrance, and only clearly-marked exits.
       </p>
     </>
   ),

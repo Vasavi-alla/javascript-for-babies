@@ -200,32 +200,32 @@ export const lesson19: LessonDef = {
       </p>
       <p>
         <code>−</code>, <code>*</code>, <code>/</code> and <code>%</code> prefer numbers instead —
-        strings get converted, and if the conversion fails (<code>"abc" * 2</code>) you get{' '}
-        <code>NaN</code>, the “math lost all meaning” value from lesson 1.5.
+        strings get converted. If the conversion fails (<code>"abc" * 2</code>), you get{' '}
+        <code>NaN</code>: the “math lost all meaning” value from lesson 1.5.
       </p>
       <p>
-        Comparison with <code>==</code> follows a genuinely arcane rulebook — programmers keep
-        actual lookup tables for it — which is precisely the argument for never using it: a
-        comparison you need a table to predict is a comparison you can’t trust at a glance.
+        Comparison with <code>==</code> follows a genuinely strange rulebook. Programmers keep
+        actual lookup tables for it. That is the argument for never using it: a comparison you
+        need a table to predict is a comparison you cannot trust at a glance.
       </p>
       <p>
-        The one that will bite YOU, specifically, as an automation tester: everything typed into a
-        form arrives as a <em>string</em> (lesson 1.1 called it). So <code>age + 1</code> where age
-        came from an input field is <code>"25" + 1</code> → <code>"251"</code> — a birthday bug,
-        silently.
+        <strong>💼 On the job —</strong> this one will bite you as an automation tester:
+        everything typed into a form arrives as a <em>string</em> (lesson 1.1 called it). So{' '}
+        <code>age + 1</code>, where age came from an input field, is <code>"25" + 1</code> →{' '}
+        <code>"251"</code> — a birthday bug, silently.
       </p>
       <p>
         The fix is explicit conversion — coercion you control: <code>Number("25")</code> → 25,{' '}
-        <code>String(25)</code> → "25". Explicit conversion is honest and greppable; implicit
-        coercion is a surprise waiting for a demo day. Prefer the honest kind.
+        <code>String(25)</code> → "25". Explicit conversion is honest and easy to search for.
+        Implicit coercion is a surprise waiting to happen. Prefer the honest kind.
       </p>
       <p>
         Also in the family: <code>!=</code> is loose not-equals (same liar, negated) and{' '}
         <code>!==</code> is the strict one you’ll actually use.
       </p>
       <p>
-        Real projects enforce all of this automatically — a <strong>linter</strong> (you’ll meet
-        ESLint in Phase 8) flags every <code>==</code> the instant it’s typed.
+        Real projects enforce this automatically — a <strong>linter</strong> (ESLint, Phase 8)
+        flags every <code>==</code> the instant it is typed.
       </p>
     </>
   ),

@@ -220,11 +220,11 @@ export const lesson24: LessonDef = {
     <>
       <p>
         The deep idea unifying this lesson: <strong>expressions compose</strong>. A ternary is an
-        expression, so it can live anywhere a value can: inside a template slot (
-        <code>{'`'}You are ${'{age >= 18 ? "in" : "out"}'}{'`'}</code>), inside an argument, inside
-        another expression. Statements (if/else) can’t do that — they don’t <em>become</em>{' '}
-        anything. Knowing which tool produces a value and which performs an action is a quiet
-        superpower for reading code.
+        expression, so it can live anywhere a value can. Inside a template slot (
+        <code>{'`'}You are ${'{age >= 18 ? "in" : "out"}'}{'`'}</code>). Inside an argument.
+        Inside another expression. Statements (if/else) cannot do that — they do not{' '}
+        <em>become</em> anything. Knowing which tool produces a value and which performs an
+        action is a quiet superpower for reading code.
       </p>
       <p>
         The exact return rules, for reference: <code>a || b</code> → a if a is truthy, else b.{' '}
@@ -242,11 +242,11 @@ export const lesson24: LessonDef = {
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the{' '}
-        <code>?:</code> operator is older than almost everything you’ve learned — it comes from the
-        C language (1972), which JavaScript borrowed its syntax from wholesale (braces, semicolons,
-        for loops, switch… and this). The <code>??</code> operator, meanwhile, is one of the
-        newest things in this whole curriculum: it only entered JavaScript in 2020 — a 48-year age
-        gap between two operators that sit three lines apart in our code.
+        <code>?:</code> operator is older than almost everything you have learned. It comes from
+        the C language (1972) — JavaScript borrowed its syntax from C wholesale: braces,
+        semicolons, for loops, switch… and this. The <code>??</code> operator is the opposite:
+        one of the newest things in this curriculum, added to JavaScript in 2020. A 48-year age
+        gap, between two operators that sit three lines apart in our code.
       </p>
     </>
   ),

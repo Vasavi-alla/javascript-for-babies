@@ -226,12 +226,12 @@ export const lesson111: LessonDef = {
         You just practiced the fundamental move of generating output from data.
       </p>
       <p>
-        Checkpoint advice, honestly meant: if any step above felt foggy — if you couldn’t have
-        predicted the output, or the 🔒 needed explaining — go re-run that lesson <em>now</em>,
-        while the gap is small and cheap. The phases ahead assume this one is solid the way a
-        building assumes its foundation. There is zero shame in a second pass; there’s only
-        expensive confusion in skipping it. (And your teach-back journal from each lesson is your
-        own textbook — reread yourself!)
+        Checkpoint advice, honestly meant. If any step above felt foggy, go re-run that lesson{' '}
+        <em>now</em>, while the gap is small and cheap. Foggy means: you could not have predicted
+        the output, or the 🔒 needed explaining. The phases ahead assume this one is solid, the
+        way a building assumes its foundation. There is zero shame in a second pass. There is
+        only expensive confusion in skipping it. (Your teach-back journal is your own textbook —
+        reread yourself!)
       </p>
     </>
   ),

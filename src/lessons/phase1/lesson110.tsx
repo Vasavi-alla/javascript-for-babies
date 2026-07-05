@@ -230,34 +230,41 @@ export const lesson110: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The full operator families, for reference: <strong>arithmetic</strong> (<code>+ − * / %</code>{' '}
-        and <code>**</code> for powers), <strong>comparison</strong> (<code>&gt; &lt; &gt;= &lt;=</code>{' '}
-        and the strict pair <code>=== !==</code> you swore loyalty to in lesson 1.9),{' '}
-        <strong>logical</strong> (<code>&& || !</code>), and <strong>assignment</strong> (<code>=</code>{' '}
-        plus the shortcuts <code>+= −= *= /=</code> from lesson 1.3).
+        You now own operators from four families — here they are in one place.{' '}
+        <strong>Arithmetic</strong> does math: <code>+ − * / %</code>, and <code>**</code> for
+        powers. <strong>Comparison</strong> asks a question and answers true or false:{' '}
+        <code>&gt; &lt; &gt;= &lt;=</code>, plus the strict pair <code>=== !==</code> from 1.9.{' '}
+        <strong>Logical</strong> combines those answers: <code>&&</code> (AND), <code>||</code>{' '}
+        (OR), <code>!</code> (NOT). <strong>Assignment</strong> stores results: <code>=</code>,
+        with the shortcuts <code>+= −= *= /=</code> from 1.3.
       </p>
       <p>
-        Precedence order, roughly: <code>!</code> first, then arithmetic (<code>*</code> before{' '}
-        <code>+</code>), then comparisons, then <code>&&</code>, then <code>||</code>, with{' '}
-        <code>=</code> dead last. Don’t memorize it — parenthesize it.
+        When several operators share one line, the engine applies them in a fixed order:{' '}
+        <code>!</code> runs first. Then arithmetic (<code>*</code> before <code>+</code>, as you
+        watched). Then comparisons. Then <code>&&</code>, then <code>||</code> — and{' '}
+        <code>=</code> always last. But here is the honest professional habit: nobody remembers
+        this full list. When in doubt, add parentheses — they redraw the tree exactly how you
+        want.
       </p>
       <p>
-        A small honest disclosure for later: <code>&&</code> and <code>||</code> secretly return{' '}
-        <em>the actual value</em> of one of their sides, not always a manufactured boolean —{' '}
-        <code>"hello" || "fallback"</code> gives "hello", which programmers exploit for defaults.
-        That trick only makes full sense after truthy/falsy (lesson 2.2), so file it as a preview,
-        not homework.
+        A preview, not homework: <code>&&</code> and <code>||</code> actually hand back one of
+        their two SIDES — not always a fresh true or false. So{' '}
+        <code>"hello" || "fallback"</code> gives "hello", the actual string. Programmers use that
+        as a default-picker. The full trick clicks in lesson 2.2, after truthy and falsy.
       </p>
       <p>
-        Short-circuiting is also load-bearing in real code: <code>user && user.name</code>{' '}
-        deliberately uses the skip to avoid touching <code>.name</code> when there’s no user.
+        The skip you watched (short-circuiting) is more than a speed trick — real code depends on
+        it. An example built only from tools you own:{' '}
+        <code>count !== 0 && total / count &gt; 5</code>. When count is 0, <code>&&</code> skips
+        the right side entirely — so the division by zero never happens. The left side protects
+        the right side.
       </p>
       <p>
-        Why this lesson matters to your career, in one sentence: <strong>a test assertion IS a
-        boolean expression</strong> — every “did it pass?” your future test suites answer is one of
-        these trees evaluating to true or false. Reading and writing compound conditions fluently
-        (“status is 200 AND body includes the id AND response time under 2s”) is the daily grammar
-        of test automation. You now have the full grammar of Phase 1 — time for the checkpoint.
+        <strong>💼 On the job —</strong> a test assertion IS a boolean expression. Every “did it
+        pass?” your future suites answer is one of these trees evaluating to true or false.
+        “Status is 200 AND the reply includes the id AND it took under 2 seconds” — that is three
+        comparisons and two <code>&&</code>s. Today’s grammar is the daily language of test
+        automation. You now have the full grammar of Phase 1 — time for the checkpoint.
       </p>
     </>
   ),

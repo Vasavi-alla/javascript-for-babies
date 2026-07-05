@@ -168,13 +168,13 @@ export const lesson18: LessonDef = {
     <>
       <p>
         The proper vocabulary: JavaScript is <strong>dynamically typed</strong> — types are checked
-        while the program <em>runs</em>, and any variable may hold any type at any moment.
+        while the program <em>runs</em>, and any variable may hold any type.
       </p>
       <p>
-        The opposite is <strong>statically typed</strong> (Java, C#, and JavaScript’s cousin{' '}
-        <strong>TypeScript</strong>): there, a variable declares its type up front and the machine
-        refuses mismatches <em>before</em> the program ever runs. You’ll get a taste of TypeScript
-        in Phase 8 — most Playwright projects use it precisely to catch type mix-ups early.
+        The opposite is <strong>statically typed</strong> — Java, C#, and JavaScript’s cousin{' '}
+        <strong>TypeScript</strong>. There, a variable declares its type. The machine refuses
+        mismatches <em>before</em> the program ever runs. A taste of TypeScript comes in Phase 8
+        — most Playwright projects use it to catch type mix-ups early.
       </p>
       <p>
         Because <code>typeof</code> answers with a string, the idiom you’ll see everywhere is a
@@ -187,11 +187,12 @@ export const lesson18: LessonDef = {
         "string". Evaluate inside-out, like always.
       </p>
       <p>
-        Why should a tester care about dynamic typing? Because it’s a bug <em>factory</em>: nothing
-        stops a variable that held a number from silently becoming a string (you saw how easily),
-        and suddenly <code>total + 1</code> glues instead of adds. Entire categories of production
-        bugs — and of test cases you’ll write — boil down to “this value wasn’t the type everyone
-        assumed.” The next lesson shows exactly what happens when mixed types collide.
+        <strong>💼 On the job —</strong> why should a tester care about dynamic typing? Because
+        it is a bug <em>factory</em>. Nothing stops a variable that held a number from silently
+        becoming a string — you saw how easily. Suddenly <code>total + 1</code> glues instead of
+        adds. Entire categories of production bugs boil down to “this value was not the type
+        everyone assumed.” Many of your future test cases target exactly that. The next lesson
+        shows what happens when mixed types collide.
       </p>
     </>
   ),

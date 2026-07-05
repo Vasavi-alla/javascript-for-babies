@@ -239,20 +239,21 @@ export const lesson23: LessonDef = {
         convention, and yes — it falls through too if unbroken.
       </p>
       <p>
-        For the road ahead: chains of else-if handling <em>ranges</em> (like our grades) appear
-        constantly in test logic — “status 2xx → pass, 4xx → client error, 5xx → server error” is
-        a textbook chain, and getting the gate ORDER wrong there is a classic silent test bug
-        (every response matching the first loose gate). When you review test code someday, mis-ordered
-        gates and missing breaks are two of the first things your eyes will learn to snag on.
+        <strong>💼 On the job —</strong> chains of else-if handling <em>ranges</em> (like our
+        grades) appear constantly in test logic. “Status 2xx → pass, 4xx → client error, 5xx →
+        server error” is a textbook chain. Getting the gate ORDER wrong there is a classic silent
+        test bug: every response matches the first loose gate. When you review test code someday,
+        mis-ordered gates and missing breaks are two of the first things your eyes will learn to
+        catch.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> on January 15,
-        1990, AT&T’s long-distance network collapsed for nine hours — over 60 million calls failed
-        — and the root cause was a single misplaced <code>break</code> in a <code>switch</code>{' '}
-        statement (in C, JavaScript’s syntactic grandparent, which is where switch and its
-        fall-through come from). One keyword, one wrong rung of the ladder, national outage. It
-        remains one of the most-cited examples of why tiny control-flow details deserve tests —
-        and why languages designed after C (like Swift and Go) made break the default.
+        1990, AT&T’s long-distance phone network collapsed for nine hours. Over 60 million calls
+        failed. The root cause: a single misplaced <code>break</code> in a <code>switch</code>{' '}
+        statement — in C, the language JavaScript borrowed switch (and its fall-through) from.
+        One keyword, one wrong rung of the ladder, a national outage. It remains one of the
+        most-cited examples of why tiny control-flow details deserve tests. Languages designed
+        after C (like Swift and Go) made break the default.
       </p>
     </>
   ),

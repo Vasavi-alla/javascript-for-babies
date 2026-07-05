@@ -241,9 +241,9 @@ export const lesson21: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Anatomy, properly named: <code>if</code> is a keyword; the parenthesized part is the{' '}
-        <strong>condition</strong> (any expression — it gets evaluated to a boolean, coercing if it
-        must, which is tomorrow’s lesson).
+        Anatomy, properly named. <code>if</code> is a keyword. The part in parentheses is the{' '}
+        <strong>condition</strong> — any expression. The condition gets evaluated to a boolean,
+        coercing if it must (tomorrow’s lesson).
       </p>
       <p>
         Each braced section is a <strong>block</strong>, and the two blocks are the{' '}
@@ -255,24 +255,25 @@ export const lesson21: LessonDef = {
         but professionals write them <em>always</em>.
       </p>
       <p>
-        Why so strict? A famous Apple security bug (“goto fail”, 2014) happened exactly because an
-        unbraced branch silently swallowed a second line — a missing pair of braces, one real
+        Why so strict? A famous Apple security bug (“goto fail”, 2014) happened exactly here. An
+        unbraced branch silently swallowed a second line. A missing pair of braces became a real
         security hole.
       </p>
       <p>
-        For your future job: test code is <em>full</em> of forks — “if the element is visible,
-        click it; else fail with a screenshot.” But more importantly, <strong>every bug report
-        you’ll ever write is a story about a branch</strong>: expected the true road, the program
-        took the false one. Being able to point at the exact fork — and the exact boolean that
-        misfired — is what separates “it’s broken” from a bug report developers love.
+        <strong>💼 On the job —</strong> test code is <em>full</em> of forks: “if the element is
+        visible, click it; else fail with a screenshot.” More importantly,{' '}
+        <strong>every bug report you will ever write is a story about a branch</strong>. You
+        expected the true road; the program took the false one. Pointing at the exact fork — and
+        the exact boolean that misfired — separates “it’s broken” from a bug report developers
+        love.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> your processor
-        literally gambles on these forks. Modern CPUs use a <em>branch predictor</em> — dedicated
-        silicon that guesses which road the code will take BEFORE the condition is even evaluated,
-        and starts working ahead on the guessed path. It guesses right well over 90% of the time,
-        and when it’s wrong it throws the work away and starts over. Billions of tiny bets per
-        second, happening under every if you’ll ever write.
+        literally gambles on these forks. Modern CPUs contain a <em>branch predictor</em>:
+        dedicated circuitry that guesses which road the code will take, before the condition is
+        even evaluated. It starts working ahead on the guessed path. It guesses right well over
+        90% of the time. When it is wrong, it throws the work away and starts over. Billions of
+        tiny bets per second, under every if you will ever write.
       </p>
     </>
   ),
