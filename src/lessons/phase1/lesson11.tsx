@@ -142,21 +142,21 @@ export const lesson11: LessonDef = {
         three: <code>number</code>, <code>string</code>, <code>boolean</code>.
       </p>
       <p>
-        Coming soon: <code>undefined</code> and <code>null</code> (two flavors of “nothing”,
-        lesson 1.7), plus two rare ones (<code>bigint</code> for astronomically large numbers,{' '}
-        <code>symbol</code> for special labels) that you can safely ignore for months.
+        Coming soon: <code>undefined</code> and <code>null</code> — two flavors of “nothing”
+        (lesson 1.7). Two more are rare: <code>bigint</code> for astronomically large numbers,
+        and <code>symbol</code> for special labels. You can safely ignore those two for months.
       </p>
       <p>
         “Primitive” means a single, simple value — as opposed to collections like arrays and
         objects, which arrive in Phase 4.
       </p>
       <p>
-        Why do types exist at all? Because the machine stores everything as numbers-in-boxes
-        (lesson 0.4), it needs to know how to <em>interpret</em> a box: the same stored bits mean
-        one thing read as a number and something else read as text. The type is that
+        Why do types exist at all? The machine stores everything as numbers-in-boxes (lesson
+        0.4). So it needs to know how to <em>interpret</em> a box. The same stored bits mean one
+        thing read as a number, and something else read as text. The type is that
         reading-instruction. And it decides behavior: <code>25 + 25</code> is 50, but{' '}
-        <code>"25" + "25"</code> glues text together into "2525". Same characters, different type,
-        completely different result — remember this one, it’s a famous interview moment.
+        <code>"25" + "25"</code> glues text into "2525". Same characters, different type,
+        different result — remember it; a famous interview moment.
       </p>
     </>
   ),

@@ -211,13 +211,12 @@ export const lesson16: LessonDef = {
     <>
       <p>
         A fact that will save you a debugging session someday: strings are{' '}
-        <strong>immutable</strong> — the train can never be modified in place. (And here the train
-        picture reaches its limit: real train cars are famously uncoupled and swapped around — a
-        string never allows it.) You can’t swap car 0
-        of "Ada" to make "Bda"; every string operation (uppercasing, trimming, gluing) builds a{' '}
-        <em>brand-new train</em> and leaves the original untouched. So{' '}
-        <code>name.toUpperCase()</code> hands you "ADA" as a new string — <code>name</code> itself
-        still points at "Ada" until you reassign it.
+        <strong>immutable</strong> — the train can never be modified in place. (Here the train
+        picture reaches its limit: real train cars can be uncoupled and swapped. A string never
+        allows it.) You cannot swap car 0 of "Ada" to make "Bda". Every string operation —
+        uppercasing, trimming, gluing — builds a <em>brand-new train</em> and leaves the original
+        untouched. So <code>name.toUpperCase()</code> hands you "ADA" as a new string.{' '}
+        <code>name</code> itself still points at "Ada" until you reassign it.
       </p>
       <p>
         Strings come with a rich toolbox attached, all reachable with the dot — recognize the
@@ -255,9 +254,9 @@ export const lesson16: LessonDef = {
         <code>{'`Line one\nLine two`'}</code> is one single string containing an actual newline.
       </p>
       <p>
-        For a future automation tester this is daily bread:{' '}
+        <strong>💼 On the job —</strong> for an automation tester this is everyday work:{' '}
         <code>`Expected ${'{expected}'} but got ${'{actual}'}`</code> is the shape of every good
-        failure message you’ll ever write.
+        failure message.
       </p>
     </>
   ),

@@ -230,15 +230,15 @@ export const lesson15: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The storage format has a name worth knowing: <strong>floating point</strong> (the standard
-        is called IEEE 754 — every mainstream language uses it, which is why Python and Java give
-        the same 0.30000000000000004).
+        The storage format has a name worth knowing: <strong>floating point</strong>. The
+        standard is called IEEE 754, and every mainstream language uses it. That is why Python
+        and Java give the same 0.30000000000000004.
       </p>
       <p>
-        Each number gets 64 bits — 64 tiny on/off switches — which is plenty for whole numbers up
-        to about 9 quadrillion (<code>Number.MAX_SAFE_INTEGER</code>) but means <em>some</em>{' '}
-        decimals are stored as their nearest representable neighbor. Whole numbers are always
-        exact; it’s only certain fractions that get trimmed.
+        Each number gets 64 bits — 64 tiny on/off switches. That is plenty for whole numbers, up
+        to about 9 quadrillion (<code>Number.MAX_SAFE_INTEGER</code>). But <em>some</em> decimals
+        must be stored as their nearest storable neighbor. Whole numbers are always exact; only
+        certain fractions get trimmed.
       </p>
       <p>
         One special citizen of the number type, born from impossible math: <code>1 / 0</code>{' '}
@@ -246,10 +246,10 @@ export const lesson15: LessonDef = {
         numbers.”
       </p>
       <p>
-        Another: <code>0 / 0</code> gives <strong>NaN</strong> — “Not a Number”, which is ironically
-        itself a value of type number, meaning “this calculation lost all meaning.” When you see
-        NaN in a test report, some math upstream went wrong — it spreads through calculations like
-        ink in water, so hunt for where it was born.
+        Another: <code>0 / 0</code> gives <strong>NaN</strong> — “Not a Number”. Ironically, NaN
+        is itself a value of type number. It means “this calculation lost all meaning.” NaN in a
+        test report means some math earlier went wrong. It spreads through calculations like ink
+        in water — hunt for where it was born.
       </p>
       <p>
         Practical toolkit: <code>Math.round(x)</code>, <code>Math.floor(x)</code> (always down),{' '}
@@ -257,9 +257,9 @@ export const lesson15: LessonDef = {
         humans.
       </p>
       <p>
-        For comparing decimals in tests, remember the pattern “difference smaller than a speck”:{' '}
-        <code>Math.abs(a - b) &lt; 0.000001</code> — test frameworks wrap exactly this idea in an
-        assertion called <code>toBeCloseTo</code>, which you’ll use in Phase 10.
+        For comparing decimals in tests, remember one pattern — “the difference is smaller than
+        a speck”: <code>Math.abs(a - b) &lt; 0.000001</code>. Test frameworks wrap exactly this
+        idea in an assertion called <code>toBeCloseTo</code>. You will use it in Phase 10.
       </p>
     </>
   ),

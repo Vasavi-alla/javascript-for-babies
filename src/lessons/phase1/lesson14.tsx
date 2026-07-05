@@ -248,26 +248,26 @@ export const lesson14: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why does <code>const</code> exist at all, when <code>let</code> can do everything? Because
-        code is read far more often than it’s written. A <code>const</code> tells every future
-        reader — including future you, and the teammates whose test suites you’ll maintain — “stop
-        tracking this one; it never changes.” In a 500-line file, knowing that 40 of 50 variables
-        are frozen is a massive gift to your working memory. const is less about the machine and
-        more about <em>communication between humans</em>.
+        Why does <code>const</code> exist at all, when <code>let</code> can do everything?
+        Because code is read far more often than it is written. A <code>const</code> tells every
+        future reader: “stop tracking this one; it never changes.” Future you is one of those
+        readers. So are the teammates whose test suites you will maintain. In a 500-line file,
+        knowing 40 of 50 variables are frozen is a gift to your memory. const is less about the
+        machine and more about <em>communication between humans</em>.
       </p>
       <p>
-        One honest note, because this app never lies to you: for every value you know so far —
-        numbers, strings, booleans — <code>const</code> truly freezes things, and what you learned
-        today is the whole story. In Phase 4 you’ll meet bigger kinds of values (arrays, objects)
-        where const carries one surprising piece of fine print. We’ll open it exactly when you can
-        watch it happen — lesson 4.6. A preview, not homework.
+        One honest note, because this app never lies to you. For every value you know so far —
+        numbers, strings, booleans — <code>const</code> truly freezes things. What you learned
+        today is the whole story. In Phase 4 you will meet bigger kinds of values (arrays,
+        objects) where const carries one surprising piece of fine print. We open it exactly when
+        you can watch it happen — lesson 4.6. A preview, not homework.
       </p>
       <p>
-        And <code>var</code>, concretely: it ignores some boundaries that let/const respect — it’s
-        “function-scoped” rather than “block-scoped.” In plain words: <em>scope</em> just means
-        “which part of the code can see this variable” — and var leaks out of places (like the
-        inside of an <code>if</code>) that let/const would have kept it contained to (fully clicks
-        in lesson 3.5).
+        And <code>var</code>, concretely. First a word: <em>scope</em> means “which part of the
+        code can see this variable”. let and const keep a variable inside the block where it was
+        born — like the inside of an <code>if</code>. var ignores that boundary and leaks out.
+        Programmers say var is “function-scoped”, not “block-scoped”. This fully clicks in
+        lesson 3.5.
       </p>
       <p>
         It also behaves oddly when used before its line: no error, you silently get{' '}

@@ -159,25 +159,26 @@ export const lesson12: LessonDef = {
       <p>
         <code>=</code> is the <strong>assignment operator</strong>, and the whole line is a{' '}
         <strong>declaration</strong> with an <strong>initial value</strong>. When someone says
-        “declare a variable and initialize it to 25,” they mean exactly the three pictures you
-        just watched: reserve a box, place a value, bind a name.
+        “declare a variable and initialize it to 25,” they mean the three pictures you just
+        watched. Reserve a box, place a value, bind a name.
       </p>
       <p>
-        That word <strong>bind</strong> is the precise one: the engine keeps a private table
-        mapping names to boxes — “age → box #7,204” — and consults it every time a name appears.
+        That word <strong>bind</strong> is the precise one. The engine keeps a private table
+        that maps names to boxes — “age → box #7,204”. It consults that table every time a name
+        appears.
       </p>
       <p>
-        You never see the table, but knowing it exists explains so much: why a name used before
-        it’s created gives a ReferenceError (nothing in the table yet!), and why two variables can
-        hold the same value without being connected (two boxes, two labels).
+        You never see the table, but knowing it exists explains a lot. A name used before it is
+        created gives a ReferenceError — nothing in the table yet. And two variables can hold
+        the same value without being connected — two boxes, two labels.
       </p>
       <p>
-        One honest disclosure, because this app never lies to you: “a labeled box holding the
-        value” is 90% true, and it’s the right picture for numbers, strings and booleans. In Phase
-        4 you’ll discover that for big things (objects, arrays), the box holds an <em>arrow</em> to
-        the thing instead of the thing itself — and that upgrade explains the single most common
+        One honest disclosure, because this app never lies to you. “A labeled box holding the
+        value” is 90% true — and it is the right picture for numbers, strings and booleans. In
+        Phase 4 you will discover a twist for big things (objects, arrays): their box holds an{' '}
+        <em>arrow</em> to the thing, not the thing itself. That twist explains the most common
         bug family in JavaScript. The label-and-box picture you learned today is the foundation
-        that upgrade stands on.
+        it stands on.
       </p>
     </>
   ),

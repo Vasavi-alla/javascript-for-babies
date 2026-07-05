@@ -193,15 +193,15 @@ export const lesson13: LessonDef = {
         That’s why <code>10 = score</code> is an error: 10 isn’t a box.
       </p>
       <p>
-        Programmers hear “score gets 15” in their heads, never “score equals 15” — adopt that
-        reading today and the confusion never returns. (The “does it equal?” question uses
+        Programmers hear “score gets 15” in their heads, never “score equals 15”. Adopt that
+        reading today, and the confusion never returns. (The “does it equal?” question uses
         different symbols, <code>===</code>, coming in lesson 1.9.)
       </p>
       <p>
         The read-change-store pattern is so common that JavaScript ships shortcuts:{' '}
         <code>score += 5</code> is exactly <code>score = score + 5</code>, and{' '}
-        <code>score++</code> adds 1. They do nothing new — same box, same label, new contents — so
-        learn the long form first (you just did) and treat the shortcuts as abbreviations, not
+        <code>score++</code> adds 1. They do nothing new — same box, same label, new contents.
+        Learn the long form first (you just did). Then treat the shortcuts as abbreviations, not
         magic.
       </p>
       <p>
