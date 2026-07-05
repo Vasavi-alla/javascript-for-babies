@@ -89,3 +89,24 @@ Reusable components in `src/viz/`. Built once, reused across lessons — consist
 | Journal | All teach-back answers, editable — "your own textbook, written by you" |
 | Sandbox (M4+) | CodeMirror + live MemoryDiagram/CallStackTower; seeded from lessons |
 | Progress | Prediction accuracy per phase, streak, export/import |
+
+## Under-the-Hood style contract (2026-07-05 — applies to ALL prose content going forward)
+
+Learner feedback: UTH read as "a different course" — dense sentences, unglossed jargon,
+colleague voice. The contract (full rationale in
+docs/superpowers/specs/2026-07-05-under-the-hood-rework-design.md):
+
+1. One idea per sentence, max two clauses. No triple-clause em-dash chains.
+2. Plain claim first, machinery second — every paragraph opens with its point in everyday
+   words, then the mechanism.
+3. Every term is taught (cite the lesson number), glossed inline in everyday words, or cut.
+   No insider asides about untaught things.
+4. One voice: UTH talks to the same beginner the captions talk to.
+5. Job notes kept, badged: open with "💼 On the job —" (bold), teaching voice.
+6. Rewrites may not grow a section (3–4 paragraphs; word count ≤ original). Never cut facts —
+   gloss them.
+7. Plain International English: no idioms, no slang, no culture-bound references. Test: does a
+   word-for-word translation still make sense?
+
+Lint: `node scripts/lint-uth.mjs [phase…]` — flags long sentences, blocklisted idioms/jargon,
+and growth vs `scripts/uth-baseline.json`.
