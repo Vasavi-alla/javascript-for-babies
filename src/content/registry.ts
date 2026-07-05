@@ -125,6 +125,22 @@ export const LESSONS: LessonMeta[] = [
   { id: '7.7', slug: 'storage-timing', title: 'Storage & timing', phase: 7, blurb: 'localStorage/cookies (test sessions!) and DOMContentLoaded vs load.', status: 'available' },
   { id: '7.8', slug: 'browser-rendering', title: 'How the browser renders', phase: 7, blurb: 'Parse → render tree → layout → paint — why “not visible yet” happens.', status: 'available' },
   { id: '7.9', slug: 'checkpoint-todo-inspected', title: 'Checkpoint: todo app, inspected', phase: 7, blurb: 'Build it, then target it — your own app as the automation practice range.', status: 'available' },
+  // Phase 8 — Modern JS & Tooling
+  { id: '8.1', slug: 'modules-import-export', title: 'Modules: import & export', phase: 8, blurb: 'One file = one sealed module; export opens a door, import borrows by name — the dependency graph.', status: 'available' },
+  { id: '8.2', slug: 'npm-package-json', title: 'npm & package.json', phase: 8, blurb: 'Two million packages, one ID card: install, semver (^ ~), lockfiles, scripts.', status: 'available' },
+  { id: '8.3', slug: 'debugging-like-a-pro', title: 'Debugging like a pro', phase: 8, blurb: 'Breakpoints pause the world — Scope panel = your bubbles, Call Stack panel = your tower.', status: 'available' },
+  { id: '8.4', slug: 'es6-grab-bag', title: 'ES6+ grab bag: ?. and ??', phase: 8, blurb: 'Crash-proof lookups and honest defaults — 2.4’s promised upgrade, delivered.', status: 'available' },
+  { id: '8.5', slug: 'taste-of-typescript', title: 'A taste of TypeScript', phase: 8, blurb: 'Type labels checked BEFORE running, then erased — why Playwright projects speak TS.', status: 'available' },
+  { id: '8.6', slug: 'checkpoint-dependency-detective', title: 'Checkpoint: dependency detective', phase: 8, blurb: 'A real Playwright project’s package.json, decoded line by line — case closed.', status: 'available' },
+  // Phase 9 — Node.js
+  { id: '9.1', slug: 'what-is-node', title: 'What is Node, really?', phase: 9, blurb: 'V8 unbolted from the browser: document vanishes, the computer’s powers arrive.', status: 'available' },
+  { id: '9.2', slug: 'terminal-properly', title: 'The terminal, properly', phase: 9, blurb: 'pwd/cd/ls, stack traces read calmly — and exit codes, the number CI lives by.', status: 'available' },
+  { id: '9.3', slug: 'cjs-vs-esm', title: 'Modules in Node: CJS vs ESM', phase: 9, blurb: 'require vs import, and the "type": "module" switch — read any Node file cold.', status: 'available' },
+  { id: '9.4', slug: 'process-argv-env-exit', title: 'process: argv, env & exit', phase: 9, blurb: 'One suite, many targets: BASE_URL, secrets, and the startup guard pattern.', status: 'available' },
+  { id: '9.5', slug: 'file-system', title: 'The file system', phase: 9, blurb: 'Real files at last: fs read/write, path.join, cwd vs the file’s home — where reports land.', status: 'available' },
+  { id: '9.6', slug: 'node-event-loop', title: 'Node’s event loop & non-blocking I/O', phase: 9, blurb: '6.2 backstage: the libuv workshop — how one thread reads a hundred files.', status: 'available' },
+  { id: '9.7', slug: 'fetch-without-browser', title: 'fetch without a browser', phase: 9, blurb: 'The envelope leaves a terminal: JSON in, JSON out — your first API check.', status: 'available' },
+  { id: '9.8', slug: 'checkpoint-environment-setup', title: 'Checkpoint: environment setup', phase: 9, blurb: 'Install Node for real, init a project, aim it with env, verify the exit code.', status: 'available' },
 ]
 
 export function lessonsForPhase(phase: number): LessonMeta[] {

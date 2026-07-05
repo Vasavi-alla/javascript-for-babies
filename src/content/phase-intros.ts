@@ -239,6 +239,8 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       { term: 'npm', meaning: 'The giant public library of JavaScript packages, plus the command that installs them into your project.' },
       { term: 'package', meaning: 'A ready-made bundle of someone else’s code you can install and use — like Playwright.' },
       { term: 'terminal / CLI', meaning: 'The text window where you type commands — how test suites are started and CI servers work.' },
+      { term: 'CI', meaning: 'Continuous Integration — a robot server that reinstalls and re-runs the whole test suite automatically on every code change. Phase 11 sets one up for real.' },
+      { term: 'git & the repo', meaning: 'git = the project’s version-control memory: it records every change ever made and shares them with the team. The repo is the shared project folder it guards; “committing” = recording into it.' },
       { term: 'TypeScript', meaning: 'JavaScript plus type labels the machine checks BEFORE running — catching mistakes early. Most Playwright projects use it.' },
     ],
     youCan: [
@@ -263,6 +265,7 @@ export const PHASE_INTROS: Record<number, PhaseIntro> = {
       { term: 'process.argv', meaning: 'The list of extra words typed after a command — how a script accepts input from whoever ran it.' },
       { term: 'process.env', meaning: 'A script’s environment variables — where secrets and settings like BASE_URL actually live in real test suites.' },
       { term: 'exit code', meaning: 'The single number a script hands back when it finishes: 0 means success, anything else means CI marks the run failed.' },
+      { term: 'CI', meaning: 'Continuous Integration — the robot server that re-runs your whole suite on every code change and reads exit codes to decide green or red.' },
       { term: 'fs (file system)', meaning: 'Node’s toolbox for reading and writing real files — where test reports and screenshots actually go.' },
     ],
     youCan: [
