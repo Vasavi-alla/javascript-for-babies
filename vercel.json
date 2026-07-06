@@ -1,5 +1,5 @@
 {
   "buildCommand": "npm run build:site",
-  "installCommand": "npm install && npx playwright install --with-deps chromium",
+  "installCommand": "yum install -y --skip-broken nss nspr atk at-spi2-atk cups-libs libdrm libXcomposite libXdamage libXrandr mesa-libgbm libxkbcommon pango alsa-lib; npm install && npx playwright install chromium",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
