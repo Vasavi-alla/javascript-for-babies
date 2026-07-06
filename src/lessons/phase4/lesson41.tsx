@@ -331,11 +331,10 @@ export const lesson41: LessonDef = {
   underTheHood: (
     <>
       <p>
-        An array keeps its elements <em>in order, in memory</em>, and the index is what makes that
+        An array keeps its elements <em>in order, in memory</em>. The index is what makes that
         useful: when you write <code>scores[2]</code>, the engine doesn't search — it jumps
-        straight to position 2. Reading by index is instant whether the array holds three elements
-        or three million — the address arithmetic behind that jump is the whole story of the next
-        lesson.
+        straight to position 2. Reading by index is instant with three elements or three million.
+        The address arithmetic behind that jump is the whole story of the next lesson.
       </p>
       <p>
         That's the trade arrays make: you find things by <em>position</em>, not by name.
@@ -345,15 +344,15 @@ export const lesson41: LessonDef = {
         equal to the number of elements.
       </p>
       <p>
-        The last element therefore always sits at <code>length - 1</code>, and asking for any
-        index at <code>length</code> or beyond returns <code>undefined</code> — no error, which is
-        both convenient and sneaky.
+        The last element therefore always sits at <code>length - 1</code>. Asking for any index
+        at <code>length</code> or beyond returns <code>undefined</code> — no error, which is both
+        convenient and sneaky.
       </p>
       <p>
-        <strong>Fun fact:</strong> indexes start at 0 for the same reason many buildings in Europe
-        call the ground floor “floor 0”: the number says how far you <em>climb</em>, not which room
-        you're in. You climb zero flights to the ground floor — and you step zero elements to
-        reach the first one.
+        <strong>Fun fact:</strong> indexes start at 0 for the same reason many buildings call the
+        ground floor “floor 0”. The number says how far you <em>climb</em>, not which room you
+        are in. You climb zero flights to the ground floor — and you step zero elements to reach
+        the first one.
       </p>
     </>
   ),

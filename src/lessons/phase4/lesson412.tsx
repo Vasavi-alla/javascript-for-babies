@@ -215,9 +215,9 @@ export const lesson412: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Both Set and Map run on exactly the hash machinery from lesson 4.5: a hash function turns
-        the key (or value, for a Set) into a bucket number, and that bucket is where the lookup,
-        insert, or delete happens — all O(1), regardless of how many entries exist.
+        Both Set and Map run on exactly the hash machinery from lesson 4.5. A hash function turns
+        the key (or value, for a Set) into a bucket number. That bucket is where the lookup,
+        insert, or delete happens — all O(1), no matter how many entries exist.
       </p>
       <p>
         Both also remember <strong>insertion order</strong> when you iterate them (with{' '}
@@ -227,10 +227,10 @@ export const lesson412: LessonDef = {
       </p>
       <p>
         There's a rarer sibling pair worth knowing exists: <code>WeakMap</code> and{' '}
-        <code>WeakSet</code>. They only accept objects as keys/values, and they let the garbage
+        <code>WeakSet</code>. They only accept objects as keys/values. They let the garbage
         collector (5.7) sweep an entry away the moment nothing else references that object —
-        useful for caches that shouldn't outlive what they're caching. You'll recognize the names
-        more than you'll write them.
+        useful for caches that shouldn't outlive what they cache. You'll recognize the names more
+        than you'll write them.
       </p>
     </>
   ),

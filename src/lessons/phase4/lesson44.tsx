@@ -393,16 +393,16 @@ export const lesson44: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Property keys are strings under the hood (<code>{'{ title: … }'}</code> is shorthand for{' '}
-        <code>{'{ "title": … }'}</code>), which is why any text can be a key — including{' '}
-        <code>"favorite toy"</code> with a space, reachable only through brackets. Dot access is
+        Property keys are strings under the hood — <code>{'{ title: … }'}</code> is shorthand
+        for <code>{'{ "title": … }'}</code>. That is why any text can be a key, including{' '}
+        <code>"favorite toy"</code> with a space (reachable only through brackets). Dot access is
         just bracket access with the string fixed at writing time: <code>book.title</code> and{' '}
         <code>book["title"]</code> are the same lookup.
       </p>
       <p>
-        The two access styles split one job: <strong>dot</strong> when you know the key while
-        writing the code, <strong>brackets</strong> when the key arrives at runtime — in a
-        variable, from user input, built from other strings.
+        The two access styles split one job. <strong>Dot</strong>: you know the key while
+        writing the code. <strong>Brackets</strong>: the key arrives at runtime — in a variable,
+        from user input, built from other strings.
       </p>
       <p>
         Writing works through both, and writing to a missing key creates it; reading a missing key

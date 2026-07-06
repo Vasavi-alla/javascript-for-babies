@@ -204,9 +204,9 @@ export const lesson413: LessonDef = {
   underTheHood: (
     <>
       <p>
-        JSON (JavaScript Object Notation) is a <em>stricter dialect</em> than JS literal syntax:
-        keys must be double-quoted, strings double-quoted, and only objects, arrays, strings,
-        numbers, booleans and <code>null</code> exist.
+        JSON (JavaScript Object Notation) is a <em>stricter dialect</em> than JS literal syntax.
+        Keys must be double-quoted; strings too. Only objects, arrays, strings, numbers, booleans
+        and <code>null</code> exist.
       </p>
       <p>
         <code>undefined</code>, functions and dates don't survive the trip (dates become plain
@@ -215,8 +215,8 @@ export const lesson413: LessonDef = {
       </p>
       <p>
         It stopped being "JavaScript's format" long ago: Python, Java, databases, and every REST
-        API speak it. When lesson 9.7 has you <code>fetch</code> an API from a Node script and
-        Phase 11 has you assert on API responses, the payload will be JSON text and{' '}
+        API speak it. Lesson 9.7 has you <code>fetch</code> an API from a Node script; Phase 11
+        has you assert on API responses. Both times the payload will be JSON text — and{' '}
         <code>parse</code>/<code>stringify</code> will be the door in and out.
       </p>
       <p>

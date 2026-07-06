@@ -249,15 +249,15 @@ export const lesson65: LessonDef = {
         the micro lane gets fully cleared.
       </p>
       <p>
-        Why does the language bother? Consistency guarantees: a promise reaction is guaranteed to
-        run <em>before</em> anything else can happen (no click, no timer can sneak between your{' '}
-        <code>.then</code>s), which makes chained state updates atomic-feeling. That guarantee is
-        exactly what <code>await</code> builds on — 6.6 will read as "microtasks with pretty
-        syntax."
+        Why does the language bother? Consistency guarantees. A promise reaction is guaranteed to
+        run <em>before</em> anything else can happen — no click, no timer can sneak between your{' '}
+        <code>.then</code>s. Chained state updates feel atomic (indivisible). The guarantee is
+        exactly what <code>await</code> builds on — 6.6 will read as "microtasks
+        with pretty syntax."
       </p>
       <p>
-        Debug-life note: this is why a log inside <code>.then</code> appears before a log inside a{' '}
-        <code>setTimeout(fn, 0)</code> written earlier — an ordering "bug" that has consumed
+        Debug-life note: this is why a log inside <code>.then</code> appears before a log inside
+        a <code>setTimeout(fn, 0)</code> written earlier. That ordering "bug" has consumed
         thousands of confused hours. You now dissolve it with one sentence: different lanes.
       </p>
     </>

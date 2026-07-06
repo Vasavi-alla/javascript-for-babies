@@ -281,9 +281,9 @@ export const lesson57: LessonDef = {
         from the roots, then sweep the unmarked.
       </p>
       <p>
-        V8 runs this in generations (new objects are checked often — most die young; survivors
-        graduate to a rarely-checked old space) and mostly in tiny pauses interleaved with your
-        code. When exactly? The engine decides; no API asks it to run.
+        V8 runs this in generations: new objects are checked often — most die young; survivors
+        graduate to a rarely-checked old space. It runs mostly in tiny pauses between your code.
+        When exactly? The engine decides; no API asks it to run.
       </p>
       <p>
         The practical posture: <em>don't fear creating objects; fear holding them forever.</em>{' '}
@@ -294,7 +294,7 @@ export const lesson57: LessonDef = {
       </p>
       <p>
         <strong>Fun fact:</strong> hotel housekeeping runs mark-and-sweep. They don't ask "is this
-        towel garbage?" — they check whether it's still <em>reachable from a guest</em> (in a
+        towel garbage?" — they check whether it's still <em>reachable from a guest</em> (in an
         occupied room, held by someone). Checkout cuts the rope; everything unreachable gets
         swept. You never call housekeeping to collect a specific towel — you just stop holding it.
       </p>

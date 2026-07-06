@@ -294,9 +294,9 @@ export const lesson67: LessonDef = {
         exists for everything else.
       </p>
       <p>
-        The exercise uses a <em>fake</em> fetch on purpose — the sandbox has no network, and
-        faking the response's shape is itself a professional skill: it's exactly how tests mock
-        APIs (Playwright's <code>route.fulfill</code>, lesson 11.8, is fakeFetch with a badge).
+        The exercise uses a <em>fake</em> fetch deliberately. The sandbox has no network — and
+        faking a response's shape is itself a professional skill. It is how tests mock APIs —
+        Playwright's <code>route.fulfill</code> (lesson 11.10) is the same idea, built in.
         The shape you fake today is the shape you'll assert on for years.
       </p>
     </>

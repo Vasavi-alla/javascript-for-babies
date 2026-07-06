@@ -240,14 +240,14 @@ export const lesson37: LessonDef = {
     <>
       <p>
         The precise definition: a <strong>closure</strong> is a function together with its{' '}
-        <strong>lexical environment</strong> — the set of outer variables that were in scope where
-        the function was <em>defined</em> (not where it’s called).
+        <strong>lexical environment</strong>. That environment is the outer variables in scope
+        where the function was <em>defined</em> — not where it is called.
       </p>
       <p>
         When the engine sees an inner function referencing an outer variable, it keeps that
-        variable alive in a longer-lived area of memory (called the heap — Phase 4 draws it
-        properly) instead of destroying it with the stack frame. The inner function “closes over”
-        the variable — hence the name.
+        variable alive. It lives on in a longer-lived memory area (the heap — Phase 4 draws it
+        properly) instead of dying with the stack frame. The inner function “closes over” the
+        variable — hence the name.
       </p>
       <p>
         Two facts worth engraving: closures capture the <em>variable</em>, not a snapshot of its
@@ -260,9 +260,9 @@ export const lesson37: LessonDef = {
         decades before classes got <code>#private</code> fields.
       </p>
       <p>
-        For your testing future: closures are why a Playwright helper like{' '}
-        <code>makeLogin(page)</code> can hand back a function that still knows which page it
-        belongs to, no matter where it’s called from. Backpacks everywhere.
+        <strong>💼 On the job —</strong> this is why a Playwright helper like{' '}
+        <code>makeLogin(page)</code> can hand back a function that still knows its page,
+        wherever the call happens. Backpacks everywhere.
       </p>
     </>
   ),

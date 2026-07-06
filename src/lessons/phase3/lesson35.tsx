@@ -332,8 +332,8 @@ export const lesson35: LessonDef = {
     <>
       <p>
         Real names: each bubble is a <strong>scope</strong> — global scope, function scope, block
-        scope. What we drew as a ray is the engine walking the <strong>scope chain</strong>:
-        current scope first, then outward, one level at a time, stopping at the first match.
+        scope. What we drew as a ray is the engine walking the <strong>scope chain</strong>.
+        Current scope first, then outward, one level at a time, stopping at the first match.
         Exhaust the chain without a match → <code>ReferenceError</code>.
       </p>
       <p>
@@ -348,7 +348,7 @@ export const lesson35: LessonDef = {
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the spec has a
-        deliciously spooky name for one corner of scope: the stretch of code above a{' '}
+        deliciously spooky name for one corner of scope. The stretch of code above a{' '}
         <code>let</code> line — where using the name throws an error instead of answering — is
         officially called the <em>Temporal Dead Zone</em>. Yes, that's the real term standards
         engineers use, and yes, it sounds like a sci-fi movie.

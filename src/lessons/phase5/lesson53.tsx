@@ -323,8 +323,8 @@ export const lesson53: LessonDef = {
       </p>
       <p>
         The precise closure story: a returned inner function keeps a reference to its outer
-        context, so the garbage collector (lesson 5.7) cannot sweep that context — its variables
-        stay alive and privately reachable only through the rope.
+        context. So the garbage collector (lesson 5.7) cannot sweep that context. Its variables
+        stay alive, reachable only through the rope.
       </p>
       <p>
         One maker call = one kept context, which is why two counters from the same factory never
@@ -332,9 +332,10 @@ export const lesson53: LessonDef = {
       </p>
       <p>
         Blocks count too: every <code>{'{ }'}</code> with a <code>let</code>/<code>const</code>{' '}
-        inside gets its own small environment on the chain — that's the machinery behind 3.5's
-        block scope and 5.2's note that <code>var</code> ignores it (var registers on the nearest{' '}
-        <em>function</em> context, sailing straight past block environments).
+        inside gets its own small environment on the chain. That is the machinery behind 3.5's
+        block scope. It explains 5.2's note that <code>var</code> ignores blocks — var
+        registers on the nearest <em>function</em> context, sailing straight past block
+        environments.
       </p>
     </>
   ),

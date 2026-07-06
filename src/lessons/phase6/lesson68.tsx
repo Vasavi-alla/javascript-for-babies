@@ -320,11 +320,12 @@ export const lesson68: LessonDef = {
         thread throughout (6.1's law): the waiting overlaps in the environment, never the JS.
       </p>
       <p>
-        Test-suite reality: Playwright code awaits sequentially when steps depend (click → then
-        assert), and uses <code>Promise.all</code> for genuinely simultaneous things — the classic
-        being <code>{'await Promise.all([page.waitForNavigation(), page.click("a")]) '}</code> —
-        start listening BEFORE the click that triggers it. Starting-then-awaiting is a
-        professional reflex; today it enters your hands.
+        <strong>💼 On the job —</strong> Playwright code awaits sequentially when steps depend
+        (click → then assert). <code>Promise.all</code> is for genuinely simultaneous things.
+        The classic:{' '}
+        <code>{'await Promise.all([page.waitForNavigation(), page.click("a")]) '}</code> — start
+        listening BEFORE the click that triggers it. Starting-then-awaiting is a professional
+        reflex; today it enters your hands.
       </p>
       <p>
         And the input-order guarantee is what makes <code>all</code> composable with

@@ -355,3 +355,17 @@ Batch 4 = Phases 7–8 (15, 3 tasks), Batch 5 = Phases 9–10 (15, 3 tasks), Bat
 (18, 4 tasks; the many 💼 job notes live here). After user approval, extend THIS plan file
 with those tasks written out (same level of detail) before executing them. Final step of the
 last batch: full-course lint (`node scripts/lint-uth.mjs` → clean), build, progress update.
+
+---
+
+## Batch 2 + 3 tasks (unlocked 2026-07-06 — register review passed; user: "continue for phase 3 to 6")
+
+Same Rewrite Procedure and Global Constraints as Tasks 3–7. Per user instruction for this
+round: NO commits until the user says so; verify after all four phases are done.
+
+- **Task 9:** Rewrite Phase 3 (11 lessons: lesson31–lesson311) → lint `phase3` clean.
+- **Task 10:** Rewrite Phase 4 (14 lessons: lesson41–lesson414) → lint `phase4` clean.
+- **Task 11:** Rewrite Phase 5 (9 lessons: lesson51–lesson59) → lint `phase5` clean.
+- **Task 12:** Rewrite Phase 6 (9 lessons: lesson61–lesson69) → lint `phase6` clean;
+  then full verify: lint phases 3–6 clean + `npm run build` green + fresher read +
+  progress note; STOP uncommitted, report to user.

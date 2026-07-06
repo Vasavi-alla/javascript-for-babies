@@ -374,16 +374,16 @@ export const lesson49: LessonDef = {
         both be written with it.
       </p>
       <p>
-        The two classic stumbles: forgetting the starting value (JS then uses the first element,
-        which breaks on empty arrays), and forgetting to <code>return</code> the next accumulator
-        (then the next lap receives <code>undefined</code> — lesson 3.3's chute rule, striking
-        again).
+        The two classic stumbles. Forgetting the starting value — JS then uses the first
+        element, which breaks on empty arrays. And forgetting to <code>return</code> the next
+        accumulator — then the next lap receives <code>undefined</code> (lesson 3.3's chute rule,
+        striking again).
       </p>
       <p>
-        <strong>Fun fact:</strong> your photo app runs this exact trio every day — “show 2024
-        photos” is a <em>filter</em>, the thumbnail grid is a <em>map</em> (every photo → a small
-        version), and “storage used: 48 GB” is a <em>reduce</em>. You've been a pipeline user for
-        years; now you're the one writing the stations.
+        <strong>Fun fact:</strong> your photo app runs this exact trio every day. “Show 2024
+        photos” is a <em>filter</em>. The thumbnail grid is a <em>map</em> — every photo → a
+        small version. “Storage used: 48 GB” is a <em>reduce</em>. You've been a pipeline user
+        for years; now you're the one writing the stations.
       </p>
     </>
   ),

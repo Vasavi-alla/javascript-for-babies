@@ -284,9 +284,9 @@ export const lesson48: LessonDef = {
         count an object's properties, since objects have no <code>.length</code> of their own.
       </p>
       <p>
-        All of today's loops <em>read</em>; none of them copy. The loop variable receives what the
-        collection holds — which, for elements that are objects, is an arrow (4.6 forever): mutate{' '}
-        <code>item.done = true</code> inside a loop and you've changed the real thing.
+        All of today's loops <em>read</em>; none of them copy. The loop variable receives what
+        the collection holds. For elements that are objects, that is an arrow (4.6 forever):
+        mutate <code>item.done = true</code> inside a loop and you've changed the real thing.
       </p>
     </>
   ),

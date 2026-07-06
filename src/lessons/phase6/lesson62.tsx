@@ -263,12 +263,13 @@ export const lesson62: LessonDef = {
         side), and a click puts your handler <em>in the queue</em>. That's why 6.1's blocked page
         had dead buttons — the handlers were queued behind a stack that never emptied. Every
         "later" in the browser — timers, clicks, network replies, even Playwright's simulated
-        events one day — is a callback taking its turn through this one queue.
+        events — is a callback taking its turn through this one queue.
       </p>
       <p>
-        Precision for interviews: the event loop is <em>not part of the JavaScript engine</em> —
-        V8 has the stack and heap; the loop, the timers, the queue live in the <em>environment</em>{' '}
-        (the browser here; Node's version awaits in lesson 9.6).
+        <strong>💼 On the job —</strong> the event loop is{' '}
+        <em>not part of the JavaScript engine</em>. V8 has the stack and heap; the loop, timers
+        and queue live in the <em>environment</em> — the browser here; Node's version arrives in
+        9.6.
       </p>
       <p>
         Also the queue is honest FIFO: two timers with equal delay run in scheduling order — your

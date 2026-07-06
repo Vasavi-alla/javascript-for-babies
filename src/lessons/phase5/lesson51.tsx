@@ -343,8 +343,8 @@ export const lesson51: LessonDef = {
         registered — that's the entire next lesson.
       </p>
       <p>
-        The execution context is the phase's master picture: each one holds its memory table, a
-        reference to its outer scope (lesson 5.3's chain), and — for function calls — its own{' '}
+        The execution context is the phase's master picture. Each holds its memory table, its
+        outer-scope reference (lesson 5.3's chain), and — for function calls — its own{' '}
         <code>this</code> (lesson 5.4).
       </p>
       <p>

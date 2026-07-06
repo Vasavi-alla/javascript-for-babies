@@ -313,21 +313,21 @@ export const lesson52: LessonDef = {
         → registered uninitialized (TDZ; reads throw ReferenceError).
       </p>
       <p>
-        And <code>var</code> has a second leak this table explains: it ignores block scope — a{' '}
+        And <code>var</code> has a second leak this table explains: it ignores block scope. A{' '}
         <code>var</code> inside an <code>if</code> registers on the whole <em>function's</em>{' '}
-        context, escaping the braces that 3.5 said contain things.
+        context — escaping the braces that 3.5 said contain things.
       </p>
       <p>
-        Why does <code>var</code> still exist? Compatibility — the web never breaks old pages. Your
-        rule as a modern developer stands exactly as 1.4 stated it: <code>const</code> by default,{' '}
+        Why does <code>var</code> still exist? Compatibility — the web never breaks old pages.
+        Your rule stands exactly as 1.4 stated it: <code>const</code> by default,{' '}
         <code>let</code> when reassigning, <code>var</code> only when reading old code. Now you can
         also <em>explain</em> the rule, which is what interviews actually test.
       </p>
       <p>
-        Interviewers phrase this a dozen ways — "is let hoisted?" being the trap. The precise
-        answer: <em>yes, all declarations are registered in pass 1 — but let/const are registered
-        uninitialized, so unlike var they throw instead of reading undefined.</em> That one
-        sentence separates memorizers from understanders.
+        <strong>💼 On the job —</strong> interviewers phrase this a dozen ways — "is let
+        hoisted?" is the trap. The precise answer: <em>yes, all declarations are registered in
+        pass 1 — but let/const are registered uninitialized, so unlike var they throw instead of
+        reading undefined.</em> That sentence separates memorizers from understanders.
       </p>
     </>
   ),

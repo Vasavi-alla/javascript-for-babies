@@ -345,9 +345,10 @@ export const lesson310: LessonDef = {
       </p>
       <p>
         A <strong>rest parameter</strong>, precisely: <code>...numbers</code> must be the LAST
-        parameter, and it always gathers into a genuine array (with <code>.reduce</code>,{' '}
-        <code>.map</code> and friends all working on it) — never a fixed count of separate slots.
-        It’s how functions like <code>Math.max(...)</code> accept any number of arguments at all.
+        parameter. It always gathers into a genuine array — <code>.reduce</code>,{' '}
+        <code>.map</code> and friends all work on it — never a fixed count of separate slots.
+        It is how functions like <code>Math.max(...)</code> accept any number of arguments at
+        all.
       </p>
       <p>
         A <strong>pure function</strong> satisfies two promises: same inputs → same output, and{' '}
@@ -362,8 +363,8 @@ export const lesson310: LessonDef = {
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the world’s most
         used “functional programming language” is… Excel. Every spreadsheet cell is a little pure
-        function of other cells — same inputs, same output, no side effects — which is exactly why
-        a billion people trust it with their money without ever debugging it.
+        function of other cells: same inputs, same output, no side effects. That is exactly why a
+        billion people trust it with their money without ever debugging it.
       </p>
     </>
   ),

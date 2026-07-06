@@ -285,8 +285,8 @@ export const lesson31: LessonDef = {
       <p>
         The proper vocabulary, worth owning: the whole recipe from <code>function</code> to the
         closing brace is a <strong>function declaration</strong>. <code>greet</code> is its{' '}
-        <strong>name</strong>, <code>name</code> is a <strong>parameter</strong> (the input slot —
-        next lesson is all about these), and the code between the braces is the{' '}
+        <strong>name</strong>. <code>name</code> is a <strong>parameter</strong> — the input
+        slot; next lesson is all about these. The code between the braces is the{' '}
         <strong>body</strong> — the work.
       </p>
       <p>
@@ -294,9 +294,9 @@ export const lesson31: LessonDef = {
         parentheses are the GO button, and without them nothing runs.
       </p>
       <p>
-        Inside there’s no real belt, of course. What actually happens: the engine saves the body’s
-        lines in memory and remembers “<code>greet</code> means this saved code” — the same
-        label-on-a-box picture from Phase 1, with <em>code</em> in the box. A call makes the engine
+        Inside there’s no real belt, of course. What actually happens: the engine saves the
+        body’s lines in memory. It remembers “<code>greet</code> means this saved code” — the
+        same label-on-a-box picture from Phase 1, with <em>code</em> in the box. A call makes the engine
         jump to the saved lines, run them top to bottom, and jump back to where the call was.
         That’s the entire trick — and every Playwright line you’ll write someday,{' '}
         <code>page.click()</code>, <code>expect()</code>, is pressing GO on a machine someone else

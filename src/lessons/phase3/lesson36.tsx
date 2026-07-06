@@ -240,8 +240,8 @@ export const lesson36: LessonDef = {
         separate frames (lesson 3.9 turns this into a superpower).
       </p>
       <p>
-        The stack also explains the phrase <em>single-threaded</em> from lesson 2.5 more deeply:
-        JavaScript has exactly ONE call stack, so exactly one top card, so exactly one thing
+        The stack also explains the phrase <em>single-threaded</em> from lesson 2.5 more deeply.
+        JavaScript has exactly ONE call stack. So: exactly one top card, exactly one thing
         running at any instant.
       </p>
       <p>

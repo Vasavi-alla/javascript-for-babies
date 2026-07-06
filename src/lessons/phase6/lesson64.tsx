@@ -301,10 +301,10 @@ export const lesson64: LessonDef = {
         not instantly — the exact "when" is next lesson's microtask story).
       </p>
       <p>
-        You'll <em>consume</em> promises far more often than construct them: <code>fetch</code>{' '}
-        (6.7) returns one, Playwright's every action returns one — your test code will be
-        promise-chains wearing 6.6's <code>async/await</code> costume. Building one by hand today
-        (the exercise) is like taking apart a lock: afterward, every key makes sense.
+        You'll <em>consume</em> promises far more often than construct them. <code>fetch</code>{' '}
+        (6.7) returns one; every Playwright action returns one. Your test code will be
+        promise-chains written in 6.6's <code>async/await</code> syntax. Building one by hand
+        today (the exercise) is like taking apart a lock: afterward, every key makes sense.
       </p>
       <p>
         Naming note for the wild: people say "resolved" loosely to mean fulfilled; strictly,{' '}

@@ -329,13 +329,13 @@ export const lesson410: LessonDef = {
         first ✓, <code>every</code> stops at the first ✗ — on a million-element array that matters.
       </p>
       <p>
-        <code>includes</code> uses exact <code>===</code> comparison, which means (4.6 forever) it
+        <code>includes</code> uses exact <code>===</code> comparison. That means (4.6 forever) it
         matches objects only by <em>address</em>: <code>list.includes({'{ id: 1 }'})</code> is
-        false even if a same-shaped object sits right there — for objects, ask{' '}
+        false even if a same-shaped object sits right there. For objects, ask{' '}
         <code>some(el =&gt; el.id === 1)</code> instead.
       </p>
       <p>
-        <strong>Fun fact:</strong> your file explorer falls for the same default: name photos{' '}
+        <strong>Fun fact:</strong> your file explorer falls for the same default. Name photos{' '}
         <code>photo1, photo2, … photo10</code> and watch <code>photo10</code> sort right after{' '}
         <code>photo1</code> — alphabetical order on digits, exactly JavaScript's default sort. The
         workaround humans invented (naming files <code>photo01</code>) is a comparator you apply by

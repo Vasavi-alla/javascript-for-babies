@@ -333,7 +333,7 @@ export const lesson56: LessonDef = {
         — step 1 of the four (creating the object) is delegated to the parent.
       </p>
       <p>
-        Where you'll live in this syntax: lesson 11.7's Page Object Model —{' '}
+        Where you'll live in this syntax: lesson 11.9's Page Object Model —{' '}
         <code>class LoginPage</code> holding locators as properties and actions as methods, one
         instance per test.
       </p>

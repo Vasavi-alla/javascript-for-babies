@@ -299,17 +299,16 @@ export const lesson59: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why interviewers ask these: not to see if you memorized outcomes, but to hear{' '}
-        <em>which model you reason with</em>. "undefined because hoisting" is a memorizer's
-        answer. "Pass one registered the name with undefined; the assignment is pass-two work" is
-        an understander's answer. Same output, different career.
+        <strong>💼 On the job —</strong> why interviewers ask these: not to see if you memorized
+        outcomes, but to hear <em>which model you reason with</em>. "undefined because hoisting"
+        is a memorizer's answer. "Pass one registered the name with undefined; the assignment is
+        pass-two work" is an understander's answer. Same output, different career.
       </p>
       <p>
         The runner you're about to write (part 2) is genuinely the core loop of Vitest and
-        Playwright's runner: each test is a function; the framework calls it inside a try; a
-        thrown assertion becomes a red result with the error's message; the loop continues to the
-        next test. When you meet <code>test('name', fn)</code> in Phase 10, you'll recognize an
-        old friend wearing a suit.
+        Playwright's runner. Each test is a function. The framework calls it inside a try. A
+        thrown assertion becomes a red result with the error's message. The loop continues. When
+        you meet <code>test('name', fn)</code> in Phase 10, you'll recognize an old friend.
       </p>
       <p>
         And the chainable class (part 1) is the fluent style behind{' '}

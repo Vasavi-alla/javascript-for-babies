@@ -348,25 +348,26 @@ export const lesson54: LessonDef = {
         Why does the default rule sometimes give the global object and sometimes{' '}
         <code>undefined</code>? Strict mode — a per-file/function opt-in (<code>"use strict"</code>)
         that modern tooling and class bodies enable automatically. Sloppy mode papers over the
-        lost-this bug with the global object; strict mode surfaces it as{' '}
-        <code>TypeError: Cannot read properties of undefined</code> — same philosophy as 5.2's TDZ:
-        loud beats silent.
+        lost-this bug with the global object. Strict mode surfaces it as{' '}
+        <code>TypeError: Cannot read properties of undefined</code>. Same philosophy as 5.2's
+        TDZ: loud beats silent.
       </p>
       <p>
-        The rules compose with everything you know: <code>this</code> is stored per{' '}
-        <em>execution context</em> (each call's context gets its own), which is exactly why arrows
-        — which don't create a <code>this</code> in their context — fall back to the rope.
+        The rules compose with everything you know. <code>this</code> is stored per{' '}
+        <em>execution context</em> — each call's context gets its own. Arrows don't create a{' '}
+        <code>this</code> in their context, so they fall back to the rope.
       </p>
       <p>
         And the table's whole point is honest: the same function object can be attached to
-        different owners freely — borrow a method with <code>a.speak = b.speak</code> and the dot
+        different owners freely. Borrow a method with <code>a.speak = b.speak</code> — the dot
         rule follows whoever calls.
       </p>
       <p>
-        Job note: Playwright test code uses arrows almost everywhere precisely to avoid this
-        entire topic — but Page Object classes (11.7) use <code>this.page</code> constantly, via
-        the implicit and new rules. You'll use all four rules weekly; you'll debug rule 2 (lost
-        this) at least once in your career. Today you'll recognize it in seconds.
+        <strong>💼 On the job —</strong> Playwright test code uses arrows almost everywhere
+        precisely to avoid this entire topic. But Page Object classes (11.9) use{' '}
+        <code>this.page</code> constantly, via the implicit and new rules. You'll use all four
+        rules weekly; you'll debug rule 2 (lost this) at least once in your career. Today means
+        you'll recognize it in seconds.
       </p>
     </>
   ),

@@ -565,8 +565,8 @@ export const lesson46: LessonDef = {
         at what’s actually sitting <em>inside</em> each slot: a value, or an arrow.
       </p>
       <p>
-        Objects and arrays live in the heap, and slots hold only their reference — so{' '}
-        <code>=</code>, function arguments, even <code>push</code>-ing an object into an array,
+        Objects and arrays live in the heap, and slots hold only their reference. So{' '}
+        <code>=</code>, function arguments, even <code>push</code>-ing an object into an array —
         all copy <em>arrows</em>, never the object.
       </p>
       <p>

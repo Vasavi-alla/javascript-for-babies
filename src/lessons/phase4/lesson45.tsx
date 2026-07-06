@@ -344,20 +344,20 @@ export const lesson45: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The full honest picture: a hash function maps a string to a number, the number is squeezed
-        into the bucket range (commonly with a remainder — <code>%</code> means “what’s left over
-        after dividing”: <code>hash % bucketCount</code>), and the key AND value are stored in
-        that bucket. Lookup re-hashes and jumps.
+        The full honest picture. A hash function maps a string to a number. The number is
+        squeezed into the bucket range — commonly with a remainder,{' '}
+        <code>hash % bucketCount</code> (<code>%</code> means “what’s left over after dividing”).
+        The key AND value are stored in that bucket. Lookup re-hashes and jumps.
       </p>
       <p>
         Collisions put a small pile in one bucket; when piles grow, the engine quietly makes more
         buckets and re-files everything — keeping average lookup O(1).
       </p>
       <p>
-        Even more honestly: V8 gives objects an extra optimization layer first (it calls them
-        <em> hidden classes</em> — objects with the same property layout share a lookup shortcut),
-        and falls back to true hash-map mode for objects used like dictionaries. Both roads end at
-        the same promise: <strong>finding a property does not scan the keys</strong>.
+        Even more honestly: V8 gives objects an extra optimization layer first. It calls them
+        <em> hidden classes</em> — objects with the same property layout share a lookup shortcut.
+        For objects used like dictionaries, V8 falls back to true hash-map mode. Both roads end
+        at the same promise: <strong>finding a property does not scan the keys</strong>.
       </p>
       <p>
         <strong>Fun fact:</strong> a cloakroom runs the same algorithm. You hand over your coat and

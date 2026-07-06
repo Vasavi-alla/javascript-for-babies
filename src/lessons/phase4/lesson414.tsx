@@ -279,9 +279,9 @@ export const lesson414: LessonDef = {
       <p>
         The pattern you've just used has a name in data work: <strong>select → project →
         aggregate</strong>. filter selects the rows you care about, map projects each row down to
-        the field you need, reduce aggregates many values into one. Every dashboard, every report,
-        every analytics query in existence is some arrangement of those three verbs — SQL calls
-        them WHERE, SELECT and SUM, spreadsheets call them filters and pivot tables.
+        the field you need, reduce aggregates many values into one. Every dashboard, every
+        report, every analytics query in existence is some arrangement of those three verbs. SQL
+        calls them WHERE, SELECT and SUM; spreadsheets call them filters and pivot tables.
       </p>
       <p>
         One reference-rules reminder while chaining (4.6 never sleeps): filter and map build new{' '}

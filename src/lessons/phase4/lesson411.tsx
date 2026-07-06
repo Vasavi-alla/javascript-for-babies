@@ -353,18 +353,18 @@ export const lesson411: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Destructuring is pure convenience syntax — the engine performs the same property reads and
-        index reads you'd have written by hand, including all the reference rules of 4.6.
+        Destructuring is pure convenience syntax. The engine performs the same property reads and
+        index reads you would have written by hand — including all the reference rules of 4.6.
       </p>
       <p>
-        Two extras worth owning: defaults (<code>{'const { retries = 3 } = options'}</code> — used
-        when the property is missing or undefined, exactly like 3.10's parameter defaults) and
-        renaming (<code>{'const { url: address } = options'}</code> reads property{' '}
-        <code>url</code> into a variable called <code>address</code>).
+        Two extras worth owning. Defaults: <code>{'const { retries = 3 } = options'}</code> —
+        used when the property is missing or undefined, exactly like 3.10's parameter defaults.
+        Renaming: <code>{'const { url: address } = options'}</code> reads property{' '}
+        <code>url</code> into a variable called <code>address</code>.
       </p>
       <p>
-        The options-object pattern is the one to internalize as a future test engineer: it's why{' '}
-        <code>{'page.goto(url, { waitUntil: "load" })'}</code> and{' '}
+        <strong>💼 On the job —</strong> the options-object pattern is the one to internalize:
+        it's why <code>{'page.goto(url, { waitUntil: "load" })'}</code> and{' '}
         <code>{'test.use({ viewport: … })'}</code> look the way they do. Named fields survive
         redesigns — adding a new option never breaks old callers, because extra and missing fields
         are handled gracefully.

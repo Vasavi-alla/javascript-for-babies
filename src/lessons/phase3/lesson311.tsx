@@ -240,11 +240,12 @@ export const lesson311: LessonDef = {
         most of what you’ll see: small verbs, composed.
       </p>
       <p>
-        And here is your career quietly beginning: pure, composed functions are exactly what unit
-        tests are written against. <code>expect(tipAmount(1200, 10)).toBe(120)</code> — one line,
-        no setup, no browser, no server. In Phase 10 you’ll write precisely that with Vitest, and
-        the functions you wrote today would pass those tests unchanged. You didn’t just finish
-        functions; you built your first testable unit.
+        <strong>💼 On the job —</strong> your career quietly begins here: pure, composed
+        functions are exactly what unit tests are written against.{' '}
+        <code>expect(tipAmount(1200, 10)).toBe(120)</code> — one line, no setup, no browser, no
+        server. In Phase 10 you write exactly that with Vitest. The functions you wrote today
+        would pass unchanged. You didn’t just finish functions; you built your first
+        testable unit.
       </p>
       <p>
         Phase 3, complete: machines → parameters → return → functions-as-values → scope → the call

@@ -277,17 +277,17 @@ export const lesson61: LessonDef = {
         async exists to avoid. JavaScript's design bet: <em>never block; always schedule.</em>
       </p>
       <p>
-        Why one thread at all? Simplicity that pays every day: your code never runs at the same
-        instant as other code, so two functions can never modify the same object simultaneously —
-        an entire universe of multithreading bugs (locks, races) simply cannot happen. The price
+        Why one thread at all? Simplicity that pays daily. Your code never runs at the same
+        instant as other code. So two functions can never modify the same object at the same
+        moment — a whole universe of multithreading bugs (locks, races) cannot happen. The price
         is discipline: keep every turn on the stack SHORT.
       </p>
       <p>
         <strong>Fun fact:</strong> a busy restaurant runs on this model. One waiter (the thread)
-        never stands at your table while the kitchen cooks (blocking) — they take the order, hand
-        it to the kitchen (the environment), serve other tables, and come back when the bell
-        rings. One waiter, forty tables, nobody starves — as long as the waiter never stops to
-        stir a pot personally.
+        never waits at your table while the kitchen cooks — that is blocking. They take the
+        order, hand it to the kitchen (the environment), serve other tables, and return when the
+        bell rings. One waiter, forty tables, nobody starves — as long as the waiter never stirs
+        a pot personally.
       </p>
     </>
   ),

@@ -260,13 +260,13 @@ export const lesson34: LessonDef = {
     <>
       <p>
         There's a proper name for "functions are values": <strong>first-class functions</strong>.
-        It means a function has all the same rights as a number or a string — it can live in a
-        variable, be handed to another function, and be handed back from one.
+        It means a function has the same rights as a number or a string. It can live in a
+        variable. It can be handed to another function, and handed back from one.
       </p>
       <p>
-        One honest disclosure: <code>typeof</code> says <code>"function"</code>, but deep down a
-        function value is a special kind of object — a bundle of stuff that happens to be runnable.
-        Objects are Phase 4; keep this footnote for then.
+        One honest disclosure: <code>typeof</code> says <code>"function"</code>. But deep down a
+        function value is a special kind of object — a bundle of stuff that happens to be
+        runnable. Objects are Phase 4; keep this footnote for then.
       </p>
       <p>
         The arrow rules, all of them: two or more parameters need parentheses —{' '}

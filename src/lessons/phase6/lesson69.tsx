@@ -291,8 +291,8 @@ export const lesson69: LessonDef = {
         Why fakes again in the exercises: determinism — the same reason professional test suites
         mock network calls. A test that depends on pokeapi.co's uptime and latency is a flaky
         test; a faked response with the <em>same shape</em> tests your logic with none of the
-        weather. Lesson 11.8 gives this practice its industrial name (<code>route.fulfill</code>);
-        today you're already doing it.
+        randomness. Lesson 11.10 gives this practice its industrial name (
+        <code>route.fulfill</code>); today you're already doing it.
       </p>
       <p>
         The loading/error/done trio is also the anatomy of test-friendly UI: each state is{' '}
@@ -302,9 +302,9 @@ export const lesson69: LessonDef = {
         interviews someday.
       </p>
       <p>
-        Phase complete. The machine's full picture, one breath: one thread; blocking forbidden;
-        environment waits; queue and express lane feed an empty stack; promises are receipts;
-        await parks frames; combinators overlap independent waits; fetch rides it all. That
+        Phase complete. The full picture, one breath. One thread. Blocking forbidden.
+        The environment waits. Queue and express lane feed an empty stack. Promises are receipts.
+        await parks frames. Combinators overlap independent waits. fetch rides it all. That
         paragraph is your teach-back — and a senior-engineer answer to "explain async JavaScript."
       </p>
     </>

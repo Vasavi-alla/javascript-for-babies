@@ -345,8 +345,8 @@ export const lesson47: LessonDef = {
       </p>
       <p>
         Spread (<code>{'{ ...obj }'}</code>, <code>[...arr]</code>) and{' '}
-        <code>Object.assign</code> all make <strong>shallow</strong> copies: one new top-level
-        container, each property copied slot-by-slot — so nested objects and arrays come along as
+        <code>Object.assign</code> all make <strong>shallow</strong> copies. One new top-level
+        container; each property copied slot-by-slot. So nested objects and arrays come along as
         shared arrows. A shallow copy is exactly right when the object is flat, and exactly one
         layer short when it isn't.
       </p>
@@ -355,9 +355,9 @@ export const lesson47: LessonDef = {
         every layer.
       </p>
       <p>
-        You'll still meet the old folk remedy <code>JSON.parse(JSON.stringify(x))</code> in older
-        code: it mostly works, but it silently drops <code>undefined</code> and functions and
-        mangles dates — knowing why takes exactly the JSON knowledge arriving in lesson 4.13.
+        You'll still meet the old home remedy <code>JSON.parse(JSON.stringify(x))</code> in older
+        code. It mostly works — but it silently drops <code>undefined</code> and functions, and
+        damages dates. Knowing why takes exactly the JSON knowledge arriving in lesson 4.13.
       </p>
     </>
   ),

@@ -314,17 +314,18 @@ export const lesson43: LessonDef = {
         pocket — lesson 4.6 turns it into the most important idea of this phase.)
       </p>
       <p>
-        Each also returns a value, and mixing them up is a classic bug: <code>pop</code> and{' '}
-        <code>shift</code> return <em>the removed element</em>; <code>push</code> and{' '}
+        Each also returns a value, and mixing them up is a classic bug. <code>pop</code> and{' '}
+        <code>shift</code> return <em>the removed element</em>. <code>push</code> and{' '}
         <code>unshift</code> return <em>the new length</em>. So{' '}
         <code>const t = list.push("x")</code> puts a <em>number</em> in <code>t</code>, not the
         text — a mistake you'll now spot at a glance.
       </p>
       <p>
-        The cost difference is real, not folklore — end work is O(1), front work O(n), in lesson 4.2’s labels: elements sit in order in memory, so removing the
-        front means every survivor is re-indexed, while the end just grows or shrinks in place.
-        It's the supermarket queue versus the plate stack: when the first person leaves a queue,
-        the whole line shuffles forward; the top plate lifts off a stack and no other plate moves.
+        The cost difference is real, not folklore. In lesson 4.2’s labels: end work is O(1),
+        front work is O(n). Elements sit in order in memory — so removing the front re-indexes
+        every survivor, while the end just grows or shrinks in place. It's the supermarket queue
+        versus the plate stack. When the first person leaves a queue, the whole line shuffles
+        forward. The top plate lifts off a stack, and no other plate moves.
       </p>
     </>
   ),

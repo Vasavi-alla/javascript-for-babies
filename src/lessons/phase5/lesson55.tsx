@@ -308,10 +308,10 @@ export const lesson55: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Naming, precisely — interviewers probe this: the hidden link on every object is{' '}
-        <strong>[[Prototype]]</strong>, readable with <code>Object.getPrototypeOf(obj)</code>{' '}
-        (you'll also meet <code>__proto__</code>, a legacy accessor for the same link — fine in
-        DevTools, avoided in code).
+        Naming, precisely — interviewers probe this. The hidden link on every object is{' '}
+        <strong>[[Prototype]]</strong>, readable with <code>Object.getPrototypeOf(obj)</code>.
+        You'll also meet <code>__proto__</code> — a legacy accessor for the same link; fine in
+        DevTools, avoided in code.
       </p>
       <p>
         Confusingly, <em>functions</em> also have a normal property literally named{' '}

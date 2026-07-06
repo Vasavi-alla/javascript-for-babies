@@ -250,9 +250,9 @@ export const lesson38: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The two terms, precisely: a <strong>higher-order function</strong> is any function that
-        takes a function as an argument or returns one (3.7’s <code>makeCounter</code> was already
-        one — it returned a function).
+        The two terms, precisely. A <strong>higher-order function</strong> is any function that
+        takes a function as an argument, or returns one. 3.7’s <code>makeCounter</code> was
+        already one — it returned a function.
       </p>
       <p>
         A <strong>callback</strong> is the function you pass in, named for the promise it carries:{' '}
@@ -270,7 +270,7 @@ export const lesson38: LessonDef = {
       </p>
       <p>
         In memory (the Phase 1 picture, now in real words): the parameter <code>action</code>{' '}
-        simply points at the same function value that <code>cheer</code> points at — nothing is
+        simply points at the same function value that <code>cheer</code> points at. Nothing is
         copied, no magic. (Phase 4 gives this pointing its precise name: a reference.)
       </p>
     </>

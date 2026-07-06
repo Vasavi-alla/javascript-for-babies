@@ -285,15 +285,14 @@ export const lesson58: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Error is a class with a family tree (5.6's chains, in the wild): <code>TypeError</code>,{' '}
-        <code>ReferenceError</code>, <code>SyntaxError</code> all <code>extends Error</code> —
-        which is why every error you've read since 0.5 had the same shape (.name, .message,
-        .stack).
+        Error is a class with a family tree — 5.6's chains, live. <code>TypeError</code>,{' '}
+        <code>ReferenceError</code>, <code>SyntaxError</code> all <code>extends Error</code>.
+        That is why every error you've read since 0.5 had the same shape: .name, .message,
+        .stack.
       </p>
       <p>
         You can extend it too: <code>class PaymentError extends Error</code> lets a catch block
-        tell YOUR errors apart with <code>instanceof</code> (5.6's chain question, earning its
-        keep).
+        tell YOUR errors apart with <code>instanceof</code> (5.6's chain question, at work).
       </p>
       <p>
         Throw stops functions the way return does, but travels differently: return hands a value
@@ -305,9 +304,10 @@ export const lesson58: LessonDef = {
       </p>
       <p>
         One honest boundary: try/catch guards the <em>synchronous</em> stack. Errors born inside
-        callbacks that run <em>later</em> (a setTimeout, a network reply) happen after your try has
-        already finished — catching those needs Phase 6's machinery (promises carry their errors;{' '}
-        <code>await</code> makes try/catch work on them again). Foreshadowed, on purpose.
+        callbacks that run <em>later</em> (a setTimeout, a network reply) happen after your try
+        has already finished. Catching those needs Phase 6's machinery — promises carry their
+        errors, and <code>await</code> makes try/catch work on them again. Foreshadowed, on
+        purpose.
       </p>
     </>
   ),

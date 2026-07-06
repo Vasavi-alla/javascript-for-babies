@@ -259,21 +259,20 @@ export const lesson63: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The pattern's proper name is <em>continuation-passing</em>: instead of returning a value,
-        a function receives "the rest of the program" (the continuation) as an argument and calls
-        it when ready. Every callback API you'll ever meet — timers, old Node file APIs, event
-        listeners in Phase 7 — is this one idea.
+        The pattern's proper name is <em>continuation-passing</em>. Instead of returning a value,
+        a function receives "the rest of the program" (the continuation) as an argument. It calls
+        it when ready. Every callback API you'll ever meet — timers, old Node file
+        APIs, event listeners in Phase 7 — is this one idea.
       </p>
       <p>
-        Be precise about what's broken and what isn't: ONE level of callback is completely fine
-        and stays common everywhere (every <code>addEventListener</code>, every{' '}
-        <code>test('…', fn)</code> in your Phase 10 future is a callback). The failure mode is{' '}
-        <em>sequencing chains</em> of dependent
-        async steps — that's where nesting compounds, errors scatter, and reading order stops
-        matching running order.
+        Be precise about what's broken. ONE level of callback is completely fine
+        and stays common everywhere — every <code>addEventListener</code>, every{' '}
+        <code>test('…', fn)</code> in your Phase 10 future is a callback. The failure mode is{' '}
+        <em>sequencing chains</em> of dependent async steps — that's where nesting compounds,
+        errors scatter, and reading order stops matching running order.
       </p>
       <p>
-        The cure's shape is worth previewing precisely: promises turn "hand your next step INTO
+        The cure's shape is worth previewing precisely. Promises turn "hand your next step INTO
         the function" into "the function HANDS BACK an object you can attach next steps to."
         Return-a-thing beats take-a-thing — it flattens the pyramid into a chain and gives errors
         one shared drain. That object is lesson 6.4.
