@@ -293,7 +293,7 @@ export const lesson96: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Two honest wrinkles for later. First: some libuv errands (like file reads) actually use a
+        Two honest details for later. First: some libuv errands (like file reads) use a
         small <strong>thread pool</strong> inside the workshop — but those threads are libuv’s C
         threads, not JavaScript. Your JS still runs on exactly one thread; the pool is plumbing.
       </p>
@@ -301,7 +301,7 @@ export const lesson96: LessonDef = {
         Second: Node’s loop technically runs in <strong>phases</strong> (timers, I/O callbacks,
         and a Node-special <code>setImmediate</code> among them). The 6.2/6.5 model — sync first,
         then microtasks, then queued callbacks — predicts the right order for everything you’ll
-        write in this course; the phase diagram is there when you someday need microscopic
+        write in this course. The phase diagram is there when you someday need microscopic
         ordering.
       </p>
       <p>
@@ -311,9 +311,9 @@ export const lesson96: LessonDef = {
         <strong>Non-blocking I/O</strong> = the waiting happens in libuv, never on the thread.
       </p>
       <p>
-        Job note: this is why one Playwright process can drive several browser contexts in
-        parallel without threads — every await is a parked job, and the loop interleaves them.
-        When Phase 11 shows tests overlapping, you’ll recognize the workshop immediately.
+        <strong>💼 On the job —</strong> this is why one Playwright process can drive several
+        browser contexts in parallel without threads. Every await is a parked job, and the loop
+        interleaves them. When Phase 11 shows tests overlapping, you’ll recognize the workshop.
       </p>
     </>
   ),

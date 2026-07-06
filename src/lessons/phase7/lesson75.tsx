@@ -297,21 +297,22 @@ export const lesson75: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Precision for interviews: addEventListener's rare third argument (<code>true</code> or{' '}
-        <code>{'{ capture: true }'}</code>) opts a listener INTO the capture phase instead of
-        bubble. Almost every real listener uses the default — bubble — which is exactly why
+        addEventListener has a rare third argument (<code>true</code> or{' '}
+        <code>{'{ capture: true }'}</code>). It opts the listener INTO the capture phase instead
+        of bubble. Almost every real listener uses the default, bubble. That default is why
         delegation works at all: it needs the event to still be traveling upward when it arrives.
       </p>
       <p>
-        <code>event.currentTarget</code> is only meaningful WHILE the handler is actively running
-        — the DOM reassigns it fresh at each node the event visits. Save the whole event object
-        for later and read <code>currentTarget</code> then, and you'll find it's gone (usually{' '}
+        <code>event.currentTarget</code> is only meaningful WHILE the handler is running. The
+        DOM reassigns it fresh at each node the event visits. Save the whole event object for
+        later and read <code>currentTarget</code> then — you'll find it gone (usually{' '}
         <code>null</code>). Read it synchronously, inside the handler, always.
       </p>
       <p>
-        Job note: Playwright's <code>.click()</code> dispatches a real, trusted click event that
-        bubbles exactly like a human's would — which is precisely why delegated listeners in the
-        app you're testing keep firing correctly under automation, with zero special handling.
+        <strong>💼 On the job —</strong> Playwright's <code>.click()</code> fires a real,
+        trusted click event. It bubbles exactly as a human's click would. That's why delegated
+        listeners in the app you're testing keep firing correctly under automation, with zero
+        special handling.
       </p>
     </>
   ),

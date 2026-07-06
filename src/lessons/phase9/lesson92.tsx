@@ -304,28 +304,28 @@ export const lesson92: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The terminal window and the program interpreting your commands are technically two things
-        — the interpreter is called a <strong>shell</strong> (bash and zsh on Mac/Linux,
-        PowerShell on Windows). Same conversation, slightly different dialects:{' '}
+        The terminal window and the program interpreting your commands are technically two
+        things. The interpreter is called a <strong>shell</strong> — bash and zsh on Mac/Linux,
+        PowerShell on Windows. Same conversation, slightly different dialects:{' '}
         <code>ls</code> vs <code>dir</code>, <code>$?</code> vs <code>$LASTEXITCODE</code>. The
         concepts today are identical in all of them.
       </p>
       <p>
-        A handful of extra commands covers 95% of daily work: <code>mkdir name</code> (make a
-        folder), <code>cat file</code> (print a file’s contents), <code>Tab</code> to
-        autocomplete paths, <code>↑</code> to repeat history, and <code>Ctrl+C</code> to stop a
-        running program. Learn the Tab key especially — professionals never type full paths.
+        A few extra commands cover 95% of daily work. <code>mkdir name</code> makes a folder;{' '}
+        <code>cat file</code> prints a file’s contents. <code>Tab</code> autocompletes paths,{' '}
+        <code>↑</code> repeats history, and <code>Ctrl+C</code> stops a running program. Learn
+        the Tab key especially — professionals never type full paths.
       </p>
       <p>
-        Exit codes compose: in CI configs you’ll see <code>npm test && npm run deploy</code> —
-        the <code>&&</code> is 2.4’s guard working on programs: deploy runs only if tests exited
-        0. The same short-circuit logic, one level up.
+        Exit codes compose. In CI configs you’ll see <code>npm test && npm run deploy</code>.
+        That <code>&&</code> is 2.4’s guard working on programs: deploy runs only if tests
+        exited 0. The same short-circuit logic, one level up.
       </p>
       <p>
-        Job note: when a Playwright test fails in CI, what you get is exactly today’s artifact — a
-        terminal log with stack traces, and a red pipeline driven by the exit code. Reading traces
-        calmly, innermost frame first, is the debugging skill interviewers quietly test with “walk
-        me through this failure.”
+        <strong>💼 On the job —</strong> when a Playwright test fails in CI, you get today’s
+        artifact. A terminal log with stack traces; a red pipeline driven by the exit code.
+        Reading traces calmly, innermost frame first, is a real debugging skill. Interviewers
+        test it with “walk me through this failure.”
       </p>
     </>
   ),

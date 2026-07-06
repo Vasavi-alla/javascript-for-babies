@@ -296,28 +296,29 @@ export const lesson102: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The boundary between “unit” and “integration” is genuinely fuzzy and teams argue about it
-        for sport — is a function plus its real helper two units or one integration? Don’t get
-        stuck: the load-bearing distinction is <strong>touches the outside world or not</strong>{' '}
+        The boundary between “unit” and “integration” is genuinely fuzzy — teams argue about it
+        endlessly. Is a function plus its real helper two units or one integration? Don’t get
+        stuck. The distinction that matters: <strong>touches the outside world or not</strong>{' '}
         (network, disk, browser, clock). Inside-only = fast lane; outside-touching = slow lane.
         10.6’s test doubles exist precisely to move tests INTO the fast lane.
       </p>
       <p>
-        Real numbers behind the estimates: a browser E2E test pays for launching a browser
-        context, loading a page, network round-trips (6.7), rendering (7.8), and auto-waiting
-        pauses (11.6 will formalize them). None of that is waste — it’s exactly WHY it proves so
-        much — but it can’t be made free, only paralleled (11.15).
+        The numbers behind the estimates. A browser E2E test pays for launching a browser
+        context and loading a page. Add network round-trips (6.7), rendering (7.8), and
+        auto-waiting pauses (11.6 formalizes them). None of that is waste — it’s WHY the test
+        proves so much. But it can’t be made free, only run in parallel (11.15).
       </p>
       <p>
         The pyramid has respectable critics — you’ll meet the “testing trophy” (which fattens the
         integration band, arguing modern tools made it cheap). The disagreement is about the
-        middle band’s size; NOBODY credible argues for the cone. Both camps agree on this
+        middle band’s size; NOBODY credible argues for the cone. Both sides agree on this
         lesson’s core: many fast tests below, few browser tests above.
       </p>
       <p>
-        Job note: “where would you test this?” is a beloved interview question. The winning shape
-        of an answer is the one from the last step — name the layer, justify by cost and by what
-        failure at that layer would tell you. You just practiced it three times.
+        <strong>💼 On the job —</strong> “where would you test this?” is a beloved interview
+        question. The winning answer has the shape from the last step. Name the layer, justify
+        by cost and by what a failure at that layer would tell you. You just practiced it three
+        times.
       </p>
     </>
   ),

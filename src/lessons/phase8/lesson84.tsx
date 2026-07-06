@@ -347,22 +347,23 @@ export const lesson84: LessonDef = {
         everywhere: null/undefined on the left → stop, answer undefined.
       </p>
       <p>
-        The stop is <strong>total</strong>: in <code>a?.b.c.d()</code>, if <code>a</code> is
-        missing, then <code>.b</code>, <code>.c</code> and the call all never happen — including
+        The stop is <strong>total</strong>. In <code>a?.b.c.d()</code>, if <code>a</code> is
+        missing, then <code>.b</code>, <code>.c</code> and the call never happen — including
         any side effects they would have had. That’s why it’s called short-circuiting, the same
         word from 2.4.
       </p>
       <p>
-        A designed-in speed bump: you may not mix <code>||</code> and <code>??</code> bare —{' '}
+        A designed-in safety rule: you may not mix <code>||</code> and <code>??</code> bare —{' '}
         <code>a || b ?? c</code> is a SyntaxError. The language forces parentheses so nobody has
-        to memorize which binds tighter. When in doubt, parenthesize — 1.10’s advice, now enforced
-        by the grammar.
+        to memorize which operator wins. When in doubt, parenthesize — 1.10’s advice, now
+        enforced by the grammar.
       </p>
       <p>
-        Job note: <code>document.querySelector</code> answers <code>null</code> when nothing
-        matches (7.2), so <code>el?.textContent</code> is daily DOM grammar. And in API testing,
-        response fields are optional by nature — <code>body.user?.address?.city ?? "unknown"</code>{' '}
-        is the shape of half the assertions you’ll write on the job.
+        <strong>💼 On the job —</strong> <code>document.querySelector</code> answers{' '}
+        <code>null</code> when nothing matches (7.2), so <code>el?.textContent</code> is daily
+        DOM grammar. And in API testing, response fields are optional by nature —{' '}
+        <code>body.user?.address?.city ?? "unknown"</code> is the shape of half the assertions
+        you’ll write.
       </p>
     </>
   ),

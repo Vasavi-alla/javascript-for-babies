@@ -17,6 +17,9 @@ const IDIOMS = [
   'the whole nine', 'walks past everyone', 'best in the trade', 'in the trenches',
   'day-one bug', 'arbitrage', 'worth their weight in gold', 'worth its weight in gold',
   'daily bread', 'senses should tingle', 'senses tingle',
+  // batch 4-6 offenders (2026-07-06)
+  'long tail', 'bolted on', 'hand-rolled', 'baked in', 'speed bump', 'autopsy',
+  'breadcrumb', 'god-fixture', 'pays its dividend', 'earning their keep',
 ]
 // Rule 3 seed list — untaught tech names; flagged unless a gloss "(" opens within the
 // same sentence after the term.

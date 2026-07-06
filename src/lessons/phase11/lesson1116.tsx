@@ -351,16 +351,16 @@ export const lesson1116: LessonDef = {
         verdict. Read one fluently (you now do) and the others are dialects, like 9.2’s shells.
       </p>
       <p>
-        The <code>CI=true</code> convention completes here: Actions sets it automatically, which
-        is what flips every <code>process.env.CI ? … : …</code> you decoded in 11.3 — retries on,
+        The <code>CI=true</code> convention completes here. Actions sets it automatically. That
+        flips every <code>process.env.CI ? … : …</code> you decoded in 11.3 — retries on,
         workers pinned, forbidOnly armed, webServer never reused. One ambient variable, and the
         whole config shifts into robot mode.
       </p>
       <p>
-        Job note: being the person who can READ the pipeline is quietly powerful. When “CI is
-        broken” panics a standup, the one who opens the YAML, finds the failing step, and says
-        “npm ci failed — lockfile drift, not a test problem” in ninety seconds is the one who
-        gets handed the release keys. That person is now you.
+        <strong>💼 On the job —</strong> being the person who can READ the pipeline is powerful.
+        “CI is broken” panics the team’s daily standup meeting. Someone opens the YAML, finds
+        the failing step, and says “npm ci failed — lockfile drift, not a test problem” in
+        ninety seconds. That person gets handed the release keys — and that person is now you.
       </p>
     </>
   ),

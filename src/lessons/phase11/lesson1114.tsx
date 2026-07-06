@@ -378,28 +378,28 @@ export const lesson1114: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why <code>trace: "on-first-retry"</code> is the beloved default: recording costs a little
-        speed, so the first (usually passing) attempt runs unrecorded — but when a test fails and
+        Why <code>trace: "on-first-retry"</code> is the beloved default. Recording costs a little
+        speed, so the first (usually passing) attempt runs unrecorded. When a test fails and
         retries (11.15), the RETRY records everything. You pay for evidence exactly when evidence
-        is needed. Flip to <code>"on"</code> temporarily when hunting something rare.
+        is needed. Switch to <code>"on"</code> temporarily when hunting something rare.
       </p>
       <p>
         The trace also captures <code>test.step</code> chapters (11.13) — a well-stepped long
-        test reads as a table of contents in the viewer. This is where that hygiene habit pays
-        its dividend: failures name chapters, chapters jump to snapshots.
+        test reads as a table of contents in the viewer. This is where that hygiene habit
+        rewards you: failures name chapters, chapters jump to snapshots.
       </p>
       <p>
-        The HTML report (11.2) embeds all of this: on CI, download the report artifact, open it,
+        The HTML report (11.2) embeds all of this. On CI: download the report artifact, open it,
         click the red test — screenshot, video, and trace are one click deep. 11.16 wires the
         upload; you already know how to read everything inside.
       </p>
       <p>
-        Job note: “walk me through debugging a CI-only failure” is THE senior-signal interview
-        question in this field. You now own the complete answer: artifacts survive the machine
-        (screenshot → right page?; trace → five questions: assertion, snapshot, locator, network,
-        console), reproduce locally with --ui if needed, and the usual verdicts — stale auth
-        bottle, backend 5xx, or a real race the trace timeline exposes. That answer, delivered
-        calmly, reads as years of experience.
+        <strong>💼 On the job —</strong> “walk me through debugging a CI-only failure” is THE
+        senior-signal interview question. You now own the complete answer. Artifacts survive the
+        machine: screenshot → right page?; trace → the five questions (assertion, snapshot,
+        locator, network, console). Reproduce locally with --ui if needed. Then the usual
+        verdicts: stale auth bottle, backend 5xx, or a real race the trace timeline exposes.
+        Delivered calmly, that answer reads as years of experience.
       </p>
     </>
   ),

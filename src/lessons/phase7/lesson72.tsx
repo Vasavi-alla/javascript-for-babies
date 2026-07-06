@@ -283,13 +283,13 @@ export const lesson72: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why does JavaScript speak CSS here? Because stylesheets needed a "which elements does this
-        rule hit" language first, and it was too good not to reuse — one grammar for styling,
+        Why does JavaScript speak CSS here? Stylesheets needed a "which elements does this rule
+        hit" language first. That language was too good not to reuse — one grammar for styling,
         querying, and (in your future) locating.
       </p>
       <p>
-        Engines match selectors <em>right to left</em>: for "ul li.done" they find li.done
-        candidates first, then verify a ul ancestor — exactly how you should read them too.
+        Engines match selectors <em>right to left</em>. For "ul li.done" they find every li.done
+        first, then check for a ul above it. Read your selectors the same way.
       </p>
       <p>
         More grammar when you need it: <code>ul &gt; li</code> (child only, no grandchildren),{' '}
@@ -297,14 +297,14 @@ export const lesson72: LessonDef = {
         <code>[href^="https"]</code> (attribute prefix).
       </p>
       <p>
-        Don't memorize the long tail — recognize it, and keep MDN's selector page bookmarked like
-        every professional does.
+        Don't memorize the full grammar — recognize it. Keep MDN's selector page bookmarked,
+        like every professional does.
       </p>
       <p>
-        And the career footnote: DevTools Console understands <code>$('sel')</code> and{' '}
-        <code>$$('sel')</code> as shorthand for querySelector/All — the fastest way to TEST a
-        selector against a live page before it goes in a script. You'll do this daily; start
-        today, F12 on any site.
+        <strong>💼 On the job —</strong> DevTools Console understands <code>$('sel')</code> and{' '}
+        <code>$$('sel')</code> as shorthand for querySelector/All. It's the fastest way to TEST
+        a selector on a live page before it goes in a script. You'll do this daily; start today
+        — F12 on any site.
       </p>
     </>
   ),

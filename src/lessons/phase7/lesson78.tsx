@@ -262,24 +262,24 @@ export const lesson78: LessonDef = {
   underTheHood: (
     <>
       <p>
-        "Gently" because the real pipeline has more nuance the job rarely needs day to day: layout
-        can happen more than once per frame if JS reads a geometry property (like{' '}
-        <code>offsetHeight</code>) right after writing one (forcing a "layout thrash").
+        "Gently" because the real pipeline holds more detail than the job needs daily. Example:
+        if JS reads a geometry property (like <code>offsetHeight</code>) right after writing
+        one, layout runs again at once — "layout thrash" (layout forced over and over).
       </p>
       <p>
-        And modern engines composite separate layers so some animations (transform, opacity) skip
-        layout and paint almost entirely — which is exactly why those two properties are the fast
-        ones to animate.
+        Modern engines also paint some parts as separate layers and combine them
+        ("compositing"). Animations of transform and opacity skip layout and paint almost
+        entirely — exactly why those two are the fast properties to animate.
       </p>
       <p>
-        Precision on the CSSOM: it isn't optional or skippable — a page with zero CSS still
-        builds one (with browser-default styles), because the render tree always needs computed
-        styles paired with content, never content alone.
+        The CSSOM is never optional. A page with zero CSS still builds one, using the browser's
+        default styles. The render tree always needs computed styles paired with content —
+        never content alone.
       </p>
       <p>
-        Job note: this whole lesson is the "why" behind auto-waiting, the single feature that
-        makes Playwright tests dramatically less flaky than hand-rolled ones. Phase 11 teaches the
-        API; today you own the reason it has to exist at all.
+        <strong>💼 On the job —</strong> this lesson is the "why" behind auto-waiting, the
+        single feature that makes Playwright tests far less flaky than hand-written ones. Phase
+        11 teaches the API; today you own the reason it must exist.
       </p>
     </>
   ),

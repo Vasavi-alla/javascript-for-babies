@@ -369,3 +369,23 @@ round: NO commits until the user says so; verify after all four phases are done.
 - **Task 12:** Rewrite Phase 6 (9 lessons: lesson61–lesson69) → lint `phase6` clean;
   then full verify: lint phases 3–6 clean + `npm run build` green + fresher read +
   progress note; STOP uncommitted, report to user.
+
+## Batch 4 + 5 + 6 tasks (unlocked 2026-07-06 — user: phases 7–11 UTH still confusing, English too complex)
+
+Same Rewrite Procedure and Global Constraints as Tasks 3–7. Per the standing user
+instruction (unchanged from batches 2+3): NO commits until the user says so; leave the
+working tree dirty and report. Known offender map from the 2026-07-06 full-course lint:
+46 of these 48 lessons have findings — idioms "arbitrage" (10.1), "load-bearing" (10.2),
+"pays its rent" (11.6); unglossed "React" (7.9, 11.6); long sentences throughout (worst:
+11.15's 53w, 10.7's 51w, 7.9's 47/48w pair, 11.10/11.11/11.5/11.6/11.12/11.14's 43–47w).
+The two lint-clean lessons (11.4, 11.17) still get the full procedure read:
+lint catches mechanics, not register.
+
+- **Task 13:** Rewrite Phase 7 (9 lessons: lesson71–lesson79) → lint `phase7` clean.
+- **Task 14:** Rewrite Phase 8 (6 lessons: lesson81–lesson86) → lint `phase8` clean.
+- **Task 15:** Rewrite Phase 9 (8 lessons: lesson91–lesson98) → lint `phase9` clean.
+- **Task 16:** Rewrite Phase 10 (7 lessons: lesson101–lesson107) → lint `phase10` clean.
+- **Task 17:** Rewrite Phase 11 (18 lessons: lesson111–lesson1118; the many 💼 job notes
+  live here) → lint `phase11` clean; then FINAL verify for the whole rework: full-course
+  lint (`node scripts/lint-uth.mjs` → clean, all 115 lessons) + `npm run build` green +
+  fresher read + progress note; STOP uncommitted, report to user.

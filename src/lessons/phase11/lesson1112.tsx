@@ -303,13 +303,13 @@ export const lesson1112: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Projects can form a DEPENDENCY graph: a <code>setup</code> project (11.11’s login
-        bottling) with <code>dependencies: ["setup"]</code> on the browser projects — the runner
-        topologically orders them (8.1’s graph, once more): bottle once, every lane drinks.
+        Projects can form a DEPENDENCY graph. Give the browser projects{' '}
+        <code>dependencies: ["setup"]</code>, and the <code>setup</code> project (11.11’s login
+        bottling) runs first — 8.1’s graph, once more. Bottle once, every lane drinks.
       </p>
       <p>
-        Projects aren’t only for browsers: teams define an <code>api</code> project (request-only
-        tests, no browser — 11.10), a <code>smoke</code> project with a grep filter baked in
+        Projects aren’t only for browsers. Teams define an <code>api</code> project (request-only
+        tests, no browser — 11.10), a <code>smoke</code> project with a grep filter built in
         (11.13), or per-environment projects with different baseURLs. “Named config variant” is
         the general tool; cross-browser is just its most famous use.
       </p>
@@ -320,10 +320,11 @@ export const lesson1112: LessonDef = {
         someday; demystification is a hobby now.
       </p>
       <p>
-        Job note: when asked “how do you handle cross-browser testing?”, the mature answer names
-        the budget, not just the feature: all engines from one suite via projects, chromium per
-        change, full matrix nightly — because engine-specific bugs are real but rare, and
-        quadrupling every run buys little. Feature + judgment is what seniority sounds like.
+        <strong>💼 On the job —</strong> when asked “how do you handle cross-browser testing?”,
+        the mature answer names the budget, not the feature. All engines from one suite via
+        projects; chromium per change; full matrix nightly. Engine-specific bugs are real but
+        rare, and quadrupling every run buys little. Feature + judgment is what seniority sounds
+        like.
       </p>
     </>
   ),

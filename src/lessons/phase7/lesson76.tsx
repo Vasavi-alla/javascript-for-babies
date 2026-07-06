@@ -257,26 +257,25 @@ export const lesson76: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The browser has its OWN built-in validation too — attributes like <code>required</code>,{' '}
-        <code>type="email"</code>, <code>minlength</code> block a submit before your JS even
-        runs, and <code>input.checkValidity()</code> asks it directly.
+        The browser has its OWN built-in validation too. Attributes like <code>required</code>,{' '}
+        <code>type="email"</code> and <code>minlength</code> block a submit before your JS even
+        runs. <code>input.checkValidity()</code> asks its verdict directly.
       </p>
       <p>
         Real apps almost always <em>also</em> validate in JS, for custom error messages and
         cross-field rules the browser can't express (like matching passwords).
       </p>
       <p>
-        Precision worth remembering: <code>value</code> is ALWAYS a string, even for{' '}
+        Worth remembering: <code>value</code> is ALWAYS a string, even for{' '}
         <code>{'<input type="number">'}</code>. Need to compute with it? Read{' '}
-        <code>input.valueAsNumber</code>, or convert yourself with <code>Number(input.value)</code>{' '}
-        — a forgotten conversion is a classic silent bug (string concatenation instead of
-        addition).
+        <code>input.valueAsNumber</code>, or convert with <code>Number(input.value)</code>. A
+        forgotten conversion is a classic silent bug — string concatenation instead of addition.
       </p>
       <p>
-        Job note: every one of Playwright's form actions — <code>fill</code>, <code>check</code>,{' '}
-        <code>uncheck</code>, <code>selectOption</code> — is just setting the property and
-        dispatching the event you read today. There is nothing more exotic underneath; that's why
-        this lesson transfers directly.
+        <strong>💼 On the job —</strong> every Playwright form action (<code>fill</code>,{' '}
+        <code>check</code>, <code>uncheck</code>, <code>selectOption</code>) does two things.
+        It sets the property and fires the event you read today. Nothing more exotic
+        sits underneath. That's why this lesson transfers directly.
       </p>
     </>
   ),

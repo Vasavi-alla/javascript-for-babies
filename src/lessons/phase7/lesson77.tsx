@@ -274,8 +274,8 @@ export const lesson77: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Storage limits and precision: localStorage/sessionStorage are typically capped around{' '}
-        5–10MB per origin (fine for settings and drafts, not for real datasets).
+        Storage has limits: localStorage/sessionStorage are capped around 5–10MB per origin
+        (roughly: per site) — fine for settings and drafts, not real datasets.
       </p>
       <p>
         And every read/write is SYNCHRONOUS — it blocks the thread briefly, unlike the async
@@ -287,15 +287,15 @@ export const lesson77: LessonDef = {
         <code>Secure</code> (sent only over HTTPS).
       </p>
       <p>
-        That's exactly why your test's own JS often <em>can't</em> read a login cookie directly —
-        Playwright manages cookies through its own API instead, sidestepping the restriction
-        properly.
+        That's why your test's JS often <em>can't</em> read a login cookie directly.
+        Playwright manages cookies through its own API instead, so the restriction never blocks
+        it.
       </p>
       <p>
-        Job note: <code>browserContext.storageState()</code> captures localStorage and cookies to
-        a file in one call; loading that file before a test skips a slow login flow entirely —
-        one of the biggest, cheapest speed wins in a real test suite, built entirely on today's
-        two topics.
+        <strong>💼 On the job —</strong> <code>browserContext.storageState()</code> captures
+        localStorage and cookies to a file in one call. Loading it before a test skips the slow
+        login flow. One of the biggest, cheapest speed wins in a real test suite — built on
+        today's two topics.
       </p>
     </>
   ),

@@ -328,10 +328,10 @@ export const lesson1110: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Handlers can be surgical: <code>route.fulfill({'{ … }'})</code> can also start from the
-        REAL response — fetch it (<code>route.fetch()</code>), tweak one field of the JSON, and
-        fulfill with the modified body: perfect for “what if the price were negative” questions
-        against otherwise-real data.
+        Handlers can be surgical. <code>route.fulfill({'{ … }'})</code> can also start from the
+        REAL response: fetch it with <code>route.fetch()</code>, change one field of the JSON,
+        and fulfill with the modified body. Perfect for “what if the price were negative”
+        questions against otherwise-real data.
       </p>
       <p>
         Routes are scoped: <code>page.route</code> affects one page;{' '}
@@ -343,14 +343,14 @@ export const lesson1110: LessonDef = {
         For whole recorded backends there’s HAR replay (<code>routeFromHAR</code>) — record a
         real session once, replay it as a complete mock. Heavier machinery, same stub idea. And
         the request fixture can share auth with your pages (11.11’s storage state) — API-create,
-        UI-verify flows come cheap.
+        UI-verify flows are cheap.
       </p>
       <p>
-        Job note: interviewers love “how would you test the error state of the products page?”
-        The professional answer is one sentence now: intercept the products call with
-        route.fulfill status 500 and assert the banner — deterministic, no server harmed. Bonus
-        sentence: and a few unmocked journeys stay in the suite so the real wiring is still
-        proven. That pairing is the whole judgment.
+        <strong>💼 On the job —</strong> interviewers love “how would you test the error state
+        of the products page?” The professional answer is one sentence: intercept the
+        products call with route.fulfill status 500 and assert the banner — deterministic, no
+        server harmed. Bonus sentence: a few unmocked journeys stay in the suite, so the real
+        wiring is still proven. That pairing is the whole judgment.
       </p>
     </>
   ),

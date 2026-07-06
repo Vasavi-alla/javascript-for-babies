@@ -365,16 +365,16 @@ export const lesson1115: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Worker mechanics worth knowing: tests from the SAME file run in one worker by default
-        (fullyParallel: true loosens this); a worker that crashes is replaced and its tests
-        re-queued; and <code>workers: 1</code> on CI (11.3’s line) exists because shared CI boxes
+        Worker mechanics worth knowing. Tests from the SAME file run in one worker by default
+        (fullyParallel: true loosens this). A worker that crashes is replaced, and its tests are
+        re-queued. <code>workers: 1</code> on CI (11.3’s line) exists because shared CI boxes
         are slower and noisier — determinism beats speed where evidence quality matters.
       </p>
       <p>
         Worker-scoped fixtures (11.7’s scope option) build once per worker — a database
         connection, a seeded catalog. With 4 workers you get 4 of them; design them to coexist
         (unique schemas/accounts per worker — <code>testInfo.workerIndex</code> is the standard
-        salt, echoing 11.8).
+        suffix, echoing 11.8).
       </p>
       <p>
         Sharding’s honest cost: the report fragments across machines. The fix is merging —{' '}
@@ -383,11 +383,12 @@ export const lesson1115: LessonDef = {
         report — whatever the machine count.
       </p>
       <p>
-        Job note: “how do you deal with flaky tests?” is the interview question in this domain —
-        asked everywhere, answered badly by most. Your answer now has four moves: prevention (the
-        clinic’s cures, by default), detection (the flaky mark + repeat-each), diagnosis (trace
-        the failing run, name the cause), and policy (quarantine + P1 fix, zero tolerance,
-        because trust is the suite’s only asset). Four moves, no hand-waving — that’s a hire.
+        <strong>💼 On the job —</strong> “how do you deal with flaky tests?” is the interview
+        question in this domain: asked everywhere, answered badly by most. Your answer now has
+        four moves. Prevention: the clinic’s cures, by default. Detection: the flaky mark +
+        repeat-each. Diagnosis: trace the failing run, name the cause. Policy: quarantine + P1
+        fix, zero tolerance — trust is the suite’s only asset. Four moves, no hand-waving.
+        That’s a hire.
       </p>
     </>
   ),

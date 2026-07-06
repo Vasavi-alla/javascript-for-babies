@@ -362,16 +362,16 @@ export const lesson85: LessonDef = {
         and let inference handle the middle.
       </p>
       <p>
-        There’s an escape hatch: the type <code>any</code> turns checking off for a value. It
-        exists for migrations and emergencies — every <code>any</code> is a hole in the net, and
-        teams treat them like TODOs.
+        There’s an escape door: the type <code>any</code> turns checking off for a value. It
+        exists for migrations and emergencies. Every <code>any</code> is a hole in the net, and
+        teams work to remove them.
       </p>
       <p>
-        One honest boundary: the checker verifies your <em>source code’s</em> promises — it cannot
-        check data arriving at runtime from the outside world (an API response is whatever the
-        server sent). That’s why tests still matter in typed projects: types catch the mistakes
-        you write, tests catch the behavior you ship. You need both — and you’re training for the
-        second.
+        One honest boundary: the checker verifies your <em>source code’s</em> promises. It
+        cannot check data arriving at runtime from the outside world — an API response is
+        whatever the server sent. That’s why tests still matter in typed projects: types catch
+        the mistakes you write, tests catch the behavior you ship. You need both — and you’re
+        training for the second.
       </p>
     </>
   ),

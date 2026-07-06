@@ -354,10 +354,10 @@ export const lesson95: LessonDef = {
     <>
       <p>
         The promise flavor looks like this:{' '}
-        <code>import {'{ readFile }'} from "node:fs/promises"</code> then{' '}
-        <code>const text = await readFile("report.txt", "utf8")</code> — 6.6’s machinery verbatim,
-        and the version servers use so the thread never stands in line. 9.6 shows what happens
-        backstage while it waits.
+        <code>import {'{ readFile }'} from "node:fs/promises"</code>, then{' '}
+        <code>const text = await readFile("report.txt", "utf8")</code>. That’s 6.6’s machinery
+        exactly — the version servers use so the thread never waits. 9.6 shows what
+        happens backstage during the wait.
       </p>
       <p>
         The classic cwd-proof pattern used <code>__dirname</code> — “this file’s folder” — glued
@@ -369,13 +369,13 @@ export const lesson95: LessonDef = {
       <p>
         More of the fs toolbox, for recognition: <code>mkdirSync(path, {'{ recursive: true }'})</code>{' '}
         builds folder chains, <code>existsSync</code> answers “is it there?”, <code>readdirSync</code>{' '}
-        lists a folder (ls, programmatically), <code>rmSync</code> deletes. Test setup and teardown
+        lists a folder (ls, programmatically), <code>rmSync</code> deletes. Test setup and cleanup
         are made of these.
       </p>
       <p>
-        Job note: “where did my screenshot go?” is a genuine daily question. The answer is always
-        some path.join of an output folder, resolved against cwd — which is why CI configs run
-        suites from the repo root, every time, on purpose.
+        <strong>💼 On the job —</strong> “where did my screenshot go?” is a daily question. The
+        answer is always some path.join of an output folder, resolved against cwd. That’s why CI
+        configs run suites from the repo root, every time, on purpose.
       </p>
     </>
   ),

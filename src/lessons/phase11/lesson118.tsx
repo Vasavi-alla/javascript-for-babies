@@ -368,14 +368,14 @@ export const lesson118: LessonDef = {
       </p>
       <p>
         You may meet “property-based testing” in reading — generating RANDOM inputs to hunt edge
-        cases. Powerful for pure functions; used sparingly in E2E where determinism is king. Know
-        the term; reach for tables first.
+        cases. Powerful for pure functions; used sparingly in E2E, where determinism matters
+        most. Know the term; use tables first.
       </p>
       <p>
-        Job note: the interview question here is “how would you test 50 coupon codes?” — the
-        answer that signals experience is the table (with named rows and a one-line edge policy),
-        NOT “I’d write 50 tests” and NOT “I’d loop inside one test.” You now know why both wrong
-        answers are wrong, which is worth more than the right one.
+        <strong>💼 On the job —</strong> the interview question is “how would you test 50 coupon
+        codes?” The answer that signals experience is the table, with named rows and a one-line
+        edge policy. NOT “I’d write 50 tests”, and NOT “I’d loop inside one test.” You now know
+        why both wrong answers are wrong — worth more than the right one.
       </p>
     </>
   ),

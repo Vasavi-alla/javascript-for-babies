@@ -334,32 +334,32 @@ export const lesson101: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The word for what bit cart.js is a <strong>contract</strong>: formatPrice’s old, unwritten
-        contract was “accepts anything <code>+</code> can glue” (1.9 — strings included); the new
-        code silently narrowed it to “numbers only.” Most regressions are exactly this: an
-        unwritten contract, narrowed without anyone noticing. Tests make contracts{' '}
-        <em>written</em> — and 8.5’s TypeScript makes some of them checkable before running
-        (<code>amount: number</code> would have flagged the string caller at the desk stage).
+        The word for what broke cart.js is a <strong>contract</strong>. formatPrice’s old,
+        unwritten contract was “accepts anything <code>+</code> can glue” (1.9 — strings
+        included). The new code silently narrowed it to “numbers only.” Most regressions are
+        exactly this: an unwritten contract, narrowed without anyone noticing. Tests make
+        contracts <em>written</em>. And 8.5’s TypeScript makes some of them checkable before
+        running — <code>amount: number</code> would have flagged the string caller at the desk
+        stage.
       </p>
       <p>
-        The cost curve isn’t folklore — it’s one of the oldest measured results in software
-        engineering, and while the exact multipliers vary by study, the <em>shape</em> never
-        does: each stage a bug survives multiplies its price, with production an order of
-        magnitude worse than anything before it. That shape is why companies pay people
-        specifically to catch bugs early — your future job is literally an arbitrage on this
-        curve.
+        The cost curve isn’t folklore; it’s one of the oldest measured results in software
+        engineering. The exact multipliers vary by study, but the <em>shape</em> never does.
+        Each stage a bug survives multiplies its price. Production is an order of magnitude (ten
+        times or more) worse than anything before it. That shape is why companies pay people
+        specifically to catch bugs early — your future job exists because of this curve.
       </p>
       <p>
         Precision on “regression”: teams also use it as an adjective — <em>regression testing</em>{' '}
         (re-running existing checks to catch regressions) and a <em>regression suite</em> (the
-        collection of those checks). Same idea, three grammatical costumes; you’ll hear all three
+        collection of those checks). Same idea, three grammatical forms; you’ll hear all three
         in your first week.
       </p>
       <p>
-        Job note: when interviewers ask “why do we test?”, weak answers say “to find bugs.” You
-        now have the strong one: to make change safe — catching regressions in seconds instead of
-        production, at desk prices instead of 2am prices — plus a specification that can’t rot.
-        That answer signals a professional.
+        <strong>💼 On the job —</strong> when interviewers ask “why do we test?”, weak answers
+        say “to find bugs.” You now have the strong one: to make change safe. Catching
+        regressions in seconds, not in production; desk prices, not 2am prices — plus a
+        specification that defends itself. That answer signals a professional.
       </p>
     </>
   ),

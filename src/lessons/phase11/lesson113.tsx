@@ -309,9 +309,9 @@ export const lesson113: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Where env values come from in practice: teams load a local <code>.env</code> file at the
-        top of the config (<code>import "dotenv/config"</code> — 9.4’s layered sources), while CI
-        injects the same names from its vault (11.16). The config reads{' '}
+        Where env values come from. Locally, teams load a <code>.env</code> file at the
+        top of the config (<code>import "dotenv/config"</code> — 9.4’s layered sources). On CI,
+        the pipeline injects the same names from its vault (11.16). The config reads{' '}
         <code>process.env.*</code> either way — one reading site, two suppliers.
       </p>
       <p>
@@ -327,10 +327,11 @@ export const lesson113: LessonDef = {
         uses the projects flavor of that idea for login.
       </p>
       <p>
-        Job note: when a suite behaves differently on CI than locally, diff the EFFECTIVE config
-        first — nearly always it’s a <code>process.env.CI ? … : …</code> line doing exactly what
-        it says (retries masking a flake, workers changing order). You now read those lines at a
-        glance; that instinct alone will save you afternoons.
+        <strong>💼 On the job —</strong> when a suite behaves differently on CI than locally,
+        compare the EFFECTIVE config first. Nearly always it’s a{' '}
+        <code>process.env.CI ? … : …</code> line doing exactly what it says — retries masking a
+        flake, workers changing order. You can now read those lines; that skill will save you
+        afternoons.
       </p>
     </>
   ),

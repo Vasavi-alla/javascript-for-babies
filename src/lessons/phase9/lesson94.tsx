@@ -333,21 +333,21 @@ export const lesson94: LessonDef = {
         <code>process.env.CI === "true"</code>).
       </p>
       <p>
-        Where do env vars come from? Layered sources: your shell session, the launch line itself
-        (<code>BASE_URL=… node app.js</code>), CI pipeline settings, and — very commonly — a{' '}
-        <code>.env</code> file loaded by a small library, with <code>.env</code> listed in{' '}
+        Where do env vars come from? Several layers. Your shell session. The launch line itself
+        (<code>BASE_URL=… node app.js</code>). CI pipeline settings. And — very commonly — a{' '}
+        <code>.env</code> file loaded by a small library. It goes in{' '}
         <code>.gitignore</code> (8.2’s rule again: local, regenerable, never committed).
       </p>
       <p>
         Honesty note on <code>process.exit()</code>: it’s an ejector seat — it ends the process{' '}
         <em>immediately</em>, without waiting for pending async work (6.x’s parked jobs are simply
-        abandoned). Guard clauses at startup: perfect. Sprinkled mid-flight: a classic source of
+        abandoned). Guard clauses at startup: perfect. Called mid-run: a classic source of
         half-written files.
       </p>
       <p>
-        Job note: the convention <code>CI=true</code> is set by virtually every CI provider, and
-        real Playwright configs read it to switch behavior — more retries and no headed browser on
-        CI, for example. One env var, two worlds correctly served.
+        <strong>💼 On the job —</strong> virtually every CI provider sets <code>CI=true</code> by
+        convention. Real Playwright configs read it to switch behavior — more retries and no
+        visible browser window on CI, for example. One env var, two worlds correctly served.
       </p>
     </>
   ),

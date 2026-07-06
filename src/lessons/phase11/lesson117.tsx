@@ -342,7 +342,7 @@ export const lesson117: LessonDef = {
         in reverse order — construction and destruction as mirror images, guaranteed.
       </p>
       <p>
-        Fixtures have <strong>scopes</strong>: the default is per-test, but{' '}
+        Fixtures have <strong>scopes</strong>. The default is per-test.{' '}
         <code>{'{ scope: "worker" }'}</code> builds once per worker process (11.15) — right for
         expensive resources safe to share across tests in one worker, like a database connection.
         Per-test freshness stays the default because isolation is the prize.
@@ -354,10 +354,10 @@ export const lesson117: LessonDef = {
         login form. Same injection shape, hundred× cheaper.
       </p>
       <p>
-        Job note: reading an unfamiliar suite, open its <code>fixtures.ts</code> first — it’s the
-        cast of characters. A suite’s maturity is visible there: good ones read like a menu of
-        prepared worlds (shopper, admin, emptyCart, seededCatalog); bad ones have one god-fixture
-        doing everything for everyone.
+        <strong>💼 On the job —</strong> reading an unfamiliar suite, open its{' '}
+        <code>fixtures.ts</code> first: it’s the cast of characters. Maturity is visible there.
+        Good ones read like a menu of prepared worlds (shopper, admin, emptyCart,
+        seededCatalog); bad ones have one giant fixture doing everything for everyone.
       </p>
     </>
   ),

@@ -248,28 +248,29 @@ export const lesson73: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Precision on the pair everyone confuses: <code>textContent</code> gets/sets the raw text
-        (fast, safe, no parsing); <code>innerHTML</code> gets/sets <em>markup</em> — reading it
-        serializes the subtree to a string, writing it runs the parser and REPLACES all children.
+        The pair everyone confuses: <code>textContent</code> gets/sets raw text — fast, safe, no
+        parsing. <code>innerHTML</code> gets/sets <em>markup</em>. Reading it turns everything
+        inside the element into one string. Writing it runs the HTML parser and REPLACES all
+        children.
       </p>
       <p>
         The security rule is one sentence: <strong>if a user typed it, it goes in textContent.</strong>{' '}
-        XSS — script smuggled through markup — is one of the top web vulnerabilities, and test
-        suites (yours, someday) include cases that try exactly that smuggle.
+        XSS (script smuggled through markup) is one of the top web attacks. Test suites (yours,
+        someday) include cases that try exactly that attack.
       </p>
       <p>
-        Every mutation also nudges the rendering pipeline — the tree changed, so layout and paint
-        re-run (lesson 7.8 walks that machinery).
+        Every mutation also wakes the rendering pipeline: the tree changed, so layout and paint
+        run again (lesson 7.8 shows that machinery).
       </p>
       <p>
-        Batches of small edits are why real apps repaint smoothly and also why "the element exists
-        but isn't PAINTED yet" moments happen — the root of flaky-test folklore, and of
-        Playwright's auto-waiting cure (11.5).
+        The browser groups small edits into one repaint — so real apps repaint smoothly. It's
+        also why an element can exist but not be PAINTED yet. That gap causes flaky tests;
+        Playwright's auto-waiting (11.5) is the cure.
       </p>
       <p>
-        And a live reference reminder (7.1 + 4.6): hold <code>const el = querySelector(…)</code>{' '}
-        once and mutate it all day — every change lands on the real tree through the same arrow.
-        Playwright's locators behave like these references with retry logic bolted on.
+        A live-reference reminder (7.1 + 4.6): hold <code>const el = querySelector(…)</code>{' '}
+        once and mutate through it all day. Every change lands on the real tree through the same
+        arrow. Playwright's locators behave like these references, with retry logic added.
       </p>
     </>
   ),

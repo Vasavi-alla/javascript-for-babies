@@ -368,22 +368,23 @@ export const lesson1118: LessonDef = {
         Small enough to polish, large enough to prove structure.
       </p>
       <p>
-        Public demo targets that welcome practice suites exist precisely for this (search
+        Public demo targets that welcome practice suites exist for this (search
         “practice automation site” — several are maintained for testers). Your own 7.9 todo app
-        is the better half of the capstone though: YOU know its spec, so your expected values are
+        is the better half of the capstone: YOU know its spec, so your expected values are
         honest.
       </p>
       <p>
-        The README is worth an hour: what the suite covers, how to run it (three commands), the
-        report link, one paragraph on structure decisions (why POM, why the mock/unmock split,
-        how auth works), and the flake story. Interviewers read READMEs before code — it’s the
-        teach-back principle (every lesson’s!) applied to your portfolio.
+        The README is worth an hour. State what it covers, how to run it (three commands), and
+        the report link. One paragraph on structure decisions — why POM, why the mock/unmock
+        split, how auth works — and the flake story. Interviewers read READMEs before code.
+        It’s the teach-back principle (every lesson’s!) applied to your portfolio.
       </p>
       <p>
         And the map from here: this course made you job-ready for E2E automation. The adjacent
-        territories when you want them — deeper API testing, performance testing, containerized
-        grids, other runners — are all built from concepts you now hold (HTTP, processes, CI,
-        doubles). Nothing in this field will read as magic again. That was the whole point.
+        territories, when you want them: deeper API testing, performance testing, running
+        browsers in containers, other runners. All are built from concepts you now hold (HTTP,
+        processes, CI, doubles). Nothing in this field will read as magic again. That was the
+        whole point.
       </p>
     </>
   ),

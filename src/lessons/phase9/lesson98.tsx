@@ -303,9 +303,9 @@ export const lesson98: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Troubleshooting the two classic snags: <strong>“node: command not found”</strong> right
-        after installing usually means the terminal was already open — close and reopen it so it
-        re-reads its PATH (the list of folders the shell searches for commands).{' '}
+        The two classic snags. <strong>“node: command not found”</strong> right after installing
+        usually means the terminal was already open. Close and reopen it so it re-reads its PATH
+        (the list of folders the shell searches for commands).{' '}
         <strong>“Cannot use import statement outside a module”</strong> means box three’s{' '}
         <code>"type": "module"</code> line is missing — 9.3 told you this error’s whole story in
         advance.
@@ -317,15 +317,15 @@ export const lesson98: LessonDef = {
         machine, different dialect (9.2’s shells).
       </p>
       <p>
-        What you did NOT need today is worth noticing: no bundler, no framework, no config beyond
-        one JSON line. A runtime, a folder, a file, a terminal — that’s the irreducible core of
-        every Node project, including the grandest test suite you’ll ever maintain.
+        What you did NOT need today is worth noticing: no build tool, no framework, no config
+        beyond one JSON line. A runtime, a folder, a file, a terminal — that’s the bare core of
+        every Node project, including the grandest test suite you’ll maintain.
       </p>
       <p>
-        Job note: “set up a project from scratch” is a real interview task for automation roles —
-        and you just rehearsed it end to end. In Phase 11, <code>npm init playwright@latest</code>{' '}
-        will do a fancier version of boxes three-and-four for you; now you’ll know exactly what it
-        scaffolded and why.
+        <strong>💼 On the job —</strong> “set up a project from scratch” (from an empty folder)
+        is a real interview task for automation roles. You just rehearsed it end to end. In
+        Phase 11, <code>npm init playwright@latest</code> will do a fancier version of boxes
+        three-and-four; you’ll know what it set up and why.
       </p>
     </>
   ),

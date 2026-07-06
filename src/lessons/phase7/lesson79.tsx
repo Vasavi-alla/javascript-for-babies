@@ -319,22 +319,23 @@ export const lesson79: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why a todo app specifically: it's small enough to hold entirely in your head, yet it
+        Why a todo app specifically? It's small enough to hold entirely in your head. Yet it
         genuinely exercises reading (7.2), writing (7.3), listening (7.4/7.5), forms (7.6),
-        persistence (7.7), and timing (7.8) — a "real" production app adds more of the same
-        shapes, not new DOM concepts.
+        persistence (7.7), and timing (7.8). A "real" production app adds more of the same
+        shapes — not new DOM concepts.
       </p>
       <p>
-        This is also, literally, real QA work in miniature: most of an automation tester's career
-        is spent writing selectors against apps someone else built, using exactly the
-        querySelector skills from 7.2, and reasoning about what a click actually triggers using
-        exactly the delegation and event patterns from 7.4/7.5.
+        This is also real QA work in miniature. Much of an automation tester's career is writing
+        selectors against apps someone else built — the querySelector skills from 7.2. The other
+        big part is reasoning about what a click actually triggers — the delegation and event
+        patterns from 7.4/7.5.
       </p>
       <p>
-        Where the curriculum goes next: Phase 8 teaches the modern tooling (modules, npm, a taste
-        of TypeScript) that real todo apps — React, Vue, and friends — are actually built with.
-        Phase 9 is Node.js — JS with the browser walls removed. Phase 10 teaches the testing
-        MINDSET. Phase 11 is Playwright itself, automating exactly this kind of app for real.
+        Where the curriculum goes next: Phase 8 teaches the modern tooling — modules, npm, a
+        taste of TypeScript. Real todo apps add libraries like React and Vue (ready-made
+        page-building kits) on top. Phase 9 is Node.js — JS with the browser walls removed.
+        Phase 10 teaches the testing MINDSET. Phase 11 is Playwright itself, automating exactly
+        this kind of app.
       </p>
     </>
   ),

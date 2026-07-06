@@ -330,31 +330,31 @@ export const lesson107: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The cascade teaches a real triage rule used daily: when many tests fail at once, sort by{' '}
-        <strong>depth of dependency</strong> and read the deepest failure first — it’s usually
-        the one true cause, and the rest are echoes. Some runners even help: Vitest prints
+        The cascade teaches a real triage rule used daily. When many tests fail at once, sort by{' '}
+        <strong>depth of dependency</strong> and read the deepest failure first. It’s usually
+        the one true cause; the rest are echoes. Some runners even help: Vitest prints
         failures in file order, but a well-structured suite (one describe per machine, bottom-up)
         makes the deepest machine’s block appear first.
       </p>
       <p>
         Should you ALSO test totalWithTip with a stubbed tipAmount, to isolate it perfectly?
-        You could — but 10.6’s rule says no: tipAmount is yours, fast, and deterministic;
-        stubbing it would only prove the wiring you can already see. Save doubles for boundaries.
+        You could — but 10.6’s rule says no. tipAmount is yours, fast, and deterministic;
+        stubbing it would only prove wiring you can already see. Save doubles for boundaries.
         This judgment call — where isolation stops being worth it — is one you’ll make weekly on
         the job.
       </p>
       <p>
-        Your four tests have a blind spot worth naming: floats. perPerson(100, 15, 3) is
+        Your four tests have one weakness worth naming: floats. perPerson(100, 15, 3) is
         38.333…, and toBe/=== on that invites 1.9’s dust. The professional habit: keep money in
-        integer paise/cents, or assert with toBeCloseTo (10.4). Real invoice code does the
-        former; real test suites do both.
+        integer paise/cents, or assert with toBeCloseTo (10.4). Real invoice code keeps integer
+        paise; real test suites do both.
       </p>
       <p>
-        Job note: this checkpoint is a complete interview story — “tell me about a time tests
-        caught a bug” is better answered with the sabotage ritual than with luck: <em>I write the
-        suite, I break the code deliberately to verify the net, and the cascade pattern tells me
-        where to look.</em> That sentence sounds like five years of experience. You earned it in
-        one lesson.
+        <strong>💼 On the job —</strong> this checkpoint is a full interview story. “Tell me
+        about a time tests caught a bug” is better answered with the sabotage ritual than with
+        luck. Your answer: <em>I write the suite, I break the code deliberately to verify the
+        net, and the cascade pattern tells me where to look.</em> That sentence sounds like five
+        years of experience. You earned it in one lesson.
       </p>
     </>
   ),

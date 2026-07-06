@@ -355,28 +355,28 @@ export const lesson116: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The polling loop’s internals: checks run on the browser side where possible, with gentle
-        intervals (effectively ~100ms-ish pacing), each iteration re-resolving the locator — so
-        even if the framework replaces the DOM node entirely (React re-renders constantly), the
-        assertion follows the description, not a dead reference. 11.4’s design decision pays its
-        rent here, permanently.
+        Inside the polling loop: checks run on the browser side where possible, at gentle
+        intervals (roughly every 100ms). Each round re-resolves the locator. So even if the
+        framework replaces the DOM node — React (a page-building library) re-renders constantly
+        — the assertion follows the description, not a dead reference. 11.4’s design decision
+        matters here, permanently.
       </p>
       <p>
-        <code>toHaveText</code> has precise semantics worth knowing: it normalizes whitespace,
-        matches the FULL text (use <code>toContainText</code> for substrings), and accepts arrays
-        for lists (<code>toHaveText(["Red", "Blue", "Green"])</code> asserts all three items in
-        order — a whole list shape in one retrying assertion).
+        <code>toHaveText</code> has precise rules. It normalizes whitespace. It matches the FULL
+        text — use <code>toContainText</code> for substrings. It accepts arrays for lists:{' '}
+        <code>toHaveText(["Red", "Blue", "Green"])</code> asserts all three items in
+        order — a whole list shape in one retrying assertion.
       </p>
       <p>
-        For truths that live outside the DOM — a value in your own code, an API’s answer —
+        Some truths live outside the DOM — a value in your own code, an API’s answer. For those
         there’s <code>await expect.poll(() =&gt; fn())</code> and <code>expect(async …).toPass()</code>:
-        the same retry engine pointed at arbitrary functions. Your exercise’s pollUntil is
+        the same retry engine pointed at any function. Your exercise’s pollUntil is
         literally this, hand-built.
       </p>
       <p>
-        Job note: you can now READ flakiness statistics: teams migrating from sleep-based suites
-        to web-first assertions routinely report both faster runs (no padded sleeps) AND
-        order-of-magnitude fewer flakes — the same change fixes both directions of sleep’s
+        <strong>💼 On the job —</strong> you can now READ flakiness statistics. Teams migrating
+        from sleep-based suites to web-first assertions routinely report faster runs (no padded
+        sleeps) AND ten-times-fewer flakes. The same change fixes both directions of sleep’s
         failure. When 11.15’s flakiness clinic lists “race conditions” as cause #1, the cure
         column will just say: this lesson.
       </p>

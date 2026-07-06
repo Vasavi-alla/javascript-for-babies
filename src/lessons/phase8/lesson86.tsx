@@ -307,10 +307,10 @@ export const lesson86: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Real package.json files carry more optional fields you’ll meet:{' '}
-        <code>"private": true</code> (never publish this to the registry — standard on test
-        suites), <code>engines</code> (which Node versions are supported), and{' '}
-        <code>packageManager</code> (pin npm itself). Same reading skill, more lines of evidence.
+        Real package.json files carry more optional fields.{' '}
+        <code>"private": true</code> means never publish this to the registry — standard on test
+        suites. <code>engines</code> lists which Node versions are supported.{' '}
+        <code>packageManager</code> pins npm itself. Same reading skill, more lines of evidence.
       </p>
       <p>
         The <code>test:headed</code> pattern generalizes: script names with a colon are just a
@@ -324,9 +324,9 @@ export const lesson86: LessonDef = {
         first is reading the truth.
       </p>
       <p>
-        Job note: in interviews, “walk me through this package.json” is a real screening question
-        for QA-automation roles — it tests exactly what you just did: semver literacy, dev-vs-prod
-        judgment, and knowing what each script implies about the workflow.
+        <strong>💼 On the job —</strong> in interviews, “walk me through this package.json” is a
+        real screening question for QA-automation roles. It tests what you just did: semver
+        literacy, dev-vs-prod judgment, and what each script implies about the workflow.
       </p>
     </>
   ),

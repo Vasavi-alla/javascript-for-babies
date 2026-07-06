@@ -249,11 +249,10 @@ export const lesson71: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The DOM is not part of JavaScript — it's a browser API handed to JS (the spec calls the
-        world of <code>document</code>, <code>fetch</code> and friends "Web APIs" — the same
-        environment side of the 6.2 machine). That's why Node.js (Phase 9) has no{' '}
-        <code>document</code>: no page, no tree. One language, different toolbelts per
-        environment.
+        The DOM is not part of JavaScript. It's a browser API handed to JS. The spec calls{' '}
+        <code>document</code>, <code>fetch</code> and friends "Web APIs" — the environment side
+        of the 6.2 machine. That's why Node.js (Phase 9) has no <code>document</code>: no page,
+        no tree. One language, different toolbelts per environment.
       </p>
       <p>
         Every node object comes packed with navigation (<code>parentElement</code>,{' '}
@@ -262,14 +261,14 @@ export const lesson71: LessonDef = {
       </p>
       <p>
         Under the hood they're prototype chains (5.5 in the wild): an <code>li</code> is an
-        HTMLLIElement → HTMLElement → Element → Node — shared methods living once, high on the
+        HTMLLIElement → HTMLElement → Element → Node. Shared methods live once, high on the
         chain.
       </p>
       <p>
-        And your exercise models the tree as plain <code>{'{ tag, children }'}</code> objects on
-        purpose: tree-walking logic is identical either way, and serialized node trees are exactly
-        what Playwright passes around when it snapshots a page. Learn the walk on paper; drive it
-        on the real tree from 7.3 on.
+        Your exercise models the tree as plain <code>{'{ tag, children }'}</code> objects on
+        purpose. Tree-walking logic is identical either way. And a node tree turned into plain
+        data is what Playwright passes around when it snapshots a page. Learn the walk on paper;
+        drive it on the real tree from 7.3 on.
       </p>
     </>
   ),

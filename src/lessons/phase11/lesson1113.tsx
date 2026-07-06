@@ -330,22 +330,22 @@ export const lesson1113: LessonDef = {
         one style and stay consistent (the hygiene is the point, not the syntax).
       </p>
       <p>
-        Selection composes into PROJECTS (11.12): a <code>smoke</code> project with{' '}
-        <code>grep: /@smoke/</code> baked in means CI can run “the smoke lane” by name — which is
-        exactly how 11.16’s pipeline will ask for it. Tags feed grep; grep feeds projects;
+        Selection composes into PROJECTS (11.12). A <code>smoke</code> project with{' '}
+        <code>grep: /@smoke/</code> built in means CI can run “the smoke lane” by name. That’s
+        how 11.16’s pipeline will ask for it. Tags feed grep; grep feeds projects;
         projects feed CI. One convention, all the way up.
       </p>
       <p>
-        skip has more moods: <code>test.skip(true, reason)</code> unconditionally,{' '}
-        <code>test.skip(({'{ browserName }'}) =&gt; …, reason)</code> conditionally per fixture
-        values, and <code>test.slow()</code> — not a skip at all: it triples the timeout for a
-        legitimately slow test, on the record.
+        skip has more moods. <code>test.skip(true, reason)</code> skips unconditionally.{' '}
+        <code>test.skip(({'{ browserName }'}) =&gt; …, reason)</code> skips conditionally, per
+        fixture values. <code>test.slow()</code> is not a skip at all: it triples the timeout
+        for a legitimately slow test, on the record.
       </p>
       <p>
-        Job note: suite hygiene is disproportionately VISIBLE seniority. Consistent tags, reasons
-        on every skip, zero merged .onlys, steps in long tests — none of it is clever, all of it
-        compounds. The engineer whose suite reads like a spec sheet gets trusted with the
-        release button. That’s the actual promotion path hiding in this lesson.
+        <strong>💼 On the job —</strong> suite hygiene is disproportionately VISIBLE seniority.
+        Consistent tags, reasons on every skip, zero merged .onlys, steps in long tests — none
+        of it is clever, all of it adds up. The engineer whose suite reads like a spec sheet
+        gets trusted with the release button. That’s the promotion path in this lesson.
       </p>
     </>
   ),

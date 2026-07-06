@@ -363,10 +363,9 @@ export const lesson82: LessonDef = {
         (<code>playwrite</code> is not <code>playwright</code>).
       </p>
       <p>
-        And the running joke you’ll meet on day one: node_modules as “the heaviest object in the
-        universe” — the meme exists because a modest project can easily download hundreds of
-        megabytes of dependency code. Now you know exactly which file to blame, and why it’s
-        regenerable.
+        Programmers joke that node_modules is “the heaviest object in the universe”. The joke
+        exists because a modest project can easily download hundreds of megabytes of dependency
+        code. Now you know exactly which folder to blame — and why it can be regenerated.
       </p>
     </>
   ),

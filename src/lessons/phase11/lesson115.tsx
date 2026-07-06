@@ -305,31 +305,32 @@ export const lesson115: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The checklist is per-action-appropriate: <code>click</code> additionally checks the
-        element isn’t covered by something else (it must actually{' '}
-        <strong>receive events</strong> at the click point — a cookie banner on top blocks it,
-        exactly as it blocks a human); <code>fill</code> checks the target is editable. The four
+        The checklist adapts per action. <code>click</code> also checks the
+        element isn’t covered by something else — it must actually{' '}
+        <strong>receive events</strong> at the click point. A cookie banner on top blocks it,
+        exactly as it blocks a human. <code>fill</code> checks the target is editable. The four
         you learned are the core; the variations all serve the same principle.
       </p>
       <p>
-        Escape hatches exist and are honestly labeled: <code>click({'{ force: true }'})</code>{' '}
+        Escape doors exist, honestly labeled: <code>click({'{ force: true }'})</code>{' '}
         skips the checks, and <code>dispatchEvent</code> fires synthetic events. Treat both as
-        confessions — “my test clicks something a user couldn’t” — occasionally right (a
-        deliberately hidden but functional control), usually a locator or app bug wearing a
-        workaround.
+        confessions: “my test clicks something a user couldn’t.” Occasionally that’s right (a
+        deliberately hidden but functional control). Usually it’s a locator or app bug hidden
+        behind a workaround.
       </p>
       <p>
         Timing precision: the checklist runs against the element the locator resolves{' '}
-        <em>at action time</em>, and re-resolves during retries — so even if the page re-renders
+        <em>at action time</em>, and re-resolves during retries. So even if the page re-renders
         and the node is replaced (frameworks do this constantly), the action follows the
-        DESCRIPTION, not a dead reference. 11.4’s locator-not-element design pays exactly here.
+        DESCRIPTION, not a dead reference. 11.4’s locator-not-element design matters exactly
+        here.
       </p>
       <p>
-        Job note: “element is not stable” failures usually mean CSS animations — real suites
-        often disable animations globally for tests (a config/use option) both for speed and
-        stability. And “not visible” with a correct locator often means you found a SECOND,
-        hidden copy of the element (mobile + desktop nav rendering twice) — strict mode’s cousin;
-        narrow the locator’s scope (11.4’s chaining).
+        <strong>💼 On the job —</strong> “element is not stable” failures usually mean CSS
+        animations. Real suites often disable animations globally for tests (a config/use
+        option), for speed and stability. And “not visible” with a correct locator often means a
+        SECOND, hidden copy of the element exists (mobile + desktop nav rendering twice). That’s
+        strict mode’s cousin; narrow the locator’s scope (11.4’s chaining).
       </p>
     </>
   ),

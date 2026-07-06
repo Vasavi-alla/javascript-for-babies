@@ -368,12 +368,12 @@ export const lesson114: LessonDef = {
       <p>
         The “name” in <code>getByRole("button", {'{ name }'})</code> is the{' '}
         <strong>accessible name</strong> — computed from visible text, or a label, or an{' '}
-        <code>aria-label</code> attribute. It matches case-insensitively and tolerates surrounding
+        <code>aria-label</code> attribute. It matches case-insensitively, tolerates surrounding
         whitespace, and accepts a regex (<code>name: /add to cart/i</code>) when text varies.
       </p>
       <p>
         Where do you LEARN an element’s role without memorizing tables? Two tools: the trace/UI
-        mode’s locator picker (11.14) literally writes the best locator for whatever you click —
+        mode’s locator picker (11.14) writes the best locator for whatever you click —
         and <code>npx playwright codegen URL</code> records your clicks as locator code. Use them
         as teachers, then edit with the ladder in mind.
       </p>
@@ -385,10 +385,10 @@ export const lesson114: LessonDef = {
         “Log” must not match “Logout”.
       </p>
       <p>
-        Job note: teams that adopted user-facing locators report the same before/after — selector
-        maintenance drops from a weekly tax to a rarity. When you inherit a CSS-heavy suite (you
-        will), migrate opportunistically: every locator you touch, promote one rung. Six months
-        later the suite is boring — the highest compliment a suite can earn.
+        <strong>💼 On the job —</strong> teams adopting user-facing locators report the same
+        change: selector maintenance drops from a weekly chore to a rarity. When you inherit a
+        CSS-heavy suite (you will), migrate gradually — every locator you touch, promote one
+        rung. Six months later the suite is boring — the highest compliment a suite can earn.
       </p>
     </>
   ),

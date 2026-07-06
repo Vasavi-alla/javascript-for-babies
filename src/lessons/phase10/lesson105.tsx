@@ -350,31 +350,32 @@ export const lesson105: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Why “Vitest”? It’s built on Vite — the same build tool running THIS app — which is where
+        Why “Vitest”? It’s built on Vite, the same build tool running THIS app. That’s where
         its speed comes from: tests re-run in milliseconds because Vite only re-processes what
-        changed. Its API is deliberately compatible with Jest (the older, most famous runner), so
-        Jest tutorials mostly apply verbatim: <code>it</code> and <code>test</code> are literally
-        aliases.
+        changed. Its API is deliberately compatible with Jest (the older, most famous runner).
+        So Jest tutorials mostly apply word for word: <code>it</code> and <code>test</code> are
+        literally aliases.
       </p>
       <p>
-        “Runs each test in isolation” is a real promise with machinery behind it: each test file
-        gets a fresh module environment, and hooks like <code>beforeEach</code> reset shared
+        “Runs each test in isolation” is a real promise with machinery behind it. Each test file
+        gets a fresh module environment. Hooks like <code>beforeEach</code> reset shared
         state between tests — so test 3 can’t be poisoned by test 2’s leftovers. (Phase 11’s
         fixtures are this idea, upgraded to whole browser contexts.)
       </p>
       <p>
-        The full report vocabulary you’ll meet: <strong>skipped</strong> (
-        <code>it.skip</code> — deliberately off), <strong>todo</strong> (a named intention with
-        no body yet), and <code>it.only</code> — run JUST this one while debugging. The
-        <code>.only</code> left in by accident is a classic disaster (the suite silently shrinks
-        to one test and everything “passes”); 11.13 shows the CI guard against it.
+        More report vocabulary you’ll meet: <strong>skipped</strong> (
+        <code>it.skip</code> — deliberately off) and <strong>todo</strong> (a named intention
+        with no body yet). <code>it.only</code> runs JUST this one while debugging. An
+        <code>.only</code> left in by accident is a classic disaster — the suite silently shrinks
+        to one test and everything “passes”. 11.13 shows the CI guard against it.
       </p>
       <p>
-        Job note: in interviews, “walk me through what happens when you run npm test” is a
-        systems question in disguise. You can now answer it end to end: npm resolves the script
-        (8.2) → Node launches the runner (9.1) → it globs for .test. files → runs each it,
-        catching assertion throws (5.8, as your exercise proves) → prints ✓/✗ + summary → exits
-        0 or 1 → CI reads the number (9.2). Thirteen lessons in one sentence.
+        <strong>💼 On the job —</strong> in interviews, “walk me through what happens when you
+        run npm test” is a systems question in disguise. You can now answer it end to end. npm
+        resolves the script (8.2) → Node launches the runner (9.1) → it finds .test. files.
+        Then: runs each it, catching assertion throws (5.8, as your exercise proves). Finally:
+        prints ✓/✗ + summary → exits 0 or 1 → CI reads the number (9.2). Thirteen lessons in
+        one answer.
       </p>
     </>
   ),

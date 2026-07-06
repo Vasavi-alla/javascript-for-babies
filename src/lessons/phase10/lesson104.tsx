@@ -361,30 +361,30 @@ export const lesson104: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Precisely what <code>toBe</code> uses: <code>Object.is</code> — which is <code>===</code>{' '}
+        Precisely what <code>toBe</code> uses: <code>Object.is</code> — <code>===</code>{' '}
         with two exotic exceptions (<code>NaN</code> matches <code>NaN</code>, and{' '}
         <code>+0</code>/<code>-0</code> differ). You can go years without meeting either; “toBe is
         strict ===” is the working truth.
       </p>
       <p>
-        <code>toEqual</code>’s full contract: it walks both structures recursively, comparing
+        <code>toEqual</code>’s full contract: it walks both trees (4.7), comparing
         primitives strictly at the leaves — and it treats <code>undefined</code> properties as
         ignorable (<code>{'{ a: 1, b: undefined }'}</code> equals <code>{'{ a: 1 }'}</code>).
         Its stricter sibling <code>toStrictEqual</code> counts those too. If a suite you join uses
         the strict one everywhere, that’s why.
       </p>
       <p>
-        Why your exercise ban on <code>JSON.stringify</code> comparison matters beyond principle:
-        stringify is order-sensitive (<code>{'{ a, b }'}</code> vs <code>{'{ b, a }'}</code>{' '}
-        serialize differently but ARE structurally equal), silently drops undefined and functions
-        (4.13’s translation losses), and explodes on circular references. Real toEqual walks the
-        tree precisely so it doesn’t inherit those lies.
+        Why your exercise ban on <code>JSON.stringify</code> comparison matters: it’s
+        order-sensitive — <code>{'{ a, b }'}</code> and <code>{'{ b, a }'}</code> serialize
+        differently but ARE structurally equal. It silently drops undefined and functions
+        (4.13’s translation losses). It explodes on circular references (self-containing
+        objects). Real toEqual walks the tree so it doesn’t inherit those lies.
       </p>
       <p>
-        Job note: failure messages are the product you ship to your future self. A precise matcher
-        turns 2am debugging into reading: <code>toHaveLength</code> tells you the actual length,{' '}
-        <code>toContain</code> shows the list. Choosing matchers IS writing documentation for the
-        night something breaks.
+        <strong>💼 On the job —</strong> failure messages are the product you ship to your future
+        self. A precise matcher turns 2am debugging into reading: <code>toHaveLength</code>{' '}
+        tells you the actual length, <code>toContain</code> shows the list. Choosing matchers IS
+        writing documentation for the night something breaks.
       </p>
     </>
   ),

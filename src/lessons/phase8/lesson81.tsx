@@ -348,7 +348,7 @@ export const lesson81: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Precision on what travels: a named import is not a copy — it’s a{' '}
+        What travels, precisely: a named import is not a copy — it’s a{' '}
         <strong>live binding</strong> to the exporting module’s variable. If math.js reassigns an
         exported <code>let</code> counter, every importer sees the new value. You read through the
         door; you don’t take a photocopy home.
@@ -357,17 +357,17 @@ export const lesson81: LessonDef = {
         Each module runs <strong>once</strong>, no matter how many files import it. The first
         import executes the file and caches the result; every later import receives that same
         cached module. That’s why a module is a safe place for shared setup — and why test
-        frameworks lean on this so heavily.
+        frameworks depend on this heavily.
       </p>
       <p>
-        “Static” buys real things: because the graph is known before execution, the engine can
-        report a misspelled import name <em>immediately</em>, and build tools can drop exports
-        nobody imports (you’ll hear this called tree-shaking).
+        “Static” has real rewards. The graph is known before execution, so the engine can report
+        a misspelled import name <em>immediately</em>. Build tools can also drop exports nobody
+        imports (you’ll hear this called tree-shaking).
       </p>
       <p>
-        Job note: every Playwright test file you will ever write starts with{' '}
-        <code>import {'{ test, expect }'} from "@playwright/test"</code> — a named import from an
-        installed package instead of a <code>./file</code> path. Installing packages is exactly
+        <strong>💼 On the job —</strong> every Playwright test file you’ll ever write starts with{' '}
+        <code>import {'{ test, expect }'} from "@playwright/test"</code>. That’s a named import
+        from an installed package, not a <code>./file</code> path. Installing packages is exactly
         the next lesson.
       </p>
     </>

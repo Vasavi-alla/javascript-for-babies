@@ -282,17 +282,17 @@ export const lesson74: LessonDef = {
   underTheHood: (
     <>
       <p>
-        The event object is per-type specialized (5.6's inheritance, again): a click hands you a
-        MouseEvent (with coordinates), a keydown a KeyboardEvent (with <code>.key</code>), a
-        submit a SubmitEvent — all extending Event.
+        Each event type hands you a specialized object (5.6's inheritance, again). A click gives
+        a MouseEvent (coordinates). A keydown gives a KeyboardEvent (<code>.key</code>). A
+        submit gives a SubmitEvent. All extend Event.
       </p>
       <p>
         <code>.type</code>, <code>.target</code>, and 7.5's <code>preventDefault</code> live on the
         base. One family tree, one lesson — yours already.
       </p>
       <p>
-        Housekeeping that separates juniors from seniors: <code>removeEventListener(name, fn)</code>{' '}
-        needs the SAME function reference — which is why handlers you plan to remove get names
+        One rule separates juniors from seniors: <code>removeEventListener(name, fn)</code>{' '}
+        needs the SAME function reference. That's why handlers you plan to remove get names
         instead of inline arrows.
       </p>
       <p>
@@ -300,9 +300,9 @@ export const lesson74: LessonDef = {
         its closure reachable forever.
       </p>
       <p>
-        Your exercise builds the pattern's heart — a name → callbacks map — and it isn't a toy:
-        Node's EventEmitter (Phase 9's world) IS this object, and the DOM's implementation is this
-        plus a tree. Build it once, recognize it everywhere: that's the whole curriculum's bet.
+        Your exercise builds the pattern's heart: a name → callbacks map. It isn't a toy. Node's
+        EventEmitter (Phase 9's world) IS this object. The DOM's version is this map plus a
+        tree. Build it once, recognize it everywhere — the whole curriculum's bet.
       </p>
     </>
   ),

@@ -331,12 +331,12 @@ export const lesson1117: LessonDef = {
         is the floor; “meets WCAG AA” is the certificate humans verify toward.
       </p>
       <p>
-        Job note: teams increasingly staff “quality” to cover both of these — and interviewers
-        probe with “how would you catch a CSS regression?” (answer: component-scoped
-        toHaveScreenshot on key screens, baselines governed like spec changes) and “what does
-        automated a11y testing miss?” (answer: everything needing judgment — focus order
-        sensibility, alt-text QUALITY, screen-reader flow — the scan is a floor). Both answers
-        are now yours.
+        <strong>💼 On the job —</strong> teams increasingly staff “quality” to cover both of
+        these. Interviewers probe with “how would you catch a CSS regression?” Answer:
+        component-scoped toHaveScreenshot on key screens, baselines governed like spec changes.
+        And “what does automated a11y testing miss?” Answer: everything needing judgment — focus
+        order sensibility, alt-text QUALITY, screen-reader flow. The scan is a floor. Both
+        answers are now yours.
       </p>
     </>
   ),

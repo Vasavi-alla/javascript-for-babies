@@ -332,24 +332,25 @@ export const lesson111: LessonDef = {
         download): each is patched and version-matched to speak the protocol reliably.
       </p>
       <p>
-        “Real input events” matters more than it sounds: when Playwright clicks, the browser
-        receives a trusted, OS-level-equivalent event — hit-testing, hover states, focus, the
-        works — not a JavaScript <code>el.click()</code> simulation (7.4’s dispatch). If your app
+        “Real input events” matters more than it sounds. When Playwright clicks, the browser
+        receives a trusted, OS-level-equivalent event — hit-testing, hover states, focus, all of
+        it. It’s not a JavaScript <code>el.click()</code> simulation (7.4’s dispatch). If your app
         behaves differently for real users than for synthetic events, Playwright sides with the
         users.
       </p>
       <p>
-        Genealogy, for your mental map of the industry: Selenium (2004) pioneered the space;
-        Puppeteer (Google, 2017) modernized it for Chrome only; the Puppeteer team then built
+        Family history, for your industry map. Selenium (2004) pioneered the field. Puppeteer
+        (Google, 2017) modernized it, for Chrome only. The Puppeteer team then built
         Playwright (Microsoft, 2020) — Puppeteer’s ideas, all engines, plus the test runner.
         When you meet Selenium at work (you will — legacy suites live long), it’s the same
         concepts with more manual labor.
       </p>
       <p>
-        Job note: “explain Playwright’s architecture” is a real interview question, and most
-        candidates say “it’s a testing tool.” You can now say: a Node test runner driving real
-        browser processes over a wire protocol, with every action awaited across that boundary —
-        which is also WHY auto-waiting and traces are possible. That answer gets remembered.
+        <strong>💼 On the job —</strong> “explain Playwright’s architecture” is a real interview
+        question. Most candidates say “it’s a testing tool.” You can now say: a Node test runner
+        driving real browser processes over a wire protocol, with every action awaited across
+        that boundary. That design is WHY auto-waiting and traces are possible. That answer gets
+        remembered.
       </p>
     </>
   ),

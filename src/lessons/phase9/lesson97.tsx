@@ -295,15 +295,15 @@ export const lesson97: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Sending data works the same way with options:{' '}
-        <code>fetch(url, {'{ method: "POST", body: JSON.stringify(data) }'})</code> — 4.13’s
+        Sending data works the same way, with options:{' '}
+        <code>fetch(url, {'{ method: "POST", body: JSON.stringify(data) }'})</code>. 4.13’s
         stringify finally meets its purpose: objects travel as JSON text. GET reads, POST creates,
         PUT/PATCH update, DELETE removes — the HTTP verbs, worth recognizing on sight.
       </p>
       <p>
         One honesty note carried over from 6.7: fetch only rejects on <em>network</em> failure. A
-        404 or 500 is a “successful” fetch with a bad status — which is precisely why API checks
-        assert on <code>res.status</code> explicitly instead of trusting that “it didn’t throw.”
+        404 or 500 is a “successful” fetch with a bad status. That’s precisely why API checks
+        assert on <code>res.status</code> explicitly, instead of trusting that “it didn’t throw.”
       </p>
       <p>
         The browser’s CORS wall (6.7’s bouncer) doesn’t apply here — CORS protects users inside
@@ -312,9 +312,10 @@ export const lesson97: LessonDef = {
         (9.4’s secrets, completing the circle).
       </p>
       <p>
-        Job note: API tests make superb <em>setup</em> for browser tests too — create the user via
-        the API in one second, then browser-test only the login screen itself. Phase 11 uses this
-        trick constantly; it’s often the difference between a 40-second test and a 4-second one.
+        <strong>💼 On the job —</strong> API tests make superb <em>setup</em> for browser tests
+        too. Create the user via the API in one second, then browser-test only the login screen.
+        Phase 11 uses this trick constantly; often the difference between a 40-second test and a
+        4-second one.
       </p>
     </>
   ),

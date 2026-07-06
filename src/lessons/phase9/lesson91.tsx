@@ -336,10 +336,10 @@ export const lesson91: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Precision on the name: Node isn’t “JavaScript on the server” so much as{' '}
+        Precision on the name: Node isn’t really “JavaScript on the server”. It’s{' '}
         <strong>a JavaScript runtime</strong> — a C++ program embedding V8 and wiring it to the
-        operating system. Servers became its most famous job, but scripts, build tools, and test
-        runners are equally native citizens.
+        operating system. Servers became its most famous job. But scripts, build tools, and test
+        runners are equally normal Node programs.
       </p>
       <p>
         The globals really are different: in the browser the global object is{' '}
@@ -353,10 +353,11 @@ export const lesson91: LessonDef = {
         real teams run. When 9.8 has you install Node, LTS is the button you’ll press.
       </p>
       <p>
-        Job note: when a Playwright suite runs in CI, there is often <em>no browser window at
-        all</em> — Node runs your test code and drives headless browsers. Understanding “my code
-        lives in Node, the page lives in the browser” will explain a dozen Phase-11 mysteries
-        before they happen (why you can’t just touch <code>document</code> from a test, for one).
+        <strong>💼 On the job —</strong> on CI, Playwright usually drives “headless” browsers:
+        real browsers running with <em>no visible window</em>. Node runs your test code and
+        steers them. Remember: “my code lives in Node, the page lives in the browser”. That one
+        idea explains a dozen Phase-11 mysteries — why you can’t touch <code>document</code>{' '}
+        from a test, for one.
       </p>
     </>
   ),

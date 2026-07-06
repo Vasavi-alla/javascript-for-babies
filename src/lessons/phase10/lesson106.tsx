@@ -398,16 +398,16 @@ export const lesson106: LessonDef = {
       </p>
       <p>
         The honest boundaries of TDD: it shines when behavior is clear and design is the question
-        (parsers, calculators, your tip functions) — it’s clumsy for exploratory UI work where
+        (parsers, calculators, your tip functions). It’s clumsy for exploratory UI work, where
         you don’t yet know what you’re building. Most professionals use it selectively, not
         religiously. What survives everywhere is the RED discipline: never trust a test you’ve
         never seen fail.
       </p>
       <p>
-        Job note: Playwright’s <code>route.fulfill()</code> (11.10 in your map) is a STUB — for
-        the network, at the browser boundary: “when the page asks /api/users, answer THIS.” Same
-        family, biggest stage. And “explain stub vs mock vs spy” is a genuine interview staple —
-        you now hold the precise answer most candidates fumble.
+        <strong>💼 On the job —</strong> Playwright’s <code>route.fulfill()</code> (11.10) is a
+        STUB — for the network, at the browser boundary: “when the page asks /api/users, answer
+        THIS.” Same family, biggest stage. And “explain stub vs mock vs spy” is a standard
+        interview question — you now hold the answer most candidates miss.
       </p>
     </>
   ),

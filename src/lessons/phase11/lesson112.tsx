@@ -319,16 +319,16 @@ export const lesson112: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Where the browsers actually live: a per-user cache (on Linux{' '}
+        Where the browsers live: a per-user cache (on Linux{' '}
         <code>~/.cache/ms-playwright</code>, equivalents elsewhere) — shared across all your
         projects, keyed by version. <code>npx playwright install</code> re-downloads on demand;
-        CI machines run it every time (11.16’s fresh-box rule), usually behind a cache step.
+        CI machines run it every time (11.16’s fresh-box rule), often behind a cache step.
       </p>
       <p>
         The example spec is worth five minutes of honest reading: it navigates to playwright.dev
         and asserts on the page — a real network round trip (6.7). Some teams delete it on day
-        one; better: keep it until your own first spec passes, as a known-good canary for “is my
-        setup broken or is my test wrong?”
+        one. Better: keep it until your own first spec passes — a known-good check for “is my
+        setup broken, or is my test wrong?”
       </p>
       <p>
         If TypeScript feels like overhead in week one: the scaffold works identically with the
@@ -337,10 +337,10 @@ export const lesson112: LessonDef = {
         and every real codebase you join will have chosen TS already.
       </p>
       <p>
-        Job note: run the init in an EMPTY folder, not inside an existing app, while learning —
-        one suite, one repo keeps the mental model clean. At work you’ll usually find the suite
-        inside the app repo (an <code>e2e/</code> folder) — same files, same reading order:
-        config first, then one spec.
+        <strong>💼 On the job —</strong> while learning, run the init in an EMPTY folder, not
+        inside an existing app. One suite, one repo keeps the mental model clean. At work
+        you’ll find the suite inside the app repo (an <code>e2e/</code> folder) — same
+        files, same reading order: config first, then one spec.
       </p>
     </>
   ),

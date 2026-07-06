@@ -352,9 +352,9 @@ export const lesson1111: LessonDef = {
       <p>
         Even faster than one UI login: API login — POST the credentials with the request fixture
         (11.10), receive the session cookie, write the storage state yourself. The UI login flow
-        then gets exactly ONE dedicated test of its own (it still needs testing — it’s a feature!)
-        while every other test skips it entirely. That division — test the login once, reuse
-        auth everywhere else — is the professional standard.
+        then gets exactly ONE dedicated test of its own (it still needs testing — it’s a
+        feature!). Every other test skips it entirely. That division — test the login once,
+        reuse auth everywhere else — is the professional standard.
       </p>
       <p>
         What storageState does NOT capture: sessionStorage (7.7’s tab-scoped store) and
@@ -362,11 +362,11 @@ export const lesson1111: LessonDef = {
         when an app stubbornly logs you out despite the bottle, remember this list.
       </p>
       <p>
-        Job note: “how do you handle auth in your suite?” is a standard interview probe. The
-        layered answer you now own: sessions are data (cookies/localStorage), so we log in once
-        in a setup project — ideally via API — bottle storageState per persona, inject it into
-        fresh contexts, keep bottles out of git, and regenerate per CI run so expiry can’t bite.
-        That answer is a hiring signal.
+        <strong>💼 On the job —</strong> “how do you handle auth in your suite?” is a standard
+        interview probe. The layered answer: sessions are data (cookies/localStorage), so we log
+        in once in a setup project, ideally via API. Bottle storageState per persona; inject it
+        into fresh contexts. Keep bottles out of git; regenerate per CI run so expiry can’t
+        surprise us. That answer is a hiring signal.
       </p>
     </>
   ),

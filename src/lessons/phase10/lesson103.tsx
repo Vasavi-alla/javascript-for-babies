@@ -315,27 +315,27 @@ export const lesson103: LessonDef = {
       <p>
         The vocabulary you’ll meet in the wild: the function being tested is the{' '}
         <strong>SUT</strong> — system under test (here, withTax). Some teams write the three
-        beats as <em>Given–When–Then</em> — identical anatomy, storytelling costume. Recognize
-        both; they are the same three beats.
+        beats as <em>Given–When–Then</em> — the same anatomy with storytelling names. Recognize
+        both.
       </p>
       <p>
         Why <em>one call</em> in Act, precisely: two acts in one test means the second runs
-        against a world modified by the first — its failures become ambiguous (did act two break,
-        or did act one leave a mess?). When a flow genuinely needs multiple steps, that’s an
-        integration/E2E test doing flow-work on purpose — and even there, one flow per test.
+        against a world modified by the first. Its failures become ambiguous — did act two
+        break, or did act one leave a mess? When a flow genuinely needs multiple steps, that’s
+        an integration/E2E test doing flow-work on purpose. Even there: one flow per test.
       </p>
       <p>
-        The enshrined-bug trap from the fifth step deserves its full horror story: a function
-        rounds wrong, a hurried tester copies its output into expected, and the suite goes green.
+        The enshrined-bug trap from the fifth step deserves its full horror story. A function
+        rounds wrong. A hurried tester copies its output into expected. The suite goes green.
         From that day the suite actively DEFENDS the bug — anyone who fixes the rounding turns
         the suite red and gets told to “fix their mistake.” One copied expected value can outlive
         everyone who remembers why. Compute expected values from the spec. Always.
       </p>
       <p>
-        Job note: interviewers love handing you a function and saying “test this.” The
-        professional move you now own: enumerate behaviors first (happy path, zero, negative,
-        wrong type), then write one AAA test per behavior with sentence names. That enumeration
-        step — before any code — is what separates testers from typists.
+        <strong>💼 On the job —</strong> interviewers love handing you a function and saying
+        “test this.” The professional move you now own: enumerate behaviors first (happy path,
+        zero, negative, wrong type), then write one AAA test per behavior with sentence names.
+        That enumeration step, done before any code, separates testers from typists.
       </p>
     </>
   ),

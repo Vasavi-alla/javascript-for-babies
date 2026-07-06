@@ -315,7 +315,7 @@ export const lesson93: LessonDef = {
   underTheHood: (
     <>
       <p>
-        Under CommonJS, Node literally wraps every file in a hidden function —{' '}
+        Under CommonJS, Node wraps every file in a hidden function —{' '}
         <code>function (exports, require, module, __filename, __dirname) {'{ … }'}</code> — and
         calls it. That’s why <code>require</code> and <code>module</code> “just exist” in CJS
         files: they’re parameters (3.1!), not globals. ESM files don’t get this wrapper, which is
@@ -324,18 +324,18 @@ export const lesson93: LessonDef = {
       <p>
         The deeper difference from 8.1 still applies: ESM imports are <strong>live bindings</strong>{' '}
         resolved before execution; CJS hands you a snapshot object whenever the require call
-        happens to run. Most days this changes nothing — it matters exactly when you hit circular
-        imports, and then it matters a lot.
+        runs. Most days this changes nothing. It matters when you hit circular imports (two
+        files importing each other) — and then it matters a lot.
       </p>
       <p>
         ESM in Node also unlocks <strong>top-level await</strong> (6.6’s await outside any
         function) — CJS files can’t do that, another reason new projects flip the switch.
       </p>
       <p>
-        Job note: TypeScript adds a twist you’ll meet in Phase 11 — your{' '}
+        <strong>💼 On the job —</strong> TypeScript adds a Phase-11 twist. Your{' '}
         <code>playwright.config.ts</code> is written with import/export, and the compiler outputs
         whichever system the project’s settings ask for. You write the standard; tooling handles
-        the costume.
+        the conversion.
       </p>
     </>
   ),

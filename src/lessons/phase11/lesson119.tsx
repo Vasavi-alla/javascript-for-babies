@@ -353,7 +353,7 @@ export const lesson119: LessonDef = {
         In TypeScript (8.5, and your scaffold’s choice) the class gets typed:{' '}
         <code>constructor(private readonly page: Page)</code>, properties as{' '}
         <code>readonly coupon: Locator</code>. The types buy the usual: autocomplete on every
-        page object across the suite and typo-death at the desk.
+        page object, and typos die at the desk.
       </p>
       <p>
         POMs pair beautifully with fixtures (11.7): define a{' '}
@@ -365,14 +365,14 @@ export const lesson119: LessonDef = {
         Methods that navigate somewhere often return the NEXT page object (
         <code>login() {'{ …; return new DashboardPage(this.page) }'}</code>) — chaining screens
         the way users flow through them. Nice when natural; forced fluent-chaining everywhere is
-        a style disease. Judgment, as always.
+        a bad habit. Judgment, as always.
       </p>
       <p>
-        Job note: “explain the Page Object Model” is a top-three automation interview question.
-        The answer that lands: locator duplication is a maintenance bug; one class per screen
-        makes page knowledge single-sourced so UI change costs one edit; specs read as user
-        stories; assertions stay in specs. Four sentences, and you’ve out-answered most
-        candidates — because you can also say when NOT to use it.
+        <strong>💼 On the job —</strong> “explain the Page Object Model” is a top-three
+        automation interview question. The winning answer: locator duplication is a maintenance
+        bug. One class per screen makes page knowledge single-sourced, so a UI change costs one
+        edit. Specs read as user stories. Assertions stay in specs. Four sentences — you’ve
+        out-answered most candidates, because you can also say when NOT to use it.
       </p>
     </>
   ),

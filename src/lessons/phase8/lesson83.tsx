@@ -333,18 +333,17 @@ export const lesson83: LessonDef = {
         just never commit it.
       </p>
       <p>
-        Real debuggers also offer <strong>conditional breakpoints</strong> — “pause here only when{' '}
-        <code>i === 97</code>” — which is the sane way to catch a bug that appears on the 97th lap
-        of a loop. And <strong>step out</strong> finishes the current function and pauses back at
-        the caller: the up-elevator of the tower.
+        Real debuggers also offer <strong>conditional breakpoints</strong>: “pause here only when{' '}
+        <code>i === 97</code>”. That’s the sensible way to catch a bug that appears on the 97th
+        lap of a loop. And <strong>step out</strong> finishes the current function and pauses
+        back at the caller: the up-elevator of the tower.
       </p>
       <p>
-        Honesty note: professionals still use <code>console.log</code> daily — logs are
-        breadcrumbs, the debugger is the autopsy table. Quick look → log. Confusing state →
-        pause.
+        Honesty note: professionals still use <code>console.log</code> daily — the debugger
+        doesn’t replace it. Quick look → log. Confusing state → pause.
       </p>
       <p>
-        Job note: Playwright ships this exact experience for tests —{' '}
+        <strong>💼 On the job —</strong> Playwright ships this exact experience for tests.{' '}
         <code>npx playwright test --debug</code> opens an inspector where you step through your
         test actions the same way: pause, inspect, step. Same buttons, same tower, Phase 11
         territory.
