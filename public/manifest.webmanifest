@@ -1,7 +1,7 @@
 {
-  "name": "JS for Babies — see JavaScript think",
-  "short_name": "JS for Babies",
-  "description": "A visual, hands-on JavaScript notebook — from zero to automation tester.",
+  "name": "JS Sketchbook — see JavaScript think",
+  "short_name": "JS Sketchbook",
+  "description": "JavaScript for absolute beginners — a visual, hands-on course from zero to Playwright automation testing.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#fbf5e9",

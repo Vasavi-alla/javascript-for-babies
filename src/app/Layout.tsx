@@ -7,7 +7,7 @@ export function Layout() {
       <BreakCoach />
       <header className="flex flex-wrap items-end justify-between gap-4 pt-8 pb-10">
         <NavLink to="/" className="leading-none">
-          <span className="font-hand text-5xl font-bold">JS for babies</span>
+          <span className="font-hand text-5xl font-bold">JS Sketchbook</span>
           <span className="text-ink-soft mt-1 block text-sm">see JavaScript think ✏️</span>
         </NavLink>
         <nav className="font-hand flex gap-6 text-2xl">

@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /design
 
-Sitemap: https://javascript-for-babies.vercel.app/sitemap.xml
+Sitemap: https://jssketchbook.com/sitemap.xml

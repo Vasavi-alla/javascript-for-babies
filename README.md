@@ -1,6 +1,6 @@
 <img src="public/icon-192.png" width="96" align="right" alt="Vasavi" />
 
-# JS for Babies — *see JavaScript think*
+# JS Sketchbook — *see JavaScript think*
 
 A visual, hands-on JavaScript learning notebook, built for one learner: **Vasavi**.
 It starts from absolute zero — "what is a program?" — and ends at writing real

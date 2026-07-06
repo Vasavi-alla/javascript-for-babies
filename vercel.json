@@ -1,3 +1,5 @@
 {
+  "buildCommand": "npm run build:site",
+  "installCommand": "npm install && npx playwright install --with-deps chromium",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }

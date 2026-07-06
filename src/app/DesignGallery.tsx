@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { SITE_NAME } from '../content/site'
+import { useSeo } from './useSeo'
 import { StickyNote } from '../design/StickyNote'
 import { InkButton } from '../design/InkButton'
 import { TapeLabel } from '../design/TapeLabel'
@@ -28,6 +30,7 @@ const SWATCHES = [
 ] as const
 
 export function DesignGallery() {
+  useSeo({ title: `Style guide | ${SITE_NAME}`, description: 'Internal design gallery.', path: '/design', noindex: true })
   const [logs, setLogs] = useState<string[]>(['Hello, machine!'])
 
   return (

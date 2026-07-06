@@ -1,5 +1,9 @@
+import { useMemo } from 'react'
 import { Link, useParams } from 'react-router'
 import { PHASES, lessonsForPhase } from '../content/registry'
+import { SITE_NAME } from '../content/site'
+import { phaseJsonLd } from '../content/seo-schemas'
+import { useSeo } from './useSeo'
 import { PHASE_INTROS } from '../content/phase-intros'
 import { PHASE_LABS } from '../labs'
 import { useProgress } from '../store/progress'
@@ -14,6 +18,17 @@ export function PhasePage() {
   const phaseNumber = Number(params.number)
   const phase = PHASES.find((p) => p.number === phaseNumber)
   const intro = PHASE_INTROS[phaseNumber]
+
+  useSeo({
+    title: phase ? `${phase.title} — Phase ${phase.number} | ${SITE_NAME}` : `Phase not found | ${SITE_NAME}`,
+    description: phase && intro ? `${phase.question} ${intro.whyNeeded[0]}`.slice(0, 155) : '',
+    path: `/phase/${params.number ?? ''}`,
+    jsonLd: useMemo(
+      () => (phase ? phaseJsonLd(phase.number, phase.title, phase.question) : undefined),
+      [phase],
+    ),
+    noindex: !phase || !intro,
+  })
 
   if (!phase || !intro) {
     return (

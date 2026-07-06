@@ -1,9 +1,11 @@
-import { useRef, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { motion } from 'motion/react'
 import { LESSONS, PHASES, lessonsForPhase, type LessonMeta } from '../content/registry'
 import { dailyNote } from '../content/motivation'
 import { DEFAULT_NAME, nameSlug, useLearnerName } from '../content/learner'
+import { courseJsonLd } from '../content/seo-schemas'
+import { useSeo } from './useSeo'
 import { useProgress } from '../store/progress'
 import { activeDaySet, computeStreak, localDay, monthGrid } from '../engine/coach/stats'
 import { PaperCard } from '../design/PaperCard'
@@ -121,6 +123,13 @@ function findNextLesson(completed: Record<string, string>): LessonMeta | undefin
 }
 
 export function CurriculumMap() {
+  useSeo({
+    title: 'JS Sketchbook — learn JavaScript visually, from zero to Playwright',
+    description:
+      'JavaScript for absolute beginners — a free, visual, hands-on course. Animated visualizations, real code exercises, from zero to Playwright automation testing.',
+    path: '/',
+    jsonLd: useMemo(() => courseJsonLd(), []),
+  })
   const progress = useProgress()
   const { completedLessons, completedChallenges, solvedExercises } = progress
   const navigate = useNavigate()
