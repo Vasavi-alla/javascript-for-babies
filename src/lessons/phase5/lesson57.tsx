@@ -312,10 +312,10 @@ export const lesson57: LessonDef = {
     {
       kind: 'type-output',
       question: 'Type exactly what the SECOND log prints:',
-      code: 'function makeTick() {\n  let n = 0;\n  return () => {\n    n = n + 1;\n    return n;\n  };\n}\nconst t = makeTick();\nconsole.log(t());\nconsole.log(t());',
+      code: 'function makeTick() {\n  let n = 0;\n  return () => {\n    n = n + 1;\n    return n;\n  };\n}\nconst tick = makeTick();\nconsole.log(tick());\nconsole.log(tick());',
       accept: ['2'],
       placeholder: 'type the console output…',
-      why: 't’s rope keeps makeTick’s context reachable, so n survives BETWEEN calls: 1, then 2. The GC keeps what closures can reach — that’s the feature.',
+      why: 'tick’s rope keeps makeTick’s context reachable, so n survives BETWEEN calls: 1, then 2. The GC keeps what closures can reach — that’s the feature.',
     },
     {
       kind: 'type-output',

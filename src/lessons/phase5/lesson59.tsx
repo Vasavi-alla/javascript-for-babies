@@ -24,8 +24,8 @@ const obj = {
   n: "X",
   get() { return this.n; },
 };
-const g = obj.get;
-// obj.get() vs g() ?
+const bare = obj.get;
+// obj.get() vs bare() ?
 
 // snippet C — the chain
 const base = { hi: "yo" };
@@ -74,7 +74,7 @@ const VIEWS: View[] = [
   {
     title: 'B · call site 2',
     lines: [
-      { text: 'g() → bare call → this lost → undefined', tone: 'bad' },
+      { text: 'bare() → bare call → this lost → undefined', tone: 'bad' },
     ],
     note: 'same function, two calls, two answers — the call site decides',
   },
@@ -273,7 +273,7 @@ export const lesson59: LessonDef = {
     {
       id: 'replay-this-bare',
       caption:
-        'g() is the SAME function, called bare → default rule → this is global/undefined → this.n is undefined. Same function twice, two different answers, both certain once you look at the calls. (5.4)',
+        'bare() is the SAME function, called bare → default rule → this is global/undefined → this.n is undefined. Same function twice, two different answers, both certain once you look at the calls. (5.4)',
       highlightLines: [11, 12, 13],
     },
     {
@@ -337,7 +337,7 @@ export const lesson59: LessonDef = {
     {
       kind: 'type-output',
       question: 'Read the call site — type exactly what this prints:',
-      code: 'const mic = {\n  id: "M1",\n  tag() { return this.id; },\n};\nconst t = mic.tag.bind(mic);\nconsole.log(t());',
+      code: 'const mic = {\n  id: "M1",\n  tag() { return this.id; },\n};\nconst tied = mic.tag.bind(mic);\nconsole.log(tied());',
       accept: ['M1'],
       placeholder: 'type the console output…',
       why: 'bind welded this to mic before the handoff — the bare call can’t lose it. Explicit rule beats default rule, every time.',

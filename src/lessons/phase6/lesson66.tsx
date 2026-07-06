@@ -291,9 +291,9 @@ export const lesson66: LessonDef = {
         level of modules) — the engine needs permission to suspend the frame.
       </p>
       <p>
-        The subtle cost that bites real test suites: <code>await a(); await b();</code> is{' '}
-        <em>sequential</em> — b doesn't start until a finishes. Two independent 80ms waits become
-        160ms. When steps don't depend on each other, start both promises first, then await —
+        The subtle cost that bites real test suites: <code>await jobA(); await jobB();</code> is{' '}
+        <em>sequential</em> — jobB doesn't start until jobA finishes. Two independent 80ms waits
+        become 160ms. When steps don't depend on each other, start both promises first, then await —
         lesson 6.8 turns this into a tool (<code>Promise.all</code>).
       </p>
       <p>

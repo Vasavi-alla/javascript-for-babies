@@ -260,11 +260,11 @@ export const lesson23: LessonDef = {
   quiz: [
     {
       kind: 'type-output',
-      question: 'For how many values of n can B() ever run? Type the number.',
-      code: 'if (n > 10) { A(); }\nelse if (n > 100) { B(); }',
+      question: 'For how many values of n can bigPrize() ever run? Type the number.',
+      code: 'if (n > 10) { smallPrize(); }\nelse if (n > 100) { bigPrize(); }',
       accept: ['0', 'zero', 'none'],
       placeholder: 'a number…',
-      why: 'Zero — a mis-ordered chain: n > 100 implies n > 10, so gate one always wins first. B() is dead code — no error, no warning, it just silently never runs. Order gates from most specific to least. (Spotting dead branches is a genuine code-review skill.)',
+      why: 'Zero — a mis-ordered chain: n > 100 implies n > 10, so gate one always wins first. bigPrize() is dead code — no error, no warning, it just silently never runs. Order gates from most specific to least. (Spotting dead branches is a genuine code-review skill.)',
     },
     {
       kind: 'type-output',

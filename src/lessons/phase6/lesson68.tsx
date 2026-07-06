@@ -234,8 +234,8 @@ export const lesson68: LessonDef = {
   hook: (
     <>
       <p>
-        Lesson 6.6 left a warning: <code>await a(); await b();</code> runs <em>one after the
-        other</em> — two independent 80ms waits become 160ms. In a test suite fetching five
+        Lesson 6.6 left a warning: <code>await jobA(); await jobB();</code> runs <em>one after
+        the other</em> — two independent 80ms waits become 160ms. In a test suite fetching five
         fixtures per test, that's the difference between a 2-minute run and a 10-minute one.
         Independent waits should <strong>overlap</strong>.
       </p>
@@ -362,7 +362,7 @@ export const lesson68: LessonDef = {
     prompt:
       'Explain to a friend: why do two independent awaits waste time, how do you overlap them, what do all / allSettled / race / any each answer — and what order do all’s results arrive in?',
     modelAnswer:
-      'await a(); await b(); is sequential — b doesn’t START until a’s await finishes, so independent waits add up. The fix: start both first (call the functions, hold the pending promises), then await a combinator — the work overlaps in the environment and the total is the slowest, not the sum. The four questions: Promise.all = “everything, please” — fulfills with an array of results when ALL fulfill, but one rejection rejects it immediately (all-or-nothing). Promise.allSettled = “the full report” — never rejects; gives { status, value/reason } per input. Promise.race = “first to settle, either way” — fulfilled or rejected, whichever crosses first (great for timeouts). Promise.any = “first success.” And all’s results arrive in INPUT order, position for position, regardless of finish order — which is why destructuring them is safe: const [user, cart] = await Promise.all([getUser(), getCart()]).',
+      'await jobA(); await jobB(); is sequential — jobB doesn’t START until jobA’s await finishes, so independent waits add up. The fix: start both first (call the functions, hold the pending promises), then await a combinator — the work overlaps in the environment and the total is the slowest, not the sum. The four questions: Promise.all = “everything, please” — fulfills with an array of results when ALL fulfill, but one rejection rejects it immediately (all-or-nothing). Promise.allSettled = “the full report” — never rejects; gives { status, value/reason } per input. Promise.race = “first to settle, either way” — fulfilled or rejected, whichever crosses first (great for timeouts). Promise.any = “first success.” And all’s results arrive in INPUT order, position for position, regardless of finish order — which is why destructuring them is safe: const [user, cart] = await Promise.all([getUser(), getCart()]).',
   },
   recap: [
     'Independent waits: START both first, then await — overlap makes the total max(), not sum(). Sequential awaits are for dependent steps only.',

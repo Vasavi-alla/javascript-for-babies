@@ -362,10 +362,10 @@ export const lesson56: LessonDef = {
     {
       kind: 'type-output',
       question: 'Type exactly what this prints:',
-      code: 'class A {}\nclass B extends A {}\nconst x = new B();\nconsole.log(x instanceof A);',
+      code: 'class Animal {}\nclass Dog extends Animal {}\nconst d = new Dog();\nconsole.log(d instanceof Animal);',
       accept: ['true'],
       placeholder: 'type the console output…',
-      why: 'x’s chain is x → B.prototype → A.prototype → … — and instanceof asks whether A.prototype appears ANYWHERE on the chain. It does: true. extends = a longer chain, nothing more.',
+      why: 'd’s chain is d → Dog.prototype → Animal.prototype → … — and instanceof asks whether Animal.prototype appears ANYWHERE on the chain. It does: true. extends = a longer chain, nothing more.',
     },
   ],
   PlayExtra: () => <CodeExercise def={PAGES_EXERCISE} />,
