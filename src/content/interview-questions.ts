@@ -1355,6 +1355,1071 @@ export const INTERVIEW_QUESTIONS: InterviewQuestion[] = [
     answer:
       'You wrap the awaits in try and catch. The try holds the fetch and the parsing. If the network fails or you throw on a bad status, control jumps to catch, where you set an error state instead of crashing. A finally can turn off the loading flag either way.',
   },
+
+  // ── Phase 7 — The Browser & DOM ─────────────────────────────────
+  {
+    id: 'iq-7.1-what',
+    lessonId: '7.1',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the DOM?',
+    answer:
+      'The DOM is the live tree of objects the browser builds from your HTML. Each tag becomes a node, nested the way the tags are nested. It is live, so changing a node changes the page. Your code and your tests both work by finding and touching these nodes.',
+  },
+  {
+    id: 'iq-7.1-live',
+    lessonId: '7.1',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What does it mean that the DOM is live?',
+    answer:
+      'It means the tree and the page are the same thing. When you change a node in the tree, the page updates to match at once. There is no separate step to redraw. This is why adding or removing nodes in code changes what the user sees.',
+  },
+  {
+    id: 'iq-7.2-queryselector',
+    lessonId: '7.2',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this do?',
+    code: 'const btn = document.querySelector(".submit")\nconsole.log(btn.textContent)',
+    answer:
+      'It finds the first element with the class submit and prints its text. querySelector takes a CSS selector and returns the first match, or null if nothing matches. querySelectorAll returns all matches. This is the main way to find nodes to read or change.',
+  },
+  {
+    id: 'iq-7.2-css-selectors',
+    lessonId: '7.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How do you select by id, by class, and by tag in a CSS selector?',
+    answer:
+      'An id uses a hash, like #login. A class uses a dot, like .active. A tag uses just its name, like button. You can combine them, so button.active means a button that also has the active class. These are the same selectors CSS uses to style.',
+  },
+  {
+    id: 'iq-7.2-locator-stability',
+    lessonId: '7.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why is choosing a stable selector important for tests?',
+    answer:
+      'Because a test finds elements by selector, and if the selector depends on something that changes often, like a deep chain of divs or an auto-generated class, the test breaks on the next redesign. Picking something stable, like a role or a test id, keeps the test working when the look changes but the behavior does not.',
+  },
+  {
+    id: 'iq-7.3-text-vs-html',
+    lessonId: '7.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between textContent and innerHTML, and why prefer textContent?',
+    answer:
+      'textContent sets or reads plain text. innerHTML sets or reads text that is parsed as HTML. Prefer textContent for user input, because innerHTML will run any tags in the text, which lets an attacker inject a script. That risk is called XSS. Use innerHTML only for HTML you trust.',
+  },
+  {
+    id: 'iq-7.3-classlist',
+    lessonId: '7.3',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this print?',
+    code: 'el.classList.add("active")\nel.classList.toggle("open")\nconsole.log(el.classList.contains("active"))',
+    answer:
+      'It prints true. classList is a tidy way to change the classes on an element. add puts a class on, remove takes it off, toggle flips it, and contains checks for it. This is cleaner than editing the class text by hand.',
+  },
+  {
+    id: 'iq-7.4-listener',
+    lessonId: '7.4',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this set up?',
+    code: 'button.addEventListener("click", () => {\n  console.log("clicked")\n})',
+    answer:
+      'It sets up a click handler. addEventListener takes an event name and a function to run when that event happens. Here, clicking the button logs clicked. You can add many listeners to one element, and each runs when its event fires.',
+  },
+  {
+    id: 'iq-7.4-event-object',
+    lessonId: '7.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the event object passed to a handler?',
+    answer:
+      'It is an object the browser hands your function describing what happened. It carries useful facts, like event.target for the element that fired it, and methods like preventDefault to stop the default behavior. Reading the event object is how one handler can react to many different elements.',
+  },
+  {
+    id: 'iq-7.5-bubbling',
+    lessonId: '7.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is event bubbling?',
+    answer:
+      'When an event fires on an element, it then travels up through its parents, one level at a time, up to the top. So a click on a button also reaches the div around it, and so on. This travel is called bubbling, and it is what makes event delegation possible.',
+  },
+  {
+    id: 'iq-7.5-delegation',
+    lessonId: '7.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is event delegation, and why is it useful?',
+    answer:
+      'Instead of putting a listener on every child, you put one listener on a shared parent and check event.target to see which child was hit. It is useful because it handles many children with one listener, and it keeps working for children you add later. Fewer listeners, less bookkeeping.',
+  },
+  {
+    id: 'iq-7.5-preventdefault',
+    lessonId: '7.5',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does preventDefault do?',
+    answer:
+      'It stops the built-in reaction the browser has to an event. For example, calling it on a form submit stops the page from reloading, and on a link it stops the browser from following the link. You use it when you want to handle the event yourself instead of letting the default happen.',
+  },
+  {
+    id: 'iq-7.6-read-value',
+    lessonId: '7.6',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this read?',
+    code: 'const input = document.querySelector("#email")\nconsole.log(input.value)',
+    answer:
+      'It prints whatever the user typed into the email field. The current text of a text input is in its value property. For a checkbox you read checked instead, which is true or false. Reading value is how you get what the user entered.',
+  },
+  {
+    id: 'iq-7.6-submit',
+    lessonId: '7.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What happens by default when a form is submitted, and how do you take control?',
+    answer:
+      'By default the browser sends the form and reloads the page. To handle it yourself, you listen for the submit event and call preventDefault, then read the values, check them, and act. This read, check, act flow is the daily work of form automation.',
+  },
+  {
+    id: 'iq-7.7-storage',
+    lessonId: '7.7',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between localStorage, sessionStorage, and cookies?',
+    answer:
+      'localStorage keeps data on the browser with no expiry until you clear it. sessionStorage keeps data only for that tab and is gone when it closes. Cookies are small values sent to the server with each request, often for login. Tests use stored login data to skip logging in every time.',
+  },
+  {
+    id: 'iq-7.7-domcontentloaded',
+    lessonId: '7.7',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the difference between DOMContentLoaded and load?',
+    answer:
+      'DOMContentLoaded fires when the HTML is parsed and the DOM tree is ready, even if images are still coming. load fires later, once everything including images has finished. You usually run setup on DOMContentLoaded so your code starts as soon as the elements exist.',
+  },
+  {
+    id: 'iq-7.8-pipeline',
+    lessonId: '7.8',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What are the main steps the browser takes to put pixels on the screen?',
+    answer:
+      'It parses the HTML into the DOM tree, works out the styles to build a render tree of what is visible, does layout to place and size each box, then paints the pixels. A change can force some of these steps to run again. Knowing this explains why an element can exist but not be visible yet.',
+  },
+  {
+    id: 'iq-7.8-visible',
+    lessonId: '7.8',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why can an element be in the DOM but not visible yet?',
+    answer:
+      'Because being in the tree is not the same as being laid out and painted, or being allowed to show. It might have display none, or its size might not be settled, or it may still be off screen. This gap is exactly why a test must wait for an element to be ready, not just present.',
+  },
+  {
+    id: 'iq-7.9-build-target',
+    lessonId: '7.9',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'In the todo app checkpoint, why build the app before targeting it?',
+    answer:
+      'Because once you have built it, you know exactly how it is structured, so you can practice finding and checking its parts with real intent. Building then targeting turns your own app into a safe practice range for the locator and event skills that automation depends on.',
+  },
+  {
+    id: 'iq-7.9-inspect',
+    lessonId: '7.9',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How would you find the right element to target in a page you did not build?',
+    answer:
+      'I would open the browser tools, inspect the element, and look for something stable to select it by, like its role, its text, or a test id, rather than a fragile chain of tags. Then I would confirm my selector matches just the one element I mean. This is the core locator skill.',
+  },
+
+  // ── Phase 8 — Modern JS & Tooling ───────────────────────────────
+  {
+    id: 'iq-8.1-import-export',
+    lessonId: '8.1',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What is happening across these two files?',
+    code: 'export function add(a, b) {\n  return a + b\n}\n// in another file:\nimport { add } from "./math.js"',
+    answer:
+      'It shares the add function between files. export opens a name for other files to use. import borrows that name from a file by its path. One file is one module with its own private scope, and only what you export is visible outside.',
+  },
+  {
+    id: 'iq-8.1-why-modules',
+    lessonId: '8.1',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why split code into modules instead of one big file?',
+    answer:
+      'Because each module keeps its own names private and only shares what it exports, so names do not clash and it is clear what each file offers. It also makes the dependency graph visible, so you can see what uses what. Small, focused files are easier to read, test, and reuse.',
+  },
+  {
+    id: 'iq-8.2-semver',
+    lessonId: '8.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'In a version like 2.5.1, what do the three numbers mean?',
+    answer:
+      'They are major, minor, and patch. Major changes can break your code. Minor adds features in a safe way. Patch is a bug fix only. This is semver, and it lets you know at a glance whether an update is risky or safe.',
+  },
+  {
+    id: 'iq-8.2-caret-tilde',
+    lessonId: '8.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between ^1.2.3 and ~1.2.3 in package.json?',
+    answer:
+      'The caret allows updates up to the next major, so any 1.x.x. The tilde is tighter and allows only patch updates, so 1.2.x. Both keep you from jumping to a version that might break your code, but the caret takes more new features while the tilde stays more cautious.',
+  },
+  {
+    id: 'iq-8.2-lockfile',
+    lessonId: '8.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the lockfile for, and why does CI care about it?',
+    answer:
+      'The lockfile records the exact versions actually installed, down to every nested dependency. CI installs from it so the build uses the same versions every time, on every machine. Without it, a fresh install could pick newer versions and behave differently, which causes works-on-my-machine bugs.',
+  },
+  {
+    id: 'iq-8.3-breakpoint',
+    lessonId: '8.3',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does a breakpoint let you do?',
+    answer:
+      'It pauses your program on a chosen line before it runs, so time stops there. While paused you can read every variable in view, step forward line by line, and watch how values change. It turns a guess about what went wrong into something you can see.',
+  },
+  {
+    id: 'iq-8.3-scope-stack',
+    lessonId: '8.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'When paused at a breakpoint, what do the Scope and Call Stack panels show?',
+    answer:
+      'The Scope panel shows the variables you can see right now and their current values, which is the scope chain made visible. The Call Stack panel shows the chain of function calls that led here, innermost at the top. Together they answer what the values are and how you got here.',
+  },
+  {
+    id: 'iq-8.4-optional-chaining',
+    lessonId: '8.4',
+    type: 'coding',
+    difficulty: 'tricky',
+    prompt: 'What does this print, and why does it not crash?',
+    code: 'const user = {}\nconsole.log(user.address?.city)',
+    answer:
+      'It prints undefined instead of crashing. The ?. checks the part before it. If user.address is null or undefined, it stops and gives undefined rather than trying to read city of nothing, which would throw. Optional chaining makes a deep lookup safe.',
+  },
+  {
+    id: 'iq-8.4-nullish',
+    lessonId: '8.4',
+    type: 'coding',
+    difficulty: 'tricky',
+    prompt: 'What does this print, and why do the two lines differ?',
+    code: 'const count = 0\nconsole.log(count ?? 5)\nconsole.log(count || 5)',
+    answer:
+      'It prints 0 then 5. ?? only falls back when the left side is null or undefined, so 0 is kept. || falls back on any falsy value, so it treats 0 as missing and gives 5. Use ?? when 0 or an empty string are real, valid values.',
+  },
+  {
+    id: 'iq-8.5-what',
+    lessonId: '8.5',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does TypeScript add to JavaScript?',
+    answer:
+      'It adds type labels that say what kind of value each thing should be. A checker reads them before the code runs and flags mismatches, like passing text where a number is expected. The types are then erased, so the browser runs plain JavaScript. It catches a class of bugs early.',
+  },
+  {
+    id: 'iq-8.5-erased',
+    lessonId: '8.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'TypeScript checks types before running, then erases them. What does erased mean here?',
+    answer:
+      'It means the type labels exist only for the checker and the editor. When the code is built, the types are stripped out, and what actually runs is ordinary JavaScript with no type information left. So types help you while writing, but they do nothing at run time.',
+  },
+  {
+    id: 'iq-8.6-scripts',
+    lessonId: '8.6',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the scripts section of package.json for?',
+    answer:
+      'It gives short names to commands you run often, like test or build. You run them with npm run and the name. It saves typing long commands, keeps everyone on the team using the same ones, and is where CI finds the command to run your tests.',
+  },
+  {
+    id: 'iq-8.6-dev-vs-dep',
+    lessonId: '8.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between dependencies and devDependencies?',
+    answer:
+      'dependencies are packages the app needs to run in production. devDependencies are only needed while developing or testing, like the test runner or the type checker. Splitting them keeps a production install lean, since the dev tools are left out there.',
+  },
+
+  // ── Phase 9 — Node.js ───────────────────────────────────────────
+  {
+    id: 'iq-9.1-what',
+    lessonId: '9.1',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is Node?',
+    answer:
+      'Node is JavaScript running outside the browser. It takes the same engine the browser uses and gives it the powers of the computer instead, like reading files and talking to the network. There is no page, no document. This is what lets tools like Playwright run as programs.',
+  },
+  {
+    id: 'iq-9.1-no-document',
+    lessonId: '9.1',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why is there no document or window in Node?',
+    answer:
+      'Because those come from the browser and the page, and Node has neither. Node runs JavaScript against the computer, not against a web page. So the browser gifts are gone, and in their place you get file, process, and network powers. Code that touched document must run in a browser instead.',
+  },
+  {
+    id: 'iq-9.2-exit-code',
+    lessonId: '9.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is an exit code, and why does CI care about it?',
+    answer:
+      'An exit code is a number a program returns when it ends. Zero means success, and anything else means failure. CI reads this number to decide whether a step passed. This is why a test runner must exit non-zero when tests fail, so the pipeline knows to stop.',
+  },
+  {
+    id: 'iq-9.2-stack-trace',
+    lessonId: '9.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How do you read a stack trace calmly?',
+    answer:
+      'The top line is the error and its message. The lines under it are the trail of calls, most recent first, each with a file and line number. You start at the top, read the message, then follow the first line that points into your own code. It tells you what broke and where.',
+  },
+  {
+    id: 'iq-9.3-require-import',
+    lessonId: '9.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between require and import in Node?',
+    answer:
+      'require is the older CommonJS way. It is a function that loads a module and hands back what the module set on module.exports. import is the newer ES module way, written at the top of the file and read before running. Modern code leans on import, but you still meet require in older projects.',
+  },
+  {
+    id: 'iq-9.3-type-module',
+    lessonId: '9.3',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does "type": "module" in package.json do?',
+    answer:
+      'It tells Node to treat your .js files as ES modules, so import and export work. Without it, Node treats them as CommonJS and expects require. It is the switch that decides which module style a project speaks.',
+  },
+  {
+    id: 'iq-9.3-read-cold',
+    lessonId: '9.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How can you tell whether a Node file uses CommonJS or ES modules?',
+    answer:
+      'If it uses require and module.exports, it is CommonJS. If it uses import and export at the top, it is an ES module. The file ending can also decide it: .cjs is always CommonJS and .mjs is always an ES module. Otherwise the package type setting decides.',
+  },
+  {
+    id: 'iq-9.4-argv',
+    lessonId: '9.4',
+    type: 'coding',
+    difficulty: 'tricky',
+    prompt: 'Running node run.js staging, what does this print?',
+    code: '// in run.js:\nconsole.log(process.argv[2])',
+    answer:
+      'It prints staging. process.argv is the list of words used to start the program. The first two entries are the node path and the script path, so your own arguments start at index 2. This is how a script reads inputs from the command line.',
+  },
+  {
+    id: 'iq-9.4-env-secrets',
+    lessonId: '9.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why keep secrets like passwords in environment variables instead of in the code?',
+    answer:
+      'Because code often goes into version control, and once a secret is committed it is remembered in the history even if you delete it later. Environment variables live outside the code, set per machine or in the CI settings, so the secret never sits in the repo. Code reads it from process.env.',
+  },
+  {
+    id: 'iq-9.5-read-write',
+    lessonId: '9.5',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this print?',
+    code: 'import { writeFileSync, readFileSync } from "node:fs"\nwriteFileSync("out.txt", "hi")\nconsole.log(readFileSync("out.txt", "utf8"))',
+    answer:
+      'It prints hi. writeFileSync saves text to a file, and readFileSync reads it back. The utf8 argument asks for text rather than raw bytes. This file power is something the browser cannot do, and it is where test reports get written.',
+  },
+  {
+    id: 'iq-9.5-path-join',
+    lessonId: '9.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why use path.join instead of gluing folder and file names with slashes?',
+    answer:
+      'Because path.join uses the right separator for the operating system and tidies up any doubled or missing slashes. Gluing strings by hand breaks across systems, since Windows and others differ. path.join builds a path that works everywhere.',
+  },
+  {
+    id: 'iq-9.6-non-blocking',
+    lessonId: '9.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What does non-blocking I/O mean in Node?',
+    answer:
+      'It means when Node starts a slow job like reading a file or a network call, it does not stand and wait. It hands the job off and keeps running other code. When the job is done, a callback is queued and run later. So one thread can have many slow jobs in flight at once.',
+  },
+  {
+    id: 'iq-9.6-one-thread-many',
+    lessonId: '9.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How can one thread handle a hundred file reads at the same time?',
+    answer:
+      'It starts each read and hands it off to the system to work on in the background, then moves on without waiting. The single thread is only busy for the quick moment of starting each one and later handling each result. The waiting happens outside the thread, so many reads overlap.',
+  },
+  {
+    id: 'iq-9.6-sync-vs-async',
+    lessonId: '9.6',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the difference between readFileSync and the async readFile?',
+    answer:
+      'readFileSync stops the whole program until the file is read, which is simple but blocks everything. The async readFile starts the read, lets other code run, and gives you the result later through a callback or a promise. Async keeps the one thread free to do other work while it waits.',
+  },
+  {
+    id: 'iq-9.7-api-check',
+    lessonId: '9.7',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is an API check, and why is it faster than a UI test?',
+    answer:
+      'An API check sends a request straight to the server and checks the response, with no browser or page involved. It is faster because it skips loading pages and clicking, and it fails closer to the cause. It is the cheap layer for confirming the data and rules behind the screen.',
+  },
+  {
+    id: 'iq-9.7-status-family',
+    lessonId: '9.7',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What do the status code families 2xx, 4xx, and 5xx mean?',
+    answer:
+      '2xx means success, the request worked. 4xx means the request was wrong, like a missing page or bad input, so the fault is on the caller side. 5xx means the server failed while handling a valid request. Checking the status is the first thing an API test does.',
+  },
+  {
+    id: 'iq-9.8-verify-install',
+    lessonId: '9.8',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'After installing Node, how do you check it is set up?',
+    answer:
+      'You run node with the version flag in the terminal, and it prints a version number. If it does, Node is on your path and ready. Then you can make a project folder, run npm init, and run a small script to confirm everything works end to end.',
+  },
+  {
+    id: 'iq-9.8-exit-verify',
+    lessonId: '9.8',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'In the setup checkpoint, why check the exit code after running the script?',
+    answer:
+      'Because the exit code is the machine-readable sign of success. A zero says the program finished cleanly, which is exactly what CI will look for later. Checking it now proves the whole chain works: the script ran, did its job, and reported success the way a pipeline expects.',
+  },
+
+  // ── Phase 10 — Testing Mindset ──────────────────────────────────
+  {
+    id: 'iq-10.1-regression',
+    lessonId: '10.1',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is a regression?',
+    answer:
+      'A regression is when something that used to work stops working, usually because a change somewhere else touched shared code. Nobody edited the broken part directly, which is what makes it sneaky. Tests exist largely to catch regressions by re-checking old behavior after every change.',
+  },
+  {
+    id: 'iq-10.1-cost-curve',
+    lessonId: '10.1',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why is a bug cheaper to fix early than late?',
+    answer:
+      'Because the later it is found, the more has been built on top of it and the more people it reaches. Caught at your desk it is a quick edit. Caught in review it costs two people. Caught in production it can mean users hit it and an urgent fix at a bad hour. The cost climbs at each step.',
+  },
+  {
+    id: 'iq-10.2-layers',
+    lessonId: '10.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What are the layers of the testing pyramid, and what does each touch?',
+    answer:
+      'The base is unit tests, which check small pieces in memory with nothing outside. The middle is integration or API tests, which cross into things like a server or a database. The top is end-to-end tests, which drive the whole app through the browser. Lower layers touch less, so they run faster.',
+  },
+  {
+    id: 'iq-10.2-shape',
+    lessonId: '10.2',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why is the pyramid wide at the bottom and narrow at the top?',
+    answer:
+      'Because low tests are fast and cheap, so you can have many of them, while top tests are slow and pricier, so you keep only a few for the key journeys. The shape is really a budget: most of your checking should sit where it is cheapest and quickest.',
+  },
+  {
+    id: 'iq-10.2-ice-cream',
+    lessonId: '10.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is the ice-cream cone anti-pattern?',
+    answer:
+      'It is the pyramid upside down: lots of slow end-to-end tests and hardly any fast unit tests. Teams fall into it because end-to-end feels the most real, but the suite ends up slow and flaky. The fix is to push most checks down to the cheaper layers.',
+  },
+  {
+    id: 'iq-10.3-aaa',
+    lessonId: '10.3',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What are the three parts of a test in the Arrange, Act, Assert pattern?',
+    answer:
+      'Arrange sets up the inputs and the world the test needs. Act runs the one thing you are testing. Assert checks the result is what you expected. Keeping the three clear makes a test easy to read and makes a failure easy to place.',
+  },
+  {
+    id: 'iq-10.3-expected-from',
+    lessonId: '10.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Where must the expected value in an assertion come from?',
+    answer:
+      'From the spec, worked out by hand, not from running the code. If you copy what the code already produces, the test just agrees with the code, bugs and all. The expected value is your independent statement of what correct means, so it can catch the code being wrong.',
+  },
+  {
+    id: 'iq-10.3-one-behavior',
+    lessonId: '10.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why should a test check one behavior?',
+    answer:
+      'Because when it fails, a one-behavior test names the exact thing that broke, so you know at a glance what is wrong. A test that checks many things at once leaves you guessing which part failed. One behavior per test turns a red into a diagnosis.',
+  },
+  {
+    id: 'iq-10.4-tobe-toequal',
+    lessonId: '10.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between toBe and toEqual?',
+    answer:
+      'toBe checks that two things are the very same value or the very same object, like strict equals. toEqual walks into objects and arrays and checks that their contents match, even if they are separate objects. Use toBe for primitives and the same-object case, and toEqual to compare shapes.',
+  },
+  {
+    id: 'iq-10.4-twin-trap',
+    lessonId: '10.4',
+    type: 'coding',
+    difficulty: 'tricky',
+    prompt: 'Does this pass or fail, and why?',
+    code: 'expect({ a: 1 }).toBe({ a: 1 })',
+    answer:
+      'It fails. The two objects look alike but they are separate objects at different addresses, and toBe checks for the same object. Since they are not the same one, it fails. To compare their contents you use toEqual, which walks the objects and sees they match.',
+  },
+  {
+    id: 'iq-10.4-tobeclose',
+    lessonId: '10.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why use toBeCloseTo instead of toBe for decimals?',
+    answer:
+      'Because decimals like 0.1 plus 0.2 are stored with a tiny rounding error, so an exact check fails even when the math is right. toBeCloseTo allows a small wiggle so a result that is right to a sensible number of places passes. It is the honest way to assert on floats.',
+  },
+  {
+    id: 'iq-10.5-describe-it',
+    lessonId: '10.5',
+    type: 'coding',
+    difficulty: 'straightforward',
+    prompt: 'What does this define?',
+    code: 'describe("add", () => {\n  it("sums two numbers", () => {\n    expect(add(2, 3)).toBe(5)\n  })\n})',
+    answer:
+      'It defines one test. describe groups related tests under a name. it is one test with a sentence describing what it checks. expect with a matcher makes the assertion. Reading it aloud says add sums two numbers, which is the point of good test names.',
+  },
+  {
+    id: 'iq-10.5-read-red',
+    lessonId: '10.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'When a test fails, what three things do you read first?',
+    answer:
+      'The test name, which says what was meant to work. The expected versus received, which shows how the result differed. And the file and line, which points you at where to look. Reading a red result in that order turns a scary wall of text into a clear next step.',
+  },
+  {
+    id: 'iq-10.6-stub',
+    lessonId: '10.6',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is a stub?',
+    answer:
+      'A stub is a stand-in that feeds your code a fixed answer instead of calling the real thing. You use it to control the input side, so a test does not depend on a real network or database. It lets you set up the exact situation you want to test.',
+  },
+  {
+    id: 'iq-10.6-spy',
+    lessonId: '10.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is a spy, and what does it let you check?',
+    answer:
+      'A spy is a stand-in that also remembers how it was called: how many times, and with what arguments. It lets you check that your code called something the right way, which is about behavior rather than a returned value. A spy is really a function with a notebook attached.',
+  },
+  {
+    id: 'iq-10.6-mock-fake',
+    lessonId: '10.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the difference between a mock and a fake?',
+    answer:
+      'A fake is a light working version of a thing, like an in-memory store standing in for a real database. A mock is a stand-in set up with expectations about how it should be called, and it fails the test if those are not met. A fake behaves, a mock checks.',
+  },
+  {
+    id: 'iq-10.6-tdd',
+    lessonId: '10.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What are the three steps of a test-driven development lap?',
+    answer:
+      'Red: write a failing test first, and see it fail so you know it can. Green: write the least code to make it pass. Refactor: clean up the code now that the test protects you. Red, green, refactor, one small lap at a time, keeps you honest and covered.',
+  },
+  {
+    id: 'iq-10.7-cascade',
+    lessonId: '10.7',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'When one small change makes several tests go red at once, what does that tell you?',
+    answer:
+      'It tells you the broken piece is shared, and those tests all lean on it. That cascade is useful, because it maps how far the damage reaches. You fix the one root cause, not each test, and watch them all go green again. This is a regression seen through the suite.',
+  },
+  {
+    id: 'iq-10.7-sabotage',
+    lessonId: '10.7',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why deliberately break the code once your tests pass?',
+    answer:
+      'To prove the tests can actually fail. A test that stays green even when the code is wrong is worthless. Breaking the code on purpose and seeing red confirms the test is really checking the thing. Then you undo the break and the suite goes green for real.',
+  },
+
+  // ── Phase 11 — Playwright ───────────────────────────────────────
+  {
+    id: 'iq-11.1-what',
+    lessonId: '11.1',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is Playwright?',
+    answer:
+      'Playwright is a tool for driving a real browser from a Node script. Your code opens pages, finds elements, clicks and types like a user, and checks what the page shows. It runs the real browser engines, so a test does what a person would do, only automatically.',
+  },
+  {
+    id: 'iq-11.1-why',
+    lessonId: '11.1',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why do teams pick Playwright over older browser tools?',
+    answer:
+      'Because it was built around the things that made older tools flaky. It waits for elements to be ready by default, drives the real modern engines, and gives strong tools like traces to debug failures. That built-in waiting is the big one, since it removes most of the guesswork that caused flaky tests.',
+  },
+  {
+    id: 'iq-11.2-scaffold',
+    lessonId: '11.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does npm init playwright set up for you?',
+    answer:
+      'It asks a few questions, then creates a config file, an example test, a folder for tests, and downloads the browser engines. So after one command you have a working suite you can run straight away. It is the fastest way to a first passing test.',
+  },
+  {
+    id: 'iq-11.2-browsers',
+    lessonId: '11.2',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why does Playwright download its own browsers?',
+    answer:
+      'So every run uses a known, matching browser version rather than whatever happens to be on the machine. That makes runs repeatable across your laptop and CI. The download is a one-time step during setup.',
+  },
+  {
+    id: 'iq-11.3-baseurl',
+    lessonId: '11.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What does baseURL in the config do, and why read it from an environment variable?',
+    answer:
+      'baseURL is the site your tests point at, so a call to page.goto with a short path is added onto it. Reading it from an environment variable lets the same suite run against local, staging, or production by changing one setting, with no code edits. One suite, many targets.',
+  },
+  {
+    id: 'iq-11.3-retries-ci',
+    lessonId: '11.3',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why might the config set retries only on CI?',
+    answer:
+      'Because a retry can hide a real flaky test if used everywhere, but on CI a single random blip should not fail the whole pipeline. Retrying on CI only gives some tolerance where runs are shared and noisy, while locally a failure stays a failure so you notice and fix it.',
+  },
+  {
+    id: 'iq-11.4-getbyrole',
+    lessonId: '11.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why is getByRole often the best way to find an element?',
+    answer:
+      'Because it finds elements the way a user or a screen reader sees them, by their role and name, like a button labelled Submit. That survives a redesign that changes the markup and classes, and it nudges the app toward being accessible. It is stable and meaningful at once.',
+  },
+  {
+    id: 'iq-11.4-locator-lazy',
+    lessonId: '11.4',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How is a Playwright locator different from grabbing an element once?',
+    answer:
+      'A locator is a description of how to find an element, not the element itself. It is looked up fresh each time you use it, so it works even if the page re-rendered since you made it. This laziness is why locators cope with a page that changes under them.',
+  },
+  {
+    id: 'iq-11.4-user-visible',
+    lessonId: '11.4',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does it mean to find elements the way a user does?',
+    answer:
+      'It means selecting by what a person perceives, like the visible text, the role, the label, or a placeholder, rather than by internal ids or a deep tag path. Tests written this way read like the intent of a user and break less when the internals change.',
+  },
+  {
+    id: 'iq-11.4-testid',
+    lessonId: '11.4',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'When would you use a test id to locate something?',
+    answer:
+      'When there is no stable, user-facing way to find it, you add a dedicated attribute like data-testid and select by that. It is a clear contract between the app and the test that will not shift with styling. You reach for it after roles and text, not before.',
+  },
+  {
+    id: 'iq-11.5-actionability',
+    lessonId: '11.5',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Before Playwright clicks something, what does it check?',
+    answer:
+      'It runs an actionability checklist. It waits for the element to be attached, visible, stable, enabled, and not covered by something else. Only when all of that is true does it click. This built-in waiting is why a Playwright click rarely misses, unlike a raw click that fires whether the element is ready or not.',
+  },
+  {
+    id: 'iq-11.5-trusted',
+    lessonId: '11.5',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does it mean that Playwright uses real, trusted input events?',
+    answer:
+      'It means clicks and typing go through the browser as if a real user did them, firing the same events in the same order. So the app cannot tell the difference from a human. This makes tests behave like real use rather than poking at the page in ways a user never could.',
+  },
+  {
+    id: 'iq-11.6-auto-wait',
+    lessonId: '11.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is auto-waiting in Playwright?',
+    answer:
+      'It is Playwright waiting for an element to be ready before acting or asserting, without you writing any wait. It polls until the condition is true or a timeout is hit. This removes the main cause of flaky tests, which was acting before the page had caught up.',
+  },
+  {
+    id: 'iq-11.6-web-first',
+    lessonId: '11.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is a web-first assertion, and how does expect(locator).toBeVisible() differ from a plain check?',
+    answer:
+      'A web-first assertion keeps re-checking until it passes or times out, instead of judging once. So toBeVisible waits for the element to become visible rather than failing the instant it is not. This polling is what lets tests handle content that arrives a moment late.',
+  },
+  {
+    id: 'iq-11.6-no-sleep',
+    lessonId: '11.6',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why should you avoid a fixed sleep like waiting three seconds?',
+    answer:
+      'Because a fixed wait is always wrong. Too short and it fails when the app is slow. Too long and it wastes time on every run. Auto-waiting checks the actual condition and continues the moment it is true, so it is both faster and more reliable than any guessed sleep.',
+  },
+  {
+    id: 'iq-11.6-timeout',
+    lessonId: '11.6',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'If auto-waiting exists, why does a test still sometimes time out?',
+    answer:
+      'Because the thing it is waiting for never becomes true within the limit. Maybe the element never appears, or the wrong locator is used, or the app really is broken. A timeout is not the waiting failing, it is the condition genuinely not happening. So you read it as a real signal, not noise.',
+  },
+  {
+    id: 'iq-11.7-page-fixture',
+    lessonId: '11.7',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Where does the page object in a Playwright test come from?',
+    answer:
+      'It is a fixture that Playwright creates and hands to your test. Before the test, it makes a fresh browser context and a new page, gives them to you, and after the test it cleans them up. So each test starts on a clean page without you setting it up by hand.',
+  },
+  {
+    id: 'iq-11.7-isolation',
+    lessonId: '11.7',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why does each test get its own fresh browser context?',
+    answer:
+      'So tests do not leak into each other. A fresh context has its own cookies, storage, and state, so one test cannot leave something behind that changes another. This isolation is what makes tests safe to run in any order and in parallel.',
+  },
+  {
+    id: 'iq-11.7-hooks',
+    lessonId: '11.7',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What are beforeEach and afterEach hooks for?',
+    answer:
+      'beforeEach runs setup before every test, like going to a starting page. afterEach runs cleanup after every test. They keep shared setup in one place instead of repeating it, so each test can focus on the one thing it checks.',
+  },
+  {
+    id: 'iq-11.8-parameterized',
+    lessonId: '11.8',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What is a parameterized test?',
+    answer:
+      'It is one test body run against a table of cases. You loop over the rows and create a test for each, so many inputs and expected outputs share one piece of logic. It keeps edge cases to a line each instead of copying the whole test.',
+  },
+  {
+    id: 'iq-11.8-unique-data',
+    lessonId: '11.8',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why generate unique data per test run instead of reusing fixed values?',
+    answer:
+      'Because a fixed value like a set email can clash if it already exists from a previous run, making the test fail for the wrong reason. Unique data, like a name with a timestamp, keeps each run independent and repeatable. It avoids tests tripping over their own leftovers.',
+  },
+  {
+    id: 'iq-11.9-pom',
+    lessonId: '11.9',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is the Page Object Model?',
+    answer:
+      'It is putting the locators and actions for one screen into one class, so tests call methods like login rather than repeating selectors. When the UI changes, you edit that one class, and every test using it is fixed at once. It keeps tests readable and cheap to maintain.',
+  },
+  {
+    id: 'iq-11.9-one-edit',
+    lessonId: '11.9',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How does a page object make a UI rename a one-edit change?',
+    answer:
+      'Because the selector lives in one place, the page object, not scattered across many tests. When the button is renamed, you update the locator in that class only. Every test that clicks through the page object keeps working with no other change.',
+  },
+  {
+    id: 'iq-11.9-what-not',
+    lessonId: '11.9',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What should a page object avoid holding?',
+    answer:
+      'It should avoid assertions and test logic. Its job is to describe the screen and offer actions, while the test decides what to check. Mixing assertions into the page object blurs that line and makes the checks hard to find and reuse. Keep intent in the test, mechanics in the object.',
+  },
+  {
+    id: 'iq-11.10-intercept',
+    lessonId: '11.10',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What can you do by intercepting network requests in a test?',
+    answer:
+      'You can watch, change, or answer requests yourself. That lets you force a sad path on demand, like making an endpoint return an error or an empty list, without needing the real server to misbehave. It makes hard-to-reach states easy and fast to test.',
+  },
+  {
+    id: 'iq-11.10-fulfill',
+    lessonId: '11.10',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How would you make an API return a fake error to test error handling?',
+    answer:
+      'You intercept that route and fulfill it yourself with the error status and body you want, instead of letting it reach the server. The app then reacts to your fake response, so you can check it shows the error state. This tests the sad path reliably every run.',
+  },
+  {
+    id: 'iq-11.10-api-in-playwright',
+    lessonId: '11.10',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How can Playwright test an API directly, with no page?',
+    answer:
+      'It has a request feature that sends HTTP calls and checks the responses, the same idea as fetch but built into the test tools. So the same project can hold fast API checks and full browser tests. You use the API layer for the cheap checks and the browser for the journeys.',
+  },
+  {
+    id: 'iq-11.11-storage-state',
+    lessonId: '11.11',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is storage state, and how does it speed up a suite?',
+    answer:
+      'Storage state is the saved cookies and local storage from a logged-in session, written to a file. Tests load that file to start already logged in, instead of logging in through the UI each time. So one real login can serve hundreds of tests, cutting a lot of slow, repeated steps.',
+  },
+  {
+    id: 'iq-11.11-login-once',
+    lessonId: '11.11',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'Why log in once and reuse the session instead of logging in every test?',
+    answer:
+      'Because logging in through the form is slow and is not what most tests are checking. Doing it once, saving the session, and reusing it makes every other test start faster and focus on its real job. It turns hundreds of logins into zero.',
+  },
+  {
+    id: 'iq-11.11-mass-401',
+    lessonId: '11.11',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'If suddenly every test fails with a 401 unauthorized, what would you suspect?',
+    answer:
+      'That the saved session is stale or missing, so tests start logged out. Maybe the stored state expired, or the login step that creates it failed, or the file path is wrong. One shared cause explaining a wave of auth failures points at the session setup, not each test.',
+  },
+  {
+    id: 'iq-11.12-projects',
+    lessonId: '11.12',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does the projects setting let you do?',
+    answer:
+      'It lets you run the same tests across several setups, like different browser engines or a phone-sized device, each defined once. So one suite covers Chromium, Firefox, WebKit, and mobile without duplicating tests. You pick which projects to run when you need to.',
+  },
+  {
+    id: 'iq-11.12-webserver',
+    lessonId: '11.12',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What problem does the webServer option solve?',
+    answer:
+      'It starts your app before the tests and waits until it is reachable, then runs them against it. This kills the dev-server-was-not-running failure, where tests hit a dead address. It ties the app and the tests together so a run is self-contained.',
+  },
+  {
+    id: 'iq-11.13-tags',
+    lessonId: '11.13',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What are test tags like @smoke used for?',
+    answer:
+      'They label tests so you can run a chosen subset, like only the quick smoke checks on every push and the full suite less often. You filter by the tag from the command line. It lets one suite serve fast feedback and deep coverage without splitting it.',
+  },
+  {
+    id: 'iq-11.13-only-danger',
+    lessonId: '11.13',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why is a stray .only in a committed test dangerous?',
+    answer:
+      'Because .only makes the runner run just that one test and skip all the others. If it lands in the shared code, CI quietly runs a single test and reports green while everything else was skipped. A setting like forbidOnly makes CI fail on a leftover .only so it cannot slip through.',
+  },
+  {
+    id: 'iq-11.14-trace',
+    lessonId: '11.14',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is a Playwright trace, and why is it useful?',
+    answer:
+      'A trace is a recording of a run: snapshots of the page at each step, the actions taken, the network, and the console. You open it after a failure and step back and forth in time to see exactly what the page looked like when it broke. It is a flight recorder for the test.',
+  },
+  {
+    id: 'iq-11.14-ci-only',
+    lessonId: '11.14',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'A test passes locally but fails on CI. How do you investigate?',
+    answer:
+      'I would get the trace and screenshots from the CI run and replay them to see the real state at failure. Then I compare the environment: timing, data, screen size, or login state may differ. The trace turns something you cannot reproduce into something you can watch.',
+  },
+  {
+    id: 'iq-11.14-headed-debug',
+    lessonId: '11.14',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How can you watch a test run to debug it?',
+    answer:
+      'You run it in headed mode so the browser is visible, or use the step debugger that pauses between actions. Seeing it run in slow motion often makes the problem obvious. This is for figuring out a test, while traces are for failures you cannot reproduce live.',
+  },
+  {
+    id: 'iq-11.15-workers',
+    lessonId: '11.15',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'How does Playwright run tests in parallel?',
+    answer:
+      'It runs several worker processes at once, each taking tests from the pile, each with its own isolated browser context. This cuts total time a lot. It works because tests are isolated, so running many at the same time does not let them interfere.',
+  },
+  {
+    id: 'iq-11.15-flaky',
+    lessonId: '11.15',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What is a flaky test, and why is it worse than a failing one?',
+    answer:
+      'A flaky test passes sometimes and fails other times with no code change. It is worse than a steady failure because people stop trusting reds and start ignoring them, so a real bug can hide among the noise. The goal is zero flakes, not just a rerun that goes green.',
+  },
+  {
+    id: 'iq-11.15-causes',
+    lessonId: '11.15',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'What are common causes of flaky tests, and their cures?',
+    answer:
+      'Racing ahead of the page, cured by auto-waiting and web-first assertions. Shared state between tests, cured by isolation. Fixed sleeps, cured by waiting on real conditions. Order dependence, cured by making each test stand alone. Most flakes trace back to one of these.',
+  },
+  {
+    id: 'iq-11.16-ci',
+    lessonId: '11.16',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does a CI pipeline do for a test suite?',
+    answer:
+      'It runs your tests automatically on a fresh machine whenever code is pushed, so nobody has to remember. It installs, builds, runs the suite, and reports pass or fail. This makes the suite a gate that guards the shared code on every change.',
+  },
+  {
+    id: 'iq-11.16-artifacts',
+    lessonId: '11.16',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'Why publish the HTML report and traces as CI artifacts?',
+    answer:
+      'Because the CI machine is thrown away after the run, so anything you want to look at later must be saved. Uploading the report and traces lets you open them from the failed build and debug without rerunning. It is how a red pipeline becomes something you can investigate.',
+  },
+  {
+    id: 'iq-11.17-visual',
+    lessonId: '11.17',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'How does visual testing work, and what is its main risk?',
+    answer:
+      'It takes a screenshot and compares it pixel by pixel against an approved baseline image, failing on a difference. The main risk is false alarms from tiny, harmless rendering changes, so baselines must be governed carefully and updated on purpose, not blindly.',
+  },
+  {
+    id: 'iq-11.17-a11y',
+    lessonId: '11.17',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does an accessibility scan like axe check for?',
+    answer:
+      'It checks the page against accessibility rules, like missing labels, poor contrast, or bad roles, and reports violations. Running it in tests sets a floor so the app stays usable with a keyboard and a screen reader. It catches common barriers automatically.',
+  },
+  {
+    id: 'iq-11.18-suite',
+    lessonId: '11.18',
+    type: 'oral',
+    difficulty: 'straightforward',
+    prompt: 'What does a complete, healthy test suite look like?',
+    answer:
+      'It uses stable locators, page objects for screens, isolated tests that run in parallel, web-first assertions with no fixed sleeps, data set up per run, and it runs green in CI with a published report. Each piece you learned plays its part in one reliable whole.',
+  },
+  {
+    id: 'iq-11.18-ready',
+    lessonId: '11.18',
+    type: 'oral',
+    difficulty: 'tricky',
+    prompt: 'As an automation tester, how would you summarize what makes tests trustworthy?',
+    answer:
+      'They fail only for real reasons and pass only when the app is truly right. That comes from stable locators, proper waiting instead of sleeps, isolation so order does not matter, and running the same way locally and in CI. Trustworthy tests are ones the team believes without a second look.',
+  },
 ]
 
 /**
