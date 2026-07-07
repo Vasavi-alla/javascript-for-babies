@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.12 — Cross-browser projects & devices
@@ -319,13 +320,6 @@ export const lesson1112: LessonDef = {
         registry entries are just objects (4.x) with good defaults. Print one in the REPL (9.1)
         someday; demystification is a hobby now.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> when asked “how do you handle cross-browser testing?”,
-        the mature answer names the budget, not the feature. All engines from one suite via
-        projects; chromium per change; full matrix nightly. Engine-specific bugs are real but
-        rare, and quadrupling every run buys little. Feature + judgment is what seniority sounds
-        like.
-      </p>
     </>
   ),
   quiz: [
@@ -351,6 +345,20 @@ export const lesson1112: LessonDef = {
       why: 'webServer — command + url + reuseExistingServer: !CI. The “was the dev server running?” failure genre dies in this block.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">How do you handle cross-browser testing?</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        All engines from one suite, via projects. Chromium on every change, the full matrix
+        nightly.
+      </ChatBubble>
+      <Takeaway>
+        Engine-specific bugs are real but rare. <Key>Feature plus judgment is what seniority
+        sounds like.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={MATRIX_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.3 — The config, decoded
@@ -326,13 +327,6 @@ export const lesson113: LessonDef = {
         11.12). And <code>globalSetup</code>/<code>globalTeardown</code> for run-once work — 11.11
         uses the projects flavor of that idea for login.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> when a suite behaves differently on CI than locally,
-        compare the EFFECTIVE config first. Nearly always it’s a{' '}
-        <code>process.env.CI ? … : …</code> line doing exactly what it says — retries masking a
-        flake, workers changing order. You can now read those lines; that skill will save you
-        afternoons.
-      </p>
     </>
   ),
   quiz: [
@@ -358,6 +352,19 @@ export const lesson113: LessonDef = {
       why: 'The configured baseURL — env-aimed via process.env.BASE_URL ?? localhost (9.4 delivered). One suite, many targets, and specs never hard-code hosts.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a suite will behave differently on CI than on your machine.</Scene>
+      <ChatBubble who="teammate" face="😕">It only fails on CI. Locally it’s green every time.</ChatBubble>
+      <ChatBubble who="you" face="🙂" accent indent>
+        Compare the effective config first. It is almost always one process.env.CI line: retries
+        masking a flake, or workers changing the order.
+      </ChatBubble>
+      <Takeaway>
+        You can now read those lines. <Key>That skill saves whole afternoons.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={CONFIG_EXERCISE} />,
   teachBack: {
     prompt:

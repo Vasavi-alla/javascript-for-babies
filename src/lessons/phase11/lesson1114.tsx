@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.14 — Debugging failing tests
@@ -393,14 +394,6 @@ export const lesson1114: LessonDef = {
         click the red test — screenshot, video, and trace are one click deep. 11.16 wires the
         upload; you already know how to read everything inside.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “walk me through debugging a CI-only failure” is THE
-        senior-signal interview question. You now own the complete answer. Artifacts survive the
-        machine: screenshot → right page?; trace → the five questions (assertion, snapshot,
-        locator, network, console). Reproduce locally with --ui if needed. Then the usual
-        verdicts: stale auth bottle, backend 5xx, or a real race the trace timeline exposes.
-        Delivered calmly, that answer reads as years of experience.
-      </p>
     </>
   ),
   quiz: [
@@ -426,6 +419,22 @@ export const lesson1114: LessonDef = {
       why: 'npx playwright test --ui — click a test, watch it run, edit, auto re-run, inspect any action’s snapshot. Daily development lives here once tasted.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">
+        Walk me through debugging a CI-only failure.
+      </ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        Artifacts survive the machine. Screenshot for the right page, then the trace: assertion,
+        snapshot, locator, network, console.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Delivered calmly, that answer reads as years of experience.</Key> This is THE
+        senior-signal question in the field.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={DIAGNOSE_EXERCISE} />,
   teachBack: {
     prompt:

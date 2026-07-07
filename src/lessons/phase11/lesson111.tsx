@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.1 — What Playwright is & why teams pick it
@@ -345,13 +346,6 @@ export const lesson111: LessonDef = {
         When you meet Selenium at work (you will — legacy suites live long), it’s the same
         concepts with more manual labor.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “explain Playwright’s architecture” is a real interview
-        question. Most candidates say “it’s a testing tool.” You can now say: a Node test runner
-        driving real browser processes over a wire protocol, with every action awaited across
-        that boundary. That design is WHY auto-waiting and traces are possible. That answer gets
-        remembered.
-      </p>
     </>
   ),
   quiz: [
@@ -377,6 +371,20 @@ export const lesson111: LessonDef = {
       why: 'Chromium (Chrome/Edge), Firefox, and WebKit (Safari’s engine — the one that surprises everyone). One test file runs on all three, unchanged.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you to explain Playwright.</Scene>
+      <ChatBubble who="interviewer" face="🙂">Explain Playwright’s architecture.</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        A Node test runner driving real browser processes over a wire protocol. Every action is
+        awaited across that boundary.
+      </ChatBubble>
+      <Takeaway>
+        Most candidates just say “it’s a testing tool.” <Key>Naming the architecture is what
+        gets remembered.</Key> It also explains why auto-waiting and traces are even possible.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={BRIDGE_EXERCISE} />,
   teachBack: {
     prompt:

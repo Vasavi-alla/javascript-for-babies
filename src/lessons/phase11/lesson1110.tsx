@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.10 — Network interception & API testing
@@ -345,13 +346,6 @@ export const lesson1110: LessonDef = {
         the request fixture can share auth with your pages (11.11’s storage state) — API-create,
         UI-verify flows are cheap.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> interviewers love “how would you test the error state
-        of the products page?” The professional answer is one sentence: intercept the
-        products call with route.fulfill status 500 and assert the banner — deterministic, no
-        server harmed. Bonus sentence: a few unmocked journeys stay in the suite, so the real
-        wiring is still proven. That pairing is the whole judgment.
-      </p>
     </>
   ),
   quiz: [
@@ -377,6 +371,22 @@ export const lesson1110: LessonDef = {
       why: 'No — mocked tests prove the UI against YOUR data, not the real wiring. Teams mix: many mocked UI-state tests + a few unmocked journeys. The pyramid is fractal.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">
+        How would you test the error state of the products page?
+      </ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        Intercept the products call with route.fulfill status 500, and assert the banner.
+        Deterministic, and no server harmed.
+      </ChatBubble>
+      <Takeaway>
+        Bonus sentence: <Key>a few unmocked journeys stay in the suite, so the real wiring is
+        still proven.</Key> That pairing is the whole judgment.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={ROUTE_EXERCISE} />,
   teachBack: {
     prompt:

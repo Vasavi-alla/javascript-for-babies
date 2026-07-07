@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.8 — Test data & parameterized tests
@@ -371,12 +372,6 @@ export const lesson118: LessonDef = {
         cases. Powerful for pure functions; used sparingly in E2E, where determinism matters
         most. Know the term; use tables first.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> the interview question is “how would you test 50 coupon
-        codes?” The answer that signals experience is the table, with named rows and a one-line
-        edge policy. NOT “I’d write 50 tests”, and NOT “I’d loop inside one test.” You now know
-        why both wrong answers are wrong — worth more than the right one.
-      </p>
     </>
   ),
   quiz: [
@@ -402,6 +397,19 @@ export const lesson118: LessonDef = {
       why: 'One behavior per table — parameterize INPUTS of a single behavior. Three different behaviors in one table is 10.3’s rule broken with extra steps: a dumping ground in a trench coat.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">How would you test 50 coupon codes?</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        One table of named rows, with a one-line edge policy. Not fifty separate tests, and not
+        a loop inside one test.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Knowing why both wrong answers are wrong is worth more than the right one.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={DATA_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.2 — Setup: what npm init playwright scaffolds
@@ -336,12 +337,6 @@ export const lesson112: LessonDef = {
         stands — <code>page.</code> autocompleting every action is worth the one-letter extension,
         and every real codebase you join will have chosen TS already.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> while learning, run the init in an EMPTY folder, not
-        inside an existing app. One suite, one repo keeps the mental model clean. At work
-        you’ll find the suite inside the app repo (an <code>e2e/</code> folder) — same
-        files, same reading order: config first, then one spec.
-      </p>
     </>
   ),
   quiz: [
@@ -367,6 +362,20 @@ export const lesson112: LessonDef = {
       why: '--headed — headless (no window) is the default for speed; headed is for humans. Watching the robot drive once is the fastest trust-builder there is.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a teammate will ask where your tests live.</Scene>
+      <ChatBubble who="teammate" face="🙂">Why is there an e2e folder inside the app repo?</ChatBubble>
+      <ChatBubble who="you" face="😊" accent indent>
+        That is where real suites live: one repo, same files, same reading order. Config first,
+        then a spec.
+      </ChatBubble>
+      <Takeaway>
+        While learning, keep one suite in an empty folder so the model stays clean.{' '}
+        <Key>At work, the suite lives inside the app repo instead.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={SCAFFOLD_EXERCISE} />,
   teachBack: {
     prompt:

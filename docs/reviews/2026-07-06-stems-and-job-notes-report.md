@@ -214,6 +214,57 @@ tag in the match, avoiding the recurrence.
 - `grep -rn "💼" src/lessons/phase9 src/lessons/phase10` → no matches
 - `<p>`/`</p>` balance check across every phase-9/10 file → all balanced
 
+## Task 11 — Phase 11 stem audit + all 17 notes (11.1–11.17)
+
+### Stem audit
+
+All ~50 quiz questions across 11.1–11.18 read as complete problem statements with explicit
+answer shapes. No `hint:`/`notice…` trick-pointers found in any stem (a targeted grep for
+`hint:|notice |Notice |watch for|pointing at` across `src/lessons/phase11` only matched
+occurrences inside `why` text, which the contract does not govern). Zero stem fixes needed —
+this phase's stems were already contract-clean.
+
+### Note migrations (17 of 17 — 11.18 has none, as the plan notes)
+
+By this late in the course nearly all vocabulary is already taught, so every note migrated as
+a straight re-expression (no vocabulary rebuilds needed, unlike the Phase 0–1 batch). Given how
+interview-heavy Phase 11's original notes were, most migrated to the two-`ChatBubble` interview
+template (interviewer asks, "you, after this lesson" answers) — a new record for that template's
+use in one batch.
+
+| lesson | surface | before | after |
+|---|---|---|---|
+| 11.1 | onTheJob (was UTH 💼 note) | `"explain Playwright's architecture" is a real interview question. Most candidates say "it's a testing tool." You can now say: a Node test runner driving real browser processes over a wire protocol...` | Interview exchange: `ChatBubble` "Explain Playwright's architecture." / "A Node test runner driving real browser processes over a wire protocol. Every action is awaited across that boundary." + `Takeaway`: "**Naming the architecture is what gets remembered.**" |
+| 11.2 | onTheJob (was UTH 💼 note) | `while learning, run the init in an EMPTY folder, not inside an existing app... At work you'll find the suite inside the app repo (an e2e/ folder)...` | Team-chat exchange: `ChatBubble` teammate asks why an `e2e/` folder lives inside the app repo / you explain + `Takeaway`: "**At work, the suite lives inside the app repo instead.**" |
+| 11.3 | onTheJob (was UTH 💼 note) | `when a suite behaves differently on CI than locally, compare the EFFECTIVE config first. Nearly always it's a process.env.CI ? … : … line...` | Team-chat exchange: `ChatBubble` "It only fails on CI" / "Compare the effective config first..." + `Takeaway`: "**That skill saves whole afternoons.**" |
+| 11.4 | onTheJob (was UTH 💼 note) | `teams adopting user-facing locators report the same change: selector maintenance drops from a weekly chore to a rarity...` | `ChatBubble` pair (you, six months in / teammate) + `Takeaway`: "**A boring suite is the highest compliment a suite can earn.**" |
+| 11.5 | onTheJob (was UTH 💼 note) | `"element is not stable" failures usually mean CSS animations... "not visible" with a correct locator often means a SECOND, hidden copy of the element exists...` | `ChatBubble` pair: teammate pastes the error / you diagnose (animation, or a hidden duplicate) + `Takeaway`: "**Actionability errors name the exact check that failed.**" |
+| 11.6 | onTheJob (was UTH 💼 note) | `teams migrating from sleep-based suites to web-first assertions routinely report faster runs AND ten-times-fewer flakes...` | `TestRunCard` (before/after: sleep-based 40min/12% flaky → web-first 9min/1% flaky) + `Takeaway`: "**Faster AND far less flaky.**" |
+| 11.7 | onTheJob (was UTH 💼 note) | `reading an unfamiliar suite, open its fixtures.ts first: it's the cast of characters... Good ones read like a menu of prepared worlds; bad ones have one giant fixture doing everything.` | `ReviewCard` (`fixtures.ts`: named fixtures vs. one dead `megaFixture` line) + `Takeaway`: "**It is the cast of characters, and it shows the suite's maturity at a glance.**" |
+| 11.8 | onTheJob (was UTH 💼 note) | `the interview question is "how would you test 50 coupon codes?" ... NOT "I'd write 50 tests", and NOT "I'd loop inside one test."` | Interview exchange: `ChatBubble` "How would you test 50 coupon codes?" / "One table of named rows... Not fifty separate tests, and not a loop inside one test." + `Takeaway`: "**Knowing why both wrong answers are wrong is worth more than the right one.**" |
+| 11.9 | onTheJob (was UTH 💼 note) | `"explain the Page Object Model" is a top-three automation interview question. The winning answer: locator duplication is a maintenance bug...` | Interview exchange, four-sentence answer + `Takeaway`: "**Bonus: you can also say when NOT to use it.**" |
+| 11.10 | onTheJob (was UTH 💼 note) | `interviewers love "how would you test the error state of the products page?" The professional answer is one sentence: intercept the products call with route.fulfill status 500...` | Interview exchange + `Takeaway`: "**a few unmocked journeys stay in the suite, so the real wiring is still proven.**" |
+| 11.11 | onTheJob (was UTH 💼 note) | `"how do you handle auth in your suite?" is a standard interview probe. The layered answer: sessions are data...` | Interview exchange + `Takeaway`: "**That layered answer is a hiring signal.**" |
+| 11.12 | onTheJob (was UTH 💼 note) | `when asked "how do you handle cross-browser testing?", the mature answer names the budget, not the feature...` | Interview exchange + `Takeaway`: "**Feature plus judgment is what seniority sounds like.**" |
+| 11.13 | onTheJob (was UTH 💼 note) | `suite hygiene is disproportionately VISIBLE seniority. Consistent tags, reasons on every skip, zero merged .onlys, steps in long tests — none of it is clever, all of it adds up.` | `ChatBubble` pair (a lead naming the hygiene habits) + `Takeaway`: "**The engineer whose suite reads like a spec sheet gets trusted with the release button.**" |
+| 11.14 | onTheJob (was UTH 💼 note) | `"walk me through debugging a CI-only failure" is THE senior-signal interview question. You now own the complete answer...` | Interview exchange + `Takeaway`: "**Delivered calmly, that answer reads as years of experience.**" |
+| 11.15 | onTheJob (was UTH 💼 note) | `"how do you deal with flaky tests?" is the interview question in this domain... Your answer now has four moves.` | Interview exchange (prevent/detect/diagnose/quarantine, four moves) + `Takeaway`: "**Trust is the suite's only asset.**" |
+| 11.16 | onTheJob (was UTH 💼 note) | `being the person who can READ the pipeline is powerful. "CI is broken" panics the team's daily standup... Someone opens the YAML... in ninety seconds.` | `ChatBubble` pair ("CI is broken!" / "npm ci failed. Lockfile drift, not a test problem.") + `Takeaway`: "**Being the person who can read the pipeline is powerful.**" |
+| 11.17 | onTheJob (was UTH 💼 note) | `teams increasingly staff "quality" to cover both of these. Interviewers probe with "how would you catch a CSS regression?"... And "what does automated a11y testing miss?"` | Two-question interview exchange (CSS regression + a11y scan limits) + `Takeaway`: "**The scan is a floor, never a certificate.**" |
+
+No relocations needed this batch — every fact from all 17 old notes re-expressed directly in
+its own new section; nothing untaught, nothing requiring a rebuild elsewhere.
+
+### Verification (Task 11)
+
+- `node scripts/lint-uth.mjs` → `UTH lint: clean`
+- `npm run build` → `✓ built in 845ms` (green)
+- `grep -rn "💼" src/lessons/phase11` → no matches
+- `grep -rl "onTheJob:" src/lessons/phase11 | wc -l` → 17 (11.18 correctly has none)
+- `<p>`/`</p>` balance check across every phase-11 file → all balanced (no repeat of the
+  Task-10 orphaned-tag bug; every deletion's `old_string` included the paragraph's opening
+  `<p>` tag from the start)
+
 ## Relocations log
 
 - **2.3's status-code example** ("Status 2xx → pass, 4xx → client error, 5xx → server error")
@@ -227,3 +278,60 @@ tag in the match, avoiding the recurrence.
   it took under 2 seconds") — **RESOLVED in Task 8.** Landed in lesson 6.7 "fetch & APIs" as a
   new `onTheJob` section (6.7 had no badged note), rebuilt with 6.7's now-taught status-code
   vocabulary and an explicit callback line ("Remember 1.10's boolean grammar?").
+
+Both relocations tracked during this project are now resolved. No new relocations surfaced in
+Task 11.
+
+## Task 12 — Final verification + handoff
+
+### Full lint + build
+
+- `node scripts/lint-uth.mjs` → `UTH lint: clean` (all 115 lessons, all `onTheJob` blocks)
+- `npm run build` → `✓ built in 853ms` (green)
+
+### Zero-leftovers check
+
+- `grep -rn "💼" src/lessons` → **0 matches.** Every badged note (and every unbadged
+  job-flavored aside found along the way) is gone from lesson source.
+- `grep -rl "onTheJob:" src/lessons | wc -l` → **63**, not the plan's stated 59. The delta is
+  the four unbadged/relocation additions logged during the project: 2.4, 3.1, 3.3 (job-flavored
+  UTH asides that predated the `💼` badge and were never in the original grep-built count), and
+  6.7 (a new section created to hold the relocated 1.10 example, since 6.7 had no note of its
+  own). As flagged in the Task-5 scope note, the plan's "59" was always a floor, not an exact
+  count — this final number is the accurate total.
+
+### Fresher-read verification pass
+
+Rather than re-reading all 115 files start to finish (each was already read carefully at its own
+migration task), this pass ran four targeted, whole-codebase checks aimed at the specific bug
+classes that actually occurred earlier in the project:
+
+- **Straight-apostrophe slips** (the recurring bug from Tasks 9–10): a script extracted every
+  `onTheJob` block across all 63 files, stripped `<code>`/backtick spans, and searched the
+  remaining prose for a straight `'` between two letters. **0 found** — every prior slip (7.5,
+  9.3, 9.7, 9.8, 10.6) stayed fixed, and no new ones appeared in Task 11's batch.
+- **Trick-pointer stems**: `grep` for `hint:`/`notice `/`Notice `/`watch for` inside any quiz
+  `question:` field, across all lessons. **0 found.**
+- **Em-dash ban**: already enforced continuously by `lint-uth.mjs`'s per-file `onTheJob`
+  check; lint is clean, so this is covered.
+- **Orphaned `<p>` tags** (the Task-10 build-breaking bug): a per-file `<p>`/`</p>` count
+  across every lesson file. Six files showed a raw mismatch (`lesson03`, `lesson111`,
+  `lesson26`, `lesson28`, `lesson31`, `lesson78`) — all six were false positives from `<p
+  className="...">` variants the plain-tag grep didn't count as opens; a follow-up check
+  confirmed each file's `<p ` count exactly closes the gap. **No real orphaned tags anywhere.**
+
+### Handoff summary
+
+- 300 quiz stems audited across all 11 phases; fixes landed in 2.3 (2 stems, Task 5), 6.9 (1
+  stem, Task 8), and 7.6 (1 stem, Task 9) — every other stem already met the Quiz-Stem Contract.
+- 63 `onTheJob` sections now live in the lesson engine (up from a planned 59, per the
+  zero-leftovers note above), replacing every `💼 On the job —` paragraph that used to sit
+  inside Under the Hood.
+- Both cross-phase relocations (1.10 → 6.7, 2.3 → 9.7) are resolved and logged above.
+- One real, pre-existing product bug was found and fixed along the way: `codeOverride` not
+  persisting across steps in lessons 5.2 and 6.1 (the "watch it happen" pane silently reverting
+  to stale code while captions kept describing the overridden version).
+- Lint clean, build green, zero `💼` leftovers, zero orphaned tags, zero apostrophe slips.
+
+Nothing further is queued from this plan. The user commits on their own word; no `git commit`
+or `git push` was run at any point in this project.

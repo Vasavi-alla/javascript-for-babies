@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.4 — Locators
@@ -384,12 +385,6 @@ export const lesson114: LessonDef = {
         <code>getByText</code> matches substrings by default — <code>exact: true</code> when
         “Log” must not match “Logout”.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> teams adopting user-facing locators report the same
-        change: selector maintenance drops from a weekly chore to a rarity. When you inherit a
-        CSS-heavy suite (you will), migrate gradually — every locator you touch, promote one
-        rung. Six months later the suite is boring — the highest compliment a suite can earn.
-      </p>
     </>
   ),
   quiz: [
@@ -415,6 +410,21 @@ export const lesson114: LessonDef = {
       why: 'Content — filter({ hasText: "Blue mug" }) then find the button within. Order changes when sorting or data changes; content IS the meaning you care about.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will inherit a suite full of CSS selectors.</Scene>
+      <ChatBubble who="you · six months in" face="🙂">
+        Every locator I touch, I promote one rung up the ladder.
+      </ChatBubble>
+      <ChatBubble who="teammate" face="😊" accent indent>
+        Selector maintenance used to be a weekly chore. Now it is a rarity.
+      </ChatBubble>
+      <Takeaway>
+        <Key>A boring suite is the highest compliment a suite can earn.</Key> Migrate
+        gradually, rung by rung.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={LOCATOR_EXERCISE} />,
   teachBack: {
     prompt:

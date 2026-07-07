@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ReviewCard, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.7 — Fixtures & hooks
@@ -353,12 +354,6 @@ export const lesson117: LessonDef = {
         The shopper fixture then becomes a one-liner that loads state instead of driving the
         login form. Same injection shape, hundred× cheaper.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> reading an unfamiliar suite, open its{' '}
-        <code>fixtures.ts</code> first: it’s the cast of characters. Maturity is visible there.
-        Good ones read like a menu of prepared worlds (shopper, admin, emptyCart,
-        seededCatalog); bad ones have one giant fixture doing everything for everyone.
-      </p>
     </>
   ),
   quiz: [
@@ -384,6 +379,22 @@ export const lesson117: LessonDef = {
       why: 'No — fixtures are LAZY: built only when a test names them. Declare needs; the runner supplies exactly those and nothing more.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will join a new team and open their suite for the first time.</Scene>
+      <ReviewCard
+        file="fixtures.ts"
+        lines={[
+          { text: 'shopper, admin, emptyCart, seededCatalog' },
+          { text: 'megaFixture(everything)', dead: true, note: 'one giant fixture doing it all' },
+        ]}
+      />
+      <Takeaway>
+        Open fixtures.ts first. <Key>It is the cast of characters, and it shows the suite’s
+        maturity at a glance.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={FIXTURE_EXERCISE} />,
   teachBack: {
     prompt:

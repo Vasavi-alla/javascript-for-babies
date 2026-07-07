@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.11 — Auth, storage state & sessions
@@ -361,13 +362,6 @@ export const lesson1111: LessonDef = {
         IndexedDB. Most auth lives in cookies/localStorage so the bottle usually suffices — but
         when an app stubbornly logs you out despite the bottle, remember this list.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “how do you handle auth in your suite?” is a standard
-        interview probe. The layered answer: sessions are data (cookies/localStorage), so we log
-        in once in a setup project, ideally via API. Bottle storageState per persona; inject it
-        into fresh contexts. Keep bottles out of git; regenerate per CI run so expiry can’t
-        surprise us. That answer is a hiring signal.
-      </p>
     </>
   ),
   quiz: [
@@ -393,6 +387,20 @@ export const lesson1111: LessonDef = {
       why: 'A stale bottle — the saved session expired. Mass auth-flavored failure = regenerate the storage state (CI does it every run by design; locally, delete .auth/).',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">How do you handle auth in your suite?</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        Sessions are just data, so we log in once in a setup project, ideally via API. We bottle
+        storageState per persona and inject it into fresh contexts.
+      </ChatBubble>
+      <Takeaway>
+        Keep bottles out of git, and regenerate them every CI run. <Key>That layered answer is
+        a hiring signal.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={BOTTLE_EXERCISE} />,
   teachBack: {
     prompt:

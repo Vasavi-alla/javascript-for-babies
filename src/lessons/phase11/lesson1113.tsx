@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.13 — Tags, selective runs & suite hygiene
@@ -341,12 +342,6 @@ export const lesson1113: LessonDef = {
         fixture values. <code>test.slow()</code> is not a skip at all: it triples the timeout
         for a legitimately slow test, on the record.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> suite hygiene is disproportionately VISIBLE seniority.
-        Consistent tags, reasons on every skip, zero merged .onlys, steps in long tests — none
-        of it is clever, all of it adds up. The engineer whose suite reads like a spec sheet
-        gets trusted with the release button. That’s the promotion path in this lesson.
-      </p>
     </>
   ),
   quiz: [
@@ -372,6 +367,21 @@ export const lesson1113: LessonDef = {
       why: 'Yes and yes — soft assertions record the failure and continue (gather ALL the evidence in one pass), but the test still fails at the end. Soft ≠ optional.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, someone will read your suite before they read your code.</Scene>
+      <ChatBubble who="lead" face="🙂">
+        Consistent tags, a reason on every skip, no merged .onlys, steps in the long tests.
+      </ChatBubble>
+      <ChatBubble who="lead" face="😊" accent indent>
+        None of that is clever. All of it adds up.
+      </ChatBubble>
+      <Takeaway>
+        <Key>The engineer whose suite reads like a spec sheet gets trusted with the release
+        button.</Key> That is the promotion path in this lesson.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={GREP_EXERCISE} />,
   teachBack: {
     prompt:

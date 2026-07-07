@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.15 — Parallelism, retries & flakiness
@@ -382,14 +383,6 @@ export const lesson1115: LessonDef = {
         upload (11.16’s artifact step often does exactly this). One suite, one verdict, one
         report — whatever the machine count.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “how do you deal with flaky tests?” is the interview
-        question in this domain: asked everywhere, answered badly by most. Your answer now has
-        four moves. Prevention: the clinic’s cures, by default. Detection: the flaky mark +
-        repeat-each. Diagnosis: trace the failing run, name the cause. Policy: quarantine + P1
-        fix, zero tolerance — trust is the suite’s only asset. Four moves, no hand-waving.
-        That’s a hire.
-      </p>
     </>
   ),
   quiz: [
@@ -415,6 +408,19 @@ export const lesson1115: LessonDef = {
       why: 'Shared state — two tests colliding on one account/record in parallel. Cure: 11.8’s unique-per-run data (plus checking that nothing shares accounts across tests).',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">How do you deal with flaky tests?</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        Prevent with the clinic’s cures. Detect with the flaky mark and repeat-each. Diagnose
+        from the trace. Quarantine and fix as priority one.
+      </ChatBubble>
+      <Takeaway>
+        Four moves, no hand-waving. <Key>Trust is the suite’s only asset.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={FLAKE_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.17 — Visual & a11y testing (bonus)
@@ -330,14 +331,6 @@ export const lesson1117: LessonDef = {
         Accessibility Guidelines — the spec accessibility law references worldwide. “Passes axe”
         is the floor; “meets WCAG AA” is the certificate humans verify toward.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> teams increasingly staff “quality” to cover both of
-        these. Interviewers probe with “how would you catch a CSS regression?” Answer:
-        component-scoped toHaveScreenshot on key screens, baselines governed like spec changes.
-        And “what does automated a11y testing miss?” Answer: everything needing judgment — focus
-        order sensibility, alt-text QUALITY, screen-reader flow. The scan is a floor. Both
-        answers are now yours.
-      </p>
     </>
   ),
   quiz: [
@@ -363,6 +356,23 @@ export const lesson1117: LessonDef = {
       why: 'No — axe catches the machine-checkable share (roughly a third to half): labels, contrast, roles. Focus order sensibility, alt-text quality, and screen-reader flow need human judgment. A floor, never a certificate.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you both of these.</Scene>
+      <ChatBubble who="interviewer" face="🙂">How would you catch a CSS regression?</ChatBubble>
+      <ChatBubble who="you" face="😊" accent indent>
+        Component-scoped toHaveScreenshot on key screens, with baselines governed like spec
+        changes.
+      </ChatBubble>
+      <ChatBubble who="interviewer" face="🙂">What does automated a11y testing miss?</ChatBubble>
+      <ChatBubble who="you" face="😊" accent indent>
+        Everything needing judgment: focus order, alt-text quality, screen-reader flow.
+      </ChatBubble>
+      <Takeaway>
+        <Key>The scan is a floor, never a certificate.</Key> Both answers are now yours.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={DIFF_EXERCISE} />,
   teachBack: {
     prompt:

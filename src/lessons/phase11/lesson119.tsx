@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.9 — Page Object Model
@@ -367,13 +368,6 @@ export const lesson119: LessonDef = {
         the way users flow through them. Nice when natural; forced fluent-chaining everywhere is
         a bad habit. Judgment, as always.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “explain the Page Object Model” is a top-three
-        automation interview question. The winning answer: locator duplication is a maintenance
-        bug. One class per screen makes page knowledge single-sourced, so a UI change costs one
-        edit. Specs read as user stories. Assertions stay in specs. Four sentences — you’ve
-        out-answered most candidates, because you can also say when NOT to use it.
-      </p>
     </>
   ),
   quiz: [
@@ -399,6 +393,21 @@ export const lesson119: LessonDef = {
       why: 'Cheap — a locator is a DESCRIPTION (11.4), not a DOM lookup. Nothing touches the page until an action or assertion uses it, and then it resolves fresh anyway.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this.</Scene>
+      <ChatBubble who="interviewer" face="🙂">Explain the Page Object Model.</ChatBubble>
+      <ChatBubble who="you · after this lesson" face="😊" accent indent>
+        Locator duplication is a maintenance bug. One class per screen makes page knowledge
+        single-sourced, so a UI change costs one edit. Specs read as user stories. Assertions
+        stay in specs.
+      </ChatBubble>
+      <Takeaway>
+        Four sentences out-answer most candidates. <Key>Bonus: you can also say when NOT to use
+        it.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={POM_EXERCISE} />,
   teachBack: {
     prompt:

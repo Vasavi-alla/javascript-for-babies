@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.5 — Actions
@@ -325,13 +326,6 @@ export const lesson115: LessonDef = {
         DESCRIPTION, not a dead reference. 11.4’s locator-not-element design matters exactly
         here.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “element is not stable” failures usually mean CSS
-        animations. Real suites often disable animations globally for tests (a config/use
-        option), for speed and stability. And “not visible” with a correct locator often means a
-        SECOND, hidden copy of the element exists (mobile + desktop nav rendering twice). That’s
-        strict mode’s cousin; narrow the locator’s scope (11.4’s chaining).
-      </p>
     </>
   ),
   quiz: [
@@ -357,6 +351,22 @@ export const lesson115: LessonDef = {
       why: 'fill — focus, CLEAR, set value, fire input events: “make the field say this.” press sends individual keys; pressSequentially types key-by-key for autocomplete-style widgets.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a teammate will paste you a strange error.</Scene>
+      <ChatBubble who="teammate" face="😕">
+        “element is not stable” but the button never seems to move.
+      </ChatBubble>
+      <ChatBubble who="you" face="🙂" accent indent>
+        Check for a CSS animation first. And if it says “not visible” with the right locator,
+        look for a second hidden copy of it, like a mobile nav rendered twice.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Actionability errors name the exact check that failed.</Key> Read them literally
+        before you guess.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={ACTIONABILITY_EXERCISE} />,
   teachBack: {
     prompt:

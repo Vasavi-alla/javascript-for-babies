@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, ChatBubble, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.16 — CI: the pipeline, decoded
@@ -356,12 +357,6 @@ export const lesson1116: LessonDef = {
         workers pinned, forbidOnly armed, webServer never reused. One ambient variable, and the
         whole config shifts into robot mode.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> being the person who can READ the pipeline is powerful.
-        “CI is broken” panics the team’s daily standup meeting. Someone opens the YAML, finds
-        the failing step, and says “npm ci failed — lockfile drift, not a test problem” in
-        ninety seconds. That person gets handed the release keys — and that person is now you.
-      </p>
     </>
   ),
   quiz: [
@@ -387,6 +382,19 @@ export const lesson1116: LessonDef = {
       why: 'The exit code (9.2, full circle): 0 → green ✓, non-zero → red ✗ — and with branch protection, red blocks the merge. The suite as gatekeeper, no human enforcement needed.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, standup will panic over three words.</Scene>
+      <ChatBubble who="teammate" face="😨">CI is broken!</ChatBubble>
+      <ChatBubble who="you · ninety seconds later" face="😊" accent indent>
+        npm ci failed. Lockfile drift, not a test problem.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Being the person who can read the pipeline is powerful.</Key> That person gets
+        handed the release keys.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={PIPELINE_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, TestRunCard, Takeaway, Key } from '../../design/JobScene'
 
 /**
  * 11.6 — Auto-waiting & web-first assertions
@@ -373,13 +374,6 @@ export const lesson116: LessonDef = {
         the same retry engine pointed at any function. Your exercise’s pollUntil is
         literally this, hand-built.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> you can now READ flakiness statistics. Teams migrating
-        from sleep-based suites to web-first assertions routinely report faster runs (no padded
-        sleeps) AND ten-times-fewer flakes. The same change fixes both directions of sleep’s
-        failure. When 11.15’s flakiness clinic lists “race conditions” as cause #1, the cure
-        column will just say: this lesson.
-      </p>
     </>
   ),
   quiz: [
@@ -405,6 +399,21 @@ export const lesson116: LessonDef = {
       why: 'The web-first (locator) family — a page’s world can change, so waiting helps. A settled value like 125 can’t change, so 10.4’s matchers check once. Know which you’re holding.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, your team will migrate an old sleep-based suite.</Scene>
+      <TestRunCard
+        lines={[
+          <>before: sleep(5000) everywhere → 500 tests, 40 min, 12% flaky</>,
+          <>after: web-first assertions → 500 tests, 9 min, 1% flaky</>,
+        ]}
+      />
+      <Takeaway>
+        One change fixes both of sleep’s failures at once. <Key>Faster AND far less flaky.</Key>{' '}
+        When 11.15’s clinic lists races as cause one, the cure is this lesson.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={POLLING_EXERCISE} />,
   teachBack: {
     prompt:
