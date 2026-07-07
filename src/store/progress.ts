@@ -1,6 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
+/** Self-rated confidence on a recall question. Not a grade. */
+export type Confidence = 'low' | 'ok' | 'solid'
+
 /** Learner progress, persisted to localStorage (see 02-ARCHITECTURE.md). */
 interface ProgressState {
   /** lessonId → ISO date completed */
@@ -13,11 +16,17 @@ interface ProgressState {
   completedChallenges: Record<string, string>
   /** local day (YYYY-MM-DD) → active study minutes; fed by the break coach */
   studyLog: Record<string, number>
+  /** recall questionId → the learner's latest self-rating + when */
+  recall: Record<string, { confidence: Confidence; ratedAt: string }>
+  /** ISO time the recall check was last shown (the 8-hour gate); null = never */
+  lastRecallShownAt: string | null
   markComplete: (lessonId: string) => void
   saveJournal: (lessonId: string, text: string) => void
   markExerciseSolved: (exerciseId: string) => void
   markChallengeComplete: (challengeId: string) => void
   logStudyMinute: (day: string) => void
+  rateRecall: (questionId: string, confidence: Confidence) => void
+  markRecallShown: () => void
 }
 
 export const useProgress = create<ProgressState>()(
@@ -28,6 +37,8 @@ export const useProgress = create<ProgressState>()(
       solvedExercises: {},
       completedChallenges: {},
       studyLog: {},
+      recall: {},
+      lastRecallShownAt: null,
       markComplete: (lessonId) =>
         set((s) => ({
           completedLessons: { ...s.completedLessons, [lessonId]: new Date().toISOString() },
@@ -44,6 +55,11 @@ export const useProgress = create<ProgressState>()(
         })),
       logStudyMinute: (day) =>
         set((s) => ({ studyLog: { ...s.studyLog, [day]: (s.studyLog[day] ?? 0) + 1 } })),
+      rateRecall: (questionId, confidence) =>
+        set((s) => ({
+          recall: { ...s.recall, [questionId]: { confidence, ratedAt: new Date().toISOString() } },
+        })),
+      markRecallShown: () => set({ lastRecallShownAt: new Date().toISOString() }),
     }),
     { name: 'jfb-progress' },
   ),

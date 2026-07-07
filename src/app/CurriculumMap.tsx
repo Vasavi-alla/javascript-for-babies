@@ -7,6 +7,7 @@ import { DEFAULT_NAME, nameSlug, useLearnerName } from '../content/learner'
 import { courseJsonLd } from '../content/seo-schemas'
 import { useSeo } from './useSeo'
 import { useProgress } from '../store/progress'
+import { useWelcome } from '../store/welcome'
 import { activeDaySet, computeStreak, localDay, monthGrid } from '../engine/coach/stats'
 import { PaperCard } from '../design/PaperCard'
 import { TapeLabel } from '../design/TapeLabel'
@@ -133,6 +134,7 @@ export function CurriculumMap() {
   const progress = useProgress()
   const { completedLessons, completedChallenges, solvedExercises } = progress
   const navigate = useNavigate()
+  const openWelcome = useWelcome((s) => s.setOpen)
 
   const days = activeDaySet(progress)
   const { streak, aliveToday } = computeStreak(days)
@@ -472,6 +474,15 @@ export function CurriculumMap() {
           >
             say hi on LinkedIn ↗
           </a>
+        </p>
+        <p className="font-hand text-ink-soft mt-1 text-lg">
+          <button
+            type="button"
+            onClick={() => openWelcome(true)}
+            className="cursor-pointer underline decoration-dashed"
+          >
+            who drew this? ✏️
+          </button>
         </p>
       </footer>
 
