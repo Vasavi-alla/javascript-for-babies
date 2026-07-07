@@ -3,6 +3,7 @@ import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { JobScene, Scene, Takeaway, Key, AppMoment } from '../../design/JobScene'
 
 /**
  * 1.9 — Type coercion & comparison
@@ -209,12 +210,6 @@ export const lesson19: LessonDef = {
         need a table to predict is a comparison you cannot trust at a glance.
       </p>
       <p>
-        <strong>💼 On the job —</strong> this one will bite you as an automation tester:
-        everything typed into a form arrives as a <em>string</em> (lesson 1.1 called it). So{' '}
-        <code>age + 1</code>, where age came from an input field, is <code>"25" + 1</code> →{' '}
-        <code>"251"</code> — a birthday bug, silently.
-      </p>
-      <p>
         The fix is explicit conversion — coercion you control: <code>Number("25")</code> → 25,{' '}
         <code>String(25)</code> → "25". Explicit conversion is honest and easy to search for.
         Implicit coercion is a surprise waiting to happen. Prefer the honest kind.
@@ -250,6 +245,21 @@ export const lesson19: LessonDef = {
       why: 'true! == coerces the string into a number before comparing — so a test written with == would happily PASS even if the API wrongly returned the string "200", hiding a real bug. That’s a bug detector with its batteries removed. === would answer false and catch it. Always === in tests.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will find a bug like this:</Scene>
+      <AppMoment>
+        Age field: <span className="font-mono">"25"</span>
+        <div className="mt-1 text-[12.5px] font-bold" style={{ color: 'var(--color-marker-coral, #E8604C)' }}>
+          age + 1 → "251", not 26
+        </div>
+      </AppMoment>
+      <Takeaway>
+        Everything typed into a form arrives as a string. <Key>"25" + 1 glues into "251"
+        instead of adding to 26.</Key> A birthday bug, silently.
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: what is coercion, why does "5" + 5 give "55" but "5" - 5 give 0, and why should they always write === instead of ==?',

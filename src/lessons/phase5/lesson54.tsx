@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 5.4 — this
@@ -362,13 +363,6 @@ export const lesson54: LessonDef = {
         different owners freely. Borrow a method with <code>a.speak = b.speak</code> — the dot
         rule follows whoever calls.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> Playwright test code uses arrows almost everywhere
-        precisely to avoid this entire topic. But Page Object classes (11.9) use{' '}
-        <code>this.page</code> constantly, via the implicit and new rules. You'll use all four
-        rules weekly; you'll debug rule 2 (lost this) at least once in your career. Today means
-        you'll recognize it in seconds.
-      </p>
     </>
   ),
   quiz: [
@@ -396,6 +390,22 @@ export const lesson54: LessonDef = {
       why: 'CALL time — the opposite of the scope chain’s write-time ropes. Same function, different call shapes, different this. The call site is the only place with the answer (except arrows, which have no this and borrow from their birthplace).',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will read two kinds of test code:</Scene>
+      <ReviewCard
+        file="test code"
+        lines={[
+          { text: 'test("logs in", async () => { ... });', note: 'arrow: no this at all' },
+          { text: 'class LoginPage { submit() { this.page.click(...); } }', note: 'class method: this needed' },
+        ]}
+      />
+      <Takeaway>
+        Test code hides behind arrows to avoid this entirely. <Key>Page Object classes use this
+        constantly, and you will debug a lost this at least once.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={ANNOUNCER_EXERCISE} />,
   teachBack: {
     prompt:

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, AppMoment } from '../../design/JobScene'
 
 /**
  * 0.5 — Errors are messages, not failures
@@ -228,12 +229,6 @@ export const lesson05: LessonDef = {
         A professional habit to start now: when several errors appear,{' '}
         <strong>read the first one</strong> — the later ones are often just fallout.
       </p>
-      <p>
-        And keep this framing forever: errors are evidence, not verdicts.{' '}
-        <strong>💼 On the job —</strong> your work includes making software fail on purpose and
-        reading what it says. A tester who reads error messages calmly and precisely is rare and
-        valuable.
-      </p>
     </>
   ),
   quiz: [
@@ -262,6 +257,21 @@ export const lesson05: LessonDef = {
       why: 'The FIRST — one real problem often triggers a cascade, so the later errors are frequently just fallout. Fix the first and re-run; the rest often vanish. (And if red text makes your heart jump: that fades with every error you read. It really does.)',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a program you are testing will crash like this:</Scene>
+      <AppMoment>
+        <span className="font-mono" style={{ color: 'var(--color-marker-coral, #E8604C)' }}>
+          ReferenceError: userName is not defined.
+        </span>
+      </AppMoment>
+      <Takeaway>
+        Your job includes making software fail on purpose, then reading what it says. Do it
+        calmly and precisely: that skill is rare and valuable. <Key>Errors are evidence, not
+        verdicts.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Your friend just got their first error and wants to give up. Explain: what IS an error really, what are the three parts to read in one, and what should they do next?',

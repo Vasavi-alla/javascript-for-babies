@@ -5,6 +5,7 @@ import { ConsolePane } from '../../design/ConsolePane'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 3.11 — Checkpoint: the tip calculator brain
@@ -240,14 +241,6 @@ export const lesson311: LessonDef = {
         most of what you’ll see: small verbs, composed.
       </p>
       <p>
-        <strong>💼 On the job —</strong> your career quietly begins here: pure, composed
-        functions are exactly what unit tests are written against.{' '}
-        <code>expect(tipAmount(1200, 10)).toBe(120)</code> — one line, no setup, no browser, no
-        server. In Phase 10 you write exactly that with Vitest. The functions you wrote today
-        would pass unchanged. You didn’t just finish functions; you built your first
-        testable unit.
-      </p>
-      <p>
         Phase 3, complete: machines → parameters → return → functions-as-values → scope → the call
         stack → closures → callbacks → recursion → purity → composition. Every later phase spends
         this vocabulary. Next stop, Phase 4: what happens when data comes in <em>groups</em>.
@@ -275,6 +268,20 @@ export const lesson311: LessonDef = {
       why: 'tipAmount → 200; totalWithTip → 1200; perPerson → 1200 ÷ 2 = 600. If you traced that chain without running it, Phase 3 has done its job.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write a unit test as short as this:</Scene>
+      <ReviewCard
+        file="tip.test.js"
+        lines={[{ text: 'expect(tipAmount(1200, 10)).toBe(120);', note: 'no setup, no browser, no server' }]}
+      />
+      <Takeaway>
+        Pure, composed functions are exactly what unit tests are written against. The functions
+        you wrote today would pass this test unchanged. <Key>You just built your first testable
+        unit.</Key> Phase 10 teaches this with Vitest.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => (
     <>
       <CodeExercise def={TIP_EXERCISE} />

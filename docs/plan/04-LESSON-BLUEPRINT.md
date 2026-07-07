@@ -103,6 +103,7 @@ docs/superpowers/specs/2026-07-05-under-the-hood-rework-design.md):
    No insider asides about untaught things.
 4. One voice: UTH talks to the same beginner the captions talk to.
 5. Job notes kept, badged: open with "💼 On the job —" (bold), teaching voice.
+   (SUPERSEDED 2026-07-06: job content now lives in the On-the-job section — see below.)
 6. Rewrites may not grow a section (3–4 paragraphs; word count ≤ original). Never cut facts —
    gloss them.
 7. Plain International English: no idioms, no slang, no culture-bound references. Test: does a
@@ -110,3 +111,25 @@ docs/superpowers/specs/2026-07-05-under-the-hood-rework-design.md):
 
 Lint: `node scripts/lint-uth.mjs [phase…]` — flags long sentences, blocklisted idioms/jargon,
 and growth vs `scripts/uth-baseline.json`.
+
+## Quiz-stem contract (2026-07-06 — applies to ALL quiz questions)
+
+1. Complete problem statement: the stem states every background fact the question depends on
+   ("n can be any number"). Never leave the situation or input universe to guesswork.
+2. Explicit answer shape (typed checks): the stem ends by naming a valid answer's form
+   ("Type the count — 0 if none." / "Type its name." / "Type yes or no."), placeholder
+   reinforces it. MCQs exempt (options are the shape).
+3. Never explain the approach. No "try to find…", no pointing at the trick. Reasoning
+   difficulty is the point; interpretation difficulty is the only defect.
+
+## The "On the job" section (2026-07-06 — replaces 💼 paragraphs in underTheHood)
+
+Placement: between the checks and teach-back (LessonShell renders `def.onTheJob`).
+Anatomy (fixed): tape label → <Scene> one italic "One day at work…" line → an artifact
+(JobScene family: chat / app moment / review / test run / interview / pipeline) →
+<Takeaway> with one <Key> phrase.
+Content rules: simplest English in the app — short sentences, NO em dashes; only vocabulary
+taught at this lesson's position (everyday words fine; gloss or cut jargon; one plain phase
+pointer allowed); real QA words may be seeded with an everyday gloss ("the success flow
+(the happy path, where everything works)"); the artifact shows, prose never retells it.
+Lint: `node scripts/lint-uth.mjs` checks onTheJob blocks (idioms, sentence cap, em-dash ban).

@@ -40,6 +40,13 @@ export interface LessonDef {
   quiz: Array<Prediction | CheckItem>
   /** Optional extra interactive exercise rendered in the Play section (e.g. a CodeExercise). */
   PlayExtra?: ComponentType
+  /**
+   * Optional "💼 on the job" section (rendered after the checks, before teach-back):
+   * the lesson's future-work moment as a hand-drawn artifact. Compose with the
+   * JobScene family (src/design/JobScene.tsx). Content rules live in
+   * docs/plan/04-LESSON-BLUEPRINT.md — simplest English in the app, no em dashes.
+   */
+  onTheJob?: ReactNode
   teachBack: {
     prompt: string
     modelAnswer: string

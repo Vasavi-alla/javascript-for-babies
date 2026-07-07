@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, TestRunCard, Fail } from '../../design/JobScene'
 
 /**
  * 1.6 — Strings
@@ -253,11 +254,6 @@ export const lesson16: LessonDef = {
       <p>
         <code>{'`Line one\nLine two`'}</code> is one single string containing an actual newline.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> for an automation tester this is everyday work:{' '}
-        <code>`Expected ${'{expected}'} but got ${'{actual}'}`</code> is the shape of every good
-        failure message.
-      </p>
     </>
   ),
   quiz: [
@@ -282,6 +278,23 @@ export const lesson16: LessonDef = {
       why: 'Inside ${…} the machine EVALUATES (work-it-out-first, lesson 0.3), then splices the result into the train: "Score: 20". Ordinary quotes would have printed the slot literally — backticks are what switch the slots on.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, your test tool will print a failure message like this:</Scene>
+      <TestRunCard
+        lines={[
+          <>
+            <Fail>login test</Fail>
+          </>,
+          <>Expected "Welcome" but got "Error"</>,
+        ]}
+      />
+      <Takeaway>
+        Template strings build that exact sentence: <code>`Expected ${'{expected}'} but got ${'{actual}'}`</code>.{' '}
+        <Key>That is the shape of every good failure message.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={FULLNAME_EXERCISE} />,
   teachBack: {
     prompt:

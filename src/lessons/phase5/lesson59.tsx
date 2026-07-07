@@ -4,6 +4,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 5.9 — Checkpoint: the explain-it-all interview
@@ -299,12 +300,6 @@ export const lesson59: LessonDef = {
   underTheHood: (
     <>
       <p>
-        <strong>💼 On the job —</strong> why interviewers ask these: not to see if you memorized
-        outcomes, but to hear <em>which model you reason with</em>. "undefined because hoisting"
-        is a memorizer's answer. "Pass one registered the name with undefined; the assignment is
-        pass-two work" is an understander's answer. Same output, different career.
-      </p>
-      <p>
         The runner you're about to write (part 2) is genuinely the core loop of Vitest and
         Playwright's runner. Each test is a function. The framework calls it inside a try. A
         thrown assertion becomes a red result with the error's message. The loop continues. When
@@ -359,6 +354,19 @@ export const lesson59: LessonDef = {
       why: 'Two objects, two heap addresses — === compares addresses only (4.6/4.7). Contents never entered the conversation. If a phase-4 idea shows up in a phase-5 interview, you’re ready for that too.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask why a hoisted variable prints undefined:</Scene>
+      <ChatBubble who="a memorizer" face="😐">undefined, because hoisting.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        Pass one registered the name with undefined. The assignment is pass-two work.
+      </ChatBubble>
+      <Takeaway>
+        Same output, <Key>different career</Key>. Interviewers listen for which model you
+        reason with, not just the right word.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => (
     <>
       <CodeExercise def={CHAIN_EXERCISE} />

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { RoughEllipse, RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ChatBubble, ReviewCard } from '../../design/JobScene'
 
 /**
  * 2.3 — else-if chains & switch
@@ -239,14 +240,6 @@ export const lesson23: LessonDef = {
         convention, and yes — it falls through too if unbroken.
       </p>
       <p>
-        <strong>💼 On the job —</strong> chains of else-if handling <em>ranges</em> (like our
-        grades) appear constantly in test logic. “Status 2xx → pass, 4xx → client error, 5xx →
-        server error” is a textbook chain. Getting the gate ORDER wrong there is a classic silent
-        test bug: every response matches the first loose gate. When you review test code someday,
-        mis-ordered gates and missing breaks are two of the first things your eyes will learn to
-        catch.
-      </p>
-      <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> on January 15,
         1990, AT&T’s long-distance phone network collapsed for nine hours. Over 60 million calls
         failed. The root cause: a single misplaced <code>break</code> in a <code>switch</code>{' '}
@@ -260,15 +253,15 @@ export const lesson23: LessonDef = {
   quiz: [
     {
       kind: 'type-output',
-      question: 'For how many values of n can bigPrize() ever run? Type the number.',
+      question: 'n can be any number. How many of them make bigPrize() run? Type the count — 0 if none.',
       code: 'if (n > 10) { smallPrize(); }\nelse if (n > 100) { bigPrize(); }',
       accept: ['0', 'zero', 'none'],
-      placeholder: 'a number…',
+      placeholder: 'how many…',
       why: 'Zero — a mis-ordered chain: n > 100 implies n > 10, so gate one always wins first. bigPrize() is dead code — no error, no warning, it just silently never runs. Order gates from most specific to least. (Spotting dead branches is a genuine code-review skill.)',
     },
     {
       kind: 'type-output',
-      question: 'x is "a" — and notice the first case has NO break. How many numbers print? Type it.',
+      question: 'x is "a". How many numbers print? Type the count.',
       code: 'switch (x) {\n  case "a": console.log(1);\n  case "b": console.log(2); break;\n  case "c": console.log(3);\n}',
       accept: ['2', 'two'],
       placeholder: 'a number…',
@@ -283,6 +276,25 @@ export const lesson23: LessonDef = {
       why: 'default — switch is an ===-zone: no coercion, ever (lesson 1.9’s liar is banned here). The number 200 slides past case "200" without a nibble. A wonderfully sneaky bug to plant in a quiz — and to find in real code.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will read a code review comment like this. Later, you will write them:</Scene>
+      <ReviewCard
+        file="grades.js"
+        lines={[
+          { text: 'if (score >= 40) { pass(); }' },
+          { text: 'else if (score >= 90) { topGrade(); }', dead: true, note: 'dead. can never run' },
+        ]}
+      />
+      <ChatBubble who="senior dev · review comment" face="🙂">
+        Every score above 40 stops at gate one, so gate two never gets a turn. Swap the
+        order: check <code>score &gt;= 90</code> first.
+      </ChatBubble>
+      <Takeaway>
+        Reviewers catch dead gates fast. <Key>Phase 10 makes reviewing part of your job.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: how does an else-if chain decide which branch runs (and why does gate ORDER matter), and what is switch fall-through — feature and footgun?',

@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 1.8 — typeof & dynamic typing
@@ -186,14 +187,6 @@ export const lesson18: LessonDef = {
         because <code>typeof 42</code> produces the string "number", and the type of a string is
         "string". Evaluate inside-out, like always.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> why should a tester care about dynamic typing? Because
-        it is a bug <em>factory</em>. Nothing stops a variable that held a number from silently
-        becoming a string — you saw how easily. Suddenly <code>total + 1</code> glues instead of
-        adds. Entire categories of production bugs boil down to “this value was not the type
-        everyone assumed.” Many of your future test cases target exactly that. The next lesson
-        shows what happens when mixed types collide.
-      </p>
     </>
   ),
   quiz: [
@@ -217,6 +210,22 @@ export const lesson18: LessonDef = {
       why: 'Inside-out: typeof true → "boolean" (a string!), then typeof "boolean" → "string". Every typeof answer is a string, so double-typeof is ALWAYS "string". Solving this proves you’ve internalized evaluate-first.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will find a bug like this:</Scene>
+      <ReviewCard
+        file="cart.js"
+        lines={[
+          { text: 'let total = "10";' },
+          { text: 'console.log(total + 1);', note: 'prints "101", not 11' },
+        ]}
+      />
+      <Takeaway>
+        Nothing stops a variable that held a number from silently becoming a string. <Key>Many
+        of your future test cases exist to catch exactly this.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: what does “dynamic typing” mean, where does the type actually live (label or value?), and what does typeof really check?',

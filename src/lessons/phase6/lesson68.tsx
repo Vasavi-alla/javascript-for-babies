@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 6.8 — Parallel & racing
@@ -320,14 +321,6 @@ export const lesson68: LessonDef = {
         thread throughout (6.1's law): the waiting overlaps in the environment, never the JS.
       </p>
       <p>
-        <strong>💼 On the job —</strong> Playwright code awaits sequentially when steps depend
-        (click → then assert). <code>Promise.all</code> is for genuinely simultaneous things.
-        The classic:{' '}
-        <code>{'await Promise.all([page.waitForNavigation(), page.click("a")]) '}</code> — start
-        listening BEFORE the click that triggers it. Starting-then-awaiting is a professional
-        reflex; today it enters your hands.
-      </p>
-      <p>
         And the input-order guarantee is what makes <code>all</code> composable with
         destructuring: <code>{'const [user, cart] = await Promise.all([getUser(), getCart()])'}</code>{' '}
         — 4.11's array pattern, matched by position, safe because position is promised.
@@ -357,6 +350,20 @@ export const lesson68: LessonDef = {
       why: 'allSettled never rejects — it reports every outcome as { status, value/reason }. all would have rejected at the first failure; allSettled files the full report.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write Playwright code shaped like this:</Scene>
+      <ReviewCard
+        file="nav.spec.js"
+        lines={[{ text: 'await Promise.all([page.waitForNavigation(), page.click("a")]);', note: 'start listening before the click' }]}
+      />
+      <Takeaway>
+        Steps that depend on each other await one at a time. <Key>Promise.all is for genuinely
+        simultaneous things, started before they are triggered.</Key> That order is a
+        professional reflex.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={KITCHEN_RACE_EXERCISE} />,
   teachBack: {
     prompt:

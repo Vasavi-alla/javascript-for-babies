@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 3.3 — return
@@ -374,13 +375,6 @@ export const lesson33: LessonDef = {
         <code>console.log(console.log("hi"))</code> in your F12 console: it prints <code>hi</code>,
         then <code>undefined</code>.
       </p>
-      <p>
-        This idea is the heart of your future job. A test line like{' '}
-        <code>expect(getTotal()).toBe(42)</code> means "run getTotal, take what it hands back,
-        check it's 42" — which only works if <code>getTotal</code> <em>returns</em> its answer. A
-        function that only prints its answer can't be tested this way: the text went to the
-        screen, and no program can read the screen.
-      </p>
     </>
   ),
   quiz: [
@@ -408,6 +402,17 @@ export const lesson33: LessonDef = {
       why: 'The program! The window vs the chute: logged text goes to your eyeballs and is gone — no code can read it back. A returned value replaces the call expression, so the rest of the program can store it, add to it, or test it. This one sentence dissolves the most common beginner bug in JavaScript.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write a test line like this:</Scene>
+      <ReviewCard file="cart.spec.js" lines={[{ text: 'expect(getTotal()).toBe(42);' }]} />
+      <Takeaway>
+        This works only if <Key>getTotal returns its answer</Key>. A function that only prints
+        its answer cannot be tested this way. The text went to the screen. No program can read
+        the screen.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={HALFSUM_EXERCISE} />,
   teachBack: {
     prompt:

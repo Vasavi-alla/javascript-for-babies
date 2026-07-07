@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { RoughEllipse, RoughLine } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 1.10 — Operators roundup
@@ -259,13 +260,6 @@ export const lesson110: LessonDef = {
         the right side entirely — so the division by zero never happens. The left side protects
         the right side.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> a test assertion IS a boolean expression. Every “did it
-        pass?” your future suites answer is one of these trees evaluating to true or false.
-        “Status is 200 AND the reply includes the id AND it took under 2 seconds” — that is three
-        comparisons and two <code>&&</code>s. Today’s grammar is the daily language of test
-        automation. You now have the full grammar of Phase 1 — time for the checkpoint.
-      </p>
     </>
   ),
   quiz: [
@@ -291,6 +285,16 @@ export const lesson110: LessonDef = {
       why: '|| stops the instant its left side is true — the answer is locked in, so the scary right side is NEVER evaluated. Real code leans on this deliberately (e.g. avoiding a lookup that would fail). Laziness as a feature.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a test check you write will look like this:</Scene>
+      <ReviewCard file="signup.spec.js" lines={[{ text: 'age >= 18 && hasConsent && !isBlocked' }]} />
+      <Takeaway>
+        A test check is just a boolean expression. <Key>Three comparisons and two &&s,
+        evaluating to one true or false.</Key> That is the grammar you just learned.
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: how does the machine evaluate age >= 18 && hasTicket (use the tree picture), and why is 2 + 3 * 4 equal to 14 without any memorized rules?',

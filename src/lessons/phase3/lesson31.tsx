@@ -6,6 +6,7 @@ import { ConsolePane } from '../../design/ConsolePane'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 3.1 — What is a function? 🎬 hero lesson (classic format, same as Phases 1–2)
@@ -298,9 +299,6 @@ export const lesson31: LessonDef = {
         body’s lines in memory. It remembers “<code>greet</code> means this saved code” — the
         same label-on-a-box picture from Phase 1, with <em>code</em> in the box. A call makes the engine
         jump to the saved lines, run them top to bottom, and jump back to where the call was.
-        That’s the entire trick — and every Playwright line you’ll write someday,{' '}
-        <code>page.click()</code>, <code>expect()</code>, is pressing GO on a machine someone else
-        built.
       </p>
       <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> JavaScript has
@@ -335,6 +333,22 @@ export const lesson31: LessonDef = {
       why: 'console.log — it has the full machine shape: a name, the GO-button parentheses, and a value dropped in. Someone else built it; you were a function CALLER from day one. Today you became a BUILDER.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write test code like this:</Scene>
+      <ReviewCard
+        file="login.spec.js"
+        lines={[
+          { text: "await page.click('#submit');", note: 'a call: press GO on saved code' },
+          { text: "await expect(page).toHaveTitle('Welcome');", note: 'a call: press GO on saved code' },
+        ]}
+      />
+      <Takeaway>
+        You did not write page.click() or expect(). You called them. Every line like this is{' '}
+        <Key>pressing GO on a machine someone else built</Key>.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={CHEER_EXERCISE} />,
   teachBack: {
     prompt:

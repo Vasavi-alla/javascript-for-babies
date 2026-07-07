@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 6.2 — The event loop (THE flagship)
@@ -266,12 +267,6 @@ export const lesson62: LessonDef = {
         events — is a callback taking its turn through this one queue.
       </p>
       <p>
-        <strong>💼 On the job —</strong> the event loop is{' '}
-        <em>not part of the JavaScript engine</em>. V8 has the stack and heap; the loop, timers
-        and queue live in the <em>environment</em> — the browser here; Node's version arrives in
-        9.6.
-      </p>
-      <p>
         Also the queue is honest FIFO: two timers with equal delay run in scheduling order — your
         exercise proves it.
       </p>
@@ -305,6 +300,20 @@ export const lesson62: LessonDef = {
       why: 'The queue — clicks are Web-API events whose handlers line up like any other callback. They run only when the loop finds the stack empty, which is why blocking code makes buttons feel dead.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, someone will ask you this question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Is the event loop part of the JavaScript engine?</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        No. The engine only has the stack and the heap. The loop, timers, and queue live in the
+        browser. Node has its own version, coming in lesson 9.6.
+      </ChatBubble>
+      <Takeaway>
+        <Key>The event loop is not part of the JavaScript engine.</Key> It lives in the
+        environment around it.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={TICKETS_EXERCISE} />,
   teachBack: {
     prompt:

@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 2.1 — if / else
@@ -260,14 +261,6 @@ export const lesson21: LessonDef = {
         security hole.
       </p>
       <p>
-        <strong>💼 On the job —</strong> test code is <em>full</em> of forks: “if the element is
-        visible, click it; else fail with a screenshot.” More importantly,{' '}
-        <strong>every bug report you will ever write is a story about a branch</strong>. You
-        expected the true road; the program took the false one. Pointing at the exact fork — and
-        the exact boolean that misfired — separates “it’s broken” from a bug report developers
-        love.
-      </p>
-      <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> your processor
         literally gambles on these forks. Modern CPUs contain a <em>branch predictor</em>:
         dedicated circuitry that guesses which road the code will take, before the condition is
@@ -301,6 +294,23 @@ export const lesson21: LessonDef = {
       why: 'The fork asks one yes/no question. Whatever sits in the parentheses — comparison, && tree, even a lone variable — gets evaluated down to one true or false. (What if it isn’t a boolean at all? That’s truthy/falsy — next lesson.)',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day at work, you will write a bug report like this:</Scene>
+      <ChatBubble who="you · reporting a bug" face="🙂">
+        The login button does nothing on iPad. I expected the success flow (the happy path,
+        where everything works): the button is visible, so click it. The program took the
+        failure path. The boolean <code>isVisible</code> was false.
+      </ChatBubble>
+      <ChatBubble who="developer" face="😅" accent indent>
+        Found it in minutes. You pointed at the exact fork. Thanks!
+      </ChatBubble>
+      <Takeaway>
+        Every bug report you will ever write is <Key>a story about a branch</Key>. Name the
+        fork. Name the boolean.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => (
     <>
       <CodeExercise def={PASSFAIL_EXERCISE} />

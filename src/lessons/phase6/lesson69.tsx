@@ -327,8 +327,8 @@ export const lesson69: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'Test suites fake network responses instead of calling real APIs mainly for ___ — type the word (hint: the opposite of flaky).',
-      accept: ['determinism', 'Determinism', 'deterministic', 'reliability', 'stability'],
+      question: 'Real network calls are unpredictable: sometimes slow, sometimes down. Test suites fake the response instead, so every run gives the same result. Type the one word for that quality.',
+      accept: ['determinism', 'Determinism', 'deterministic', 'reliability', 'stability', 'consistency', 'Consistency', 'repeatability'],
       placeholder: 'one word…',
       why: 'Determinism — same input, same result, every run, no network weather. Faking the response SHAPE tests your logic without the world’s noise; Playwright calls it route.fulfill (11.8).',
     },

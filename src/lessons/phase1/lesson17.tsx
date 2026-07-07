@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, AppMoment } from '../../design/JobScene'
 
 /**
  * 1.7 — Booleans, null & undefined
@@ -202,13 +203,6 @@ export const lesson17: LessonDef = {
         Interviewers adore this question; now you have the story, not just the trivia.
       </p>
       <p>
-        <strong>💼 On the job —</strong> API responses are full of nulls.{' '}
-        <code>"middleName": null</code> means the field exists and is deliberately empty.
-        undefined usually means the field is <em>missing entirely</em>. “Empty on purpose” and
-        “forgot to include it” are different bugs, with different fixes. Your future assertions
-        will distinguish the two constantly.
-      </p>
-      <p>
         A preview for lesson 1.9, where you meet JavaScript’s two ways of asking “are these
         equal?”. The loose way (written <code>==</code>) considers the two nothings equal:{' '}
         <code>null == undefined</code> is true. The strict way (<code>===</code>) knows better:{' '}
@@ -239,6 +233,20 @@ export const lesson17: LessonDef = {
       why: 'A comparison never errors just because the answer is no — it EVALUATES to the boolean false, a perfectly good value you can store, print, or hand to an if. Comparisons are boolean factories.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will look at saved profile data like this:</Scene>
+      <AppMoment>
+        <div className="font-mono text-[13px]">middleName = null</div>
+        <div className="mt-1 font-mono text-[13px]">nickname = undefined</div>
+      </AppMoment>
+      <Takeaway>
+        null means the person left middleName empty on purpose. undefined means nickname was
+        never even created. <Key>"Empty on purpose" and "forgot to include it" are different
+        bugs.</Key> Your future checks will tell them apart constantly.
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: why does JavaScript have TWO kinds of “nothing”, and how would you decide whether a nothing you found is undefined or null territory?',

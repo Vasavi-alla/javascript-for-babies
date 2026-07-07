@@ -103,6 +103,18 @@ export function LessonShell({ def }: { def: LessonDef }) {
         </div>
       </section>
 
+      {/* ── on the job ────────────────────────────────── */}
+      {def.onTheJob && (
+        <section>
+          <TapeLabel id={`job-${def.id}`} color="var(--color-marker-yellow)">
+            💼 on the job
+          </TapeLabel>
+          <PaperCard id={`job-card-${def.id}`} tilt={false} className="mt-3 max-w-3xl">
+            {def.onTheJob}
+          </PaperCard>
+        </section>
+      )}
+
       {/* ── teach-back ────────────────────────────────── */}
       <section>
         <TapeLabel id={`teach-${def.id}`} color="var(--color-marker-teal)">

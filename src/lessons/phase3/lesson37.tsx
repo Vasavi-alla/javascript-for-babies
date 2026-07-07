@@ -5,6 +5,7 @@ import { ConsolePane } from '../../design/ConsolePane'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 3.7 — Closures 🎬 hero lesson
@@ -259,11 +260,6 @@ export const lesson37: LessonDef = {
         This combination — persistent + private — is how JavaScript did “private state” for
         decades before classes got <code>#private</code> fields.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> this is why a Playwright helper like{' '}
-        <code>makeLogin(page)</code> can hand back a function that still knows its page,
-        wherever the call happens. Backpacks everywhere.
-      </p>
     </>
   ),
   quiz: [
@@ -288,6 +284,23 @@ export const lesson37: LessonDef = {
       why: 'A closure — the function “closes over” its outer variables, keeping them alive and private after the outer function is gone. The most asked-about concept in JavaScript interviews, and you now own the picture.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write a helper like this:</Scene>
+      <ReviewCard
+        file="login-helper.js"
+        lines={[
+          { text: 'function makeLogin(page) {' },
+          { text: '  return function () { page.click("#submit"); };' },
+          { text: '}' },
+        ]}
+      />
+      <Takeaway>
+        The returned function still knows page, wherever it gets called. <Key>Closures are why
+        a Playwright helper can carry its page around in its backpack.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={GREETER_EXERCISE} />,
   teachBack: {
     prompt:

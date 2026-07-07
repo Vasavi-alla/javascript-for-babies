@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { RoughLine, RoughRect } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, AppMoment, ReviewCard } from '../../design/JobScene'
 
 /**
  * 2.2 — Truthy & falsy
@@ -214,15 +215,6 @@ export const lesson22: LessonDef = {
         This is why interviewers love the question “name the falsy values” — it is a five-second
         test of whether someone knows the rulebook or is guessing.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> truthy/falsy bugs are <em>silent</em>. A form that
-        checks <code>if (quantity)</code> treats a legitimate quantity of <code>0</code> as
-        “missing”. The user typed zero; the code thought nothing was entered. No error is thrown;
-        the program confidently walks the wrong road. These bugs only reveal themselves under
-        deliberate test inputs — <code>0</code>, <code>""</code>, a lone space. That is why
-        testers keep a mental list of “edge values”, and it starts suspiciously like the falsy
-        list. You now own that list.
-      </p>
     </>
   ),
   quiz: [
@@ -249,6 +241,26 @@ export const lesson22: LessonDef = {
       why: 'Six — false, 0, "", null, undefined, NaN — fixed by the language standard; everything else is truthy. Small enough to memorize, and worth it: this list is a favorite interview quickie and a tester’s edge-case checklist in disguise.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will catch this bug on a real page:</Scene>
+      <AppMoment>
+        Quantity:{' '}
+        <span className="font-mono" style={{ border: '2px solid var(--color-ink, #2B2A26)', borderRadius: '12px 4px 10px 5px', padding: '2px 10px' }}>
+          0
+        </span>{' '}
+        <strong style={{ color: 'var(--color-marker-coral, #E8604C)' }}>⚠ “please enter a quantity”</strong>
+        <div className="mt-1 text-[12.5px] font-bold" style={{ color: 'var(--color-marker-coral, #E8604C)' }}>
+          ← but the user DID type 0!
+        </div>
+      </AppMoment>
+      <ReviewCard file="cart.js" lines={[{ text: 'if (quantity) { addToCart(); }', note: '0 is falsy: “nothing entered”' }]} />
+      <Takeaway>
+        No error. No crash. The program simply walks the wrong road. Testers always try 0,
+        "", and a lone space. <Key>That is the falsy list. You own it now.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain truthy/falsy to a friend: what does the machine do when an if gets a non-boolean, which six values mean “no”, and what’s the sneaky bug with checking if (quantity)?',

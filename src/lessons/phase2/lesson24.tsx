@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'motion/react'
 import { HandArrow, RoughEllipse } from '../../design/rough-svg'
 import { HighlightMark } from '../../design/HighlightMark'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 2.4 — Ternary & short-circuit
@@ -236,11 +237,6 @@ export const lesson24: LessonDef = {
         side effects and all.
       </p>
       <p>
-        In test code you’ll constantly read patterns like <code>config.timeout ?? 30000</code>{' '}
-        (“use the configured timeout, defaulting to 30 seconds”) and{' '}
-        <code>element && element.click()</code> — and now they read like sentences.
-      </p>
-      <p>
         <strong style={{ color: 'var(--color-marker-coral)' }}>Fun fact:</strong> the{' '}
         <code>?:</code> operator is older than almost everything you have learned. It comes from
         the C language (1972) — JavaScript borrowed its syntax from C wholesale: braces,
@@ -275,6 +271,21 @@ export const lesson24: LessonDef = {
       why: '0 — && returns its FIRST falsy side and never evaluates past it. "pizza" is never even looked at. That stop-at-falsy behavior is exactly what made user && user.name crash-proof in the lesson. (Modern cousin: user?.name — Phase 8.)',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will read test code like this:</Scene>
+      <ReviewCard
+        file="login.spec.js"
+        lines={[
+          { text: 'const timeout = config.timeout ?? 30000;' },
+          { text: 'if (element && element.click()) { ... }' },
+        ]}
+      />
+      <Takeaway>
+        Real test code reads like <Key>short sentences once you know ?? and &&</Key>.
+      </Takeaway>
+    </JobScene>
+  ),
   teachBack: {
     prompt:
       'Explain to a friend: how does a ternary differ from if/else, and how do the || default and && guard idioms work — including the 0-gets-stomped trap and which operator fixes it?',

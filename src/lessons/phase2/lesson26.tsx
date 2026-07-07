@@ -4,6 +4,7 @@ import { HighlightMark } from '../../design/HighlightMark'
 import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
+import { JobScene, Scene, Takeaway, Key, TestRunCard, Pass, Fail } from '../../design/JobScene'
 
 /**
  * 2.6 — for loops (LoopMachine 🎬)
@@ -211,11 +212,6 @@ export const lesson26: LessonDef = {
         array positions. And <code>i++</code> (“increment”) is the universal shorthand for{' '}
         <code>i = i + 1</code> (<code>i--</code> counts down).
       </p>
-      <p>
-        <strong>💼 On the job —</strong> for loops drive data-driven tests: “for each of these 50
-        usernames, run the login test”. One body, fifty laps. And the counter tells you exactly
-        which lap failed.
-      </p>
     </>
   ),
   quiz: [
@@ -242,6 +238,27 @@ export const lesson26: LessonDef = {
       why: 'Six: five yeses (i = 0…4) plus the final NO at i = 5 that ends the loop. Checks = laps + 1, always — off-by-one bugs live and die on this fact. (And in testing, one loop body + n data laps is data-driven testing: when run #37 fails, the counter names the culprit.)',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, your test run will print this:</Scene>
+      <TestRunCard
+        lines={[
+          <>for each of 50 usernames → run login:</>,
+          <>
+            <Pass>user 1</Pass>&nbsp;&nbsp;<Pass>user 2</Pass>&nbsp;&nbsp;…&nbsp;&nbsp;
+            <Fail>user 24</Fail>&nbsp;&nbsp;<Pass>user 25</Pass> …
+          </>,
+        ]}
+      />
+      <p className="text-[12.5px] font-bold" style={{ color: 'var(--color-marker-coral, #E8604C)' }}>
+        ↑ the counter names the failing lap: i = 24
+      </p>
+      <Takeaway>
+        One body, fifty laps. <Key>The counter tells you exactly which lap failed.</Key> Phase
+        11 gives this pattern its real name: data-driven testing.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={COUNTDOWN_EXERCISE} />,
   teachBack: {
     prompt:

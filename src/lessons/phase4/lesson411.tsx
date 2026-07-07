@@ -5,6 +5,7 @@ import { CodeExercise } from '../../engine/practice/CodeExercise'
 import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 4.11 — Destructuring, spread & rest
@@ -363,13 +364,6 @@ export const lesson411: LessonDef = {
         <code>url</code> into a variable called <code>address</code>.
       </p>
       <p>
-        <strong>💼 On the job —</strong> the options-object pattern is the one to internalize:
-        it's why <code>{'page.goto(url, { waitUntil: "load" })'}</code> and{' '}
-        <code>{'test.use({ viewport: … })'}</code> look the way they do. Named fields survive
-        redesigns — adding a new option never breaks old callers, because extra and missing fields
-        are handled gracefully.
-      </p>
-      <p>
         Keep the dots straight forever with one sentence: <strong>in a pattern, dots gather; in a
         literal, dots spread.</strong>
       </p>
@@ -405,6 +399,22 @@ export const lesson411: LessonDef = {
       why: 'h takes 1; ...t gathers everything left into a NEW array [2, 3], whose length is 2. Dots in a pattern gather.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will read Playwright code shaped like this:</Scene>
+      <ReviewCard
+        file="checkout.spec.js"
+        lines={[
+          { text: 'page.goto(url, { waitUntil: "load" });' },
+          { text: 'test.use({ viewport: { width: 1280, height: 720 } });' },
+        ]}
+      />
+      <Takeaway>
+        Both calls destructure an options object. <Key>Named fields survive redesigns: a new
+        option never breaks old callers.</Key> Missing fields are handled gracefully too.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={TRIP_EXERCISE} />,
   teachBack: {
     prompt:

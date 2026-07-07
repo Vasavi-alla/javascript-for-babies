@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 5.2 — Hoisting, demystified
@@ -323,12 +324,6 @@ export const lesson52: LessonDef = {
         <code>let</code> when reassigning, <code>var</code> only when reading old code. Now you can
         also <em>explain</em> the rule, which is what interviews actually test.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> interviewers phrase this a dozen ways — "is let
-        hoisted?" is the trap. The precise answer: <em>yes, all declarations are registered in
-        pass 1 — but let/const are registered uninitialized, so unlike var they throw instead of
-        reading undefined.</em> That sentence separates memorizers from understanders.
-      </p>
     </>
   ),
   quiz: [
@@ -356,6 +351,19 @@ export const lesson52: LessonDef = {
       why: 'Declarations register complete in pass 1. Expressions are just variables holding functions — they follow their variable’s rules (const/let → dead zone; var → undefined, and calling undefined throws TypeError).',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Is let hoisted?</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        Yes. All declarations are registered in pass one. But let and const are registered
+        uninitialized, so they throw instead of reading undefined.
+      </ChatBubble>
+      <Takeaway>
+        <Key>That one sentence separates memorizers from understanders.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={ROUTINE_EXERCISE} />,
   teachBack: {
     prompt:

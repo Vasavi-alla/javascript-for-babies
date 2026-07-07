@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 6.7 — fetch & APIs
@@ -324,6 +325,16 @@ export const lesson67: LessonDef = {
       why: '5xx = server-side trouble (503: overloaded/unavailable). 4xx = client-side (bad URL, no auth). As a tester you’ll read this split every single day.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a test check you write will look like this:</Scene>
+      <ReviewCard file="pokemon.spec.js" lines={[{ text: 'res.status === 200 && data.id === 25 && ms < 2000' }]} />
+      <Takeaway>
+        Three comparisons and two &&s, evaluating to one true or false. <Key>Remember 1.10’s
+        boolean grammar? This is the same tree, now with real status codes and data.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={FAKEFETCH_EXERCISE} />,
   teachBack: {
     prompt:

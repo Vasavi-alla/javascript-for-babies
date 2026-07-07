@@ -42,6 +42,21 @@ function extractUth(source) {
     .trim()
 }
 
+function extractJob(source) {
+  const m = source.match(/onTheJob: \(([\s\S]*?)\n  \),/)
+  if (!m) return null
+  return m[1]
+    .replace(/\{\[[\s\S]*?\]\}/g, ' ') // array props (ReviewCard lines etc.) may contain ">" — strip before tags
+    .replace(/\{\{[\s\S]*?\}\}/g, ' ') // inline style objects
+    .replace(/<code>[\s\S]*?<\/code>/g, ' CODE ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\{'\s*'\}/g, ' ')
+    .replace(/\{["']([^"']*)["']\}/g, '$1')
+    .replace(/&\w+;/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 const results = []
 const baseline = fs.existsSync(BASELINE_PATH) ? JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8')) : {}
 const newBaseline = {}
@@ -78,6 +93,20 @@ for (const dir of fs.readdirSync(ROOT).sort()) {
       findings.push(`grew: ${baseline[id]} → ${words} words`)
     }
     if (findings.length) results.push({ id, findings })
+
+    const job = extractJob(source)
+    if (job) {
+      const jobFindings = []
+      for (const sentence of job.split(/(?<=[.!?])["”'’)]*\s+/)) {
+        const w = sentence.split(' ').filter(Boolean).length
+        if (w > MAX_SENTENCE_WORDS) jobFindings.push(`job: long sentence (${w}w): "${sentence.slice(0, 70)}…"`)
+      }
+      for (const idiom of IDIOMS) {
+        if (job.toLowerCase().includes(idiom.toLowerCase())) jobFindings.push(`job idiom: "${idiom}"`)
+      }
+      if (job.includes('—')) jobFindings.push('job: em dash (banned in On-the-job text)')
+      if (jobFindings.length) results.push({ id: `${id} (on the job)`, findings: jobFindings })
+    }
   }
 }
 
