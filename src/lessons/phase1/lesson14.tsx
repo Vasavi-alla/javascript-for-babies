@@ -308,6 +308,20 @@ export const lesson14: LessonDef = {
       <CodeExercise def={COUNTER_EXERCISE} />
     </>
   ),
+  interview: {
+    question: 'What’s the difference between var, let, and const?',
+    say: 'Use const by default, let when you must reassign, and var almost never. let and const are block scoped, so they stay inside the braces they are declared in. var is function scoped and leaks out of blocks, which causes surprises.',
+    example: {
+      code: 'if (true) {\n  var a = 1\n  let b = 2\n}\nconsole.log(a) // 1, var leaked out of the block\nconsole.log(b) // ReferenceError, b stayed in the block',
+      note: 'var ignores the block and leaks out. let and const stay inside the braces, which prevents a whole class of bugs.',
+    },
+    deeper:
+      'On hoisting: var declarations start as undefined. let and const hoist too but sit in the temporal dead zone (5.1) until their line runs, so using them early throws.',
+    dontSay: {
+      wrong: 'const makes the value immutable.',
+      why: 'const only locks the binding. A const object’s contents can still change (4.6).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend: what’s the difference between let and const, why do professionals default to const, and what should they do when they meet var in an old tutorial?',

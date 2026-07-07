@@ -302,6 +302,20 @@ export const lesson37: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={GREETER_EXERCISE} />,
+  interview: {
+    question: 'What’s a closure?',
+    say: 'A closure is a function that remembers the variables from where it was created, even after that outer function has returned. So the inner function can still read and update those variables later. That is how you get private state, or a helper that carries its own settings around.',
+    example: {
+      code: 'function makeDiscount(percent) {\n  return (price) => price - price * percent\n}\n\nconst half = makeDiscount(0.5)\n\nhalf(80)  // 40, still knows percent\nhalf(30)  // 15, still knows it',
+      note: 'makeDiscount has already returned, but half still remembers percent on every later call.',
+    },
+    deeper:
+      'If they ask where percent is kept: on the heap (4.6), not the stack (3.6), which is why it outlives the call. Every call to makeDiscount makes a fresh, private percent, so two discounts never share one.',
+    dontSay: {
+      wrong: 'A function inside a function.',
+      why: 'That describes where it lives, not what it does. The point is the remembered variables.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain closures to a friend with the backpack picture — including why lesson 3.2’s "slots die with the call" rule has this exception, and why two counters from the same factory never share a count.',

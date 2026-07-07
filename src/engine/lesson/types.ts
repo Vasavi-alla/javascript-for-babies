@@ -47,6 +47,29 @@ export interface LessonDef {
    * docs/plan/04-LESSON-BLUEPRINT.md — simplest English in the app, no em dashes.
    */
   onTheJob?: ReactNode
+  /**
+   * Optional "🎤 in an interview" section (rendered before On-the-job, after
+   * the checks): the technically-precise spoken answer a real interviewer wants.
+   * This is the ONE section that uses real terminology unglossed — that is the
+   * point. Content rules: see 04-LESSON-BLUEPRINT.md ("In-an-interview contract").
+   * `question` + `say` are required; `deeper` and `dontSay` render only when set.
+   */
+  interview?: {
+    /** What the interviewer asks, in their words. e.g. "What's a closure?" */
+    question: string
+    /** The complete spoken answer: headline sentence + the substance you volunteer right after. */
+    say: ReactNode
+    /**
+     * A real code example you would talk through — NOT a toy. `code` is a JS
+     * string (use \n for line breaks; keep it one source line so the lint stays
+     * robust). `note` is an optional one-line caption ("point at this: …").
+     */
+    example?: { code: string; note?: string }
+    /** The genuinely harder follow-up they push for. Cite the lesson each term was taught. */
+    deeper?: ReactNode
+    /** The common shallow/wrong answer, and why it is shallow. */
+    dontSay?: { wrong: string; why: string }
+  }
   teachBack: {
     prompt: string
     modelAnswer: string

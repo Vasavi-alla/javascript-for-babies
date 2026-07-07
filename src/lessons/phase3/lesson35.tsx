@@ -379,6 +379,20 @@ export const lesson35: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={PRICE_TAG_EXERCISE} />,
+  interview: {
+    question: 'How does JavaScript decide which variable a name refers to?',
+    say: 'It looks for the name in the current scope first. If it is not there, it walks outward to the enclosing scope, and up to global. The first match wins, and the search stops there.',
+    example: {
+      code: 'let total = 100\n\nfunction cart() {\n  let total = 5   // a different, inner total\n  return total\n}\n\ncart()   // 5, the inner one\ntotal    // 100, untouched',
+      note: 'The inner total shadows the outer one inside cart. Outside cart, the outer total is still 100.',
+    },
+    deeper:
+      'This is lexical scope (3.5): scope is set by where code is written, not where it is called. That is why you can predict a name just by reading the nesting.',
+    dontSay: {
+      wrong: 'It searches every scope for the variable.',
+      why: 'It only walks outward through enclosing scopes, and stops at the first match.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain scope to a friend using the bubbles-and-ray picture: where do variables live, which direction can lookups travel, and what happens when two bubbles use the same name?',

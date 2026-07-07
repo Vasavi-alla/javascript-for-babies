@@ -11,6 +11,7 @@ import { StepperControls } from '../stepper/StepperControls'
 import { QuizCard } from './QuizCard'
 import { TypeOutputCard } from './TypeOutputCard'
 import { TeachBack } from './TeachBack'
+import { InterviewCard } from '../../design/InterviewCard'
 import type { LessonDef } from './types'
 import type { Prediction } from '../stepper/types'
 
@@ -102,6 +103,18 @@ export function LessonShell({ def }: { def: LessonDef }) {
           )}
         </div>
       </section>
+
+      {/* ── in an interview ───────────────────────────── */}
+      {def.interview && (
+        <section>
+          <TapeLabel id={`interview-${def.id}`} color="var(--color-marker-coral)">
+            🎤 in an interview
+          </TapeLabel>
+          <PaperCard id={`interview-card-${def.id}`} tilt={false} className="mt-3 max-w-3xl">
+            <InterviewCard {...def.interview} />
+          </PaperCard>
+        </section>
+      )}
 
       {/* ── on the job ────────────────────────────────── */}
       {def.onTheJob && (

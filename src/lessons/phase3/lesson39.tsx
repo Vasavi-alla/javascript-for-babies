@@ -258,6 +258,20 @@ export const lesson39: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={SUMTO_EXERCISE} />,
+  interview: {
+    question: 'What is recursion, and when does it stop?',
+    say: 'Recursion is a function that calls itself, with a base case that stops it. Each call handles a smaller piece, until the base case returns without calling again. It shines on nested data a plain loop cannot flatten easily.',
+    example: {
+      code: 'function countAll(items) {\n  let total = 0\n  for (const it of items) {\n    total += 1\n    if (it.children) total += countAll(it.children)\n  }\n  return total\n}',
+      note: 'countAll calls itself on each children list, going as deep as the tree. The base case is a list with no children.',
+    },
+    deeper:
+      'Each call adds a frame to the call stack (3.6). Miss the base case and the frames pile up until the stack overflows. Even correct recursion can overflow on a very deep tree.',
+    dontSay: {
+      wrong: 'Recursion is just a loop.',
+      why: 'It repeats like a loop, but by stacking calls, so it has a depth limit a loop does not.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain recursion to a friend using the stack tower: how can a function call itself without paradox, what is the base case, and what happens if you forget it?',

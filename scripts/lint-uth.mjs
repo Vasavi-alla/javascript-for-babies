@@ -57,6 +57,22 @@ function extractJob(source) {
     .trim()
 }
 
+function extractInterview(source) {
+  const m = source.match(/\n  interview: \{([\s\S]*?)\n  \},/)
+  if (!m) return null
+  return m[1]
+    .replace(/(code|note): '(?:[^'\\]|\\.)*'/g, ' ') // drop the code example (symbols, not prose)
+    .replace(/\b(question|say|deeper|dontSay|wrong|why|example):/g, ' ')
+    .replace(/<code>[\s\S]*?<\/code>/g, ' CODE ')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/[{}]/g, ' ')
+    .replace(/['"`]/g, ' ')
+    .replace(/&\w+;/g, ' ')
+    .replace(/,/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 const results = []
 const baseline = fs.existsSync(BASELINE_PATH) ? JSON.parse(fs.readFileSync(BASELINE_PATH, 'utf8')) : {}
 const newBaseline = {}
@@ -106,6 +122,22 @@ for (const dir of fs.readdirSync(ROOT).sort()) {
       }
       if (job.includes('—')) jobFindings.push('job: em dash (banned in On-the-job text)')
       if (jobFindings.length) results.push({ id: `${id} (on the job)`, findings: jobFindings })
+    }
+
+    // In-an-interview: sentence-length + idiom + em-dash checks. The JARGON
+    // check is deliberately skipped — unglossed real terms are the point here.
+    const interview = extractInterview(source)
+    if (interview) {
+      const ivFindings = []
+      for (const sentence of interview.split(/(?<=[.!?])["”'’)]*\s+/)) {
+        const w = sentence.split(' ').filter(Boolean).length
+        if (w > MAX_SENTENCE_WORDS) ivFindings.push(`interview: long sentence (${w}w): "${sentence.slice(0, 70)}…"`)
+      }
+      for (const idiom of IDIOMS) {
+        if (interview.toLowerCase().includes(idiom.toLowerCase())) ivFindings.push(`interview idiom: "${idiom}"`)
+      }
+      if (interview.includes('—')) ivFindings.push('interview: em dash (banned in interview text)')
+      if (ivFindings.length) results.push({ id: `${id} (in an interview)`, findings: ivFindings })
     }
   }
 }

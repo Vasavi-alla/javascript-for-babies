@@ -260,6 +260,20 @@ export const lesson19: LessonDef = {
       </Takeaway>
     </JobScene>
   ),
+  interview: {
+    question: 'What’s the difference between == and ===?',
+    say: 'Always use ===. It checks value and type with no conversion. == converts the two sides to a common type first, then compares, which hides bugs. With === what you see is what gets compared.',
+    example: {
+      code: 'const typed = "5" // a form field is always a string\n\ntyped == 5   // true, the string is converted to a number\ntyped === 5  // false, different types\n\n0 == ""      // true, both convert to 0',
+      note: 'Form fields and URLs give you strings. == quietly converts them, so a wrong type can still look equal.',
+    },
+    deeper:
+      'On the rules: == follows the coercion rules (1.9). The one pair people do allow is null == undefined, which is true, while null === undefined is false.',
+    dontSay: {
+      wrong: '== compares value and === compares reference.',
+      why: 'Both compare values. The real difference is that == converts types first (1.9), === does not.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend: what is coercion, why does "5" + 5 give "55" but "5" - 5 give 0, and why should they always write === instead of ==?',

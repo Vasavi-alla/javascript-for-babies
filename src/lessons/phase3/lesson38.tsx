@@ -298,6 +298,20 @@ export const lesson38: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={RUNBOTH_EXERCISE} />,
+  interview: {
+    question: 'What is a higher-order function?',
+    say: 'A higher-order function either takes another function as an argument, or returns one. It works because functions are values in JavaScript (3.4). map, filter, and event handlers all rely on this.',
+    example: {
+      code: 'function retry(action, times) {\n  for (let i = 0; i < times; i++) {\n    if (action()) return true\n  }\n  return false\n}\n\nretry(() => tryLogin(), 3)',
+      note: 'retry takes a function and runs it up to three times. Passing behavior as data is the whole idea.',
+    },
+    deeper:
+      'A callback is just the function you pass in (3.8). The receiver decides when to call it. That is how map calls yours for each item, and how a test runner calls each test.',
+    dontSay: {
+      wrong: 'A function that calls other functions.',
+      why: 'Any function can call others. Higher order means it takes or returns a function as data.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain higher-order functions and callbacks to a friend — including why repeat(3, cheer) has no parentheses on cheer, and what goes wrong if you add them.',

@@ -280,6 +280,20 @@ export const lesson36: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={SONG_EXERCISE} />,
+  interview: {
+    question: 'What is the call stack?',
+    say: 'The call stack is the stack of functions currently running. Calling a function pushes a new frame on top. When it returns, its frame pops off. The frame on top is whatever is running right now.',
+    example: {
+      code: 'function round(n) { return Math.round(n) }\nfunction applyTax(p) { return round(p * 1.1) }\nfunction checkout(p) { return applyTax(p) }\n\ncheckout(100)\n// grows:  checkout -> applyTax -> round\n// pops back the same way',
+      note: 'Each call waits on top of the one that called it. An error prints this stack, innermost call first.',
+    },
+    deeper:
+      'Each frame holds that call’s arguments and locals (3.2). If frames never return, like a recursion (3.9) with no base case, the stack overflows and the program crashes.',
+    dontSay: {
+      wrong: 'The call stack stores all my variables.',
+      why: 'It stores one frame per running call. Objects live on the heap (4.6), not the stack.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain the call stack to a friend with the tower-of-cards picture: what happens on a call, what happens on a finish, and how the engine knows exactly where to resume.',
