@@ -12,39 +12,46 @@ import { TapeLabel } from '../../design/TapeLabel'
 const EIGHT_HOURS_MS = 8 * 60 * 60 * 1000
 const MAX_QUESTIONS = 3
 
+function shuffle<T>(arr: T[]): T[] {
+  const a = [...arr]
+  for (let k = a.length - 1; k > 0; k--) {
+    const j = Math.floor(Math.random() * (k + 1))
+    ;[a[k], a[j]] = [a[j], a[k]]
+  }
+  return a
+}
+
 /**
- * Bias toward recently completed topics: fill most slots from the newest-completed
- * lessons (tie-break least-recently-asked, so within a batch they rotate), and
- * reserve one slot for the globally least-recently-asked question so older topics
- * resurface occasionally.
+ * Pick a small set of questions, biased toward recently completed topics but
+ * randomised so repeated "quick recall" opens do not replay the identical set.
+ * Newest-completed lessons weigh most; anything shown on the previous open is
+ * heavily down-weighted so it seldom repeats back-to-back. When the eligible
+ * pool is small enough that everything must show, we just shuffle the order.
  */
 function pickQuestions(
   eligible: InterviewQuestion[],
-  recall: Record<string, { ratedAt: string }>,
   completed: Record<string, string>,
+  avoid: Set<string>,
 ): InterviewQuestion[] {
-  const askedAt = (q: InterviewQuestion) => recall[q.id]?.ratedAt ?? '' // '' = never asked
-  const completedAt = (q: InterviewQuestion) => completed[q.lessonId] ?? ''
+  if (eligible.length <= MAX_QUESTIONS) return shuffle(eligible)
 
-  const byRecent = [...eligible].sort((a, b) => {
-    const c = completedAt(b).localeCompare(completedAt(a)) // newest completion first
-    return c !== 0 ? c : askedAt(a).localeCompare(askedAt(b)) // then least-recently-asked
-  })
-  const byStale = [...eligible].sort((a, b) => askedAt(a).localeCompare(askedAt(b)))
+  const completedAt = (q: InterviewQuestion) => completed[q.lessonId] ?? ''
+  const byRecent = [...eligible].sort((a, b) => completedAt(b).localeCompare(completedAt(a)))
+  const n = byRecent.length
+
+  // weight = recency rank, cut to a tenth for anything shown on the last open
+  const pool = byRecent.map((q, idx) => ({ q, w: (n - idx) * (avoid.has(q.id) ? 0.1 : 1) }))
 
   const picks: InterviewQuestion[] = []
-  const take = (q?: InterviewQuestion) => {
-    if (q && !picks.some((p) => p.id === q.id)) picks.push(q)
+  while (picks.length < MAX_QUESTIONS && pool.length) {
+    const total = pool.reduce((sum, it) => sum + it.w, 0)
+    let r = Math.random() * total
+    let idx = 0
+    while (idx < pool.length - 1 && (r -= pool[idx].w) > 0) idx++
+    picks.push(pool[idx].q)
+    pool.splice(idx, 1)
   }
-
-  take(byRecent[0]) // two from the most recently completed lessons
-  take(byRecent[1])
-  take(byStale[0]) // one older topic resurfaced
-  for (const q of byRecent) {
-    if (picks.length >= MAX_QUESTIONS) break
-    take(q)
-  }
-  return picks.slice(0, MAX_QUESTIONS)
+  return picks
 }
 
 /**
@@ -65,6 +72,7 @@ export function RecallCheck() {
   const [i, setI] = useState(0)
   const [revealed, setRevealed] = useState<Set<string>>(() => new Set())
   const lastPath = useRef('')
+  const lastShown = useRef<Set<string>>(new Set()) // questions from the previous open, to vary the next
 
   // auto-open on entering a lesson, gated to once per 8 hours
   useEffect(() => {
@@ -82,7 +90,9 @@ export function RecallCheck() {
   // build a fresh queue each time the overlay opens
   useEffect(() => {
     if (!open) return
-    setQueue(pickQuestions(questionsForCompleted(completedLessons), recall, completedLessons))
+    const picks = pickQuestions(questionsForCompleted(completedLessons), completedLessons, lastShown.current)
+    lastShown.current = new Set(picks.map((p) => p.id))
+    setQueue(picks)
     setI(0)
     setRevealed(new Set())
     // eslint-disable-next-line react-hooks/exhaustive-deps
