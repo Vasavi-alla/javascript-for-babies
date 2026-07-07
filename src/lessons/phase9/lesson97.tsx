@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, TestRunCard } from '../../design/JobScene'
 
 /**
  * 9.7 — fetch without a browser
@@ -311,12 +312,6 @@ export const lesson97: LessonDef = {
         authorization usually travels as a header carrying a token from… <code>process.env</code>{' '}
         (9.4’s secrets, completing the circle).
       </p>
-      <p>
-        <strong>💼 On the job —</strong> API tests make superb <em>setup</em> for browser tests
-        too. Create the user via the API in one second, then browser-test only the login screen.
-        Phase 11 uses this trick constantly; often the difference between a 40-second test and a
-        4-second one.
-      </p>
     </>
   ),
   quiz: [
@@ -342,6 +337,23 @@ export const lesson97: LessonDef = {
       why: '?. turns the missing path into undefined instead of a crash, and ?? catches exactly that undefined with the honest default — 8.4’s pair in its natural habitat.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, your test suite will do this instead of clicking through a signup form:</Scene>
+      <TestRunCard
+        lines={[
+          <>create user via API: 1s</>,
+          <>browser-test only the login screen: 3s</>,
+          <>old way: click through signup + login: 40s</>,
+        ]}
+      />
+      <Takeaway>
+        API tests make superb setup for browser tests. <Key>Often the difference between a
+        40-second test and a 4-second one.</Key> Phase 11 uses this trick constantly. And
+        remember 2.3’s dead gate? Real status-code chains fall into that same mis-ordered trap.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={API_CHECK_EXERCISE} />,
   teachBack: {
     prompt:

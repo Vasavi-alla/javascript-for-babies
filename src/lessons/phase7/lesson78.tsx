@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 7.8 — How the browser renders
@@ -276,11 +277,6 @@ export const lesson78: LessonDef = {
         default styles. The render tree always needs computed styles paired with content —
         never content alone.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> this lesson is the "why" behind auto-waiting, the
-        single feature that makes Playwright tests far less flaky than hand-written ones. Phase
-        11 teaches the API; today you own the reason it must exist.
-      </p>
     </>
   ),
   quiz: [
@@ -306,6 +302,16 @@ export const lesson78: LessonDef = {
       why: 'Yes — this exact gap is why Playwright checks attached, visible, stable, and enabled before acting, instead of trusting DOM presence alone.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will click a button before it is even ready, and it will just work:</Scene>
+      <ReviewCard file="checkout.spec.js" lines={[{ text: 'await page.click("#pay");', note: 'waits for the render tree first.' }]} />
+      <Takeaway>
+        <Key>This is the “why” behind auto-waiting.</Key> It is the single feature that makes
+        Playwright tests far less flaky than hand-written ones. Phase 11 teaches the API.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={VISIBILITY_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 7.2 — Selecting elements (THE locator skill)
@@ -300,12 +301,6 @@ export const lesson72: LessonDef = {
         Don't memorize the full grammar — recognize it. Keep MDN's selector page bookmarked,
         like every professional does.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> DevTools Console understands <code>$('sel')</code> and{' '}
-        <code>$$('sel')</code> as shorthand for querySelector/All. It's the fastest way to TEST
-        a selector on a live page before it goes in a script. You'll do this daily; start today
-        — F12 on any site.
-      </p>
     </>
   ),
   quiz: [
@@ -331,6 +326,22 @@ export const lesson72: LessonDef = {
       why: 'Inside (descent): an a.external anywhere within a nav — children, grandchildren, any depth. Read it right to left: the thing you want, then where it must live.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will open DevTools and type this:</Scene>
+      <ReviewCard
+        file="DevTools console"
+        lines={[
+          { text: "$('.card.active')", note: 'shorthand for querySelector' },
+          { text: "$$('button')", note: 'shorthand for querySelectorAll' },
+        ]}
+      />
+      <Takeaway>
+        <Key>Testing a selector on the live page before it goes in a script</Key> is something
+        you will do daily. Press F12 on any site and try it today.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={MATCHER_EXERCISE} />,
   teachBack: {
     prompt:

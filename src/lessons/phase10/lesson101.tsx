@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 10.1 — Why software breaks
@@ -355,12 +356,6 @@ export const lesson101: LessonDef = {
         collection of those checks). Same idea, three grammatical forms; you’ll hear all three
         in your first week.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> when interviewers ask “why do we test?”, weak answers
-        say “to find bugs.” You now have the strong one: to make change safe. Catching
-        regressions in seconds, not in production; desk prices, not 2am prices — plus a
-        specification that defends itself. That answer signals a professional.
-      </p>
     </>
   ),
   quiz: [
@@ -386,6 +381,19 @@ export const lesson101: LessonDef = {
       why: 'No — tests show the presence of bugs in what you asked about, never the absence of bugs everywhere. Green means “everything I asked still works” — which is why choosing the right questions is the craft.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Why do we test?</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        To make change safe. Catching regressions in seconds, not in production. Desk prices,
+        not 2am prices.
+      </ChatBubble>
+      <Takeaway>
+        <Key>That answer signals a professional.</Key> A specification that defends itself.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={REGRESSION_EXERCISE} />,
   teachBack: {
     prompt:

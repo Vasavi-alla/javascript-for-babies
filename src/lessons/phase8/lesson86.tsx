@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 8.6 — Checkpoint: dependency detective
@@ -323,11 +324,6 @@ export const lesson86: LessonDef = {
         documentation that might lie — it’s configuration that’s executed. That’s why reading it
         first is reading the truth.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> in interviews, “walk me through this package.json” is a
-        real screening question for QA-automation roles. It tests what you just did: semver
-        literacy, dev-vs-prod judgment, and what each script implies about the workflow.
-      </p>
     </>
   ),
   quiz: [
@@ -353,6 +349,20 @@ export const lesson86: LessonDef = {
       why: '"type": "module" switches Node to the modern module system from 8.1. Without it, require is the default — the two-system story 9.3 tells in full.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Walk me through this package.json.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        dependencies ship to production. devDependencies are for testing and tooling only. The
+        caret in a version number allows minor updates, never major ones.
+      </ChatBubble>
+      <Takeaway>
+        <Key>This tests your semver literacy and dev-vs-prod judgment.</Key> A real screening
+        question for QA-automation roles.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={DETECTIVE_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 9.5 — The file system
@@ -372,11 +373,6 @@ export const lesson95: LessonDef = {
         lists a folder (ls, programmatically), <code>rmSync</code> deletes. Test setup and cleanup
         are made of these.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “where did my screenshot go?” is a daily question. The
-        answer is always some path.join of an output folder, resolved against cwd. That’s why CI
-        configs run suites from the repo root, every time, on purpose.
-      </p>
     </>
   ),
   quiz: [
@@ -402,6 +398,18 @@ export const lesson95: LessonDef = {
       why: 'Relative paths resolve against process.cwd() — where the terminal stood at launch. That’s the “works from repo root, breaks from a subfolder” bug in one sentence.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a teammate will ask you this exact question:</Scene>
+      <ChatBubble who="teammate" face="🙂">Where did my screenshot go?</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        Some path.join of an output folder, resolved against cwd.
+      </ChatBubble>
+      <Takeaway>
+        <Key>That is why CI configs run suites from the repo root, every time, on purpose.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={FS_EXERCISE} />,
   teachBack: {
     prompt:

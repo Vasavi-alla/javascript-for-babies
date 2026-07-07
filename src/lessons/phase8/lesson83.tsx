@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, TestRunCard } from '../../design/JobScene'
 
 /**
  * 8.3 — Debugging like a pro
@@ -342,12 +343,6 @@ export const lesson83: LessonDef = {
         Honesty note: professionals still use <code>console.log</code> daily — the debugger
         doesn’t replace it. Quick look → log. Confusing state → pause.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> Playwright ships this exact experience for tests.{' '}
-        <code>npx playwright test --debug</code> opens an inspector where you step through your
-        test actions the same way: pause, inspect, step. Same buttons, same tower, Phase 11
-        territory.
-      </p>
     </>
   ),
   quiz: [
@@ -373,6 +368,16 @@ export const lesson83: LessonDef = {
       why: 'The Call Stack panel — every paused moment shows the tower of active calls, top card running, and clicking a frame moves your Scope view to it.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will run a test in slow motion like this:</Scene>
+      <TestRunCard lines={[<>$ npx playwright test --debug</>, <>paused. step. inspect. same buttons, same tower.</>]} />
+      <Takeaway>
+        Playwright ships this exact debugging experience for tests. <Key>Pause, inspect, step:
+        the same call-stack tower, for real.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={BUGHUNT_EXERCISE} />,
   teachBack: {
     prompt:

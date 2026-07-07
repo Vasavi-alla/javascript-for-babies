@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 9.1 — What is Node, really?
@@ -352,13 +353,6 @@ export const lesson91: LessonDef = {
         Version note: Node releases in even-numbered LTS lines (“long-term support”) — the ones
         real teams run. When 9.8 has you install Node, LTS is the button you’ll press.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> on CI, Playwright usually drives “headless” browsers:
-        real browsers running with <em>no visible window</em>. Node runs your test code and
-        steers them. Remember: “my code lives in Node, the page lives in the browser”. That one
-        idea explains a dozen Phase-11 mysteries — why you can’t touch <code>document</code>{' '}
-        from a test, for one.
-      </p>
     </>
   ),
   quiz: [
@@ -384,6 +378,16 @@ export const lesson91: LessonDef = {
       why: 'node report.js — Node reads the file and V8 executes it. No HTML, no script tag; this is how every test suite starts.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will run a test with no window at all:</Scene>
+      <ReviewCard file="ci.yml" lines={[{ text: 'playwright test --headless', note: 'no visible window, Node steers the browser' }]} />
+      <Takeaway>
+        My code lives in Node. The page lives in the browser. <Key>That is why you cannot
+        touch document from a test.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={RUNTIME_EXERCISE} />,
   teachBack: {
     prompt:

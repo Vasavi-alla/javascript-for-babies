@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 10.7 — Checkpoint: test the tip calculator
@@ -349,13 +350,6 @@ export const lesson107: LessonDef = {
         integer paise/cents, or assert with toBeCloseTo (10.4). Real invoice code keeps integer
         paise; real test suites do both.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> this checkpoint is a full interview story. “Tell me
-        about a time tests caught a bug” is better answered with the sabotage ritual than with
-        luck. Your answer: <em>I write the suite, I break the code deliberately to verify the
-        net, and the cascade pattern tells me where to look.</em> That sentence sounds like five
-        years of experience. You earned it in one lesson.
-      </p>
     </>
   ),
   quiz: [
@@ -381,6 +375,20 @@ export const lesson107: LessonDef = {
       why: 'Fix the code. Editing tests to match buggy output is 10.3’s enshrined-bug trap: the suite would then DEFEND the bug against whoever tries to fix it properly. (Tests change only when the SPEC changes.)',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Tell me about a time tests caught a bug.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        I write the suite. I break the code deliberately to verify the net. The cascade pattern
+        tells me exactly where to look.
+      </ChatBubble>
+      <Takeaway>
+        <Key>That sentence sounds like five years of experience.</Key> You earned it in one
+        lesson.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={CHECKPOINT_EXERCISE} />,
   teachBack: {
     prompt:

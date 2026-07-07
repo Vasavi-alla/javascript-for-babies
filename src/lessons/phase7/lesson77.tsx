@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 7.7 — Storage & timing
@@ -291,12 +292,6 @@ export const lesson77: LessonDef = {
         Playwright manages cookies through its own API instead, so the restriction never blocks
         it.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> <code>browserContext.storageState()</code> captures
-        localStorage and cookies to a file in one call. Loading it before a test skips the slow
-        login flow. One of the biggest, cheapest speed wins in a real test suite — built on
-        today's two topics.
-      </p>
     </>
   ),
   quiz: [
@@ -322,6 +317,17 @@ export const lesson77: LessonDef = {
       why: 'DOMContentLoaded — the tree just needs to be parsed. load waits for every image, stylesheet, and iframe to finish, which always takes at least as long, often longer.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will skip a slow login flow like this:</Scene>
+      <ReviewCard file="auth.setup.js" lines={[{ text: 'await context.storageState({ path: "state.json" });' }]} />
+      <Takeaway>
+        One call captures localStorage and cookies to a file. Loading it before a test skips
+        the slow login flow. <Key>One of the biggest, cheapest speed wins in a real test
+        suite.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={STORAGE_MODEL_EXERCISE} />,
   teachBack: {
     prompt:

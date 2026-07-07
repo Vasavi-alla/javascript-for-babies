@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, TestRunCard } from '../../design/JobScene'
 
 /**
  * 10.4 — Assertions
@@ -380,12 +381,6 @@ export const lesson104: LessonDef = {
         (4.13’s translation losses). It explodes on circular references (self-containing
         objects). Real toEqual walks the tree so it doesn’t inherit those lies.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> failure messages are the product you ship to your future
-        self. A precise matcher turns 2am debugging into reading: <code>toHaveLength</code>{' '}
-        tells you the actual length, <code>toContain</code> shows the list. Choosing matchers IS
-        writing documentation for the night something breaks.
-      </p>
     </>
   ),
   quiz: [
@@ -411,6 +406,16 @@ export const lesson104: LessonDef = {
       why: 'No — 999 is truthy, so it passes. toBeTruthy only fails on 1.8’s six falsy values; it’s a blunt instrument. toHaveLength(3) asks the real question.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, at 2am, a failure message will need to explain itself:</Scene>
+      <TestRunCard lines={[<>expect(items).toHaveLength(3)</>, <>✗ expected length 3, received 5</>]} />
+      <Takeaway>
+        Failure messages are the product you ship to your future self. <Key>Choosing precise
+        matchers IS writing documentation for the night something breaks.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={MATCHER_EXERCISE} />,
   teachBack: {
     prompt:

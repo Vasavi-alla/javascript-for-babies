@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 9.3 — Modules in Node: CJS vs ESM
@@ -331,12 +332,6 @@ export const lesson93: LessonDef = {
         ESM in Node also unlocks <strong>top-level await</strong> (6.6’s await outside any
         function) — CJS files can’t do that, another reason new projects flip the switch.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> TypeScript adds a Phase-11 twist. Your{' '}
-        <code>playwright.config.ts</code> is written with import/export, and the compiler outputs
-        whichever system the project’s settings ask for. You write the standard; tooling handles
-        the conversion.
-      </p>
     </>
   ),
   quiz: [
@@ -362,6 +357,16 @@ export const lesson93: LessonDef = {
       why: 'A normal function — which is why it can run inside an if with computed paths, and why the engine can’t know a CJS graph before running the code.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write a config file like this:</Scene>
+      <ReviewCard file="playwright.config.ts" lines={[{ text: 'import { defineConfig } from "@playwright/test";' }]} />
+      <Takeaway>
+        You write the standard: import and export. <Key>The compiler outputs whichever system
+        the project’s settings ask for.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={CJS_EXERCISE} />,
   teachBack: {
     prompt:

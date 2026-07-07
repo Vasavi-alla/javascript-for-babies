@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 10.6 — Test doubles & a taste of TDD
@@ -403,12 +404,6 @@ export const lesson106: LessonDef = {
         religiously. What survives everywhere is the RED discipline: never trust a test you’ve
         never seen fail.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> Playwright’s <code>route.fulfill()</code> (11.10) is a
-        STUB — for the network, at the browser boundary: “when the page asks /api/users, answer
-        THIS.” Same family, biggest stage. And “explain stub vs mock vs spy” is a standard
-        interview question — you now hold the answer most candidates miss.
-      </p>
     </>
   ),
   quiz: [
@@ -434,6 +429,20 @@ export const lesson106: LessonDef = {
       why: 'Bad — double at the boundaries (network, disk, clock), never what you own. Over-mocking makes tests check the wiring instead of the behavior: green while broken, red while working.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Explain stub vs mock vs spy.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        A stub feeds canned answers in. A spy records how it was called. Playwright’s
+        route.fulfill() is a stub at the network boundary: when the page asks for data, answer
+        with this.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Most candidates miss this answer.</Key> Same family, biggest stage.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={SPY_EXERCISE} />,
   teachBack: {
     prompt:

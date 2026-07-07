@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 10.3 — Anatomy of a test
@@ -331,12 +332,6 @@ export const lesson103: LessonDef = {
         the suite red and gets told to “fix their mistake.” One copied expected value can outlive
         everyone who remembers why. Compute expected values from the spec. Always.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> interviewers love handing you a function and saying
-        “test this.” The professional move you now own: enumerate behaviors first (happy path,
-        zero, negative, wrong type), then write one AAA test per behavior with sentence names.
-        That enumeration step, done before any code, separates testers from typists.
-      </p>
     </>
   ),
   quiz: [
@@ -362,6 +357,19 @@ export const lesson103: LessonDef = {
       why: '“Something, somewhere.” One behavior per test means a failure IS the diagnosis — five one-assert tests tell you exactly what broke, and their names read as a spec.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will hand you a function and say this:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Test this.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        First, enumerate the behaviors: happy path, zero, negative, wrong type. Then one AAA
+        test per behavior, with a sentence name.
+      </ChatBubble>
+      <Takeaway>
+        <Key>That enumeration step, done before any code, separates testers from typists.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={AAA_EXERCISE} />,
   teachBack: {
     prompt:

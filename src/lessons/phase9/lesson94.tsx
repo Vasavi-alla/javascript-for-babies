@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 9.4 — process: argv, env & exit
@@ -344,11 +345,6 @@ export const lesson94: LessonDef = {
         abandoned). Guard clauses at startup: perfect. Called mid-run: a classic source of
         half-written files.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> virtually every CI provider sets <code>CI=true</code> by
-        convention. Real Playwright configs read it to switch behavior — more retries and no
-        visible browser window on CI, for example. One env var, two worlds correctly served.
-      </p>
     </>
   ),
   quiz: [
@@ -374,6 +370,16 @@ export const lesson94: LessonDef = {
       why: 'Non-zero exit = failure (9.2’s contract) — the pipeline turns red before a single misconfigured test runs. Refusing loudly is a feature.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a real config will read this exact variable:</Scene>
+      <ReviewCard file="playwright.config.ts" lines={[{ text: 'retries: process.env.CI ? 2 : 0,' }]} />
+      <Takeaway>
+        Virtually every CI provider sets CI=true by convention. <Key>One env var serves two
+        worlds correctly: your machine, and CI.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={PROCESS_EXERCISE} />,
   teachBack: {
     prompt:

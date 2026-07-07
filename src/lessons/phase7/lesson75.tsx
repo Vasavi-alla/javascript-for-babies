@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 7.5 — Bubbling, delegation & preventDefault
@@ -308,12 +309,6 @@ export const lesson75: LessonDef = {
         later and read <code>currentTarget</code> then — you'll find it gone (usually{' '}
         <code>null</code>). Read it synchronously, inside the handler, always.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> Playwright's <code>.click()</code> fires a real,
-        trusted click event. It bubbles exactly as a human's click would. That's why delegated
-        listeners in the app you're testing keep firing correctly under automation, with zero
-        special handling.
-      </p>
     </>
   ),
   quiz: [
@@ -339,6 +334,16 @@ export const lesson75: LessonDef = {
       why: 'Yes — delegation relies on bubbling from whatever is inside the parent, present or future. That’s the entire reason it beats wiring a listener to every individual child.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will run a Playwright test that clicks a delegated button:</Scene>
+      <ReviewCard file="todo.spec.js" lines={[{ text: 'await page.click("li .delete");', note: 'fires a real, trusted click' }]} />
+      <Takeaway>
+        The click bubbles exactly like a human’s click. <Key>Delegated listeners in the app you
+        are testing keep firing correctly under automation, with zero special handling.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={DELEGATE_EXERCISE} />,
   teachBack: {
     prompt:

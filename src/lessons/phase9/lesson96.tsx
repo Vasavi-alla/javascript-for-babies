@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 9.6 — Node's event loop & non-blocking I/O
@@ -310,11 +311,6 @@ export const lesson96: LessonDef = {
         queue. <strong>Blocking</strong> = holds the thread while waiting.{' '}
         <strong>Non-blocking I/O</strong> = the waiting happens in libuv, never on the thread.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> this is why one Playwright process can drive several
-        browser contexts in parallel without threads. Every await is a parked job, and the loop
-        interleaves them. When Phase 11 shows tests overlapping, you’ll recognize the workshop.
-      </p>
     </>
   ),
   quiz: [
@@ -340,6 +336,16 @@ export const lesson96: LessonDef = {
       why: 'No — Sync means BLOCKING: the thread itself stands in the disk’s line and nothing else runs. That’s 6.1’s frozen page at server scale, and why the promise flavor exists.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will watch several browser tests run at once, on one thread:</Scene>
+      <ReviewCard file="playwright.config.ts" lines={[{ text: 'workers: 4,', note: 'four parallel contexts, one process' }]} />
+      <Takeaway>
+        Every await is a parked job, and the loop interleaves them. <Key>One process can drive
+        several browser contexts in parallel without threads.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={ORDER_EXERCISE} />,
   teachBack: {
     prompt:

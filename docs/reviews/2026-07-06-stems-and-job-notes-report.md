@@ -122,14 +122,107 @@ task text, out of the audit's scope — quiz array only).
 - `npm run build` → `✓ built in …` (green)
 - `grep -rn "💼" src/lessons/phase5 src/lessons/phase6` → no matches
 
+## Task 9 — Phases 7–8 stem audit + notes 7.2, 7.5, 7.6, 7.7, 7.8, 8.1, 8.3, 8.4, 8.6
+
+### Stem audit (phases 7, 8)
+
+All quiz questions checked (~48 across both phases). One fix — a genuine variable-name
+mismatch, not a wording issue:
+
+| lesson | surface | before | after |
+|---|---|---|---|
+| 7.6 Q3 | quiz stem | `checkbox.checked is true. Type exactly what console.log(subscribe.checked) prints:` (situation names `checkbox`, code asks about `subscribe` — the lesson's actual variable is `subscribe`, so this was internally inconsistent) | `subscribe.checked is true. Type exactly what console.log(subscribe.checked) prints:` |
+
+All other stems self-contained and complete. No `hint:`/`notice…` pointers found in any quiz
+stem. Phase 7's "write the selector" questions (7.2 Q1/Q2) and phase 8's true/false and
+either/or questions all state their full situation and answer shape already.
+
+### Note migrations (7.2, 7.5, 7.6, 7.7, 7.8, 8.1, 8.3, 8.4, 8.6)
+
+Per the plan's Task 9 note, these lessons' Playwright/CI references are approved forward-flags
+already glossed in the surrounding UTH (established since 2.1/3.1) — kept plain, not stripped.
+
+| lesson | surface | before | after |
+|---|---|---|---|
+| 7.2 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> DevTools Console understands $('sel') and $$('sel') as shorthand for querySelector/All. It's the fastest way to TEST a selector on a live page before it goes in a script. You'll do this daily; start today — F12 on any site.` | New `onTheJob` section: `ReviewCard` (`DevTools console`, `$('.card.active')` / `$$('button')`) + `Takeaway`: "**Testing a selector on the live page before it goes in a script** is something you will do daily. Press F12 on any site and try it today." |
+| 7.5 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> Playwright's .click() fires a real, trusted click event. It bubbles exactly as a human's click would. That's why delegated listeners in the app you're testing keep firing correctly under automation, with zero special handling.` | New `onTheJob` section: `ReviewCard` (`todo.spec.js`, `await page.click("li .delete");` annotated "fires a real, trusted click") + `Takeaway`: "The click bubbles exactly like a human's click. **Delegated listeners in the app you are testing keep firing correctly under automation, with zero special handling.**" |
+| 7.6 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> every Playwright form action (fill, check, uncheck, selectOption) does two things. It sets the property and fires the event you read today. Nothing more exotic sits underneath. That's why this lesson transfers directly.` | New `onTheJob` section: `ReviewCard` (`signup.spec.js`, `page.fill(...)` + `page.check(...)`) + `Takeaway`: "Every Playwright form action sets the property and fires the event you read today. **Nothing more exotic sits underneath.** That is why this lesson transfers directly." |
+| 7.7 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> browserContext.storageState() captures localStorage and cookies to a file in one call. Loading it before a test skips the slow login flow. One of the biggest, cheapest speed wins in a real test suite — built on today's two topics.` | New `onTheJob` section: `ReviewCard` (`auth.setup.js`, `context.storageState({ path: "state.json" });`) + `Takeaway`: "One call captures localStorage and cookies to a file. Loading it before a test skips the slow login flow. **One of the biggest, cheapest speed wins in a real test suite.**" |
+| 7.8 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> this lesson is the "why" behind auto-waiting, the single feature that makes Playwright tests far less flaky than hand-written ones. Phase 11 teaches the API; today you own the reason it must exist.` | New `onTheJob` section: `ReviewCard` (`checkout.spec.js`, `page.click("#pay");` annotated "waits for the render tree first.") + `Takeaway`: "**This is the “why” behind auto-waiting.** It is the single feature that makes Playwright tests far less flaky than hand-written ones. Phase 11 teaches the API." |
+| 8.1 | onTheJob (was UTH 💼 note) | ``<strong>💼 On the job —</strong> every Playwright test file you'll ever write starts with import { test, expect } from "@playwright/test". That's a named import from an installed package, not a ./file path. Installing packages is exactly the next lesson.`` | New `onTheJob` section: `ReviewCard` (`login.spec.js`, `import { test, expect } from "@playwright/test";`) + `Takeaway`: "A named import from an installed package, not a ./file path. **Installing packages is exactly the next lesson.**" |
+| 8.3 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> Playwright ships this exact experience for tests. npx playwright test --debug opens an inspector where you step through your test actions the same way: pause, inspect, step. Same buttons, same tower, Phase 11 territory.` | New `onTheJob` section: `TestRunCard` (`$ npx playwright test --debug` / "paused. step. inspect. same buttons, same tower.") + `Takeaway`: "Playwright ships this exact debugging experience for tests. **Pause, inspect, step: the same call-stack tower, for real.**" |
+| 8.4 | onTheJob (was UTH 💼 note, "assertions" → "checks") | `<strong>💼 On the job —</strong> document.querySelector answers null when nothing matches (7.2), so el?.textContent is daily DOM grammar. And in API testing, response fields are optional by nature — body.user?.address?.city ?? "unknown" is the shape of half the assertions you'll write.` | New `onTheJob` section: `ReviewCard` (`user.spec.js`, `body.user?.address?.city ?? "unknown"`) + `Takeaway`: "document.querySelector answers null when nothing matches, so el?.textContent is daily DOM grammar. **Optional fields are the shape of half the checks you will write.**" ("assertions" replaced with "checks" — untaught until Phase 10, same policy as 1.7/1.10) |
+| 8.6 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> in interviews, "walk me through this package.json" is a real screening question for QA-automation roles. It tests what you just did: semver literacy, dev-vs-prod judgment, and what each script implies about the workflow.` | New `onTheJob` section: interview exchange, `ChatBubble` "Walk me through this package.json." / "dependencies ship to production. devDependencies are for testing and tooling only. The caret in a version number allows minor updates, never major ones." + `Takeaway`: "**This tests your semver literacy and dev-vs-prod judgment.** A real screening question for QA-automation roles." |
+
+### Verification (Task 9)
+
+- `node scripts/lint-uth.mjs` → two findings on first pass: 7.8 had a sentence-boundary merge
+  (Scene's colon + the array-stripped artifact + Takeaway's first sentence combined into a
+  37-word "sentence"; fixed by splitting the Takeaway's first sentence so it terminates before
+  the merge point) and 8.3 had an em dash inside a `<Key>` phrase (fixed by rewording with a
+  colon). Re-ran → `UTH lint: clean`.
+- `npm run build` → `✓ built in …` (green)
+- `grep -rn "💼" src/lessons/phase7 src/lessons/phase8` → no matches
+
+## Task 10 — Phases 9–10 stem audit + all 15 notes (9.1–9.8, 10.1–10.7)
+
+### Stem audit (phases 9, 10)
+
+All ~45 questions checked. **Zero fixes needed** this batch — every stem is self-contained via
+its situation/code, and all `notice…`/`hint:` hits found by grep are in step `caption`s or
+`why` fields (out of the audit's scope, quiz array only).
+
+### Note migrations (all 15) + one relocation (into 9.7)
+
+Interview-flavored notes (9.8, 10.1, 10.2, 10.3, 10.6, 10.7) use the two-`ChatBubble` interview
+template for the first time at this scale; 10.5 introduces `PipelineRow` for the "walk me
+through npm test" systems answer.
+
+| lesson | surface | before | after |
+|---|---|---|---|
+| 9.1 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> on CI, Playwright usually drives "headless" browsers... Remember: "my code lives in Node, the page lives in the browser". That one idea explains a dozen Phase-11 mysteries — why you can't touch document from a test.` | New `onTheJob` section: `ReviewCard` (`ci.yml`, `playwright test --headless` annotated "no visible window, Node steers the browser") + `Takeaway`: "My code lives in Node. The page lives in the browser. **That is why you cannot touch document from a test.**" |
+| 9.2 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> when a Playwright test fails in CI, you get today's artifact. A terminal log with stack traces; a red pipeline driven by the exit code. Reading traces calmly, innermost frame first, is a real debugging skill. Interviewers test it with "walk me through this failure."` | New `onTheJob` section: `TestRunCard` (`at makeReport (report.js:4:15)` / `exit code: 1`) + `Takeaway`: "Reading traces calmly, innermost frame first, is a real debugging skill. **Interviewers test it with "walk me through this failure."**" |
+| 9.3 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> TypeScript adds a Phase-11 twist. Your playwright.config.ts is written with import/export, and the compiler outputs whichever system the project's settings ask for. You write the standard; tooling handles the conversion.` | New `onTheJob` section: `ReviewCard` (`playwright.config.ts`, `import { defineConfig } from "@playwright/test";`) + `Takeaway`: "You write the standard: import and export. **The compiler outputs whichever system the project's settings ask for.**" |
+| 9.4 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> virtually every CI provider sets CI=true by convention. Real Playwright configs read it to switch behavior... One env var, two worlds correctly served.` | New `onTheJob` section: `ReviewCard` (`playwright.config.ts`, `retries: process.env.CI ? 2 : 0,`) + `Takeaway`: "Virtually every CI provider sets CI=true by convention. **One env var serves two worlds correctly: your machine, and CI.**" |
+| 9.5 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> "where did my screenshot go?" is a daily question. The answer is always some path.join of an output folder, resolved against cwd. That's why CI configs run suites from the repo root, every time, on purpose.` | New `onTheJob` section: team-chat, `ChatBubble` "Where did my screenshot go?" / "Some path.join of an output folder, resolved against cwd." + `Takeaway`: "**That is why CI configs run suites from the repo root, every time, on purpose.**" |
+| 9.6 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> this is why one Playwright process can drive several browser contexts in parallel without threads. Every await is a parked job, and the loop interleaves them.` | New `onTheJob` section: `ReviewCard` (`playwright.config.ts`, `workers: 4,` annotated "four parallel contexts, one process") + `Takeaway`: "Every await is a parked job, and the loop interleaves them. **One process can drive several browser contexts in parallel without threads.**" |
+| 9.7 | onTheJob (was UTH 💼 note **+ relocated 1.10-era 2.3 callback**) | `<strong>💼 On the job —</strong> API tests make superb setup for browser tests too. Create the user via the API in one second, then browser-test only the login screen... often the difference between a 40-second test and a 4-second one.` | New `onTheJob` section: `TestRunCard` (API setup 1s / browser-only login 3s / old click-through way 40s) + `Takeaway`: "API tests make superb setup for browser tests. **Often the difference between a 40-second test and a 4-second one.** Phase 11 uses this trick constantly. And remember 2.3's dead gate? Real status-code chains fall into that same mis-ordered trap." — **this resolves the 2.3 relocation logged back in Task 5/6** |
+| 9.8 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> "set up a project from scratch" (from an empty folder) is a real interview task for automation roles. You just rehearsed it end to end.` | New `onTheJob` section: interview exchange, `ChatBubble` "Set up a test project from an empty folder." / "You just rehearsed this end to end." + `Takeaway`: "**Phase 11's npm init playwright@latest does a fancier version of the same steps.** You will know what it sets up and why." |
+| 10.1 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> when interviewers ask "why do we test?", weak answers say "to find bugs." You now have the strong one: to make change safe...` | New `onTheJob` section: interview exchange, `ChatBubble` "Why do we test?" / "To make change safe. Catching regressions in seconds, not in production. Desk prices, not 2am prices." + `Takeaway`: "**That answer signals a professional.** A specification that defends itself." |
+| 10.2 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> "where would you test this?" is a beloved interview question. The winning answer has the shape from the last step...` | New `onTheJob` section: interview exchange, `ChatBubble` "Where would you test this?" / "Name the layer. Justify it by cost, and by what a failure there would tell you." + `Takeaway`: "**You just practiced that answer three times.**" |
+| 10.3 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> interviewers love handing you a function and saying "test this." The professional move you now own: enumerate behaviors first...` | New `onTheJob` section: interview exchange, `ChatBubble` "Test this." / "First, enumerate the behaviors: happy path, zero, negative, wrong type. Then one AAA test per behavior, with a sentence name." + `Takeaway`: "**That enumeration step, done before any code, separates testers from typists.**" |
+| 10.4 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> failure messages are the product you ship to your future self. A precise matcher turns 2am debugging into reading...` | New `onTheJob` section: `TestRunCard` (`expect(items).toHaveLength(3)` / `✗ expected length 3, received 5`) + `Takeaway`: "Failure messages are the product you ship to your future self. **Choosing precise matchers IS writing documentation for the night something breaks.**" |
+| 10.5 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> in interviews, "walk me through what happens when you run npm test" is a systems question in disguise... Thirteen lessons in one answer.` | New `onTheJob` section: `ChatBubble` "Walk me through what happens when you run npm test." + `PipelineRow` (npm resolves → Node launches → finds .test. files → runs each it → prints ✓/✗ + exit code) + `Takeaway`: "**Thirteen lessons in one answer.** CI reads that exit code to turn the pipeline green or red." (first use of `PipelineRow`) |
+| 10.6 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> Playwright's route.fulfill() (11.10) is a STUB... And "explain stub vs mock vs spy" is a standard interview question — you now hold the answer most candidates miss.` | New `onTheJob` section: interview exchange, `ChatBubble` "Explain stub vs mock vs spy." / "A stub feeds canned answers in. A spy records how it was called. Playwright's route.fulfill() is a stub at the network boundary..." + `Takeaway`: "**Most candidates miss this answer.** Same family, biggest stage." |
+| 10.7 | onTheJob (was UTH 💼 note) | `<strong>💼 On the job —</strong> this checkpoint is a full interview story. "Tell me about a time tests caught a bug" is better answered with the sabotage ritual than with luck...` | New `onTheJob` section: interview exchange, `ChatBubble` "Tell me about a time tests caught a bug." / "I write the suite. I break the code deliberately to verify the net. The cascade pattern tells me exactly where to look." + `Takeaway`: "**That sentence sounds like five years of experience.** You earned it in one lesson." |
+
+### Bug found and fixed during migration (Task 10)
+
+The first `Edit` deletion for 9.8's old 💼 paragraph matched starting from `<strong>💼 On the
+job` rather than the preceding `<p>` opening tag, leaving an **orphaned `<p>` tag** behind
+(build broke with `TS1381`/`TS1005` errors). The same match pattern had been used for all 8
+phase-9 files migrated just before this was caught, so all 8 carried the identical bug —
+found and fixed in every one (`grep`-verified `<p>`/`</p>` balance across every phase-9/10
+file afterward). Phase-10 edits were done with the full paragraph including the opening `<p>`
+tag in the match, avoiding the recurrence.
+
+### Verification (Task 10)
+
+- `node scripts/lint-uth.mjs` → `UTH lint: clean`
+- `npm run build` → failed after the phase-9 batch (`TS1381`/`TS1005` in lesson98.tsx and,
+  once checked, the same issue in 7 more phase-9 files) → fixed → `✓ built in …` (green)
+- `grep -rn "💼" src/lessons/phase9 src/lessons/phase10` → no matches
+- `<p>`/`</p>` balance check across every phase-9/10 file → all balanced
+
 ## Relocations log
 
 - **2.3's status-code example** ("Status 2xx → pass, 4xx → client error, 5xx → server error")
   from the old 💼 note is not carried into the new Task-5 onTheJob section (that content is
-  fixed verbatim by the plan). Per the plan's Task 10 note, this status-code chain is to land
-  as a callback in a Phase 9/10 lesson (9.7 or similar) — pending, tracked here so it isn't
-  lost. All other facts from the four migrated Phase-2 notes (dead-code silence, falsy edge
-  values, data-driven test counters) are fully re-expressed in their new sections above.
+  fixed verbatim by the plan). **RESOLVED in Task 10.** Landed in lesson 9.7 (API testing,
+  already being migrated for its own note) as an appended callback line: "And remember 2.3's
+  dead gate? Real status-code chains fall into that same mis-ordered trap." All other facts
+  from the four migrated Phase-2 notes (dead-code silence, falsy edge values, data-driven test
+  counters) are fully re-expressed in their new sections above.
 - **1.10's status-code assertion example** ("Status is 200 AND the reply includes the id AND
   it took under 2 seconds") — **RESOLVED in Task 8.** Landed in lesson 6.7 "fetch & APIs" as a
   new `onTheJob` section (6.7 had no badged note), rebuilt with 6.7's now-taught status-code

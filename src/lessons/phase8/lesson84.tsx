@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 8.4 — ES6+ grab bag: ?. and ??
@@ -358,13 +359,6 @@ export const lesson84: LessonDef = {
         to memorize which operator wins. When in doubt, parenthesize — 1.10’s advice, now
         enforced by the grammar.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> <code>document.querySelector</code> answers{' '}
-        <code>null</code> when nothing matches (7.2), so <code>el?.textContent</code> is daily
-        DOM grammar. And in API testing, response fields are optional by nature —{' '}
-        <code>body.user?.address?.city ?? "unknown"</code> is the shape of half the assertions
-        you’ll write.
-      </p>
     </>
   ),
   quiz: [
@@ -388,6 +382,16 @@ export const lesson84: LessonDef = {
       why: '"" is falsy, so || replaces it. ?? keeps it, because "" is neither null nor undefined. That difference is the whole reason ?? exists.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write a check shaped like this:</Scene>
+      <ReviewCard file="user.spec.js" lines={[{ text: 'body.user?.address?.city ?? "unknown"' }]} />
+      <Takeaway>
+        document.querySelector answers null when nothing matches, so el?.textContent is daily
+        DOM grammar. <Key>Optional fields are the shape of half the checks you will write.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={SAFE_READ_EXERCISE} />,
   teachBack: {
     prompt:

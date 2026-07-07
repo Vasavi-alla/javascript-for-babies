@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 7.6 — Forms & user input
@@ -271,12 +272,6 @@ export const lesson76: LessonDef = {
         <code>input.valueAsNumber</code>, or convert with <code>Number(input.value)</code>. A
         forgotten conversion is a classic silent bug — string concatenation instead of addition.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> every Playwright form action (<code>fill</code>,{' '}
-        <code>check</code>, <code>uncheck</code>, <code>selectOption</code>) does two things.
-        It sets the property and fires the event you read today. Nothing more exotic
-        sits underneath. That's why this lesson transfers directly.
-      </p>
     </>
   ),
   quiz: [
@@ -296,12 +291,29 @@ export const lesson76: LessonDef = {
     },
     {
       kind: 'type-output',
-      question: 'checkbox.checked is true. Type exactly what console.log(subscribe.checked) prints:',
+      question: 'subscribe.checked is true. Type exactly what console.log(subscribe.checked) prints:',
       accept: ['true', 'True'],
       placeholder: 'the value…',
       why: 'true — a real boolean, not the string "true". Comparing it with === "true" is a classic beginner bug that always fails.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, you will write Playwright form actions like these:</Scene>
+      <ReviewCard
+        file="signup.spec.js"
+        lines={[
+          { text: 'await page.fill("#name", "Vas");' },
+          { text: 'await page.check("#subscribe");' },
+        ]}
+      />
+      <Takeaway>
+        Every Playwright form action sets the property and fires the event you read today.{' '}
+        <Key>Nothing more exotic sits underneath.</Key> That is why this lesson transfers
+        directly.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={SUBMIT_EXERCISE} />,
   teachBack: {
     prompt:

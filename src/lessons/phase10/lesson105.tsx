@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble, PipelineRow } from '../../design/JobScene'
 
 /**
  * 10.5 — Vitest hands-on
@@ -369,14 +370,6 @@ export const lesson105: LessonDef = {
         <code>.only</code> left in by accident is a classic disaster — the suite silently shrinks
         to one test and everything “passes”. 11.13 shows the CI guard against it.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> in interviews, “walk me through what happens when you
-        run npm test” is a systems question in disguise. You can now answer it end to end. npm
-        resolves the script (8.2) → Node launches the runner (9.1) → it finds .test. files.
-        Then: runs each it, catching assertion throws (5.8, as your exercise proves). Finally:
-        prints ✓/✗ + summary → exits 0 or 1 → CI reads the number (9.2). Thirteen lessons in
-        one answer.
-      </p>
     </>
   ),
   quiz: [
@@ -402,6 +395,25 @@ export const lesson105: LessonDef = {
       why: 'Watch mode — the runner stays alive and re-runs affected tests on every save. The tightest feedback loop in the trade: red or green before your hand leaves the keyboard.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Walk me through what happens when you run npm test.</ChatBubble>
+      <PipelineRow
+        steps={[
+          { label: 'npm resolves the script', state: 'pass' },
+          { label: 'Node launches the runner', state: 'pass' },
+          { label: 'finds .test. files', state: 'pass' },
+          { label: 'runs each it', state: 'pass' },
+          { label: 'prints ✓/✗ + exit code', state: 'pass' },
+        ]}
+      />
+      <Takeaway>
+        <Key>Thirteen lessons in one answer.</Key> CI reads that exit code to turn the pipeline
+        green or red.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={RUNNER_EXERCISE} />,
   teachBack: {
     prompt:

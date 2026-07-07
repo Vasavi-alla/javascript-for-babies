@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 10.2 — The testing pyramid
@@ -314,12 +315,6 @@ export const lesson102: LessonDef = {
         middle band’s size; NOBODY credible argues for the cone. Both sides agree on this
         lesson’s core: many fast tests below, few browser tests above.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “where would you test this?” is a beloved interview
-        question. The winning answer has the shape from the last step. Name the layer, justify
-        by cost and by what a failure at that layer would tell you. You just practiced it three
-        times.
-      </p>
     </>
   ),
   quiz: [
@@ -345,6 +340,18 @@ export const lesson102: LessonDef = {
       why: '500 × 5ms = 2500ms ≈ 3 seconds — fast enough to run on every save. The same 500 tests as E2E would take over an hour. That factor is the pyramid’s entire argument.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Where would you test this?</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        Name the layer. Justify it by cost, and by what a failure there would tell you.
+      </ChatBubble>
+      <Takeaway>
+        <Key>You just practiced that answer three times.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={PLANNER_EXERCISE} />,
   teachBack: {
     prompt:

@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ReviewCard } from '../../design/JobScene'
 
 /**
  * 8.1 — Modules: import & export
@@ -364,12 +365,6 @@ export const lesson81: LessonDef = {
         a misspelled import name <em>immediately</em>. Build tools can also drop exports nobody
         imports (you’ll hear this called tree-shaking).
       </p>
-      <p>
-        <strong>💼 On the job —</strong> every Playwright test file you’ll ever write starts with{' '}
-        <code>import {'{ test, expect }'} from "@playwright/test"</code>. That’s a named import
-        from an installed package, not a <code>./file</code> path. Installing packages is exactly
-        the next lesson.
-      </p>
     </>
   ),
   quiz: [
@@ -394,6 +389,16 @@ export const lesson81: LessonDef = {
       why: 'False — imports are static and resolved before any code runs, so they must live at the top level of the file.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, every test file you write will start with this line:</Scene>
+      <ReviewCard file="login.spec.js" lines={[{ text: 'import { test, expect } from "@playwright/test";' }]} />
+      <Takeaway>
+        A named import from an installed package, not a ./file path. <Key>Installing packages
+        is exactly the next lesson.</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={MODULE_EXERCISE} />,
   teachBack: {
     prompt:

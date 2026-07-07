@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, TestRunCard } from '../../design/JobScene'
 
 /**
  * 9.2 — The terminal, properly
@@ -321,12 +322,6 @@ export const lesson92: LessonDef = {
         That <code>&&</code> is 2.4’s guard working on programs: deploy runs only if tests
         exited 0. The same short-circuit logic, one level up.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> when a Playwright test fails in CI, you get today’s
-        artifact. A terminal log with stack traces; a red pipeline driven by the exit code.
-        Reading traces calmly, innermost frame first, is a real debugging skill. Interviewers
-        test it with “walk me through this failure.”
-      </p>
     </>
   ),
   quiz: [
@@ -352,6 +347,16 @@ export const lesson92: LessonDef = {
       why: 'ls (dir on Windows). Paired with pwd and cd, that’s the eyes-and-legs of terminal navigation.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, a CI pipeline will turn red and show you this:</Scene>
+      <TestRunCard lines={[<>at makeReport (report.js:4:15)</>, <>exit code: 1</>]} />
+      <Takeaway>
+        Reading traces calmly, innermost frame first, is a real debugging skill. <Key>
+        Interviewers test it with “walk me through this failure.”</Key>
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={EXITCODE_EXERCISE} />,
   teachBack: {
     prompt:

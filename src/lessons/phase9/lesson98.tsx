@@ -6,6 +6,7 @@ import type { CodeExerciseDef } from '../../engine/practice/types'
 import type { LessonDef } from '../../engine/lesson/types'
 import { WrapTspans } from '../../design/WrapTspans'
 import { SvgBadge } from '../../design/SvgBadge'
+import { JobScene, Scene, Takeaway, Key, ChatBubble } from '../../design/JobScene'
 
 /**
  * 9.8 — Checkpoint: environment setup
@@ -321,12 +322,6 @@ export const lesson98: LessonDef = {
         beyond one JSON line. A runtime, a folder, a file, a terminal — that’s the bare core of
         every Node project, including the grandest test suite you’ll maintain.
       </p>
-      <p>
-        <strong>💼 On the job —</strong> “set up a project from scratch” (from an empty folder)
-        is a real interview task for automation roles. You just rehearsed it end to end. In
-        Phase 11, <code>npm init playwright@latest</code> will do a fancier version of boxes
-        three-and-four; you’ll know what it set up and why.
-      </p>
     </>
   ),
   quiz: [
@@ -352,6 +347,19 @@ export const lesson98: LessonDef = {
       why: '0 = success, the exit code every clean run leaves behind — the machine-readable proof CI reads instead of the logs.',
     },
   ],
+  onTheJob: (
+    <JobScene>
+      <Scene>One day, an interviewer will ask you this exact question:</Scene>
+      <ChatBubble who="interviewer" face="🙂">Set up a test project from an empty folder.</ChatBubble>
+      <ChatBubble who="you, after this lesson" face="😊" accent indent>
+        You just rehearsed this end to end.
+      </ChatBubble>
+      <Takeaway>
+        <Key>Phase 11’s npm init playwright@latest does a fancier version of the same
+        steps.</Key> You will know what it sets up and why.
+      </Takeaway>
+    </JobScene>
+  ),
   PlayExtra: () => <CodeExercise def={REHEARSAL_EXERCISE} />,
   teachBack: {
     prompt:
