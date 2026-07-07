@@ -290,18 +290,21 @@ export const lesson52: LessonDef = {
       id: 'notyet-throws',
       caption:
         'But notYet() on line 7 throws — ReferenceError, the TDZ again. Same-looking "call it above its line" move as hoisted() just made work perfectly — and this time it crashes.',
+      codeOverride: EXPR_CODE,
       highlightLines: [7, 9, 10, 11],
     },
     {
       id: 'expressions-are-variables',
       caption:
         'Why the difference? notYet is not a function declaration; it’s a CONST that happens to hold a function (lesson 3.4: functions are values!). Expressions follow their VARIABLE’s hoisting rules, and const’s rule is the dead zone.',
+      codeOverride: EXPR_CODE,
       highlightLines: [9, 10, 11],
     },
     {
       id: 'one-question-settles',
       caption:
         'One sentence settles every hoisting puzzle you will ever meet: “what kind of DECLARATION is this name?” — the function part is irrelevant. Ask that question first, always.',
+      codeOverride: EXPR_CODE,
       highlightLines: [1, 3, 4, 5, 7, 9, 10, 11],
     },
   ],

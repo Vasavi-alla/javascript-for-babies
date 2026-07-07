@@ -246,18 +246,21 @@ export const lesson61: LessonDef = {
       id: 'sails-past',
       caption:
         'And so the famous order begins: A prints, setTimeout REGISTERS and returns immediately, B prints. The thread never stood still.',
+      codeOverride: TIMER_CODE,
       highlightLines: [1, 7],
     },
     {
       id: 'c-arrives',
       caption:
         'Two seconds later — with the stack long empty — the callback finally runs and C appears. A function you passed to be called later: 3.8’s callbacks were rehearsal for exactly this.',
+      codeOverride: TIMER_CODE,
       highlightLines: [3, 4, 5],
     },
     {
       id: 'the-question',
       caption:
         'But wait — the timer rang OFF the thread… so how did the callback get back ONTO the one stack, safely, without interrupting whatever was running? THAT handover machine — the queue and the loop that guards the stack — is the single most famous diagram in JavaScript, and it’s the entire next lesson.',
+      codeOverride: TIMER_CODE,
       highlightLines: [3, 4, 5],
     },
   ],
