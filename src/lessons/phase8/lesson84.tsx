@@ -393,6 +393,20 @@ export const lesson84: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={SAFE_READ_EXERCISE} />,
+  interview: {
+    question: 'What do ?. and ?? do?',
+    say: '?. reads a property and stops safely if the thing before it is null or undefined, returning undefined instead of throwing. ?? gives a fallback only when the value is null or undefined. That makes ?? the safe default operator.',
+    example: {
+      code: 'const city = user?.address?.city // undefined if any hop is missing\n\nconst port = config.port ?? 3000 // 3000 only if null or undefined\nconst bad = config.port || 3000  // wrong: also replaces 0',
+      note: '?. stops safely on a missing hop. ?? falls back only on null or undefined, unlike || which also replaces 0.',
+    },
+    deeper:
+      '?? differs from || because || also replaces 0 and empty string (8.4). ?? treats those as real values, so it is the safe choice for a default.',
+    dontSay: {
+      wrong: '?? is the same as ||.',
+      why: '|| replaces any falsy value, including 0 and empty string. ?? only replaces null and undefined (8.4).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend why user.cat.name crashes but user.cat?.name doesn’t, and why volume ?? 50 is safer than volume || 50 when volume is 0.',

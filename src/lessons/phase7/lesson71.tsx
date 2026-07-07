@@ -296,6 +296,20 @@ export const lesson71: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={TREECOUNT_EXERCISE} />,
+  interview: {
+    question: 'What is the DOM?',
+    say: 'The DOM is the live tree of objects the browser builds from your HTML. Your JavaScript reads and changes that tree, and the page updates to match. The DOM is the objects in memory, not the HTML text you started with.',
+    example: {
+      code: '// HTML: <button id="buy">Buy</button>\n\ndocument.querySelector("#buy").textContent = "Sold"\n// the page now shows Sold\n// the original HTML text never changed',
+      note: 'The HTML was the starting text. Script changes the live object, and the page updates. That live tree is the DOM.',
+    },
+    deeper:
+      'Each tag becomes a node with parents and children (7.1). Changing a node changes what is shown. Automation tools drive the page by finding and acting on these nodes.',
+    dontSay: {
+      wrong: 'The DOM is the HTML file.',
+      why: 'The HTML is the starting text. The DOM is the live object tree, which script can change after load (7.1).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend what the DOM actually is — what the browser does with HTML text, what document gives you, what querySelector hands back, and why the DevTools Elements panel isn’t the same as “View Source.”',

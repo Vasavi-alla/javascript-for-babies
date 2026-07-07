@@ -368,6 +368,20 @@ export const lesson93: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={CJS_EXERCISE} />,
+  interview: {
+    question: 'What’s the difference between CommonJS and ES modules?',
+    say: 'CommonJS uses require and module.exports and loads modules at run time. ES modules use import and export and are resolved statically before the code runs. ESM is the modern standard, and mixing the two causes errors.',
+    example: {
+      code: '// CommonJS, loads at run time\nconst fs = require("fs")\nmodule.exports = { run }\n\n// ES modules, resolved before running\nimport fs from "fs"\nexport { run }',
+      note: 'require and module.exports are CommonJS. import and export are ES modules, and "type": "module" selects them.',
+    },
+    deeper:
+      'require returns a value you can call conditionally (9.3). import is static, so tools can analyze it. "type": "module" or an .mjs file selects ESM.',
+    dontSay: {
+      wrong: 'They are interchangeable.',
+      why: 'Mixing them causes errors like ERR_REQUIRE_ESM. import is static, require is dynamic (9.3).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend why Node has two module systems, how to recognize each in one glance, and what "type": "module" in package.json actually does.',

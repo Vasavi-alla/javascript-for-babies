@@ -391,6 +391,20 @@ export const lesson45: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={PHONEBOOK_EXERCISE} />,
+  interview: {
+    question: 'Why does {} === {} return false?',
+    say: 'Because each object literal creates a separate object in memory, and === on objects compares identity, not contents. Two different objects are never equal, even with identical fields. To compare contents you check field by field.',
+    example: {
+      code: 'const a = { id: 1 }\nconst b = { id: 1 }\n\na === b        // false, two different objects\na === a        // true, the same object\na.id === b.id  // true, same contents',
+      note: 'a and b hold the same field but are two different objects, so === is false. Compare the fields to check contents.',
+    },
+    deeper:
+      'An object variable holds a reference, an address (4.6). === compares the addresses. A deep compare walks the fields instead, which is what toEqual does (10.4).',
+    dontSay: {
+      wrong: 'They are equal because both are empty.',
+      why: '=== on objects ignores contents. It asks if they are the same object, and these are two.',
+    },
+  },
   teachBack: {
     prompt:
       'An interviewer asks: “Why is looking up a value by key in an object O(1)? Strings aren’t numbers — what’s actually happening?” Give the full answer: hash function, buckets, collisions.',

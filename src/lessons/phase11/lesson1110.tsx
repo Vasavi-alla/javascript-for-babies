@@ -388,6 +388,20 @@ export const lesson1110: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={ROUTE_EXERCISE} />,
+  interview: {
+    question: 'Why intercept network requests in a test?',
+    say: 'To control what the app receives without a real server. You match a request and fulfill it yourself, returning fixed data or forcing an error. That makes tests fast and deterministic, and lets you check how the UI handles a 500 or a timeout.',
+    example: {
+      code: 'await page.route("**/api/user", route =>\n  route.fulfill({ status: 500 })\n)\n// load the page and check it shows the error state,\n// with no real server needed',
+      note: 'You force a 500 the real backend rarely gives. That lets you test the sad path fast and every time.',
+    },
+    deeper:
+      'You match a request and fulfill it yourself (11.10). This makes tests fast and deterministic, and lets you check how the UI handles a 500 or a timeout.',
+    dontSay: {
+      wrong: 'Interception is only for speed.',
+      why: 'Its bigger value is forcing errors and edge cases you cannot reliably cause with a live backend (11.10).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain interception to a friend: the backend-dependency problem, what page.route does to the envelope (name the 10.6 family member), why sad paths are the superpower, the mocked-vs-real tradeoff, and what the request fixture adds.',

@@ -287,6 +287,20 @@ export const lesson65: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={LANES_EXERCISE} />,
+  interview: {
+    question: 'Does a promise callback or setTimeout(fn, 0) run first?',
+    say: 'The promise callback runs first. Promise callbacks are microtasks. Timers are macrotasks. After each macrotask the event loop empties the whole microtask queue before taking the next macrotask, so microtasks always jump ahead.',
+    example: {
+      code: 'setTimeout(() => console.log("timeout"), 0)\nPromise.resolve().then(() => console.log("promise"))\n\n// prints: promise, then timeout',
+      note: 'Both are queued with no delay, but the promise is a microtask, so it runs before the setTimeout macrotask.',
+    },
+    deeper:
+      'After each macrotask the loop drains every microtask, including ones added while draining (6.5). setTimeout(fn, 0) still waits for the stack to clear and the microtasks to finish.',
+    dontSay: {
+      wrong: 'setTimeout(fn, 0) runs immediately.',
+      why: 'Zero is a minimum delay, not now. It waits for the stack and all microtasks first (6.5).',
+    },
+  },
   teachBack: {
     prompt:
       'The interviewer shows you sync + setTimeout(0) + Promise.then and asks for the output order and WHY. Give the two-queue explanation, the drain rule, and name what rides in each lane.',

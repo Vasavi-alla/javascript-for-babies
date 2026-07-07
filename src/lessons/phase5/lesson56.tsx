@@ -369,6 +369,20 @@ export const lesson56: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={PAGES_EXERCISE} />,
+  interview: {
+    question: 'Is a JavaScript class a real class?',
+    say: 'It is syntax over prototypes (5.5). class is a cleaner way to write a constructor and put methods on its prototype. extends links one prototype to another. Under the hood it is the same prototype machinery, not a new kind of thing.',
+    example: {
+      code: 'class Animal { speak() { return "..." } }\nclass Dog extends Animal {}\n\nconst d = new Dog()\nd.speak()                          // "...", found up the chain\nd.speak === Animal.prototype.speak // true, one shared method',
+      note: 'speak is not copied onto d. It lives once on the prototype, and extends links Dog to Animal.',
+    },
+    deeper:
+      'Methods you write in a class go on the prototype, shared by all instances. extends links one prototype to another, which is how the chain forms (5.5).',
+    dontSay: {
+      wrong: 'Classes were added to replace prototypes.',
+      why: 'They desugar to prototypes (5.6). The same model runs underneath, with nicer syntax.',
+    },
+  },
   teachBack: {
     prompt:
       'A friend says “JavaScript classes are like classes in other languages, right?” Give the honest answer: what a class actually builds, the four things new does, and what extends really wires.',

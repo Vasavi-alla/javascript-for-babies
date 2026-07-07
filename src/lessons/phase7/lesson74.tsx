@@ -330,6 +330,20 @@ export const lesson74: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={EMITTER_EXERCISE} />,
+  interview: {
+    question: 'What is event delegation?',
+    say: 'You put one listener on a parent instead of many on each child. Events bubble up from the target, so the parent hears them and checks which child was clicked. It also handles children added later, which per child listeners would miss.',
+    example: {
+      code: '// one listener on the parent, not one per row\nlist.addEventListener("click", (e) => {\n  if (e.target.matches(".delete")) {\n    remove(e.target)\n  }\n})',
+      note: 'Clicks on any row bubble up to list. The parent checks the target, so rows added later work too.',
+    },
+    deeper:
+      'Events travel down, then bubble up through ancestors (7.4). Because the parent catches them, it also handles children added later, which a per child listener would miss.',
+    dontSay: {
+      wrong: 'Delegation means fewer clicks.',
+      why: 'The user still clicks each thing. Delegation is fewer listeners, using bubbling to handle them in one place (7.4).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend how a click becomes their function running: the registration, the event object, the queue underneath — and why a busy page makes clicks feel dead.',

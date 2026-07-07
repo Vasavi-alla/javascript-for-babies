@@ -407,6 +407,20 @@ export const lesson54: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={ANNOUNCER_EXERCISE} />,
+  interview: {
+    question: 'How does JavaScript decide what this is?',
+    say: 'By how the function is called, not where it is defined. Called as obj.method(), this is obj. Called plain, this is undefined in strict mode. Arrow functions ignore the call and take this from the surrounding scope.',
+    example: {
+      code: 'const user = {\n  name: "Sam",\n  greet() { return this.name }\n}\n\nuser.greet()       // "Sam", this is user\nconst g = user.greet\ng()                // undefined, this is lost',
+      note: 'Called as user.greet(), this is user. Pulled off and called plain, the same function loses its this.',
+    },
+    deeper:
+      'The rules have an order (5.4): new, then call, apply, or bind, then the object before the dot, then default. Arrow functions ignore all of that and use lexical this.',
+    dontSay: {
+      wrong: 'this is the object the function is written in.',
+      why: 'this depends on the call site, so the same function can have a different this each call (5.4).',
+    },
+  },
   teachBack: {
     prompt:
       'The interview question: “Explain this in JavaScript.” Give the one-sentence core, the four rules in priority order, the arrow-function exception — and name the classic bug the default rule causes.',

@@ -329,6 +329,20 @@ export const lesson66: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={SCORE_EXERCISE} />,
+  interview: {
+    question: 'What does async/await actually do?',
+    say: 'It is syntax over promises (6.4). async makes a function return a promise. await pauses inside that function until a promise settles, then gives you the value. It reads like straight line code but does not block the thread.',
+    example: {
+      code: 'async function load() {\n  try {\n    const user = await getUser() // returns a promise\n    return user.name\n  } catch (err) {\n    return "failed"\n  }\n}',
+      note: 'await pauses inside load until getUser settles, then hands back the value. try and catch catches a rejection.',
+    },
+    deeper:
+      'await does not block the thread (6.1). It hands control back to the event loop and resumes later as a microtask (6.5). Only that async function pauses, the thread stays free.',
+    dontSay: {
+      wrong: 'await stops everything until the promise finishes.',
+      why: 'It only pauses that async function. The thread is free to run other work meanwhile (6.6).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain async/await to a friend who knows promises: what async guarantees, what await actually does to the function (and the thread!), how it resumes, and why try/catch works again.',

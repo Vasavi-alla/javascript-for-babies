@@ -388,6 +388,20 @@ export const lesson47: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={SAFE_COPY_EXERCISE} />,
+  interview: {
+    question: 'What’s the difference between map, filter, and reduce?',
+    say: 'map turns each item into a new array of the same length. filter keeps only the items that pass a test. reduce folds the whole array into one value. All three take a function and leave the original array unchanged.',
+    example: {
+      code: 'const nums = [1, 2, 3, 4]\n\nnums.map(n => n * 2)               // [2, 4, 6, 8]\nnums.filter(n => n % 2 === 0)      // [2, 4]\nnums.reduce((sum, n) => sum + n, 0) // 10',
+      note: 'map keeps the length, filter shrinks it, reduce collapses it to one value. nums itself is never changed.',
+    },
+    deeper:
+      'reduce is the general one (4.7). You can build map and filter out of reduce. map differs from forEach because forEach returns nothing, so only map can be chained.',
+    dontSay: {
+      wrong: 'map and forEach are the same.',
+      why: 'forEach returns nothing. map returns a new array, so only map can be chained.',
+    },
+  },
   teachBack: {
     prompt:
       'A friend spread-copied their settings object, edited the copy’s nested prefs, and corrupted the original anyway. Explain why the top level was safe but the nested part wasn’t — and what tool makes a copy with nothing shared.',

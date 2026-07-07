@@ -624,6 +624,20 @@ export const lesson46: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={SCOREBOARD_EXERCISE} />,
+  interview: {
+    question: 'What’s the difference between passing by value and by reference?',
+    say: 'Primitives like numbers are copied by value, so changing the copy never touches the original. Objects are passed by their reference, so two names can point at the same object. Mutating it through one name is visible through the other.',
+    example: {
+      code: 'let a = { n: 1 }\nlet b = a     // same object, not a copy\nb.n = 99\na.n           // 99, they share it\n\nlet x = 5\nlet y = x     // a real copy\ny = 99\nx             // 5, untouched',
+      note: 'Objects are shared through a reference, so b changes a. Primitives are copied, so y never touches x.',
+    },
+    deeper:
+      'The variable holds an address for objects (4.6). Reassigning the parameter only repoints the local name. Mutating the object through it changes the shared object the caller sees.',
+    dontSay: {
+      wrong: 'Objects are passed by reference, so reassigning the argument changes the caller’s variable.',
+      why: 'Mutation is shared, but reassigning the parameter is not. JavaScript passes the reference by value.',
+    },
+  },
   teachBack: {
     prompt:
       'The interview classic — a friend shows you: const a = { n: 1 }; const b = a; b.n = 2; and is horrified that a.n is now 2. Explain what b = a really copied, why const didn’t prevent any of it, and what a function could and couldn’t do if they passed a to it.',

@@ -385,6 +385,20 @@ export const lesson51: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={BANNER_EXERCISE} />,
+  interview: {
+    question: 'What is hoisting?',
+    say: 'Before running, JavaScript registers the declarations in each scope. Function declarations are ready right away. var starts as undefined. let and const are registered too but stay unusable until their line runs.',
+    example: {
+      code: 'console.log(a) // undefined, var is hoisted\nvar a = 1\n\nconsole.log(b) // ReferenceError\nlet b = 2      // b was in the temporal dead zone',
+      note: 'var exists early as undefined. let exists too, but cannot be touched until its line, the temporal dead zone.',
+    },
+    deeper:
+      'This is the two pass model (5.1). let and const sit in the temporal dead zone from the top of the block until their line runs. Touching them there throws.',
+    dontSay: {
+      wrong: 'let and const are not hoisted.',
+      why: 'They are registered too. The difference is they stay in the temporal dead zone until declared (5.1).',
+    },
+  },
   teachBack: {
     prompt:
       'A friend is baffled that calling a function above its definition works, but reading a var above its line gives undefined. Explain the two passes — and why the two cases behave differently.',

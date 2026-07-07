@@ -353,6 +353,20 @@ export const lesson102: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={PLANNER_EXERCISE} />,
+  interview: {
+    question: 'What is the testing pyramid?',
+    say: 'A shape for your test mix: many fast unit tests at the base, fewer integration tests, and few slow end to end tests on top. You ask each question at the cheapest layer that can answer it. The inverted mix, mostly end to end, is the anti pattern.',
+    example: {
+      code: '// 500 unit tests   ~ 5ms each   = 2.5s\n// 40 integration    ~ 200ms each = 8s\n// 5 end-to-end       ~ 8s each    = 40s\n// most questions answered at the cheap base',
+      note: 'The same coverage moved up to end to end would take many minutes and flake often. Ask at the cheapest layer.',
+    },
+    deeper:
+      'Cost and confidence pull opposite ways (10.2). End to end tests catch real breakage but are slow and flaky. The inverted cone, mostly end to end, is the anti pattern.',
+    dontSay: {
+      wrong: 'End to end tests are best, so write mostly those.',
+      why: 'They are slow and flaky in bulk (10.2). Push logic checks down to fast unit tests.',
+    },
+  },
   teachBack: {
     prompt:
       'Draw the pyramid for a friend: define the three layers precisely, give the speed math that justifies the shape, explain what the ice-cream cone is and why teams fall into it, and say where Playwright sits.',

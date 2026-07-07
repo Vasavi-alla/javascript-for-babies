@@ -422,6 +422,20 @@ export const lesson1115: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={FLAKE_EXERCISE} />,
+  interview: {
+    question: 'What makes a test flaky, and how do you fix it?',
+    say: 'A flaky test passes and fails on the same code. The common causes are fixed sleeps, shared state between tests, and depending on run order. You fix the cause, usually timing or shared state, rather than just adding a retry that hides it.',
+    example: {
+      code: '// flaky: guesses the wait, reuses data\nawait page.waitForTimeout(1000)\nconst name = "test-user"\n\n// fixed: auto-wait + unique data per run\nawait expect(toast).toBeVisible()\nconst name = "user-" + Date.now()',
+      note: 'Replace the sleep with an auto waiting assertion, and give each run unique data. A retry only hides the cause.',
+    },
+    deeper:
+      'Auto waiting removes timing flakes (11.6). Unique data per run and isolation remove shared state flakes (11.15). Retries hide flakes, they do not fix them.',
+    dontSay: {
+      wrong: 'Just add a retry to fix flaky tests.',
+      why: 'Retries mask the cause and slow the suite. Find the real source, usually timing or shared state (11.15).',
+    },
+  },
   teachBack: {
     prompt:
       'Give the full scale-and-flakiness briefing: why workers speed things up (the 9.6 connection), what makes parallelism safe, the retry debate honestly (both edges + the mark), the four clinic causes with their cures, and the zero-flake policy’s reasoning.',

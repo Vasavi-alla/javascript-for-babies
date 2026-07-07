@@ -341,6 +341,20 @@ export const lesson64: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={DELAY_CHAIN_EXERCISE} />,
+  interview: {
+    question: 'What is a promise?',
+    say: 'A promise is an object for a value that is not ready yet. It is pending, then either fulfilled with a value or rejected with an error. You attach then and catch to react when it settles, and a settled promise never changes again.',
+    example: {
+      code: 'const p = Promise.resolve(5)\n\np.then(n => console.log(n)) // 5, but later\nconsole.log("runs first")\n\n// prints: runs first, then 5',
+      note: 'then always runs its callback later, after the current code finishes, even when the value is already ready.',
+    },
+    deeper:
+      'then always runs its callback as a microtask (6.5), even on an already resolved promise. The promise is just the handle you read the result through, it does not run the work itself.',
+    dontSay: {
+      wrong: 'A promise runs the async work.',
+      why: 'The work is already running. The promise is just the handle you use to read its result later (6.4).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain promises to a friend using the receipt picture: the three states and the one-flip rule, what .then really does (and returns!), how chains stay flat, and where errors go.',

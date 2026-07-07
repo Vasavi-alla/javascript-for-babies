@@ -315,6 +315,20 @@ export const lesson62: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={TICKETS_EXERCISE} />,
+  interview: {
+    question: 'Explain the event loop.',
+    say: 'JavaScript runs on one thread. Slow work is handed to the environment, and its callback waits in a queue when done. The event loop runs a queued callback only when the call stack is empty. It drains all microtasks before the next macrotask.',
+    example: {
+      code: 'console.log("A")\nsetTimeout(() => console.log("B"), 0)\nPromise.resolve().then(() => console.log("C"))\nconsole.log("D")\n\n// prints: A, D, C, B',
+      note: 'A and D run first. Then the promise callback C, a microtask. Then the timer B, a macrotask, last.',
+    },
+    deeper:
+      'There are two queues (6.5). The loop drains the whole microtask queue, the promise callbacks, before it takes one macrotask like a timer. That is why C prints before B.',
+    dontSay: {
+      wrong: 'The event loop runs things in parallel.',
+      why: 'It runs one thing at a time. It just decides what runs next when the stack is empty (6.2).',
+    },
+  },
   teachBack: {
     prompt:
       'The interview favorite: “Explain the event loop.” Name the four parts, the one rule, and use setTimeout(fn, 0) as your worked example — including why its callback can never run before the sync code finishes.',

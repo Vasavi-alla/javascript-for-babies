@@ -313,6 +313,20 @@ export const lesson78: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={VISIBILITY_EXERCISE} />,
+  interview: {
+    question: 'Why can an element be in the DOM but not ready to click?',
+    say: 'Being in the tree is not the same as being visible and interactive. An element may be hidden, still loading, or covered by another. The pixels lag behind the markup, so a test must wait for it to be actionable, not just present.',
+    example: {
+      code: '// <div id="msg" style="display:none">Saved</div>\n\ndocument.querySelector("#msg") // found, it is in the DOM\n// but display:none means it is not rendered,\n// so a real click would fail',
+      note: 'The element is in the tree but not rendered. In the DOM is not the same as visible and clickable.',
+    },
+    deeper:
+      'The browser parses, builds the render tree, lays out, then paints (7.8). A display none element is in the DOM but not rendered. This gap is why tests must wait.',
+    dontSay: {
+      wrong: 'If it is in the DOM I can click it.',
+      why: 'It may be hidden or not yet painted (7.8). You wait for it to be actionable, not just present.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend the four stages of the render pipeline, in order — and why "it exists in the DOM" is not the same claim as "it is visible on screen," with an example of a real testing consequence.',

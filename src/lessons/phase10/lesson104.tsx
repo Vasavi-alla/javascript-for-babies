@@ -417,6 +417,20 @@ export const lesson104: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={MATCHER_EXERCISE} />,
+  interview: {
+    question: 'What’s the difference between toBe and toEqual?',
+    say: 'toBe uses ===, so for objects it checks identity, the same object in memory. toEqual walks the structure and compares field by field. You use toBe for primitives like numbers and strings, and toEqual for objects and arrays.',
+    example: {
+      code: 'expect(2 + 2).toBe(4)         // pass, primitives\n\nconst a = { id: 1 }\nexpect(a).toBe({ id: 1 })     // FAIL, different objects\nexpect(a).toEqual({ id: 1 })  // pass, same contents',
+      note: 'toBe uses ===, so two equal looking objects fail it. toEqual walks the fields. Primitives use toBe.',
+    },
+    deeper:
+      'Two objects with equal contents fail toBe because they have different addresses (4.6). toEqual compares the trees (10.4), so it passes.',
+    dontSay: {
+      wrong: 'toBe and toEqual are interchangeable.',
+      why: 'For objects, toBe checks identity and usually fails. toEqual checks contents (10.4).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain the twin trap to a friend: why toBe fails on two identical-looking objects (use 4.6’s picture), what toEqual does differently, and the rule for choosing between them — plus which matcher float math always gets.',

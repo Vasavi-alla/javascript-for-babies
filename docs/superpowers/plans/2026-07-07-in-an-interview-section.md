@@ -14,7 +14,13 @@
 - ✅ **Task 2 (3.7 closures)** — DONE, user-approved as the calibration reference.
 - ✅ **Task 3 (back-ports 1.4, 1.9)** — DONE.
 - ✅ **Task 4 (Phase 3: 3.5, 3.6, 3.8, 3.9)** — DONE.
-- ⬜ **Tasks 5–11 (Phases 4–11 content)** — NOT STARTED. Author per the blocks below.
+- ✅ **Task 5 (Phase 4: 4.5, 4.6, 4.7)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 6 (Phase 5: 5.1, 5.4, 5.5, 5.6)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 7 (Phase 6: 6.1, 6.2, 6.4, 6.5, 6.6)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 8 (Phase 7: 7.1, 7.2, 7.4, 7.8)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 9 (Phases 8 & 9: 8.4, 9.3, 9.6)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 10 (Phase 10: 10.2, 10.4, 10.6)** — DONE. Build green, lint clean, citations confirmed.
+- ✅ **Task 11 (Phase 11: 11.6, 11.9, 11.10, 11.15)** — DONE. Build green, lint clean, citations confirmed. ALL content phases complete.
 - ⬜ **Task 12 (docs/blueprint/memory + final sweep)** — NOT STARTED.
 
 **Two model revisions were made while building Tasks 1–4** (both already reflected in the spec and in the Task 5–11 blocks below):
@@ -91,11 +97,11 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
 
 ---
 
-## Task 5: Phase 4 — 4.5, 4.6, 4.7
+## Task 5: Phase 4 — 4.5, 4.6, 4.7 ✅ DONE
 
 **Files:** Modify `src/lessons/phase4/lesson45.tsx`, `lesson46.tsx`, `lesson47.tsx`
 
-- [ ] **Step 1: 4.5 copying & equality** (insert before `  teachBack: {`):
+- [x] **Step 1: 4.5 copying & equality** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -114,7 +120,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 4.6 value vs reference** (insert before `  teachBack: {`):
+- [x] **Step 2: 4.6 value vs reference** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -133,7 +139,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 4.7 map/filter/reduce** (insert before `  teachBack: {`):
+- [x] **Step 3: 4.7 map/filter/reduce** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -152,15 +158,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase4` (`clean`). Confirm `(4.6)`, `(4.7)`, `(10.4)` citations. Leave in working tree.
+- [x] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase4` (`clean`). Confirm `(4.6)`, `(4.7)`, `(10.4)` citations. Leave in working tree. ✅ build green, lint clean, citations confirmed (10.4 = toEqual, 4.6 = value vs reference).
 
 ---
 
-## Task 6: Phase 5 — 5.1, 5.4, 5.5, 5.6
+## Task 6: Phase 5 — 5.1, 5.4, 5.5, 5.6 ✅ DONE
 
 **Files:** Modify `src/lessons/phase5/lesson51.tsx`, `lesson54.tsx`, `lesson55.tsx`, `lesson56.tsx`
 
-- [ ] **Step 1: 5.1 hoisting & TDZ** (insert before `  teachBack: {`):
+- [x] **Step 1: 5.1 hoisting & TDZ** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -179,7 +185,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 5.4 this** (insert before `  teachBack: {`):
+- [x] **Step 2: 5.4 this** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -198,7 +204,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 5.5 prototypes** (insert before `  teachBack: {`):
+- [x] **Step 3: 5.5 prototypes** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -217,7 +223,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: 5.6 classes** (insert before `  teachBack: {`):
+- [x] **Step 4: 5.6 classes** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -236,15 +242,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase5` (`clean`). Confirm `(5.1)`, `(5.4)`, `(5.5)`, `(5.6)` citations. Leave in working tree.
+- [x] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase5` (`clean`). Confirm `(5.1)`, `(5.4)`, `(5.5)`, `(5.6)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (5.1 two passes, 5.4 this/binding, 5.5 prototype chain, 5.6 classes).
 
 ---
 
-## Task 7: Phase 6 — 6.1, 6.2, 6.4, 6.5, 6.6
+## Task 7: Phase 6 — 6.1, 6.2, 6.4, 6.5, 6.6 ✅ DONE
 
 **Files:** Modify `src/lessons/phase6/lesson61.tsx`, `lesson62.tsx`, `lesson64.tsx`, `lesson65.tsx`, `lesson66.tsx`
 
-- [ ] **Step 1: 6.1 blocking vs non-blocking** (insert before `  teachBack: {`):
+- [x] **Step 1: 6.1 blocking vs non-blocking** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -263,7 +269,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 6.2 event loop** (insert before `  teachBack: {`):
+- [x] **Step 2: 6.2 event loop** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -282,7 +288,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 6.4 promises** (insert before `  teachBack: {`):
+- [x] **Step 3: 6.4 promises** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -301,7 +307,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: 6.5 microtask/macrotask order** (insert before `  teachBack: {`):
+- [x] **Step 4: 6.5 microtask/macrotask order** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -320,7 +326,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 5: 6.6 async/await** (insert before `  teachBack: {`):
+- [x] **Step 5: 6.6 async/await** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -339,15 +345,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 6: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase6` (`clean`). Confirm `(6.1)`, `(6.2)`, `(6.4)`, `(6.5)`, `(6.6)` citations. Leave in working tree.
+- [x] **Step 6: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase6` (`clean`). Confirm `(6.1)`, `(6.2)`, `(6.4)`, `(6.5)`, `(6.6)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (6.1 thread, 6.2 event loop, 6.4 promises, 6.5 lanes, 6.6 async/await).
 
 ---
 
-## Task 8: Phase 7 — 7.1, 7.2, 7.4, 7.8
+## Task 8: Phase 7 — 7.1, 7.2, 7.4, 7.8 ✅ DONE
 
 **Files:** Modify `src/lessons/phase7/lesson71.tsx`, `lesson72.tsx`, `lesson74.tsx`, `lesson78.tsx`
 
-- [ ] **Step 1: 7.1 DOM** (insert before `  teachBack: {`):
+- [x] **Step 1: 7.1 DOM** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -366,7 +372,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 7.2 selectors / locators** (insert before `  teachBack: {`):
+- [x] **Step 2: 7.2 selectors / locators** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -385,7 +391,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 7.4 event delegation** (insert before `  teachBack: {`):
+- [x] **Step 3: 7.4 event delegation** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -404,7 +410,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: 7.8 why elements aren’t ready** (insert before `  teachBack: {`):
+- [x] **Step 4: 7.8 why elements aren’t ready** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -423,15 +429,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase7` (`clean`). Confirm `(7.1)`, `(7.2)`, `(7.4)`, `(7.8)` citations. Leave in working tree.
+- [x] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase7` (`clean`). Confirm `(7.1)`, `(7.2)`, `(7.4)`, `(7.8)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (7.1 DOM tree, 7.2 selectors, 7.4 events, 7.8 render-tree).
 
 ---
 
-## Task 9: Phase 8 & 9 — 8.4, 9.3, 9.6
+## Task 9: Phase 8 & 9 — 8.4, 9.3, 9.6 ✅ DONE
 
 **Files:** Modify `src/lessons/phase8/lesson84.tsx`, `src/lessons/phase9/lesson93.tsx`, `src/lessons/phase9/lesson96.tsx`
 
-- [ ] **Step 1: 8.4 ?. and ??** (insert before `  teachBack: {`):
+- [x] **Step 1: 8.4 ?. and ??** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -450,7 +456,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 9.3 CJS vs ESM** (insert before `  teachBack: {`):
+- [x] **Step 2: 9.3 CJS vs ESM** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -469,7 +475,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 9.6 Node’s event loop / libuv** (insert before `  teachBack: {`):
+- [x] **Step 3: 9.6 Node’s event loop / libuv** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -488,15 +494,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase8 phase9` (`clean`). Confirm `(8.4)`, `(9.3)`, `(9.6)` citations. Leave in working tree.
+- [x] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase8 phase9` (`clean`). Confirm `(8.4)`, `(9.3)`, `(9.6)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (8.4 crash-proof reader, 9.3 build require, 9.6 prove the order).
 
 ---
 
-## Task 10: Phase 10 — 10.2, 10.4, 10.6
+## Task 10: Phase 10 — 10.2, 10.4, 10.6 ✅ DONE
 
 **Files:** Modify `src/lessons/phase10/lesson102.tsx`, `lesson104.tsx`, `lesson106.tsx`
 
-- [ ] **Step 1: 10.2 testing pyramid** (insert before `  teachBack: {`):
+- [x] **Step 1: 10.2 testing pyramid** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -515,7 +521,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 10.4 toBe vs toEqual** (insert before `  teachBack: {`):
+- [x] **Step 2: 10.4 toBe vs toEqual** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -534,7 +540,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 10.6 test doubles & TDD** (insert before `  teachBack: {`):
+- [x] **Step 3: 10.6 test doubles & TDD** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -553,17 +559,15 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase10` (`clean`). Confirm `(4.6)`, `(10.2)`, `(10.4)`, `(10.6)` citations. Leave in working tree.
+- [x] **Step 4: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase10` (`clean`). Confirm `(4.6)`, `(10.2)`, `(10.4)`, `(10.6)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (10.2 suite health check, 10.4 toBe/toEqual, 10.6 spy/stub).
 
 ---
 
-## Task 11: Phase 11 — 11.6, 11.9, 11.10, 11.15
+## Task 11: Phase 11 — 11.6, 11.9, 11.10, 11.15 ✅ DONE
 
-**Files:** Modify the phase11 files whose ids are `11.6`, `11.9`, `11.10`, `11.15`.
+**Files:** Modify the phase11 files whose ids are `11.6`, `11.9`, `11.10`, `11.15`. Confirmed: `lesson116.tsx`, `lesson119.tsx`, `lesson1110.tsx`, `lesson1115.tsx`.
 
-> Confirm filenames first: `grep -rl "id: '11\.\(6\|9\|10\|15\)'" src/lessons/phase11`. The likely names are `lesson116.tsx`, `lesson119.tsx`, `lesson1110.tsx`, `lesson1115.tsx`, but verify by id, not by guessing.
-
-- [ ] **Step 1: 11.6 auto-waiting** (insert before `  teachBack: {`):
+- [x] **Step 1: 11.6 auto-waiting** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -582,7 +586,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 2: 11.9 Page Object Model** (insert before `  teachBack: {`):
+- [x] **Step 2: 11.9 Page Object Model** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -601,7 +605,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 3: 11.10 network interception** (insert before `  teachBack: {`):
+- [x] **Step 3: 11.10 network interception** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -620,7 +624,7 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 4: 11.15 flakiness** (insert before `  teachBack: {`):
+- [x] **Step 4: 11.15 flakiness** (insert before `  teachBack: {`):
 
 ```tsx
   interview: {
@@ -639,25 +643,25 @@ Shipped in `src/lessons/phase3/lesson35.tsx`, `lesson36.tsx`, `lesson38.tsx`, `l
   },
 ```
 
-- [ ] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase11` (`clean`). Confirm `(11.6)`, `(11.9)`, `(11.10)`, `(11.15)` citations. Leave in working tree.
+- [x] **Step 5: Verify.** `npm run build` (green), `node scripts/lint-uth.mjs phase11` (`clean`). Confirm `(11.6)`, `(11.9)`, `(11.10)`, `(11.15)` citations. Leave in working tree. ✅ build green, lint clean, titles confirmed (11.6 polling assertion, 11.9 page object, 11.10 customs booth, 11.15 flake detector).
 
 ---
 
-## Task 12: Docs, blueprint, memory, final sweep
+## Task 12: Docs, blueprint, memory, final sweep ✅ DONE
 
 **Files:** Modify `docs/plan/04-LESSON-BLUEPRINT.md`, `docs/plan/05-PROGRESS.md`; create `C:\Users\Admin\.claude\projects\D--Code-js-for-babies\memory\feedback-interview-section.md` + one line in `MEMORY.md`.
 
-- [ ] **Step 1: Blueprint.** Add `🎤 In an interview` to the lesson-anatomy list (**before** 💼 On the job), and add a subsection **"The 🎤 In-an-interview section (2026-07-07)"** capturing the copy + example contract from this plan's Global Constraints: real terms unglossed (the one exception to gloss-everything), `say` is a full spoken answer, a real `example` (never a toy, show the behavior twice when the point is persistence/difference, only position-taught vocab), every term cited, no em dashes, curated interview-topic lessons only. Note the lint: `extractInterview` runs sentence-length + idiom + em-dash checks but NOT the jargon check.
+- [x] **Step 1: Blueprint.** Add `🎤 In an interview` to the lesson-anatomy list (**before** 💼 On the job), and add a subsection **"The 🎤 In-an-interview section (2026-07-07)"** capturing the copy + example contract from this plan's Global Constraints: real terms unglossed (the one exception to gloss-everything), `say` is a full spoken answer, a real `example` (never a toy, show the behavior twice when the point is persistence/difference, only position-taught vocab), every term cited, no em dashes, curated interview-topic lessons only. Note the lint: `extractInterview` runs sentence-length + idiom + em-dash checks but NOT the jargon check.
 
-- [ ] **Step 2: Progress.** Add a "Next up" entry: the `🎤 In an interview` section shipped in code (engine + ~34 curated lessons: 1.4, 1.9, and Phases 3–11), spec + plan paths, UNCOMMITTED per standing rule, section placed above On-the-job, `say`+`example` model.
+- [x] **Step 2: Progress.** Add a "Next up" entry: the `🎤 In an interview` section shipped in code (engine + ~34 curated lessons: 1.4, 1.9, and Phases 3–11), spec + plan paths, UNCOMMITTED per standing rule, section placed above On-the-job, `say`+`example` model.
 
-- [ ] **Step 3: Memory.** Create `feedback-interview-section.md` (type: feedback): curated interview-topic lessons (Phase 3+ plus 1.4/1.9) carry a `🎤 In an interview` card — the one place real terminology is used unglossed, `say` is a full spoken answer, each has a real code example (no toys; show behavior twice for persistence/difference), no em dashes, placed above On-the-job. Add a one-line pointer to `MEMORY.md`. Link `[[feedback-uth-style-contract]]`.
+- [x] **Step 3: Memory.** Create `feedback-interview-section.md` (type: feedback): curated interview-topic lessons (Phase 3+ plus 1.4/1.9) carry a `🎤 In an interview` card — the one place real terminology is used unglossed, `say` is a full spoken answer, each has a real code example (no toys; show behavior twice for persistence/difference), no em dashes, placed above On-the-job. Add a one-line pointer to `MEMORY.md`. Link `[[feedback-uth-style-contract]]`.
 
-- [ ] **Step 4: Full-course sweep.**
-  - `npm run build` → green.
+- [x] **Step 4: Full-course sweep.** ✅
+  - `npm run build` → green (`✓ built in 920ms`).
   - `node scripts/lint-uth.mjs` → `UTH lint: clean` across all phases.
-  - `grep -rc "interview: {" src/lessons | grep -v ":0" | wc -l` → expect **34** files (1.4, 1.9 + the Phase 3–11 topics). Investigate any mismatch.
-  - Leave everything in the working tree. **Report the work is ready and awaits the user's word to commit — do NOT commit.**
+  - `grep -rl "interview: {" src/lessons | wc -l` → **33** files. NOTE: the plan's "34" estimate was off by one; the per-task topic list sums to exactly 33 (1.4, 1.9 + 3.5/3.6/3.7/3.8/3.9 + 4.5/4.6/4.7 + 5.1/5.4/5.5/5.6 + 6.1/6.2/6.4/6.5/6.6 + 7.1/7.2/7.4/7.8 + 8.4 + 9.3/9.6 + 10.2/10.4/10.6 + 11.6/11.9/11.10/11.15). No mismatch — all present.
+  - Everything left in the working tree, UNCOMMITTED, per standing rule.
 
 ---
 

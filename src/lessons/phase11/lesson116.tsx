@@ -415,6 +415,20 @@ export const lesson116: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={POLLING_EXERCISE} />,
+  interview: {
+    question: 'How does Playwright handle waiting, and why not sleep?',
+    say: 'Before each action Playwright waits for the element to be actionable: visible, attached, stable, and enabled. A fixed sleep either wastes time or is too short under load, which is what makes tests flaky. The waiting is built into every action.',
+    example: {
+      code: '// no sleep needed\nawait page.getByRole("button", { name: "Save" }).click()\n// Playwright waits until the button is visible,\n// attached, stable, and enabled before clicking',
+      note: 'The wait is built into the action and polls until ready. A fixed sleep is either too slow or too short.',
+    },
+    deeper:
+      'The waiting is built into the action and polls until the element is ready (11.6). This handles spinners and late content without you guessing a duration.',
+    dontSay: {
+      wrong: 'Add a sleep to fix the flaky test.',
+      why: 'A sleep guesses the wait and still fails under load. Let the locator auto wait instead (11.6).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain the flaky-test killer to a friend: why dynamic pages break sleep() in BOTH directions, how a polling assertion works (freshness included), what bounds its patience, and the one honest exception to “never wait by hand.”',

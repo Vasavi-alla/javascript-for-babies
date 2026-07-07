@@ -15,6 +15,8 @@
 
 6. **Recap** (auto-generated). 2–4 recall cards added to the spaced-recall deck (e.g., "Sketch what memory looks like after `let a = {x:1}; let b = a;`"). Shows which future lessons build on this one.
 
+> Two **optional curated sections** render between the checks and Teach-back, in this order: **🎤 In an interview** then **💼 On the job** (both dated subsections below). They appear only on lessons where they earn their place, not on every lesson.
+
 ### Authoring quality checklist (every lesson must pass)
 - [ ] One mental model only — anything extra split into its own lesson
 - [ ] At least one prediction gate at the point of highest surprise
@@ -121,6 +123,36 @@ and growth vs `scripts/uth-baseline.json`.
    reinforces it. MCQs exempt (options are the shape).
 3. Never explain the approach. No "try to find…", no pointing at the trick. Reasoning
    difficulty is the point; interpretation difficulty is the only defect.
+
+## The "🎤 In an interview" section (2026-07-07)
+
+A curated card on interview-critical lessons (Phase 3+, plus the 1.4 / 1.9 back-ports —
+33 lessons total). It gives the technically-precise spoken answer an interviewer wants,
+not a metaphor. `LessonDef.interview?` renders **above 💼 On the job**, after the checks.
+
+Placement in the file: the `interview: { … }` object sits immediately before `teachBack: {`.
+Anatomy (fixed bands, rendered by `InterviewCard`): question bubble (🎤) → **Say this**
+(`say`) → **Show this on paper** (`example.code` in a `<pre>` + italic `note`) → **If they
+dig deeper** (`deeper`) → **⚠ Don't say** (struck `dontSay.wrong` + `dontSay.why`).
+
+Copy + example contract (the one section exempt from gloss-everything):
+- **Real terms, unglossed** in `say` / `deeper` — that precision is the whole point. This is
+  the ONLY section that does not gloss jargon.
+- `say` is a **full spoken answer** (headline + the 1–2 sentences you volunteer right after,
+  ~20–30s), never a one-liner. `deeper` is only the genuinely harder follow-up.
+- Every card carries a **real `example`** — an artifact a candidate would actually talk
+  through, never a `makeCounter`-style toy. `code` is a JS string on one source line (`\n`
+  breaks) so the lint extractor stays robust; only vocabulary taught at or before this
+  lesson may appear; **show the behavior at least twice** when the point is persistence or
+  difference (e.g. call the closure twice; print two queue outcomes).
+- Every technical term must be **taught earlier**, cited on heavy use (e.g. `the heap (4.6)`).
+- **No em dashes** anywhere; short sentences (≤28 words), one idea each; curly apostrophes
+  (`’`) inside string literals.
+- `dontSay.wrong` is a real shallow answer; `dontSay.why` names what it confuses (usually
+  mechanism vs syntax, or "where it lives vs what it does").
+
+Lint: `node scripts/lint-uth.mjs` runs `extractInterview` — sentence-length + idiom + em-dash
+checks. The **jargon check is deliberately NOT applied** here (unglossed terms are intended).
 
 ## The "On the job" section (2026-07-06 — replaces 💼 paragraphs in underTheHood)
 

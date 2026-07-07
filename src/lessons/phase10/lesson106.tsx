@@ -444,6 +444,20 @@ export const lesson106: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={SPY_EXERCISE} />,
+  interview: {
+    question: 'What is a mock, and what is TDD?',
+    say: 'A test double stands in for a real dependency so a test stays fast and predictable. A stub feeds fixed input, and a spy records how it was called. TDD is writing the failing test first, then the code, so the red step proves the test can fail.',
+    example: {
+      code: 'const getUser = () => ({ name: "Sam" }) // stub\nconst sent = []\nconst send = (msg) => sent.push(msg)    // spy\n\nnotify(getUser, send)\nsent.length // 1, we can assert it was called',
+      note: 'The stub replaces a real dependency so the test is predictable. The spy records calls so you can check them.',
+    },
+    deeper:
+      'Double at the boundary, not everything (10.6). Over mocking makes tests pass while the app breaks. The red step of TDD proves the test can actually fail.',
+    dontSay: {
+      wrong: 'Mock everything so tests are isolated.',
+      why: 'Over mocking tests your mocks, not your code. Double only at real boundaries (10.6).',
+    },
+  },
   teachBack: {
     prompt:
       'Teach the double family to a friend: the problem doubles solve, each member’s precise job (stub/spy/mock/fake — with your 9.5 example), the boundaries rule — then walk one red-green-refactor lap and say what each beat proves.',

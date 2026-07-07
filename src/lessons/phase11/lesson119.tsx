@@ -409,6 +409,20 @@ export const lesson119: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={POM_EXERCISE} />,
+  interview: {
+    question: 'What is the Page Object Model?',
+    say: 'A pattern where each page’s locators and actions live in one class. Tests call methods like login instead of repeating selectors everywhere. When the page changes, you edit one file and every test that uses it heals at once.',
+    example: {
+      code: 'class LoginPage {\n  constructor(page) { this.page = page }\n  async login(user, pass) {\n    await this.page.fill("#user", user)\n    await this.page.click("#submit")\n  }\n}\n// tests call loginPage.login(...), not raw selectors',
+      note: 'Selectors live in one class. When the page changes, you edit here once and every test using it heals.',
+    },
+    deeper:
+      'It keeps selectors out of the tests (11.9). One redesign then means one edit, and every test that uses that page heals at once.',
+    dontSay: {
+      wrong: 'The Page Object Model makes tests run faster.',
+      why: 'It is about maintenance, not speed. One page change becomes one edit, not many (11.9).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain the POM to a friend: the duplication problem, the class shape (what becomes a property, what becomes a method), what specs look like after, the one-edit-heals-all payoff (name the principle), and when POM is overkill.',

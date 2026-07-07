@@ -361,6 +361,20 @@ export const lesson55: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={KITCHEN_EXERCISE} />,
+  interview: {
+    question: 'What is the prototype chain?',
+    say: 'Every object has a hidden link to another object, its prototype. When you read a property the object does not have, JavaScript follows that link upward until it finds it or reaches the end. That chain is how objects share methods.',
+    example: {
+      code: 'const arr = [1, 2, 3]\n\narr.hasOwnProperty("map") // false, arr has no map of its own\narr.map(n => n)           // works anyway\n// map was found up the chain on Array.prototype',
+      note: 'arr does not own map. JavaScript follows the hidden link to Array.prototype and finds it there.',
+    },
+    deeper:
+      'This is how inheritance works in JavaScript (5.5). Methods live once on the prototype, and every instance borrows them through the chain instead of copying them.',
+    dontSay: {
+      wrong: 'JavaScript classes work like Java classes.',
+      why: 'class is syntax over prototypes (5.6). Under it there is still one prototype object the instances link to.',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend how rabbit.sleep() can work when rabbit has no sleep — the hidden link, the full lookup rule, where every chain ends, and why sharing methods this way saves memory.',

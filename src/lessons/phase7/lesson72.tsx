@@ -343,6 +343,20 @@ export const lesson72: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={MATCHER_EXERCISE} />,
+  interview: {
+    question: 'How do you find an element to test reliably?',
+    say: 'With a selector that targets what the user sees, like a role, a visible label, or a test id. Avoid selectors tied to layout or deep structure, which break on any redesign. A Playwright locator also stays lazy and re-finds the element each time it acts.',
+    example: {
+      code: '// brittle: breaks on any layout change\npage.locator("div > div:nth-child(3) button")\n\n// robust: targets what the user sees\npage.getByRole("button", { name: "Buy" })',
+      note: 'The role and visible name survive a redesign. A deep structural path breaks the moment the layout shifts.',
+    },
+    deeper:
+      'A Playwright locator wraps a selector but stays lazy (7.2). It finds the element again each time it acts, so it survives the page changing between steps.',
+    dontSay: {
+      wrong: 'Use the element’s full CSS path.',
+      why: 'A long structural path breaks on any layout change. Prefer role, text, or a test id (7.2).',
+    },
+  },
   teachBack: {
     prompt:
       'Teach a friend the five selector forms with one example each — and explain why data-test attributes are the gold standard for automation, and what the space in a selector means.',

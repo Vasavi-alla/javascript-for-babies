@@ -319,6 +319,20 @@ export const lesson61: LessonDef = {
     },
   ],
   PlayExtra: () => <CodeExercise def={DING_EXERCISE} />,
+  interview: {
+    question: 'What does blocking the main thread mean?',
+    say: 'JavaScript runs on one thread. A long synchronous task holds that thread, so nothing else can run. Clicks, typing, and rendering all freeze until it finishes. That is why slow work should be handed off as asynchronous.',
+    example: {
+      code: 'const end = Date.now() + 3000\nwhile (Date.now() < end) {}\n// the page is frozen for 3 seconds:\n// clicks, typing, and animation all wait',
+      note: 'This loop holds the one thread, so the whole page freezes until it finishes. Slow work must be async instead.',
+    },
+    deeper:
+      'Async work is handed off and the thread stays free (6.1). The result comes back later through the event loop (6.2). The callback still runs on the one main thread, only the waiting is handed off.',
+    dontSay: {
+      wrong: 'async code runs on another thread.',
+      why: 'The callback still runs on the one main thread. Only the waiting is handed off, not your JavaScript (6.2).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend: what does “JavaScript is single-threaded” mean, what is blocking and why is it so bad in a browser, and how does setTimeout let one thread handle waiting without standing still?',

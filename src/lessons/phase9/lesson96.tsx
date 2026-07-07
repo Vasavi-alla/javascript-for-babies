@@ -347,6 +347,20 @@ export const lesson96: LessonDef = {
     </JobScene>
   ),
   PlayExtra: () => <CodeExercise def={ORDER_EXERCISE} />,
+  interview: {
+    question: 'How does Node stay responsive with one thread?',
+    say: 'Node hands slow input and output to libuv, which does the waiting off your thread. Your JavaScript keeps running, and when the work is done its callback is queued for the event loop. One thread can hold thousands of parked jobs this way.',
+    example: {
+      code: 'const fs = require("fs")\n\nfs.readFile("big.txt", () => console.log("done"))\nconsole.log("not blocked")\n\n// prints: not blocked, then done',
+      note: 'readFile hands the waiting to libuv off thread. Your code keeps running, and the callback fires when the file is ready.',
+    },
+    deeper:
+      'One thread can have thousands of parked jobs (9.6). This non blocking I/O is why Node handles many connections at once. A synchronous read would freeze all of them.',
+    dontSay: {
+      wrong: 'Node is multithreaded, so it is fast.',
+      why: 'Your JavaScript is single threaded. libuv does the waiting off thread, but callbacks still run one at a time (9.6).',
+    },
+  },
   teachBack: {
     prompt:
       'Explain to a friend how Node reads 100 files with one thread: the loop, libuv, what non-blocking I/O means, and why readFileSync would ruin it.',
